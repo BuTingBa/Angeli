@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"menuTiele{ font-size: ",[0,28],"; font-weight: 400; }\n.",[1],"tishi{ margin-right: ",[0,20],"; color: #999999; }\n.",[1],"menuList{ background: #FFFFFF; height: ",[0,88],"; padding: ",[0,24]," ",[0,30],"; }\n.",[1],"nei{ margin-left: ",[0,60],"; }\n",],undefined,{path:"./pages/anquan/anquan.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/anquan/anquan.wxml') } }));

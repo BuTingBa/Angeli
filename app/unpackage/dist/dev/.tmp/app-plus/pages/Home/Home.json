@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "安个利",
+  "usingComponents": {
+    "uni-load-more": "/components/uni-load-more"
+  }
+}

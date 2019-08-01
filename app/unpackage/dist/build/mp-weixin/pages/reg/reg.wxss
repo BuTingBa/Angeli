@@ -1,0 +1,109 @@
+
+page{
+	background-color: #FFFFFF;
+	text-align: center;
+}
+.loginImage{
+	height: 87rpx;
+	width: 87rpx;
+}
+.autologin{
+	margin: 0rpx 240rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack:justify;
+	-webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	        justify-content:space-between;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	    -ms-flex-align:center;
+	        align-items:center;
+}
+.line{
+	height: 2rpx;
+	width: 90rpx;
+	background-color: #999999;
+}
+.lineBox{
+	margin-top: 300rpx;
+	margin-right: 165rpx;
+	margin-left:165rpx;
+	margin-bottom: 56rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack:justify;
+	-webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	        justify-content:space-between;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	    -ms-flex-align:center;
+	        align-items:center;
+}
+.yzm{
+	width: 70%;
+}
+.logoa{
+	width: 100%;
+	text-align: center;
+	margin-top: 200rpx;
+}
+.anniu{
+	margin: 100rpx 40rpx;
+}
+.inputbox{
+	margin: 60rpx 40rpx;
+	text-align:left;
+}
+.from{
+	margin-top: 20rpx;
+	height: 80rpx;
+	border-bottom: 1px solid #EFEFF4;
+}
+.fromA{
+	margin-top: 20rpx;
+	height: 80rpx;
+	border-bottom: 1px solid #EFEFF4;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack:justify;
+	-webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	        justify-content:space-between;
+}
+.reg{
+	margin: 30rpx;
+}
+.getCode{
+	width: 160rpx;
+	height: 50rpx;
+	background:rgba(121,196,152,0.3);
+	text-align: center;
+	line-height: 50rpx;
+	font-size:24rpx;
+	border-radius: 25rpx;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	    -ms-flex-align:center;
+	        align-items:center;
+	margin-top: 20rpx;
+}
+input{
+	/* border: none; */
+	width: 100%;
+	height: 80rpx;
+}
+button::after {
+	  border: none;
+	  outline: none; 
+	  margin: 0rpx;
+	  padding: 0rpx;
+}
+

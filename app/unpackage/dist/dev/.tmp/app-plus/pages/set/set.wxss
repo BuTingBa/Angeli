@@ -1,0 +1,9 @@
+
+page{
+	background-color: #F7F8FA;
+}
+.menuClass{
+	font-size: 32rpx;
+	margin: 15rpx 37rpx;
+}
+

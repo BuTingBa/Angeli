@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/Home/Home",
+    "pages/post/post",
+    "pages/reg/reg",
+    "pages/i/i",
+    "pages/postinfo/postinfo",
+    "pages/editinfo/editinfo",
+    "pages/huati/huati",
+    "pages/sousuo/sousuo",
+    "pages/classPost/classPost",
+    "pages/edit/edit",
+    "pages/set/set",
+    "pages/about/about",
+    "pages/vip/vip",
+    "pages/newUser/newUser",
+    "pages/anquan/anquan",
+    "pages/menu/Message",
+    "pages/menu/friend",
+    "pages/menu/jifen",
+    "pages/menu/shoucang",
+    "pages/menu/mpl",
+    "pages/menu/zan",
+    "pages/menu/newFans",
+    "pages/i/bieren"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "安个利",
+    "navigationBarBackgroundColor": "#FFF",
+    "backgroundColor": "#FFF",
+    "navigationStyle": "custom"
+  },
+  "permission": {},
+  "usingComponents": {
+    "cu-custom": "/components/colorui/components/cu-custom",
+    "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"
+  },
+  "sitemapLocation": "sitemap.json"
+}

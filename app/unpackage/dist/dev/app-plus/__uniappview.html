@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8" />
+        <script>
+            var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+                CSS.supports('top: constant(a)'))
+            document.write(
+                '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+                (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+        </script>
+        <title>View</title>
+        <style>
+            * {
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            input[type="search"i]::-webkit-search-cancel-button {
+                display: none;
+            }
+        </style>
+        <script>
+            var __wxConfig = {"debug":false,"appname":"安个利","entryPagePath":"pages/Home/Home.html","page":{"pages/Home/Home.html":{"window":{"navigationBarTitleText":"安个利","usingComponents":{"uni-load-more":"/components/uni-load-more"}}},"pages/post/post.html":{"window":{"usingComponents":{}}},"pages/reg/reg.html":{"window":{"usingComponents":{}}},"pages/i/i.html":{"window":{"usingComponents":{"uni-load-more":"/components/uni-load-more"}}},"pages/postinfo/postinfo.html":{"window":{"usingComponents":{}}},"pages/editinfo/editinfo.html":{"window":{"usingComponents":{}}},"pages/huati/huati.html":{"window":{"usingComponents":{}}},"pages/sousuo/sousuo.html":{"window":{"usingComponents":{}}},"pages/classPost/classPost.html":{"window":{"usingComponents":{}}},"pages/edit/edit.html":{"window":{"usingComponents":{}}},"pages/set/set.html":{"window":{"usingComponents":{}}},"pages/about/about.html":{"window":{"usingComponents":{}}},"pages/vip/vip.html":{"window":{"usingComponents":{}}},"pages/newUser/newUser.html":{"window":{"usingComponents":{}}},"pages/anquan/anquan.html":{"window":{"usingComponents":{}}},"pages/menu/Message.html":{"window":{"usingComponents":{}}},"pages/menu/friend.html":{"window":{"usingComponents":{}}}},"global":{"window":{"navigationBarTextStyle":"black","navigationBarTitleText":"安个利","navigationBarBackgroundColor":"#FFF","backgroundColor":"#FFF","navigationStyle":"custom"}},"tabBar":{"color":"","selectedColor":"","backgroundColor":"","borderStyle":"black","list":[],"position":"bottom"},"networkTimeout":{"request":60000,"connectSocket":60000,"uploadFile":60000,"downloadFile":60000},"platform":"devtools","pages":["pages/Home/Home","pages/post/post","pages/reg/reg","pages/i/i","pages/postinfo/postinfo","pages/editinfo/editinfo","pages/huati/huati","pages/sousuo/sousuo","pages/classPost/classPost","pages/edit/edit","pages/set/set","pages/about/about","pages/vip/vip","pages/newUser/newUser","pages/anquan/anquan","pages/menu/Message","pages/menu/friend"],"subPackages":[],"nvueCompiler":"weex","splashscreen":{"alwaysShowBeforeRender":true,"autoclose":false},"compilerVersion":"2.1.1","usingComponents":{"cu-custom":"/components/colorui/components/cu-custom","sunui-upoos":"/components/sunui-upimg/sunui-upimg-alioos"}}
+        </script>
+        <script>
+            var __id__ = '';
+            window.__dispatchGenerateFunc__ = function(page) {
+                __id__ = page;
+                document.title = page;
+                // window.history.pushState('', '', page);
+                var wxss = page.replace('.html', '.wxss')
+                if (
+                    typeof __wxAppCode__ !== 'undefined' &&
+                    __wxAppCode__.hasOwnProperty(wxss)
+                ) {
+                    var setCssToHead = __wxAppCode__[wxss]
+                    typeof setCssToHead === 'function' && setCssToHead()
+                    document.dispatchEvent(new CustomEvent("generateFuncReady", {
+                        detail: {
+                            generateFunc: $gwx(page.replace('.html', '.wxml'))
+                        }
+                    }));
+                } else {
+                    plus.webview.currentWebview().setJsFile('_www/' + page.replace('.html', '.js'));
+                }
+            };
+        </script>
+        <script src="__uniappes6.js"></script>
+        <script src="uniapp://ready"></script>
+    </head>
+
+    <body>
+        <div></div>
+    </body>
+
+</html>

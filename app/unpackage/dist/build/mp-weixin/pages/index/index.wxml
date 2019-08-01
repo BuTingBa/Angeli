@@ -1,0 +1,1 @@
+<view class="content"><image class="logding" src="../../static/g.png"></image><view class="anniu"><button class="mini-btn" type="default" size="mini" plain="true" data-event-opts="{{[['tap',[['countDown',['$event']]]]]}}" bindtap="__e">{{"跳过"+num}}</button></view></view>

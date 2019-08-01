@@ -1,0 +1,102 @@
+
+.jifenListBox{
+	margin-top: 9rpx;
+}
+.username{
+	font-size:28rpx;
+	font-weight:400;
+	line-height:40rpx;
+	color:rgba(54,54,54,1);
+}
+.jifen{
+	margin-left: auto;
+	font-size:28rpx;
+	font-weight:400;
+	line-height:40rpx;
+	color:rgba(54,54,54,1);
+}
+.lpaihang{
+	height: 102rpx;
+	font-size:26rpx;
+	font-weight:500;
+}
+.listTouxiang{
+	height: 70rpx;
+	width: 70rpx;
+	background-color: #1CBBB4;
+	margin-left: 25rpx;
+	margin-right: 27rpx;
+	margin-top: 12rpx;
+	margin-bottom: 12rpx;
+	border-radius: 50%;
+}
+.myJifen{
+	height: 102rpx;
+	padding: 16rpx 38rpx;
+	background-color: #FFFFFF;
+	font-size:28rpx;
+	font-weight:400;
+	line-height:102rpx;
+	color:rgba(54,54,54,1);
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	    -ms-flex-align:center;
+	        align-items:center;
+}
+.jifenTiele{
+	padding: 16rpx 38rpx;
+	background-color: #FFFFFF;
+	font-size:32rpx;
+	font-weight:500;
+	line-height:45rpx;
+	color:rgba(54,54,54,1);
+}
+.titleText text:nth-child(1){
+	font-size:28rpx;
+	font-weight:500;
+	line-height:40rpx;
+	color:rgba(0,0,0,1);
+}
+.titleText text:nth-child(2){
+	font-size:24rpx;
+	font-weight:400;
+	line-height:33rpx;
+	color:rgba(153,153,153,1);
+}
+.jifenMy{
+	height: 72rpx;
+	text-align: center;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack:justify;
+	-webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	        justify-content:space-between;
+	margin-top: 32rpx;
+	padding: 0rpx 100rpx;
+}
+.name{
+	font-size:28rpx;
+	font-weight:500;
+	line-height:40px;
+	color:rgba(54,54,54,1);
+}
+.jinfenTouxiang{
+	height: 128rpx;
+	width: 128rpx;
+	margin-top: 49rpx;
+	border-radius: 50%;
+	background-color: #1CBBB4;
+}
+.jifenTop{
+	height:373rpx;
+	background:rgba(255,255,255,1);
+	text-align: center;
+}
+

@@ -1,0 +1,143 @@
+
+.top{
+	background-color: #FFFFFF;
+	padding-bottom: 30rpx;
+}
+.itemImage{
+	width: 100%;
+	height: 75%;
+	background-size: auto 100%;
+}
+.itemText{
+	width: 100%;
+	padding: 5rpx;
+	height: 76rpx;
+	overflow:hidden;
+	-o-text-overflow:ellipsis;
+	   text-overflow:ellipsis;
+	display:-webkit-box;
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:2;
+}
+.miaoshu{
+	grid-column-start: 2;
+	grid-column-end: 4;
+	justify-self:start;
+	-webkit-align-self:start;
+	    -ms-flex-item-align:start;
+	        align-self:start;
+	vertical-align:text-top;
+}
+.hang{
+	margin-left: 20rpx;
+	height: 48rpx;
+	padding-bottom: 5rpx;
+}
+.dibutext{
+	text-align: center;
+	margin: 35rpx;
+}
+.hangIng{
+	font-weight: 600;
+	color: #79C498;
+	border-bottom:2px solid #79C498;
+}
+.daohang{
+	margin-top: 5rpx;
+	padding: 10rpx;
+	height: 50rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: space-around;
+	    -ms-flex-pack: distribute;
+	        justify-content: space-around;
+	background-color: #FFFFFF;
+	font-size: 28rpx;
+}
+.Maxnum{
+	font-size: 28rpx;
+	font-weight:700;
+	color: #000000;
+}
+.items{
+	margin-top: 10rpx;
+	height: 450rpx;
+	width: 100%;
+	margin-left: 10rpx;
+	background-color: #F7F8FA;
+}
+.duoList{
+	padding-left: 25rpx;
+	padding-right: 35rpx;
+	padding-top: 20rpx;
+	padding-bottom: 20rpx;
+	background-color: #FFFFFF;
+	display: grid;
+	grid-template-columns: 50% 50%;
+	grid-column-gap: 8rpx;
+	justify-items:center;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	    -ms-flex-align:center;
+	        align-items:center;
+}
+.sange{
+	padding-top: 30rpx;
+	padding-left: 50rpx;
+	padding-right: 50rpx;
+	font-size: 24rpx;
+	color: #999999;
+	height: 120rpx;
+	bottom: 20rpx;
+	display: grid;
+	grid-template-columns: 33.33% 33.33% 33.33%;
+	
+	justify-items: center;
+}
+.editinfo{
+	padding-right: 0rpx;
+	
+	padding-top: 20rpx;
+}
+.button-edituserinfo{
+	background-color: #79C498;
+	height: 60rpx;
+	font-size: 25rpx;
+	vertical-align:auto;
+	color: #FFFFFF;
+	border-radius: 25rpx;
+}
+.dengji{
+	font-size:20rpx;
+	height: 30rpx;
+	border-radius:25rpx !important;
+	vertical-align: top;
+}
+.info{
+	padding: 60rpx;
+	display: grid;
+	grid-template-columns: 25% 50% 25%;
+	grid-template-rows: 50% 50%;
+	-webkit-flex-wrap: nowrap;
+	    -ms-flex-wrap: nowrap;
+	        flex-wrap: nowrap;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+}
+.lstouxiang{
+	width: 132rpx;
+	height: 132rpx;
+	background-size:100% 100%;
+	border-radius:50%;
+}
+.xinxi{
+	margin-top: 10rpx;
+	line-height:40rpx;
+	vertical-align:top;
+	line-height: 50rpx;
+}
+

@@ -1,0 +1,28 @@
+
+.textarea{
+		width: 100%;
+}
+.body{
+	background-color: #FFFFFF;
+}
+.an{
+	width: 100%;
+}
+.dibu{
+	position: absolute;
+	width: 90%;
+	bottom: 10rpx;
+	margin: 0rpx 20rpx;
+}
+.in{
+	color: #000000;
+	font-size: 28rpx;
+	height: 32rpx;
+	line-height: 32rpx;
+	margin-top: 10rpx;
+}
+.upname{
+	padding: 20rpx 20rpx;
+	font-size: 26rpx;
+}
+

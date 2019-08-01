@@ -1,0 +1,146 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		//#ifdef H5 || MP-WEIXIN
+		{	
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		//上方只会在小程序上个显示，加载启动页面。
+		//#endif
+	    {
+            "path" : "pages/Home/Home",
+            "style" : {
+				"navigationBarTitleText": "安个利"
+			}
+        }
+        ,{
+            "path" : "pages/post/post",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/reg/reg",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/i/i",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/postinfo/postinfo",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/editinfo/editinfo",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/huati/huati",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/sousuo/sousuo",
+            "style" : {}
+        },{
+			"path" : "pages/classPost/classPost",
+			"style" : {}
+		}
+        
+        ,{
+            "path" : "pages/edit/edit",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/set/set",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/about/about",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/vip/vip",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/newUser/newUser",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/anquan/anquan",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/menu/Message",
+            "style" : {}
+        },
+		{
+			"path" : "pages/menu/friend",
+			"style" : {}
+		},
+		{
+			"path" : "pages/menu/jifen",
+			"style" : {}
+		},
+		{
+			"path" : "pages/menu/shoucang",
+			"style" : {}
+		},
+		{
+			"path" : "pages/menu/mpl",
+			"style" : {}
+		},
+		{
+			"path" : "pages/menu/zan",
+			"style" : {}
+		},
+		{
+			"path" : "pages/menu/newFans",
+			"style" : {}
+		},
+		{
+			"path" : "pages/i/bieren",
+			"style" : {}
+		}
+		
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "安个利",
+		"navigationBarBackgroundColor": "#FFF",
+		"backgroundColor": "#FFF",
+		"navigationStyle":"custom"
+		
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 3, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "首页启动", //模式名称
+				"path": "pages/Home/Home", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "注册", //模式名称
+				"path": "pages/reg/reg", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "话题帖子", //模式名称
+				"path": "pages/classPost/classPost", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "信息通知", //模式名称
+				"path": "pages/menu/Message", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "olun", //模式名称
+				"path": "pages/menu/mpl", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+}

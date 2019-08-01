@@ -1,0 +1,2 @@
+setCssToHead(["body{ background-color: #F7F8FA; }\n.",[1],"menuClass{ font-size: ",[0,32],"; margin: ",[0,15]," ",[0,37],"; }\n",],undefined,{path:"./pages/set/set.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/set/set.wxml') } }));

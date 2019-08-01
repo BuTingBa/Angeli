@@ -1,0 +1,45 @@
+
+.banquan{
+	position: absolute;
+	bottom: 32rpx;
+	width: 100%;
+	text-align: center;
+	line-height: 1.5em;
+}
+.menuList{
+	margin-top: 100rpx;
+	border-top: 1rpx solid #E5E4EA;
+	border-bottom: 1rpx solid #E5E4EA;
+	margin: 30rpx;
+	padding-left: 60rpx;
+	padding-right: 40rpx;
+}
+.nei{
+	padding-left: 60rpx;
+}
+.jiantou{
+		width: 20rpx;
+		height: 20rpx;
+		border-top: 3px solid #EFEFF4;
+		border-right: 3px solid #EFEFF4;
+		right: 20rpx;
+		border-color: #E5E4EA;
+		-webkit-transform: rotate(45deg);
+		    -ms-transform: rotate(45deg);
+		        transform: rotate(45deg);
+		margin-top:31rpx;
+		justify-self:end;
+}
+.menuTiele{
+	height: 87rpx;
+	line-height: 87rpx;
+	font-size: 28rpx;
+}
+.logo{
+	text-align: center;
+	margin-top: 100rpx;
+}
+page{
+	background-color: #FFFFFF;
+}
+

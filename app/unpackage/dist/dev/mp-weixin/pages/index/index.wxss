@@ -1,0 +1,15 @@
+
+.content{
+	width: 100%;
+	height: 100vh;
+}
+.logding{
+	width: 100%;
+	height: 100vh;
+}
+.anniu{
+	position: absolute;
+	  bottom: 30px;
+	  right: 10px;
+}
+

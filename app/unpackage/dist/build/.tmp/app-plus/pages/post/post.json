@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-custom": "/components/colorui/components/cu-custom",
+    "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"
+  }
+}
