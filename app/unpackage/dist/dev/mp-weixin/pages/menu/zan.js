@@ -193,7 +193,7 @@ var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onL
     markMsg: function markMsg() {
       uni.request({
         method: 'GET',
-        url: "https://api.angeli.top/user.php?type=mark", //请求标记已读消息
+        url: "https://api.angeli.top/user.php?type=mark&class=zan", //请求标记已读消息
         data: {},
 
 

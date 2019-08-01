@@ -78,6 +78,12 @@
 				
 			}
 		},
+		onBackPress:function(){
+			/* uni.redirectTo({
+				url: '../Home/Home?type=plusPost'
+			}) */
+		}
+		,
 		onShow:function(){
 			console.log(server.postClass)
 			this.huati=server.postClass.ClassId;

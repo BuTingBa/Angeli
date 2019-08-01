@@ -105,7 +105,36 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -133,30 +162,56 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      TabCur: 0 };
+var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onLoad: function onLoad() {var _this = this;uni.showLoading({ title: '加载中' });uni.request({ method: 'GET', url: "https://api.angeli.top/user.php?type=getMypl", //仅为示例，并非真实接口地址。
+      data: {}, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.msgList = res.data.data;_this.markMsg();} else {}
+
+      },
+      complete: function complete() {
+        uni.hideLoading();
+      } });
 
   },
   methods: {
     tabSelect: function tabSelect(e) {
       this.TabCur = e;
 
+    },
+    getbieren: function getbieren(e) {
+      uni.navigateTo({
+        url: '../i/bieren?auid=' + e });
+
+    },
+    getPostInfo: function getPostInfo(e) {
+      uni.navigateTo({
+        url: '../postinfo/postinfo?id=' + e });
+
+    },
+    markMsg: function markMsg() {
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=mark&class=pl", //请求标记已读消息
+        data: {},
+
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            console.log('已将信息标记为已读');
+          } else {
+            console.log('标记已读失败！');
+          }
+
+        },
+        complete: function complete() {
+
+        } });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

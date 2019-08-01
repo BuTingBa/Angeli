@@ -147,8 +147,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
-{
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));var _data$onBackPress$onS;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default = (_data$onBackPress$onS = {
+
   data: function data() {
     return {
       CustomBar: this.CustomBar,
@@ -185,6 +185,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
   },
+  onBackPress: function onBackPress() {
+    /* uni.redirectTo({
+                                       	url: '../Home/Home?type=plusPost'
+                                       }) */
+  },
+
   onShow: function onShow() {
     console.log(_server.default.postClass);
     this.huati = _server.default.postClass.ClassId;
@@ -193,100 +199,108 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
   },
   onLoad: function onLoad(e) {
 
-  },
-  onBackPress: function onBackPress(e) {
-    uni.redirectTo({
-      url: '../Home/Home?type=plusPost' });
+  } }, _defineProperty(_data$onBackPress$onS, "onBackPress",
+function onBackPress(e) {
+  uni.redirectTo({
+    url: '../Home/Home?type=plusPost' });
+
+}), _defineProperty(_data$onBackPress$onS, "methods",
+{
+  getClassList: function getClassList() {
+    uni.navigateTo({
+      url: '../huati/huati' });
 
   },
-  methods: {
-    getClassList: function getClassList() {
-      uni.navigateTo({
-        url: '../huati/huati' });
+  uImageTap: function uImageTap() {
+    this.$refs.uImage.uploadimage(this.upImgOos);
+  },
+  // 删除图片 -2019/05/12(本地图片进行删除)
+  delImgInfo: function () {var _delImgInfo = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              console.log('你删除的图片地址为:', e, this.oosArr.splice(e.index, 1));case 1:case "end":return _context.stop();}}}, _callee, this);}));function delImgInfo(_x) {return _delImgInfo.apply(this, arguments);}return delImgInfo;}(),
 
-    },
-    uImageTap: function uImageTap() {
-      this.$refs.uImage.uploadimage(this.upImgOos);
-    },
-    // 删除图片 -2019/05/12(本地图片进行删除)
-    delImgInfo: function () {var _delImgInfo = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                console.log('你删除的图片地址为:', e, this.oosArr.splice(e.index, 1));case 1:case "end":return _context.stop();}}}, _callee, this);}));function delImgInfo(_x) {return _delImgInfo.apply(this, arguments);}return delImgInfo;}(),
+  // 阿里云
+  upOosData: function () {var _upOosData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var arrImg, i, len;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+              // 上传图片数组
+              arrImg = [];
+              i = 0, len = e.length;case 2:if (!(i < len)) {_context2.next = 15;break;}_context2.prev = 3;if (!(
 
-    // 阿里云
-    upOosData: function () {var _upOosData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var arrImg, i, len;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                // 上传图片数组
-                arrImg = [];
-                i = 0, len = e.length;case 2:if (!(i < len)) {_context2.next = 15;break;}_context2.prev = 3;if (!(
-
-                e[i].path_server != "")) {_context2.next = 7;break;}_context2.next = 7;return (
-                  arrImg.push(e[i].path_server.split(',')));case 7:_context2.next = 12;break;case 9:_context2.prev = 9;_context2.t0 = _context2["catch"](3);
+              e[i].path_server != "")) {_context2.next = 7;break;}_context2.next = 7;return (
+                arrImg.push(e[i].path_server.split(',')));case 7:_context2.next = 12;break;case 9:_context2.prev = 9;_context2.t0 = _context2["catch"](3);
 
 
-                console.log('上传失败...');case 12:i++;_context2.next = 2;break;case 15:
+              console.log('上传失败...');case 12:i++;_context2.next = 2;break;case 15:
 
 
-                // 图片信息保存到data数组
-                this.oosArr = arrImg;
+              // 图片信息保存到data数组
+              this.oosArr = arrImg;
 
-                // 可以根据长度来判断图片是否上传成功. 2019/4/11新增
-                if (arrImg.length == this.upImgOos.count) {
-                  uni.showToast({
-                    title: "\u4E0A\u4F20\u6210\u529F",
-                    icon: 'none' });
+              // 可以根据长度来判断图片是否上传成功. 2019/4/11新增
+              if (arrImg.length == this.upImgOos.count) {
+                uni.showToast({
+                  title: "\u4E0A\u4F20\u6210\u529F",
+                  icon: 'none' });
 
-                }case 17:case "end":return _context2.stop();}}}, _callee2, this, [[3, 9]]);}));function upOosData(_x2) {return _upOosData.apply(this, arguments);}return upOosData;}(),
+              }case 17:case "end":return _context2.stop();}}}, _callee2, this, [[3, 9]]);}));function upOosData(_x2) {return _upOosData.apply(this, arguments);}return upOosData;}(),
 
-    // 获取上传图片阿里云
+  // 获取上传图片阿里云
 
-    textareaAInput: function textareaAInput(e) {
-      this.postcontent = e.target.value;
-    },
-    sendpost: function sendpost(e) {
-      console.log(this.postcontent);
-      if (this.postcontent == "null" || this.postcontent == "") {
-        uni.showToast({
-          title: "请输入文字内容！",
-          position: 'bottom',
-          icon: 'none',
-          mask: true });
-
-        return;
-      }
-      if (this.postcontent.length > 2000 || this.postcontent.length < 10) {
-        uni.showToast({
-          title: "内容最少10个字，最多2000个字",
-          position: 'bottom',
-          icon: 'none',
-          mask: true });
-
-        return;
-      }
-      if (!this.huati) {
-        uni.showToast({
-          title: "你还没有选择话题",
-          position: 'bottom',
-          icon: 'none',
-          mask: true });
-
-        return;
-      }
-      uni.showLoading({
-        title: '发送帖子中..',
+  textareaAInput: function textareaAInput(e) {
+    this.postcontent = e.target.value;
+  },
+  sendpost: function sendpost(e) {
+    console.log(this.postcontent);
+    if (this.postcontent == "null" || this.postcontent == "") {
+      uni.showToast({
+        title: "请输入文字内容！",
+        position: 'bottom',
+        icon: 'none',
         mask: true });
 
-      uni.request({
-        method: 'POST',
-        url: 'https://api.angeli.top/post.php?type=addPost', //仅为示例，并非真实接口地址。
-        data: {
-          imageList: this.oosArr.join().split(','),
-          txt: this.postcontent,
-          huati: this.huati },
+      return;
+    }
+    if (this.postcontent.length > 2000 || this.postcontent.length < 10) {
+      uni.showToast({
+        title: "内容最少10个字，最多2000个字",
+        position: 'bottom',
+        icon: 'none',
+        mask: true });
 
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+      return;
+    }
+    if (!this.huati) {
+      uni.showToast({
+        title: "你还没有选择话题",
+        position: 'bottom',
+        icon: 'none',
+        mask: true });
 
-        success: function success(res) {
+      return;
+    }
+    uni.showLoading({
+      title: '发送帖子中..',
+      mask: true });
+
+    uni.request({
+      method: 'POST',
+      url: 'https://api.angeli.top/post.php?type=addPost', //仅为示例，并非真实接口地址。
+      data: {
+        imageList: this.oosArr.join().split(','),
+        txt: this.postcontent,
+        huati: this.huati },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Cookie': _server.default.cookie },
+
+      success: function success(res) {
+        uni.showToast({
+          title: res.data.msg,
+          position: 'bottom',
+          icon: 'none',
+          duration: 2000,
+          mask: true });
+
+        if (res.data.code == "2") {
           uni.showToast({
             title: res.data.msg,
             position: 'bottom',
@@ -294,30 +308,22 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
             duration: 2000,
             mask: true });
 
-          if (res.data.code == "2") {
-            uni.showToast({
-              title: res.data.msg,
-              position: 'bottom',
-              icon: 'none',
-              duration: 2000,
-              mask: true });
+        }
+        if (res.data.code == "1") {
+          setTimeout(function () {
+            uni.hideLoading();
+            uni.redirectTo({
+              url: '../Home/Home?type=plusPost' });
 
-          }
-          if (res.data.code == "1") {
-            setTimeout(function () {
-              uni.hideLoading();
-              uni.redirectTo({
-                url: '../Home/Home?type=plusPost' });
+          }, 2000);
+        }
+      },
+      complete: function complete() {
 
-            }, 2000);
-          }
-        },
-        complete: function complete() {
-
-        } });
+      } });
 
 
-    } } };exports.default = _default;
+  } }), _data$onBackPress$onS);exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

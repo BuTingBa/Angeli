@@ -26,17 +26,52 @@ class angeli
     /**
      * @return 标记已读信息
      */
-    public function markNoRead($auid)
+    public function markNoRead($auid,$type)
     {
-        $sql="UPDATE angeli_favorite SET mark=1 WHERE AuthorId='$auid'";
-        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
-        //echo $sql;
-        if($this->mysqli->affected_rows<1){
-            //表示操作失败
-            return false;
-        }else{
-            return true;
+
+        switch ($type){
+            case 'zan':
+                $sql="UPDATE angeli_favorite SET mark=1 WHERE AuthorId='$auid'";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                //echo $sql;
+                if($this->mysqli->affected_rows<1){
+                    //表示操作失败
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            case 'pl':
+                $sql="UPDATE angeli_reply SET mark=1 WHERE ReplyTo='$auid'";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                $sql="UPDATE angeli_comments SET mark=1 WHERE AuthorId='$auid'";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                //echo $sql;
+                if($this->mysqli->affected_rows<1){
+                    //表示操作失败
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            case 'fans':
+                $sql="UPDATE angeli_guanzhu SET mark=1 WHERE beiguanzhu='$auid'";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                //echo $sql;
+                if($this->mysqli->affected_rows<1){
+                    //表示操作失败
+                    return false;
+                }else{
+                    return true;
+                }
+
+                break;
+            default:
+
+                break;
         }
+
+
     }
 
     /**获取我的点赞信息
@@ -69,13 +104,13 @@ class angeli
             }
         }
     }
-    /**获取我的评论信息
+    /**获取我的未读评论信息
      * @return array
      */
     public function getMyPinglun($auid,$page=1,$count=40)
     {
         $pageNum=($page-1)*$count;
-        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid'  ORDER BY addTime DESC LIMIT $pageNum, $count";
+        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid' AND CommentsFromUid<>'$auid' ORDER BY addTime DESC LIMIT $pageNum, $count";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -90,13 +125,14 @@ class angeli
                         'type'=>'pinglun',
                         'mark'=>$row['mark'],
                         'txt' =>$row['CommentsContent'],
-                        'toId'=>$this->getPostInfo($row['PostId'],$auid)
+                        'toId'=>$this->getPostInfo($row['PostId'],$auid),
+                        'timestr'=>$row['AddTime']
                     );
                     array_push($data,$aa);
                 }
             }
         }
-        $sql = "SELECT * FROM angeli_reply WHERE ReplyTo='$auid'  ORDER BY addTime DESC LIMIT $pageNum, $count";
+        $sql = "SELECT * FROM angeli_reply WHERE ReplyTo='$auid' AND ReplyUid<>'$auid' ORDER BY addTime DESC LIMIT $pageNum, $count";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -112,14 +148,16 @@ class angeli
                         'mark'=>$row['mark'],
                         'txt'=>$row['ReplyContent'],
                         'toId'=>$this->getPostInfo($row['PostId'],$auid),
-                        'huifu'=>$this->huifuTotxt($row['CommentId'])
+                        'huifu'=>$this->huifuTotxt($row['CommentId']),
+                        'timestr'=>$row['AddTime']
                     );
                     array_push($data,$ab);
 
                 }
             }
         }
-
+        $tempArray = array_column($data,'timestr');
+        array_multisort($tempArray,SORT_DESC,$data);
         return $data;
     }
 
@@ -140,6 +178,17 @@ class angeli
                 }
             }else{
                 $pinglun=0;
+            }
+        }
+        $sql = "SELECT * FROM angeli_reply WHERE ReplyTo='$auid' AND mark=0";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            $pinglun=0;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $pinglun++;
+                }
             }
         }
 
@@ -1353,7 +1402,7 @@ class angeli
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
-            return FALSE;
+            return '';
         }else{
             if($row=$this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()) {
@@ -1361,7 +1410,7 @@ class angeli
                 }
                 return $auid;
             }else{
-                return FALSE;
+                return '';
             }
         }
     }

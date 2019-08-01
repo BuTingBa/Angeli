@@ -81,7 +81,12 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $auid=$_SESSION['Auid'];
-        if(!$app=$user->markNoRead($auid)){
+        if(empty($_GET['class'])){
+            $outmsg = array('code' =>'0','msg'=>'没有指定标记类型','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $type=$_GET['class'];
+        if(!$app=$user->markNoRead($auid,$type)){
             $outmsg = array('code' =>'0','msg'=>'标记失败！','data'=>$outdata);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{

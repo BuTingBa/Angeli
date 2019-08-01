@@ -2,53 +2,107 @@
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">我的好友</block>
+			<block slot="content">评论和@</block>
 		</cu-custom>
-		<view class="listBox">
-			<view class="userBox">
-				<view class="touxiang"></view>
-				<view class="info">
-					<text>粽子\n</text>
-					<text>2小时前</text>
+		<view v-for="(list,index) in msgList" :key='index'>
+			<view class="listBox">
+				<view class="userBox">
+					<view class="touxiang" :style="{'background-image':'url('+list.userInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.userInfo.AuthorId)"></view>
+					<view class="info">
+						<text>{{list.userInfo.AuthorName}}\n</text>
+						<text>{{list.time}}</text>
+					</view>
+				</view>
+				<view class="plnr">
+					<text>{{list.txt}}</text>
+				</view>
+				<view class="mynr" @click="getPostInfo(list.toId.PostsId)">
+					<text v-if="list.type=='huifu'">我的评论：</text><text class="slms" v-if="list.type=='huifu'">{{list.huifu}}</text>
+					<text v-if="list.type=='pinglun'">我的种草：</text><text class="slms" v-if="list.type=='pinglun'">{{list.toId.Content}}</text>
 				</view>
 			</view>
-			<view class="plnr">
-				<text>这个超级好用，谁用谁知道</text>
-			</view>
-			<view class="mynr">
-				<text>我的评论：</text><text>这个好用么？求知情大佬告知。</text>
-			</view>
-		</view>
-		<view class="menusolid"></view>
-		<view class="listBox">
-			<view class="userBox">
-				<view class="touxiang"></view>
-				<view class="info">
-					<text>粽子\n</text>
-					<text>2小时前</text>
-				</view>
-			</view>
-			<view class="plnr">
-				<text>这个超级好用，谁用谁知道</text>
-			</view>
-			<view class="mynr">
-				<text>我的评论：</text><text>这个好用么？求知情大佬告知。</text>
-			</view>
+			<view class="menusolid"></view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
-				TabCur:0
+				TabCur:0,
+				msgList:[]
 			}
+		},
+		onLoad:function(){
+			uni.showLoading({
+				title: '加载中'
+			});
+			uni.request({
+				method:'GET',
+				url: "https://api.angeli.top/user.php?type=getMypl", //仅为示例，并非真实接口地址。
+				data: {
+					
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+					'Cookie':server.cookie
+				},
+				success: (res) => {
+					console.log(res)
+					if(res.data.code=="1"){
+						this.msgList=res.data.data
+						this.markMsg()
+					}else{
+			
+					}
+					
+				},
+				complete() {
+					uni.hideLoading();
+				}
+			});
 		},
 		methods: {
 			tabSelect(e) {
 				this.TabCur = e
 	
+			},
+			getbieren:function(e){
+				uni.navigateTo({
+					url: '../i/bieren?auid='+e
+				})
+			},
+			getPostInfo:function(e){
+				uni.navigateTo({
+					url: '../postinfo/postinfo?id='+e
+				});
+			},
+			markMsg:function(){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=mark&class=pl", //请求标记已读消息
+					data: {
+						
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							console.log('已将信息标记为已读')
+						}else{
+							console.log('标记已读失败！')
+						}
+						
+					},
+					complete() {
+						
+					}
+				});
 			}
 		}
 	}
@@ -66,6 +120,12 @@ page{
 	font-size:24upx;
 	font-weight:400;
 	color:rgba(54,54,54,1);
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+.mynr text{
+	width: 588upx;
+	white-space:nowrap;
 }
 .mynr text:nth-child(1){
 	color:#79C498;

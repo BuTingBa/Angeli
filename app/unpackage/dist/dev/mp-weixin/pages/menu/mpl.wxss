@@ -10,6 +10,13 @@ page{
 	font-size:24rpx;
 	font-weight:400;
 	color:rgba(54,54,54,1);
+	overflow:hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+}
+.mynr text{
+	width: 588rpx;
+	white-space:nowrap;
 }
 .mynr text:nth-child(1){
 	color:#79C498;
