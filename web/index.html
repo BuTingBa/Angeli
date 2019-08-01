@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="angeli,安个利,小红书,分享,安利,鑫峰互联,安利平台,类似小红书" />
+	<meta name="description" content="安个利是一款专门安利自己觉得很棒的东西给其他人的应用，在这里你可以畅所欲言，推荐好玩、有趣、好用的事物给他人,分享自己觉得好的东西,给大家来带快乐" />
+    <title>安个利 - 与你共享快乐</title>
+    <meta name="description" content="Demo of A Free Coming Soon Bootstrap 4 Template"/>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+  </head>
+  <body id="top"><div class="site-wrapper">
+  <video src="img/video.mp4" preload="auto" loop="loop" muted="muted" autoplay="autoplay" class="my-video" id="video"></video>
+  <div class="site-wrapper-inner">
+    <div class="cover-container">
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand">Angeli</h3>
+          <!-- <nav class="nav nav-masthead">
+            <a class="nav-link nav-social" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a class="nav-link nav-social" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a class="nav-link nav-social" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+            <a class="nav-link nav-social" href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+          </nav> -->
+        </div>
+      </div><br>      <div class="inner cover">
+        <h1 class="cover-heading">安个利</h1>
+        <p class="lead cover-copy">安个利是一款专门安利自己觉得很棒的东西给其他人的应用，在这里你可以畅所欲言，推荐好玩、有趣、好用的事物给他人.</p>
+        <p class="lead"><button type="button" class="btn btn-lg btn-default btn-notify" data-toggle="modal" data-target="#subscribeModal">立即使用</button></p>
+      </div>
+      <div class="mastfoot">
+        <div class="inner">
+          <p>&copy; Angeli Copyright -<a href="https://www.xinfenghulian.cn/" target="_blank" title="深圳市鑫峰互联"> 鑫峰互联</a></p>
+        </div>
+      </div>
+      <div class="modal fade" id="subscribeModal" tabindex="-1" role="dialog" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="subscribeModalLabel">使用安个利</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="form-control-label">你可以使用微信扫描二维码使用小程序，或者下载客户端</label>
+                  <img src="img/QR.jpg" width="250px" height="250px">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer"><a href="angeli.apk" target="_blank">
+              <button type="button" class="btn btn-default">Android</button></a>
+			  <button type="button" class="btn btn-default">IOS</button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <script src="scripts/main.js"></script>
+	<style>
+		.modal-footer{
+			text-align: center;
+			justify-content:center;
+		}
+		.modal-body{
+			text-align: center;
+		}
+		.modal-footer button{
+			color: #000;
+			border: 2px solid #000;
+		}
+		#subscribeModal .modal-content {
+		  background-color: #FFF;
+		  color: #000;
+		  text-align: left;
+		}
+		.my-video{
+			margin: 0;
+			padding: 0;
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			z-index: -999;
+			min-height: 100%;
+			min-width: 100%;
+			width: 100%;
+		}
+	</style>
+	<script type="text/javascript">
+		//判断是不是微信客户端访问,如果是微信浏览器访问就不播放视频,否则播放视频
+		if(isWeiXin()==true){
+			document.getElementById("video").hidden=true;
+		}else{
+			document.getElementById("video").hidden=false;	
+		}
+
+		function isWeiXin(){
+			var ua = window.navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	</script>
+  </body>
+</html>

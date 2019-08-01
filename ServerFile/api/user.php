@@ -90,6 +90,22 @@ switch ($_GET['type']){
         }
 
         break;
+    case 'getMypl':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        //$auid=6666;
+        if(!$app=$user->getMyPinglun($auid)){
+            $outmsg = array('code' =>'0','msg'=>'查询失败！','data'=>$outdata);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$app);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
     default:
         $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));

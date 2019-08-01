@@ -107,7 +107,7 @@
 			this.postid=option.id;
 			uni.request({
 				method:'GET',
-				url: 'https://api.angeli.top/post.php?type=outPostInfo', //仅为示例，并非真实接口地址。
+				url: 'https://api.angeli.top/post.php?type=outPostInfo', 
 				data: {
 					id: option.id
 				},
@@ -121,7 +121,7 @@
 					console.log(this.postInfo);
 					uni.request({
 						method:'GET',
-						url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
+						url: 'https://api.angeli.top/post.php?type=getpl', 
 						data: {
 							postid: option.id
 						},

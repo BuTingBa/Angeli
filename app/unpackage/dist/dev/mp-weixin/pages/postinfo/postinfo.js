@@ -1,15 +1,15 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/postinfo/postinfo"],{
 
 /***/ 56:
-/*!************************************************************!*\
-  !*** D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue ***!
-  \************************************************************/
+/*!*****************************************************!*\
+  !*** D:/Web/angeli/app/pages/postinfo/postinfo.vue ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _postinfo_vue_vue_type_template_id_065c3114___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./postinfo.vue?vue&type=template&id=065c3114& */ 57);
+/* harmony import */ var _postinfo_vue_vue_type_template_id_fd2e8c76___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./postinfo.vue?vue&type=template&id=fd2e8c76& */ 57);
 /* harmony import */ var _postinfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./postinfo.vue?vue&type=script&lang=js& */ 59);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _postinfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _postinfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _postinfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./postinfo.vue?vue&type=style&index=0&lang=css& */ 61);
@@ -24,8 +24,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _postinfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _postinfo_vue_vue_type_template_id_065c3114___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _postinfo_vue_vue_type_template_id_065c3114___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _postinfo_vue_vue_type_template_id_fd2e8c76___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _postinfo_vue_vue_type_template_id_fd2e8c76___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -35,33 +35,33 @@ var component = Object(_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_l
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue"
+component.options.__file = "D:/Web/angeli/app/pages/postinfo/postinfo.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
 /***/ 57:
-/*!*******************************************************************************************!*\
-  !*** D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue?vue&type=template&id=065c3114& ***!
-  \*******************************************************************************************/
+/*!************************************************************************************!*\
+  !*** D:/Web/angeli/app/pages/postinfo/postinfo.vue?vue&type=template&id=fd2e8c76& ***!
+  \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_postinfo_vue_vue_type_template_id_065c3114___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./postinfo.vue?vue&type=template&id=065c3114& */ 58);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_postinfo_vue_vue_type_template_id_065c3114___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_postinfo_vue_vue_type_template_id_fd2e8c76___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./postinfo.vue?vue&type=template&id=fd2e8c76& */ 58);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_postinfo_vue_vue_type_template_id_fd2e8c76___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_postinfo_vue_vue_type_template_id_065c3114___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_E_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_E_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_postinfo_vue_vue_type_template_id_fd2e8c76___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
 /***/ 58:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue?vue&type=template&id=065c3114& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/Web/angeli/app/pages/postinfo/postinfo.vue?vue&type=template&id=fd2e8c76& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -82,9 +82,9 @@ render._withStripped = true
 /***/ }),
 
 /***/ 59:
-/*!*************************************************************************************!*\
-  !*** D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/*!******************************************************************************!*\
+  !*** D:/Web/angeli/app/pages/postinfo/postinfo.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -98,9 +98,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 60:
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/Web/angeli/app/pages/postinfo/postinfo.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -261,10 +261,10 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 var _default = { data: function data() {return { postInfo: [], pllist: [], InputBottom: 0, plnr: "", postid: "", setvar: "", Give: "0", huifu: false, pluid: "" };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);}return { title: this.postInfo.Content, path: '/pages/postinfo/postinfo?id=' + this.postid, desc: this.postInfo.Content, imageUrl: this.postInfo.PictureId[0] };}, onLoad: function onLoad(option) {var _this = this; //option为object类型，会序列化上个页面传递的参数
     console.log(option.id); //打印出上个页面传递的参数。
-    this.postid = option.id;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', //仅为示例，并非真实接口地址。
-      data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
-          data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);} });} });}, methods: { Like: function Like(postid, auid, give) {var _this2 = this;if (give === true) {var modea = 'del';} else {var modea = 'add';}uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
-        data: { fuid: auid, postid: postid, mode: modea }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie },
+    this.postid = option.id;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);} });} });}, methods: { Like: function Like(postid, auid, give) {var _this2 = this;if (give === true) {var modea = 'del';} else {var modea = 'add';}uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+        data: { fuid: auid, postid: postid, mode: modea }, header: { 'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
         success: function success(res) {
           if (res.data.code == "1") {
             if (modea == 'add') {
@@ -504,9 +504,9 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 /***/ }),
 
 /***/ 61:
-/*!*********************************************************************************************!*\
-  !*** D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue?vue&type=style&index=0&lang=css& ***!
-  \*********************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** D:/Web/angeli/app/pages/postinfo/postinfo.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -520,9 +520,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 62:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!./node_modules/css-loader??ref--6-oneOf-1-2!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/开发/UNI-APP/Angeli/安个利/pages/postinfo/postinfo.vue?vue&type=style&index=0&lang=css& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-1!./node_modules/css-loader??ref--6-oneOf-1-2!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/Web/angeli/app/pages/postinfo/postinfo.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -24,7 +24,7 @@ class angeli
     }
 
     /**
-     * @return mysqli
+     * @return 标记已读信息
      */
     public function markNoRead($auid)
     {
@@ -69,7 +69,59 @@ class angeli
             }
         }
     }
+    /**获取我的评论信息
+     * @return array
+     */
+    public function getMyPinglun($auid,$page=1,$count=40)
+    {
+        $pageNum=($page-1)*$count;
+        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid'  ORDER BY addTime DESC LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            $data=[];
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $aa=array(
+                        'userInfo'=>$this->getInfo($row['CommentsFromUid']),
+                        'time'=>$this->uc_time_ago($row['AddTime']),
+                        'type'=>'pinglun',
+                        'mark'=>$row['mark'],
+                        'txt' =>$row['CommentsContent'],
+                        'toId'=>$this->getPostInfo($row['PostId'],$auid)
+                    );
+                    array_push($data,$aa);
+                }
+            }
+        }
+        $sql = "SELECT * FROM angeli_reply WHERE ReplyTo='$auid'  ORDER BY addTime DESC LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
 
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $ab=array(
+                        'userInfo'=>$this->getInfo($row['ReplyUid']),
+                        'time'=>$this->uc_time_ago($row['AddTime']),
+                        'type'=>'huifu',
+                        'mark'=>$row['mark'],
+                        'txt'=>$row['ReplyContent'],
+                        'toId'=>$this->getPostInfo($row['PostId'],$auid),
+                        'huifu'=>$this->huifuTotxt($row['CommentId'])
+                    );
+                    array_push($data,$ab);
+
+                }
+            }
+        }
+
+        return $data;
+    }
 
     /**查询我的未读消息数量
      * @return array
@@ -477,7 +529,7 @@ class angeli
                         'PostId' =>$row["PostId"],
                         'Content' =>$row["CommentsContent"],
                         'FromUid' =>$row["CommentsFromUid"],
-                        'Time' =>$this->uc_time_ago($row["CommentsTime"]),
+                        'Time' =>$this->uc_time_ago($row["AddTime"]),
                         'Give' =>$row["Zan"],
                         'userinfo'=>$this->getInfo($row["CommentsFromUid"]),
                         'replyList'=>$this->getReplyList($row["CommentsId"])
@@ -499,7 +551,7 @@ class angeli
      */
     public function addComment($PostId,$Content,$auid,$AuthorId)
     {
-        $sql = $this->mysqli->prepare("INSERT INTO angeli_comments (PostId,CommentsContent,CommentsFromUid,CommentsTime,AuthorId) VALUES (?,?,?,?,?)");
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_comments (PostId,CommentsContent,CommentsFromUid,AddTime,AuthorId) VALUES (?,?,?,?,?)");
         $time=time();
         $sql->bind_param("isiii",$PostId,$Content,$auid,$time,$AuthorId);
         $sql->execute();
@@ -1284,6 +1336,30 @@ class angeli
         }else{
             if($this->mysqli->affected_rows>0){
                 return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    /*
+         *  根据回复ID查询评论内容
+         *  $postid 文章ID
+         *  @return  array
+         *
+         */
+    public function huifuTotxt($ID){
+        $sql="SELECT * from angeli_comments WHERE CommentsId='$ID'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($row=$this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $auid=$row['CommentsContent'];
+                }
+                return $auid;
             }else{
                 return FALSE;
             }
