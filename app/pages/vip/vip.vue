@@ -133,7 +133,7 @@
 				gaodu:'-710px',
 				yanse:'rgba(0,0,0,0)',
 				userInfo:[],
-				monnumber:0,
+				monnumber:1,
 				money:0
 			}
 		},
@@ -151,13 +151,13 @@
 					console.log('月份：'+this.monnumber,'金额：'+this.money)
 					let sjstr=md5(String(Date.now()));
 					let time=String(Date.now())
-					let signTemp="appId=wxb2418420ae2cf37c&nonceStr="+sjstr+"&package=prepay_id=wxpay&signType=MD5&timeStamp="+time+"&key=xinfenghuliankejiyouxiangongsi12"
+					let signTemp="appId=wxb2418420ae2cf37c&nonceStr="+sjstr+"&package=prepay_id=wx021047283782973608a1c5e11751141900&signType=MD5&timeStamp="+time+"&key=xinfenghuliankejiyouxiangongsi12"
 					let sign=md5(signTemp)
 					uni.requestPayment({
 						provider: 'wxpay',
 						timeStamp: time,
 						nonceStr: sjstr,
-						package: 'prepay_id=wxpay',
+						package: 'prepay_id=wx021047283782973608a1c5e11751141900',
 						signType: 'MD5',
 						paySign: sign,
 						success: function (res) {
