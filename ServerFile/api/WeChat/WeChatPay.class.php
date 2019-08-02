@@ -1,37 +1,38 @@
 <?php
 
-$app=new WeChatPay();
-
-echo json_encode($app->unifiedorder());
-
-
 class WeChatPay
 {
     protected $appid='wxb2418420ae2cf37c';
     protected $mch_id='1526775681';
     protected $key='xinfenghuliankejiyouxiangongsi12';
-    protected $openid='oiIia5QlS30j5K7Zd5X6woZ29ObI';
+    protected $out_trade_no;
+    protected $total_fee;
+    protected $body;
+    protected $openid;
+    //构造函数是啥我也不知道
+    function __construct($openid,$out_trade_no,$body,$total_fee) {
+        $this->openid = $openid;
+        $this->out_trade_no = $out_trade_no;
+        $this->body = $body;
+        $this->total_fee = $total_fee;
+    }
 
-
-
-
-
-
-
-//统一下单接口
+    //统一下单接口
     public function unifiedorder() {
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
         $parameters = array(
             'appid' => $this->appid, //小程序 ID
             'mch_id' => $this->mch_id, //商户号
             'nonce_str' => $this->createNoncestr(), //随机字符串
-            'body' => '安个利会员', //商品描述
-            'out_trade_no' => '2018013106125348', //商户订单号
-            'total_fee' => floatval(0.01 * 100), //总金额 单位 分
+            'body' => $this->body, //商品描述
+            'out_trade_no' => $this->out_trade_no, //商户订单号
+            'total_fee' => floatval($this->total_fee*100), //总金额 单位 分
             'spbill_create_ip' => $_SERVER['REMOTE_ADDR'], //终端 IP
-            'notify_url' => 'https://www.weixin.qq.com/wxpay/notify.php', //通知地址  确保外网能正常访问
+            'notify_url' => 'https://api.angeli.top/WeChat/notify.php', //通知地址  确保外网能正常访问
             'openid' => $this->openid, //用户id
-            'trade_type' => 'JSAPI'//交易类型
+            'trade_type' => 'JSAPI',//交易类型
+            'time_start'=>date("YmdHis",time()),
+            'time_expire'=>date("YmdHis",time()+3600)
         );
         //统一下单签名
         $parameters['sign'] = $this->getSign($parameters);
@@ -40,6 +41,9 @@ class WeChatPay
         return $return;
     }
 
+
+
+    //发送订单请求
     private static function postXmlCurl($xml, $url, $second = 30)
     {
         $ch = curl_init();

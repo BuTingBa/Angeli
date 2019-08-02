@@ -1012,6 +1012,7 @@ class angeli
                         'Email' =>$row["UserEmail"],
                         'Phone' =>$row["Phone"],
                         'Wxid' =>$row["WxUid"],
+                        'wxOpenId'=>$row["wxopenid"],
                         'Gender'=>$row['Gender'],
                         'UserType' =>$this->isVip($row["VIPEndTime"]),
                         'VIPEndTime' =>date("Y-d-m H:i:s",$row["VIPEndTime"]),

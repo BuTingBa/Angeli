@@ -149,24 +149,55 @@
 						this.money=this.monnumber*20-this.monnumber*4
 					}
 					console.log('月份：'+this.monnumber,'金额：'+this.money)
-					let sjstr=md5(String(Date.now()));
-					let time=String(Date.now())
-					let signTemp="appId=wxb2418420ae2cf37c&nonceStr="+sjstr+"&package=prepay_id=wx021047283782973608a1c5e11751141900&signType=MD5&timeStamp="+time+"&key=xinfenghuliankejiyouxiangongsi12"
-					let sign=md5(signTemp)
-					uni.requestPayment({
-						provider: 'wxpay',
-						timeStamp: time,
-						nonceStr: sjstr,
-						package: 'prepay_id=wx021047283782973608a1c5e11751141900',
-						signType: 'MD5',
-						paySign: sign,
-						success: function (res) {
-							console.log('success:' + JSON.stringify(res));
+					uni.showLoading({
+						title: '加载中'
+					});
+					let wxkey=md5('不停'+String(Date.now()));
+					uni.request({
+						method:'POST',
+						url: "https://api.angeli.top/WeChat/pay.php?type=vip", //仅为示例，并非真实接口地址。
+						data: {
+							openid:server.userinfo.wxOpenId,
+							fee:this.money,
+							moon:this.monnumber,
+							key:wxkey
 						},
-						fail: function (err) {
-							console.log('fail:' + JSON.stringify(err));
+						header: {
+							'content-type': 'application/x-www-form-urlencoded',
+							'Cookie':server.cookie
+						},
+						success: (res) => {
+							console.log(res)
+							if(res.data.code=="1"){
+								let sjstr=md5(String(Date.now()));
+								let time=String(Date.now())
+								let signTemp="appId=wxb2418420ae2cf37c&nonceStr="+sjstr+"&package=prepay_id="+res.data.data.prepay_id+"&signType=MD5&timeStamp="+time+"&key=xinfenghuliankejiyouxiangongsi12"
+								let sign=md5(signTemp)
+								uni.requestPayment({
+									provider: 'wxpay',
+									timeStamp: time,
+									nonceStr: sjstr,
+									package: 'prepay_id='+res.data.data.prepay_id,
+									signType: 'MD5',
+									paySign: sign,
+									success: function (res) {
+										console.log('success:' + JSON.stringify(res));
+									},
+									fail: function (err) {
+										console.log('fail:' + JSON.stringify(err));
+									}
+								});
+								
+							}else{
+					
+							}
+							
+						},
+						complete() {
+							uni.hideLoading();
 						}
 					});
+					
 				}else{
 					uni.showToast({
 						title: "必须选择月份",
