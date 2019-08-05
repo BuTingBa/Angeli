@@ -813,6 +813,73 @@ class angeli
     }
 
 
+    /*
+     * 创建订单
+     */
+    public function createOrder($auid,$name,$fee,$number,$wxOpenId,$orderId){
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_pay (auid,wxOpenId,orderId,name,number,payFee,orderTime,payStatus) VALUES (?,?,?,?,?,?,?,?)");
+        $time=time();
+        $status='待支付';
+        $sql->bind_param("isssiiis",$auid,$wxOpenId,$orderId,$name,$number,$fee,$time,$status);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+
+            return TRUE;
+        }
+    }
+
+    /*
+     * 更新订单
+     */
+    public function upOrder($wxOrderId,$endTime,$openId,$orderId){
+        $sql = $this->mysqli->prepare("UPDATE angeli_pay SET wxOrderId=?,timeEnd=?,payStatus=? WHERE wxOpenId=? AND orderId=?");
+        $time=time();
+        $status='已支付';
+        $sql->bind_param("sisss",$wxOrderId,$endTime,$status,$openId,$orderId);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+
+            return TRUE;
+        }
+    }
+    /*
+     * 查询订单
+     */
+    public function getOrder($openId,$order)
+    {
+
+        $sql = "SELECT * FROM angeli_pay WHERE wxOpenId='$openId' AND orderId='$order'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $data = array(
+                        'auid' =>$row["auid"],
+                        'wxOpenId' =>$row["wxOpenId"],
+                        'orderId' =>$row["orderId"],
+                        'name'=>$row['name'],
+                        'number' =>$row["number"],
+                        'payFee'=>$row["payFee"],
+                        'orderTime' =>$row["orderTime"],
+                        'payStatus' =>$row["payStatus"]
+                    );
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
 
     /*
     *   修改手机号
@@ -1142,7 +1209,7 @@ class angeli
     {
         switch ($type) {
             case 'wxid':
-                $sql = $this->mysqli->prepare("UPDATE angeli_user SET Type=?, VIPEndTime=? WHERE WxUid=?");
+                $sql = $this->mysqli->prepare("UPDATE angeli_user SET Type=?, VIPEndTime=? WHERE wxopenid=?");
                 break;
             case 'phone':
                 $sql = $this->mysqli->prepare("UPDATE angeli_user SET Type=?, VIPEndTime=? WHERE Phone=?");
@@ -1154,20 +1221,19 @@ class angeli
                 $sql = $this->mysqli->prepare("UPDATE angeli_user SET Type=?, VIPEndTime=? WHERE AuId=?");
                 break;
             default:
-                $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
-                return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+
+                return false;
                 break;
         }
 
-        $usertype=$this->isVip($endTime);
+        $usertype='VIP';
         $sql->bind_param("sss",$usertype,$endTime,$uid);
         $sql->execute();
         if($sql->affected_rows<1)
         {
-            $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
-            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+            return false;
         }else{
-            return TRUE;
+            return true;
         }
     }
 
@@ -1371,6 +1437,20 @@ class angeli
     *
     *===============================================================================*/
 
+    /*
+     * 生成订单号
+     */
+    function getOrderId(){
+        $time=$this->getMillisecond();
+        return 'LHSD'.$time.mt_rand(1000,9999);;
+    }
+    /*
+     * 取毫秒级时间戳
+     */
+    function getMillisecond() {
+        list($t1, $t2) = explode(' ', microtime());
+        return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+    }
     /* 查询今天是否签到
      * return 已经签到返回真，否则false
      */

@@ -231,7 +231,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));
-var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 258));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 125));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
@@ -266,8 +266,9 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
           data: {
             openid: _server.default.userinfo.wxOpenId,
             fee: this.money,
-            moon: this.monnumber,
-            key: wxkey },
+            number: this.monnumber,
+            key: wxkey,
+            auid: _server.default.userinfo.Auid },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',

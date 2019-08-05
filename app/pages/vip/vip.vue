@@ -159,8 +159,9 @@
 						data: {
 							openid:server.userinfo.wxOpenId,
 							fee:this.money,
-							moon:this.monnumber,
-							key:wxkey
+							number:this.monnumber,
+							key:wxkey,
+							auid:server.userinfo.Auid
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
