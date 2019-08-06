@@ -457,6 +457,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 _this2.getPostData('new', 0);
               }
               console.log("———————————用户信息——————————");
+              console.log(_server.default.userinfo);
             },
             fail: function fail(src) {
               uni.showToast({

@@ -350,6 +350,7 @@
 									this.getPostData('new',0);
 								}
 								console.log("———————————用户信息——————————");
+								console.log(server.userinfo)
 							},
 							fail:(src) =>{
 								uni.showToast({

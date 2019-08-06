@@ -4,15 +4,15 @@
 			<block slot="backText">返回</block>
 			<block slot="content">会员中心</block>
 		</cu-custom>
-		<view style="text-align: center;width: 100%;margin-top: 37upx;"><view class="touxiang"></view></view>
+		<view style="text-align: center;width: 100%;margin-top: 37upx;"><view class="touxiang" :style="{'background-image':'url('+userInfo.AvatarUrl+')'}"></view></view>
 		<view class="vipCardBox">
 			<view class="vipCard">
 				<view class="vipCardName">
 					{{userInfo.UserName?userInfo.UserName:'未知用户'}}
 				</view>
-				<view class="vipCardTitle">开通安个利VIP,畅享高级功能</view>
+				<view class="vipCardTitle">{{endVipTime}}</view>
 			</view>
-			<view style="padding: 72upx 0upx;" @tap="showKaitong"><button class="Angeli">立即开通</button></view>
+			<view style="padding: 72upx 0upx;" @tap="showKaitong"><button class="Angeli" :disabled="ann">立即开通</button></view>
 		</view>
 		<view class="fenge">会员特权</view>
 		<view class="tequanList">
@@ -134,11 +134,18 @@
 				yanse:'rgba(0,0,0,0)',
 				userInfo:[],
 				monnumber:1,
-				money:0
+				money:0,
+				endVipTime:'开通安个利VIP,畅享高级功能',
+				ann:false
 			}
 		},
 		onLoad:function(){
 			this.userInfo=server.userinfo
+			if(this.userInfo.VIPEndTime>0){
+				this.endVipTime="你已成为安个利VIP，还有"+parseInt(this.userInfo.VIPEndTime)+"天到期";
+				this.ann=true
+			}
+			console.log(this.userInfo)
 		},
 		methods: {
 			getVip:function(){
@@ -169,6 +176,7 @@
 						},
 						success: (res) => {
 							console.log(res)
+							let dd=res.data.orderId;
 							if(res.data.code=="1"){
 								let sjstr=md5(String(Date.now()));
 								let time=String(Date.now())
@@ -181,11 +189,66 @@
 									package: 'prepay_id='+res.data.data.prepay_id,
 									signType: 'MD5',
 									paySign: sign,
-									success: function (res) {
-										console.log('success:' + JSON.stringify(res));
+									success: (res) => {
+										uni.showLoading({
+											title: '正在查询中...'
+										});
+										uni.request({
+											method:'GET',
+											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
+											data:{
+												auid:server.userinfo.Auid,
+												orderId:dd
+											},
+											header: {
+												'content-type': 'application/x-www-form-urlencoded',
+												'Cookie':server.cookie
+											},
+											success: (res) => {
+												if(res.data.code==1){
+													if(res.data.data.payStatus=='已支付'){
+														let endtime=res.data.data.userInfo.VIPEndTime;
+														this.endVipTime="你已成为安个利VIP，还有"+parseInt(endtime)+"天到期";
+														console.log('已支付',this.endVipTime)
+														this.showVip=false;
+														this.ann=true
+														
+														uni.showToast({
+															title: "已开通VIP",
+															position:'bottom',
+															icon:'none',
+															position:'center'
+														})
+														uni.navigateBack()
+													}else{
+														uni.showToast({
+															title: "支付失败！请联系客服",
+															position:'bottom',
+															icon:'none',
+															position:'center'
+														})
+													}
+												}else{
+													uni.showToast({
+														title: "支付失败！请联系客服",
+														position:'bottom',
+														icon:'none',
+														position:'center'
+													})
+												}
+											},
+											complete: () => {
+												uni.hideLoading();
+											}
+										});
 									},
 									fail: function (err) {
-										console.log('fail:' + JSON.stringify(err));
+										uni.showToast({
+											title: "支付失败！请联系客服",
+											position:'bottom',
+											icon:'none',
+											position:'center'
+										})
 									}
 								});
 								

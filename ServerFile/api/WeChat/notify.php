@@ -33,30 +33,26 @@ if($status=="SUCCESS"){
     $yOrder=$app->getOrder($open_id,$out_trade_no);
     if(!$yOrder){
 
-        testLog("查询订单时失败！");
+        testLog("查询本地订单失败！".$wxTeadeNo);
         exit;
     }
     testLog(json_encode($attr,JSON_UNESCAPED_UNICODE));
     if($yOrder['payFee']!==$total_fee){
-        testLog("订单金额和支付金额不一致！");
+        testLog("【商家订单号】".$yOrder['orderId']."订单金额和支付金额不一致！".$wxTeadeNo);
         exit;
     }
     $paysta=$app->upOrder($wxTeadeNo,$time,$open_id,$out_trade_no);
     if(!$paysta){
-        testLog("更新订单时 失败！");
+        testLog("【商家订单号】".$yOrder['orderId']."更新订单失败！！".$wxTeadeNo);
         exit;
     }
     if($yOrder['name']==1){
-        $s=60*60*24*$yOrder['number']*30;
-        $endtime=time()+$s;
+        $yue=$yOrder['number'];
+        $endtime=strtotime("+$yue months");
         $app->setVIP('auid',$yOrder['auid'],$endtime);
     }else{
 
     }
-
-
-
-
 }else{
     testLog("支付失败！");
 }

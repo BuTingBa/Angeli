@@ -882,6 +882,39 @@ class angeli
     }
 
     /*
+     * 查询订单和是否是VIP，用于VIP充值成功后查询
+     */
+    public function getOrderAndVip($orderId,$uid)
+    {
+
+        $sql = "SELECT * FROM angeli_pay WHERE orderId='$orderId' AND auid='$uid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $order = array(
+                        'auid' =>$row["auid"],
+                        'wxOpenId' =>$row["wxOpenId"],
+                        'orderId' =>$row["orderId"],
+                        'name'=>$row['name'],
+                        'number' =>$row["number"],
+                        'payFee'=>$row["payFee"],
+                        'orderTime' =>$row["orderTime"],
+                        'payStatus' =>$row["payStatus"],
+                        'userInfo'=>$this->getUserInfo('auid',$uid)
+                    );
+                }
+                return $order;
+            }else{
+                return false;
+            }
+        }
+
+    }
+
+    /*
     *   修改手机号
     *   参数：用户uid类型，uid，新手机号
     */
@@ -1082,7 +1115,7 @@ class angeli
                         'wxOpenId'=>$row["wxopenid"],
                         'Gender'=>$row['Gender'],
                         'UserType' =>$this->isVip($row["VIPEndTime"]),
-                        'VIPEndTime' =>date("Y-d-m H:i:s",$row["VIPEndTime"]),
+                        'VIPEndTime' =>$this->getOverDay($row["VIPEndTime"]),
                         'Status' =>$row["Status"],
                         'BanDeadline' =>$row["BanDeadline"],
                         'DateCreated' =>$row["DateCreated"],
@@ -1438,11 +1471,22 @@ class angeli
     *===============================================================================*/
 
     /*
+     * 计算时间差
+     */
+    function getOverDay($vipTime){
+        $dtime=time();
+        $time=$vipTime-$dtime;
+        return $time/86400;
+
+    }
+
+
+    /*
      * 生成订单号
      */
     function getOrderId(){
         $time=$this->getMillisecond();
-        return 'LHSD'.$time.mt_rand(1000,9999);;
+        return 'LHSD'.$time.mt_rand(1000,9999);
     }
     /*
      * 取毫秒级时间戳
@@ -1613,7 +1657,8 @@ class angeli
                     $outmsg = array(
                         'AuthorName' =>$row['UserName'],
                         'AuthorAvatarUrl'=>$row['AvatarUrl'],
-                        'Auid'=>$row['AuId']
+                        'Auid'=>$row['AuId'],
+                        'VIPEndTime' =>$this->getOverDay($row["VIPEndTime"])
                     );
                 }
                 return $outmsg;

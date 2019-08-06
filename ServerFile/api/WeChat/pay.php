@@ -40,14 +40,14 @@ if($order){
     $pay=new WeChatPay($_POST['openid'],$dd,$body,$fee);
     $data=$pay->unifiedorder();
     if($data['return_code']=='SUCCESS'){
-        $outmsg = array('code' =>'1','msg'=>'订单成功！','data'=>$data);
+        $outmsg = array('code' =>'1','msg'=>'订单成功！','data'=>$data,'orderId'=>$dd);
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
     }else{
-        $outmsg = array('code' =>'1','msg'=>'订单失败！','data'=>$data);
+        $outmsg = array('code' =>'0','msg'=>'订单失败！','data'=>$data);
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
     }
 }else{
-    $outmsg = array('code' =>'1','msg'=>'创建订单失败！','data'=>$data);
+    $outmsg = array('code' =>'0','msg'=>'创建订单失败！','data'=>$data);
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 
