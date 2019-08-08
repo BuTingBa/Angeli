@@ -30,8 +30,8 @@
 			<block v-if="TabCur==0">
 				<view class="postList" v-for="(list,index) in postList" :key="index">
 					<view class="user">
-						<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}" @click="getbieren(list.AuthorId)"></view>
-						<view class="userName">{{list.AuthorInfo.AuthorName}}</view>
+						<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}" @click="getbieren(list.AuthorId)"><view class="vipLogo" v-if="list.AuthorInfo.VIPEndTime>0"></view></view>
+						<view :class="list.AuthorInfo.VIPEndTime>0?'vipUserName':'userName'">{{list.AuthorInfo.AuthorName}}</view>
 						<view class="postDate">{{list.PsotDate}}</view>
 					</view>
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
@@ -52,8 +52,8 @@
 			<block v-if="TabCur==1">
 				<view class="postList" v-for="(list,index) in postList" :key="index">
 					<view class="user">
-						<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.AuthorId)"></view>
-						<view class="userName">{{list.AuthorInfo.AuthorName}}</view>
+						<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.AuthorId)"><view class="vipLogo" v-if="list.AuthorInfo.VIPEndTime>0"></view></view>
+						<view :class="list.AuthorInfo.VIPEndTime>0?'vipUserName':'userName'">{{list.AuthorInfo.AuthorName}}</view>
 						<view class="postDate">{{list.PsotDate}}</view>
 					</view>
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
@@ -76,8 +76,8 @@
 				<template  v-if="weikong==false">
 				<view class="postList" v-for="(list,index) in postList" :key="index">
 					<view class="user">
-						<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.AuthorId)"></view>
-						<view class="userName">{{list.AuthorInfo.AuthorName}}</view>
+						<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.AuthorId)"><view class="vipLogo" v-if="list.AuthorInfo.VIPEndTime>0"></view></view>
+						<view :class="list.AuthorInfo.VIPEndTime>0?'vipUserName':'userName'">{{list.AuthorInfo.AuthorName}}</view>
 						<view class="postDate">{{list.PsotDate}}</view>
 					</view>
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
@@ -120,9 +120,9 @@
 		<view class="DrawerWindow " :class="modalName=='viewModal'?'show':''">
 			<view class='Luserinfo' >
 				<view class="infoo" @tap="reguser">
-					<view class="lstouxiang" style="background-image: url(http://img1.doubanio.com/view/group_topic/raw/public/p158668038.jpg);" :style="{'background-image':'url('+AvatarUrl+')'}"></view>
+					<view class="lstouxiang" style="background-image: url(http://img1.doubanio.com/view/group_topic/raw/public/p158668038.jpg);" :style="{'background-image':'url('+AvatarUrl+')'}"><view class="vipLogo listvip" v-if="userInfo.VIPEndTime>0"></view></view>
 					<view class="xinxi">
-						<text style="font-size: 40upx;padding-bottom: 10upx;" >{{username}}</text>
+						<text class="listnamea">{{username}}</text>
 						<text>\nID:{{userid}}</text>
 						<text>\n等级：{{dengji}}</text>
 					</view>
@@ -143,13 +143,13 @@
 						<view class="menuItem" @tap="getMessage">
 							<view class="menuIcon aicon-Msg" ></view>
 							<view class="menuTiele">消息通知</view>
-							<view class="menuRight">+{{msgNumber<1?'':msgNumber}}</view>
+							<view class="menuRight">{{msgNumber<1?'':'+'+msgNumber}}</view>
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="getFriend">
 							<view class="menuIcon aicon-friend" ></view>
 							<view class="menuTiele">我的好友</view>
-							<view class="menuRight">+1</view>
+							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="getShoucang">
@@ -160,16 +160,16 @@
 					</view>
 					<view class="solidMax"></view>
 					<view class="menuListBox">
-						<view class="menuItem">
+						<view class="menuItem" @tap="wallet">
 							<view class="menuIcon aicon-qianbao"></view>
 							<view class="menuTiele">我的钱包</view>
-							<view class="menuRight">+2</view>
+							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @click="getVip">
 							<view class="menuIcon aicon-vip"></view>
 							<view class="menuTiele">会员中心</view>
-							<view class="menuRight">+1</view>
+							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @click="getJifen">
@@ -245,7 +245,8 @@
 				userid:"0",
 				fensi:"0",
 				dengji:"0",
-				index:false
+				index:false,
+				userInfo:[]
 			}
 		},
 		onShow:function(){
@@ -274,9 +275,10 @@
 			});
 		},
 		onLoad:function(e){
+			
 			console.log(e)
 			if(e.id==1){
-				console.log(e)
+				
 				this.index=true;
 			}
 			if(e.type=='plusPost'){
@@ -334,6 +336,7 @@
 									this.fensi=res.data.data.FollowerCount;
 									this.dengji=res.data.data.Rank;
 									this.userid=res.data.data.Auid;
+									this.userInfo=res.data.data;
 									server.userinfo=res.data.data;
 									server.cookie=res.header['Set-Cookie'];
 									if(res.data.code=="2"){
@@ -401,6 +404,11 @@
 			getMessage:function(){
 				uni.navigateTo({
 					url: '../menu/Message'
+				})
+			},
+			wallet:function(){
+				uni.navigateTo({
+					url: '../menu/wallet'
 				})
 			},
 			set:function(){
@@ -759,11 +767,16 @@
 		margin-left: 30upx;
 		line-height:40upx;
 	}
+	.listvip{
+		width: 35upx;
+		height: 35upx;
+	}
 	.lstouxiang{
 		width: 132upx;
 		height: 132upx;
 		background-size:100% 100%;
 		border-radius:50%;
+		position: relative;
 	}
 	.plus{
 		position: fixed;
@@ -787,6 +800,10 @@
 		margin-top: 30upx;
 		margin-bottom: 10upx;
 		height: 332upx; */
+	}
+	.listnamea{
+		font-size: 40upx;
+		padding-bottom: 10upx;
 	}
 	.daohangBox{
 		width: 100%;
@@ -847,7 +864,9 @@
 		height: 90upx;
 		width: 90upx;
 		background-image: url("https://pic.qqtn.com/up/2017-11/15114902797453337.gif");
+		position: relative;
 	}
+	
 	.Luserinfo{
 		top: 0upx;
 		height: 300upx;

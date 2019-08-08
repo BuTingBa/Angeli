@@ -23,7 +23,8 @@
     "pages/menu/mpl",
     "pages/menu/zan",
     "pages/menu/newFans",
-    "pages/i/bieren"
+    "pages/i/bieren",
+    "pages/menu/wallet"
   ],
   "subPackages": [],
   "window": {
@@ -37,6 +38,5 @@
   "usingComponents": {
     "cu-custom": "/components/colorui/components/cu-custom",
     "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

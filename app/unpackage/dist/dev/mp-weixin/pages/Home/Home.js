@@ -352,7 +352,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       userid: "0",
       fensi: "0",
       dengji: "0",
-      index: false };
+      index: false,
+      userInfo: [] };
 
   },
   onShow: function onShow() {var _this = this;
@@ -381,9 +382,10 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   onLoad: function onLoad(e) {var _this2 = this;
+
     console.log(e);
     if (e.id == 1) {
-      console.log(e);
+
       this.index = true;
     }
     if (e.type == 'plusPost') {
@@ -441,6 +443,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 _this2.fensi = res.data.data.FollowerCount;
                 _this2.dengji = res.data.data.Rank;
                 _this2.userid = res.data.data.Auid;
+                _this2.userInfo = res.data.data;
                 _server.default.userinfo = res.data.data;
                 _server.default.cookie = res.header['Set-Cookie'];
                 if (res.data.code == "2") {
@@ -508,6 +511,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     getMessage: function getMessage() {
       uni.navigateTo({
         url: '../menu/Message' });
+
+    },
+    wallet: function wallet() {
+      uni.navigateTo({
+        url: '../menu/wallet' });
 
     },
     set: function set() {

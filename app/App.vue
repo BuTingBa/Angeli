@@ -39,7 +39,6 @@
 	.menuList-2c{
 		display: flex;
 		justify-content:space-between;
-		
 	}
 	.jiantou{
 		width: 20upx;
@@ -130,6 +129,20 @@
 	.userName{
 		font-weight: 600;
 		font-size: 28upx;
+	}
+	.vipUserName{
+		font-weight: 600;
+		font-size: 28upx;
+		color: #F8C259;
+	}
+	.vipLogo{
+		position: absolute;
+		width: 30upx;
+		height: 30upx;
+		background-image: url('static/VIPLogo2.png');
+		background-size: 100% 100%;
+		right: -5upx;
+		bottom: 0upx;
 	}
 	.postDate{
 		opacity: 0.4;

@@ -4,74 +4,52 @@
 			<block slot="backText">返回</block>
 			<block slot="content">会员中心</block>
 		</cu-custom>
-		<view style="text-align: center;width: 100%;margin-top: 37upx;"><view class="touxiang" :style="{'background-image':'url('+userInfo.AvatarUrl+')'}"></view></view>
+	
 		<view class="vipCardBox">
 			<view class="vipCard">
 				<view class="vipCardName">
-					{{userInfo.UserName?userInfo.UserName:'未知用户'}}
+					累计收益 (安个利币)
 				</view>
 				<view class="vipCardTitle">{{endVipTime}}</view>
 			</view>
-			<view style="padding: 72upx 0upx;" @tap="showKaitong"><button class="Angeli" :disabled="ann">立即开通</button></view>
+			<view style="padding: 0 38upx;padding-top: 40upx;padding-bottom: 16upx;" @tap="showKaitong"><button class="Angeli" :disabled="ann">充值</button></view>
 		</view>
-		<view class="fenge">会员特权</view>
+		<view class="fenge">
+			<view class="feniteam">提现方式</view>
+			<view class="feniteamX">账单记录</view>
+			</view>
 		<view class="tequanList">
 			<image src="../../static/vipname.png" mode="" class="tu"></image>
 			<view><text style="font-size:  28upx;color: #000000;font-weight: 500;">会员昵称\n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员拥有尊贵VIP标识，红色昵称</text></view>
 		</view>
 		<view class="menusolid"></view>
-		
 		<view class="tequanList">
 			<image src="../../static/sbjifen.png" mode="" class="tu"></image>
 			<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">双倍积分 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员签到积分双倍计算</text></view>
 		</view>
-		<view class="menusolid"></view>
-		
-		<view class="tequanList">
-			<image src="../../static/fatiejianban.png" mode="" class="tu"></image>
-			<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">发帖减半 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员发布帖子所需积分减半</text></view>
-		</view>
-		<view class="menusolid"></view>
-		
-		<view class="tequanList">
-			<image src="../../static/hiad.png" mode="" class="tu"></image>
-			<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">广告隐藏 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员具有开关广告权限</text></view>
-		</view>
-		<view class="menusolid"></view>
-		<view class="tequanList">
-			<image src="../../static/editid.png" mode="" class="tu"></image>
-			<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">修改昵称 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员拥有每月一次昵称修改机会</text></view>
-		</view>
-		<view class="menusolid"></view>
-		<view class="tequanList">
-			<image src="../../static/gengduo.png" mode="" class="tu"></image>
-			<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">后续特权 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员后期享有积分商城折扣</text></view>
-		</view>
-		
-		
 		
 		<view :class="showVip?'mask':''" :style="{background:yanse}" @click="hideVip"></view>
 		<view class="pay" :style="{ bottom:gaodu}">
-			<text class="titlea">充值会员</text>
+			<text class="titlea">充值安个利币</text>
 			<view class="vipBox">
 				<view :class="xzId==1?'vipItemXZ':'vipItem'" @click="xuanze(1)">
-					<view class="vipTitle">一个月</view>
-					<text class="paynumber">￥1</text>
+					<view class="vipTitle">100安个利币</view>
+					<text class="paynumber">￥10</text>
 				</view>
 				<view :class="xzId==2?'vipItemXZ':'vipItem'" @click="xuanze(2)">
-					<view class="vipTitle">三个月</view>
-					<text class="paynumber">￥48</text>
+					<view class="vipTitle">500安个利币</view>
+					<text class="paynumber">￥50</text>
 				</view>
 				<view :class="xzId==3?'vipItemXZ':'vipItem'" @click="xuanze(3)">
-					<view class="vipTitle">一整年</view>
-					<text class="paynumber">￥192</text>
+					<view class="vipTitle">1000安个利币</view>
+					<text class="paynumber">￥100</text>
 				</view>
 				<view :class="xzId==4?'vipItemXZ':'vipItem'" @click="xuanze(4)">
 					<view class="vipTitle">自定义</view>
-					<input type="text" value="" placeholder="输入月数" @input="inputVip"/>
+					<input type="text" value="" placeholder="输入人民币" @input="inputVip"/>
 				</view>
 			</view>
-			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" @tap="getVip">立即支付</button>
+			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" >立即支付</button>
 			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;">购买即视为同意《安个利会员用户协议》</text></view>
 		</view> 
 		
@@ -135,7 +113,7 @@
 				userInfo:[],
 				monnumber:1,
 				money:0,
-				endVipTime:'开通安个利VIP,畅享高级功能',
+				endVipTime:'1,234.32',
 				ann:false
 			}
 		},
@@ -336,11 +314,7 @@
 	z-index: 999;
 }
 .vipCardBox{
-	height: 556upx;
-	padding-top: 79upx;
-	padding-bottom: 44upx;
-	padding-left: 38upx;
-	padding-right: 38upx;
+	
 	text-align: center;
 }
 .tu{
@@ -357,13 +331,29 @@
 	align-items:center;
 }
 .fenge{
-	height: 77upx;
-	padding-left: 38upx;
-	font-size: 32upx;
+	height: 94upx;
+	padding:0 70upx;
 	font-weight:500;
-	background-color: #F7F8FA;
+	background-color: #fff;
 	line-height: 77upx;
-	
+	display: flex;
+	justify-content:space-around;
+	align-items:center;
+}
+.feniteam{
+	height: 94upx;
+	font-size: 28upx;
+	font-weight: 400upx;
+	line-height: 94upx;
+	opacity:0.9;
+}
+.feniteamX{
+	height: 94upx;
+	font-size: 28upx;
+	font-weight: 500upx;
+	line-height: 94upx;
+	opacity:1;
+	border-bottom: 3upx solid #79C498;
 }
 .touxiang{
 	width: 128upx;
@@ -377,24 +367,23 @@
 }
 .vipCardTitle{
 	padding-top: 42upx;
+	font-size: 72upx;
+	font-weight: 400;
+	color: #FFFFFF;
+}
+.vipCardName{
+	
+	padding-top: 81upx;
 	font-size: 28upx;
 	color:rgba(121,196,152,1);
 }
-.vipCardName{
-	font-size: 32upx;
-	font-weight: 400;
-	color: #FFFFFF;
-	padding-top: 81upx;
-}
 .vipCard{
-	height: 298upx;
-	width: 674upx;
+	height: 336upx;
+
 	background-color: #fff;
-	background-image: url('~@/static/VIPcard.png');
+	background-image: url('https://sz.oss.data.angeli.top/system/walletbg.png');
 	background-size: 100% 100%;
-	
-	box-shadow:0px 3px 6px rgba(0,0,0,0.3);
-	border-radius:16px;
+
 	text-align: center;
 }
 	
