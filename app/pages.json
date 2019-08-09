@@ -107,7 +107,11 @@
         ,{
             "path" : "pages/menu/wallet",
             "style" : {}
-        }
+        },
+		{
+			"path" : "pages/menu/tixian",
+			"style" : {}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -142,7 +146,7 @@
 			},
 			{
 				"name": "olun", //模式名称
-				"path": "pages/menu/mpl", //启动页面，必选
+				"path": "pages/menu/tixian", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{

@@ -181,33 +181,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));
 var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 125));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
@@ -221,33 +194,39 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       monnumber: 1,
       money: 0,
       endVipTime: '1,234.32',
-      ann: false };
+      ann: false,
+      xz: 1,
+      angelibi: "自定义" };
 
   },
   onLoad: function onLoad() {
     this.userInfo = _server.default.userinfo;
-    if (this.userInfo.VIPEndTime > 0) {
-      this.endVipTime = "你已成为安个利VIP，还有" + parseInt(this.userInfo.VIPEndTime) + "天到期";
-      this.ann = true;
-    }
-    console.log(this.userInfo);
   },
   methods: {
+    get: function get(e) {
+      if (e == 1) {
+        //微信
+        uni.navigateTo({
+          url: 'tixian?type=wx' });
+
+      } else {
+        //支付宝
+        uni.navigateTo({
+          url: 'tixian?type=alipay' });
+
+      }
+    },
     getVip: function getVip() {var _this = this;
-      if (this.monnumber >= 1) {
-        if (this.monnumber == 1) {
-          this.money = 1;
-        } else {
-          this.money = this.monnumber * 20 - this.monnumber * 4;
-        }
-        console.log('月份：' + this.monnumber, '金额：' + this.money);
+      if (this.monnumber >= 10) {
+        this.money = this.monnumber / 10;
+        console.log('安个利币：' + this.monnumber, '金额：' + this.money);
         uni.showLoading({
           title: '加载中' });
 
         var wxkey = (0, _md.default)('不停' + String(Date.now()));
         uni.request({
           method: 'POST',
-          url: "https://api.angeli.top/WeChat/pay.php?type=vip", //仅为示例，并非真实接口地址。
+          url: "https://api.angeli.top/WeChat/pay.php", //仅为示例，并非真实接口地址。
           data: {
             openid: _server.default.userinfo.wxOpenId,
             fee: this.money,
@@ -349,7 +328,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
       } else {
         uni.showToast(_defineProperty({
-          title: "必须选择月份",
+          title: "必须选择充值数量",
           position: 'bottom',
           icon: 'none' }, "position",
         'center'));
@@ -361,25 +340,31 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       this.gaodu = '0px';
       this.yanse = 'rgba(0,0,0,0.4)';
     },
+    setxz: function setxz(e) {
+      this.xz = e;
+    },
     inputVip: function inputVip(e) {
       this.monnumber = e.target.value;
+      this.angelibi = e.target.value * 10 + "安个利币";
+      if (e.target.value == "" || e.target.value == null) {
+        this.angelibi = "自定义";
+      }
     },
     hideVip: function hideVip() {
       this.showVip = false;
       this.gaodu = '-710px';
       this.yanse = 'rgba(0,0,0,0)';
-
     },
     xuanze: function xuanze(e) {
       switch (e) {
         case 1:
-          this.monnumber = 1;
+          this.monnumber = 100;
           break;
         case 2:
-          this.monnumber = 3;
+          this.monnumber = 500;
           break;
         case 3:
-          this.monnumber = 12;
+          this.monnumber = 1000;
           break;
         case 4:
           break;

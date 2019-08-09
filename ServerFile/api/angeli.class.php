@@ -964,32 +964,31 @@ class angeli
         switch ($type) {
             case 'wxid':
                 $sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE WxUid=?");
-                break;ODE);
+                break;
+            case 'phone':
+                $sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE Phone=?");
+                break;
+            case 'username':
+                $sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE UserName=?");
+                break;
+            case 'auid':
+                $sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE AuId=?");
+                break;
+            default:
+                $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
+                return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+                break;
+        }
+        $sql->bind_param("s",$uid);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
             return TRUE;
         }
     }
-case 'phone':
-$sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE Phone=?");
-break;
-case 'username':
-$sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE UserName=?");
-break;
-case 'auid':
-$sql = $this->mysqli->prepare("DELETE FROM angeli_user WHERE AuId=?");
-break;
-default:
-$outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
-return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
-break;
-}
-$sql->bind_param("s",$uid);
-$sql->execute();
-if($sql->affected_rows<1)
-{
-    $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
-    return json_encode($outmsg,JSON_UNESCAPED_UNIC
-
     /*
     *   设置/解除封禁用户，默认为封禁
     *   参数：用户uid类型，uid，封禁状态1正常使用，2禁止登录封禁；禁封结束时间；封禁原因

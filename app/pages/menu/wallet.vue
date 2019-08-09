@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">会员中心</block>
+			<block slot="content">我的钱包</block>
 		</cu-custom>
 	
 		<view class="vipCardBox">
@@ -15,17 +15,33 @@
 			<view style="padding: 0 38upx;padding-top: 40upx;padding-bottom: 16upx;" @tap="showKaitong"><button class="Angeli" :disabled="ann">充值</button></view>
 		</view>
 		<view class="fenge">
-			<view class="feniteam">提现方式</view>
-			<view class="feniteamX">账单记录</view>
-			</view>
-		<view class="tequanList">
-			<image src="../../static/vipname.png" mode="" class="tu"></image>
-			<view><text style="font-size:  28upx;color: #000000;font-weight: 500;">会员昵称\n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员拥有尊贵VIP标识，红色昵称</text></view>
+			<view :class="xz==1?'feniteamX':'feniteam'" @click="setxz(1)">提现方式</view>
+			<view :class="xz==2?'feniteamX':'feniteam'" @click="setxz(2)">账单记录</view>
 		</view>
-		<view class="menusolid"></view>
-		<view class="tequanList">
-			<image src="../../static/sbjifen.png" mode="" class="tu"></image>
-			<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">双倍积分 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员签到积分双倍计算</text></view>
+		
+		<view v-if="xz==1">
+			<view class="tequanList" @click="get(1)">
+				<image src="../../static/WeChatpayicon.png" mode="" class="tu"></image>
+				<view><text style="font-size:  28upx;color: #000000;font-weight: 500;">提现到微信\n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">活动繁忙期间到账可以会延迟</text></view>
+			</view>
+			<view class="menusolid"></view>
+			<view class="tequanList" @click="get(2)">
+				<image src="../../static/alipayicon.png" mode="" class="tu"></image>
+				<view><text style="font-size: 28upx;color: #000000;font-weight: 500;">提现到支付宝 \n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">活动繁忙期间到账可以会延迟</text></view>
+			</view>
+		</view>
+		<view v-if="xz==2">
+			<view class="flexList">
+				<view>
+					<text style="font-size: 28upx;">提现\n</text>
+					<text style="font-size: 24upx;color:rgba(153,153,153,1);opacity:1;">2019年8月9日18:15:25</text>
+				</view>
+				<view>
+					<text style="font-size: 28upx;color:rgba(121,196,152,1);">-200\n</text>
+					<text style="font-size: 24upx;">成功</text>
+				</view>
+			</view>
+			
 		</view>
 		
 		<view :class="showVip?'mask':''" :style="{background:yanse}" @click="hideVip"></view>
@@ -45,58 +61,15 @@
 					<text class="paynumber">￥100</text>
 				</view>
 				<view :class="xzId==4?'vipItemXZ':'vipItem'" @click="xuanze(4)">
-					<view class="vipTitle">自定义</view>
+					<view class="vipTitle">{{angelibi}}</view>
 					<input type="text" value="" placeholder="输入人民币" @input="inputVip"/>
 				</view>
 			</view>
-			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" >立即支付</button>
-			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;">购买即视为同意《安个利会员用户协议》</text></view>
+			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" @click="getVip">立即支付</button>
+			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;">购买即视为同意《安个利用户充值协议》</text></view>
 		</view> 
 		
 		
-		<!-- 以前的版本会员中心<view class="vipNote">
-			<text class="title">四大权益</text>
-			<view class="tequan">
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-			</view>
-		</view>
-		<view class="line"></view>
-		<view class="pay">
-			<text class="titlea">充值会员</text>
-			<view class="vipBox">
-				<view :class="xzId==1?'vipItemXZ':'vipItem'" @click="xuanze(1)">
-					<view class="vipTitle">一个月</view>
-					<text class="paynumber">￥1</text>
-				</view>
-				<view :class="xzId==2?'vipItemXZ':'vipItem'" @click="xuanze(2)">
-					<view class="vipTitle">三个月</view>
-					<text class="paynumber">￥29</text>
-				</view>
-				<view :class="xzId==3?'vipItemXZ':'vipItem'" @click="xuanze(3)">
-					<view class="vipTitle">一整年</view>
-					<text class="paynumber">￥58</text>
-				</view>
-				<view :class="xzId==4?'vipItemXZ':'vipItem'" @click="xuanze(4)">
-					<view class="vipTitle">自定义</view>
-					<text class="paynumber">￥1</text>
-				</view>
-			</view>
-		</view> -->
 	</view>
 </template>
 
@@ -114,33 +87,39 @@
 				monnumber:1,
 				money:0,
 				endVipTime:'1,234.32',
-				ann:false
+				ann:false,
+				xz:1,
+				angelibi:"自定义"
 			}
 		},
 		onLoad:function(){
 			this.userInfo=server.userinfo
-			if(this.userInfo.VIPEndTime>0){
-				this.endVipTime="你已成为安个利VIP，还有"+parseInt(this.userInfo.VIPEndTime)+"天到期";
-				this.ann=true
-			}
-			console.log(this.userInfo)
 		},
 		methods: {
+			get:function(e){
+				if(e==1){
+					//微信
+					uni.navigateTo({
+						url: 'tixian?type=wx'
+					});
+				}else{
+					//支付宝
+					uni.navigateTo({
+						url: 'tixian?type=alipay'
+					});
+				}
+			},
 			getVip:function(){
-				if(this.monnumber>=1){
-					if(this.monnumber==1){
-						this.money=1
-					}else{
-						this.money=this.monnumber*20-this.monnumber*4
-					}
-					console.log('月份：'+this.monnumber,'金额：'+this.money)
+				if(this.monnumber>=10){
+					this.money=this.monnumber/10
+					console.log('安个利币：'+this.monnumber,'金额：'+this.money)
 					uni.showLoading({
 						title: '加载中'
 					});
 					let wxkey=md5('不停'+String(Date.now()));
 					uni.request({
 						method:'POST',
-						url: "https://api.angeli.top/WeChat/pay.php?type=vip", //仅为示例，并非真实接口地址。
+						url: "https://api.angeli.top/WeChat/pay.php", //仅为示例，并非真实接口地址。
 						data: {
 							openid:server.userinfo.wxOpenId,
 							fee:this.money,
@@ -242,7 +221,7 @@
 					
 				}else{
 					uni.showToast({
-						title: "必须选择月份",
+						title: "必须选择充值数量",
 						position:'bottom',
 						icon:'none',
 						position:'center'
@@ -254,25 +233,31 @@
 				this.gaodu='0px'
 				this.yanse='rgba(0,0,0,0.4)'
 			},
+			setxz:function(e){
+				this.xz=e
+			},
 			inputVip:function(e){
 				this.monnumber=e.target.value
+				this.angelibi=e.target.value*10+"安个利币"
+				if(e.target.value==""||e.target.value==null){
+					this.angelibi="自定义"
+				}
 			},
 			hideVip:function(){
 				this.showVip=false
 				this.gaodu='-710px';
 				this.yanse='rgba(0,0,0,0)'
-				
 			},
 			xuanze:function(e){
 				switch (e){
 					case 1:
-						this.monnumber=1
+						this.monnumber=100
 						break;
 					case 2:
-						this.monnumber=3
+						this.monnumber=500
 						break;
 					case 3:
-						this.monnumber=12
+						this.monnumber=1000
 						break;
 					case 4:
 						break;
@@ -318,8 +303,8 @@
 	text-align: center;
 }
 .tu{
-	width: 100upx;
-	height: 100upx;
+	width: 56upx;
+	height: 56upx;
 	margin-right: 14upx;
 	
 }
@@ -370,6 +355,15 @@
 	font-size: 72upx;
 	font-weight: 400;
 	color: #FFFFFF;
+}
+.flexList{
+	display: flex;
+	justify-content:space-between;
+	align-items: center;
+	padding: 24upx 38upx;
+}
+.flexList{
+	line-height: 44upx;
 }
 .vipCardName{
 	

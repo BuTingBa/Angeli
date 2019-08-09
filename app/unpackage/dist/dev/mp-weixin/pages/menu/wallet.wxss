@@ -32,8 +32,8 @@
 	text-align: center;
 }
 .tu{
-	width: 100rpx;
-	height: 100rpx;
+	width: 56rpx;
+	height: 56rpx;
 	margin-right: 14rpx;
 }
 .tequanList{
@@ -102,6 +102,24 @@
 	font-size: 72rpx;
 	font-weight: 400;
 	color: #FFFFFF;
+}
+.flexList{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack:justify;
+	-webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	        justify-content:space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	padding: 24rpx 38rpx;
+}
+.flexList{
+	line-height: 44rpx;
 }
 .vipCardName{
 	
