@@ -302,7 +302,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
                   uni.request({
                     method: 'GET',
-                    url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
+                    url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip',
                     data: {
                       auid: _server.default.userinfo.Auid,
                       orderId: dd },
@@ -313,7 +313,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
                     success: function success(res) {
                       if (res.data.code == 1) {
-                        if (res.data.data.payStatus == '已支付') {
+                        if (res.data.data.payStatus == '已支付' && res.data.data.payStatus == 'OK') {
                           var endtime = res.data.data.userInfo.VIPEndTime;
                           _this.endVipTime = "你已成为安个利VIP，还有" + parseInt(endtime) + "天到期";
                           console.log('已支付', _this.endVipTime);

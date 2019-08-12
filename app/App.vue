@@ -250,6 +250,9 @@
 	.aicon-vip{
 		background-image: url("static/vip.png")
 	}
+	.aicon-shop{
+		background-image: url("static/shop.png")
+	}
 	.aicon-jifen{
 		background-image: url("static/jifen.png")
 	}

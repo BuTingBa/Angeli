@@ -23,7 +23,9 @@
     "pages/menu/mpl",
     "pages/menu/zan",
     "pages/menu/newFans",
-    "pages/i/bieren"
+    "pages/i/bieren",
+    "pages/menu/wallet",
+    "pages/menu/tixian"
   ],
   "subPackages": [],
   "window": {

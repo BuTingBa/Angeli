@@ -1,0 +1,38 @@
+
+.inputBox{
+	height: 136rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	padding: 48rpx 38rpx;
+	background-color: #FFFFFF;
+	font-size: 28rpx;
+}
+.inputBox input{
+	text-align: right;
+	font-size: 28rpx;
+	color:#000;
+	width: 60%;
+}
+.txt{
+	margin: 24rpx 38rpx;
+	color:rgba(153,153,153,1);
+	font-size: 26rpx;
+	margin-bottom: 95rpx;
+}
+.ssssss{
+	color:rgba(153,153,153,1);
+}
+.alipayinput{
+	text-align: right;
+}
+

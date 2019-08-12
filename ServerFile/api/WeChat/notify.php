@@ -32,11 +32,10 @@ if($status=="SUCCESS"){
     $app=new angeli($config);
     $yOrder=$app->getOrder($open_id,$out_trade_no);
     if(!$yOrder){
-
         testLog("查询本地订单失败！".$wxTeadeNo);
         exit;
     }
-    testLog(json_encode($attr,JSON_UNESCAPED_UNICODE));
+    //testLog(json_encode($attr,JSON_UNESCAPED_UNICODE));
     if($yOrder['payFee']!==$total_fee){
         testLog("【商家订单号】".$yOrder['orderId']."订单金额和支付金额不一致！".$wxTeadeNo);
         exit;
@@ -49,8 +48,20 @@ if($status=="SUCCESS"){
     if($yOrder['name']==1){
         $yue=$yOrder['number'];
         $endtime=strtotime("+$yue months");
-        $app->setVIP('auid',$yOrder['auid'],$endtime);
+        if($app->setVIP('auid',$yOrder['auid'],$endtime)){
+            $app->upSystemStatus($out_trade_no,"OK");
+        }else{
+            $app->upSystemStatus($out_trade_no,"ERROR");
+        }
+
     }else{
+        $yue=$yOrder['number'];
+        $data=$app->setPoints($yOrder['auid'],'+',$yue,'充值安个利币');
+        if(!$data){
+            $app->upSystemStatus($out_trade_no,"ERROR");
+        }else{
+            $app->upSystemStatus($out_trade_no,"OK");
+        }
 
     }
 }else{

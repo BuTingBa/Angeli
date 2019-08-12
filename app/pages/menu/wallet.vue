@@ -31,13 +31,13 @@
 			</view>
 		</view>
 		<view v-if="xz==2">
-			<view class="flexList">
+			<view class="flexList" v-for="(list,index) in billList" :key="index">
 				<view>
-					<text style="font-size: 28upx;">提现\n</text>
-					<text style="font-size: 24upx;color:rgba(153,153,153,1);opacity:1;">2019年8月9日18:15:25</text>
+					<text style="font-size: 28upx;">{{list.note}}\n</text>
+					<text style="font-size: 24upx;color:rgba(153,153,153,1);opacity:1;">{{list.time}}</text>
 				</view>
-				<view>
-					<text style="font-size: 28upx;color:rgba(121,196,152,1);">-200\n</text>
+				<view style="text-align: right;">
+					<text style="font-size: 28upx;color:rgba(121,196,152,1);">{{list.type+list.number}}\n</text>
 					<text style="font-size: 24upx;">成功</text>
 				</view>
 			</view>
@@ -84,16 +84,18 @@
 				gaodu:'-710px',
 				yanse:'rgba(0,0,0,0)',
 				userInfo:[],
-				monnumber:1,
+				monnumber:10,
 				money:0,
 				endVipTime:'1,234.32',
 				ann:false,
 				xz:1,
-				angelibi:"自定义"
+				angelibi:"自定义",
+				billList:[]
 			}
 		},
 		onLoad:function(){
-			this.userInfo=server.userinfo
+			this.userInfo=server.userinfo;
+			this.getjifen();
 		},
 		methods: {
 			get:function(e){
@@ -109,6 +111,31 @@
 					});
 				}
 			},
+			getjifen:function(){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=cxjf", //仅为示例，并非真实接口地址。
+					data: {
+						auid:server.userinfo.Auid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							this.endVipTime=res.data.data.Points
+						}else{
+							
+						}
+						console.log(this.msgNumber)
+					},
+					complete() {
+						
+					}
+				});
+			},
 			getVip:function(){
 				if(this.monnumber>=10){
 					this.money=this.monnumber/10
@@ -119,7 +146,7 @@
 					let wxkey=md5('不停'+String(Date.now()));
 					uni.request({
 						method:'POST',
-						url: "https://api.angeli.top/WeChat/pay.php", //仅为示例，并非真实接口地址。
+						url: "https://api.angeli.top/WeChat/pay.php?type=angelibi", //仅为示例，并非真实接口地址。
 						data: {
 							openid:server.userinfo.wxOpenId,
 							fee:this.money,
@@ -163,15 +190,10 @@
 											},
 											success: (res) => {
 												if(res.data.code==1){
-													if(res.data.data.payStatus=='已支付'){
-														let endtime=res.data.data.userInfo.VIPEndTime;
-														this.endVipTime="你已成为安个利VIP，还有"+parseInt(endtime)+"天到期";
+													if(res.data.data.payStatus=='已支付' && res.data.data.payStatus=='OK'){
 														console.log('已支付',this.endVipTime)
-														this.showVip=false;
-														this.ann=true
-														
 														uni.showToast({
-															title: "已开通VIP",
+															title: "已充值",
 															position:'bottom',
 															icon:'none',
 															position:'center'
@@ -235,6 +257,39 @@
 			},
 			setxz:function(e){
 				this.xz=e
+				if(e==2){
+					this.getBill();
+				}
+			},
+			getBill:function(){
+				uni.showLoading({
+					title: '正在查询中...'
+				});
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/account.php?type=cx', //仅为示例，并非真实接口地址。
+					data:{
+						auid:server.userinfo.Auid,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						if(res.data.code=="1"){
+							this.billList=res.data.data
+						}else{
+							uni.showToast({
+								title: "获取账单失败！",
+								position:'bottom',
+								icon:'none'
+							});
+						}	
+					},
+					complete: () => {
+						uni.hideLoading();
+					}
+				});
 			},
 			inputVip:function(e){
 				this.monnumber=e.target.value

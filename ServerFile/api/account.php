@@ -35,10 +35,39 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
-    case '':
-
+    case 'queryOrderIdAndAngelibi':
+        if(empty($_GET['auid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少必要参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if(empty($_GET['orderId'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少必要参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $outdata=$app->getOrderAndVip($_GET['orderId'],$_GET['auid']);
+        if(!$outdata){
+            $outmsg = array('code' =>'0','msg'=>'没有找到订单，有问题请联系客服','data'=>$outdata);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>$outdata);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         break;
-
+    case 'cx':
+        if(empty($_GET['auid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少必要参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_GET['auid'];
+        $data=$app->getMyBill($auid);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'查询失败','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
     default:
 
         break;

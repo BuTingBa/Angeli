@@ -304,6 +304,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default =
 
 
@@ -353,7 +359,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       fensi: "0",
       dengji: "0",
       index: false,
-      userInfo: [] };
+      userInfo: [],
+      menuList: ['分享给朋友', '生成海报', '举报'] };
 
   },
   onShow: function onShow() {var _this = this;
@@ -659,16 +666,34 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     caidan: function caidan(res) {
       console.log(res);
       this.Dindex = res;
+      if (res.AuthorId == _server.default.userinfo.Auid) {
+        this.menuList = ['分享给朋友', '生成海报', '举报', '删除帖子'];
+      } else {
+        this.menuList = ['分享给朋友', '生成海报', '举报'];
+      }
       uni.showActionSheet({
-        itemList: ['分享给朋友', '生成海报', '举报'],
+        itemList: this.menuList,
         success: function success(res) {
-          if (res.tapIndex == 0) {
-            uni.showToast({
-              title: "分享" + res.Content,
-              position: 'bottom',
-              icon: 'none' });
+          switch (res.tapIndex) {
+            case 0:
+              uni.showToast({
+                title: "分享" + res.Content,
+                position: 'bottom',
+                icon: 'none' });
 
-          }
+              break;
+            case 1:
+
+              break;
+            case 2:
+
+              break;
+            case 3:
+
+              break;
+            default:}
+
+
         },
         fail: function fail(res) {
           console.log(res.errMsg);

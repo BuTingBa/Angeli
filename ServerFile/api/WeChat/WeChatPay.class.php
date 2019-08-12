@@ -26,7 +26,7 @@ class WeChatPay
             'nonce_str' => $this->createNoncestr(), //随机字符串
             'body' => $this->body, //商品描述
             'out_trade_no' => $this->out_trade_no, //商户订单号
-            'total_fee' => floatval($this->total_fee), //总金额 单位 分,上线需要乘以100
+            'total_fee' => floatval($this->total_fee*100), //总金额 单位 分,上线需要乘以100
             'spbill_create_ip' => $_SERVER['REMOTE_ADDR'], //终端 IP
             'notify_url' => 'https://api.angeli.top/WeChat/notify.php', //通知地址  确保外网能正常访问
             'openid' => $this->openid, //用户id

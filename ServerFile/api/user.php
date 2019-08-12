@@ -111,6 +111,23 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'cxjf':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        $data=$user->getJifen($auid);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'查询失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+
     default:
         $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));

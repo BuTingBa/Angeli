@@ -3,6 +3,12 @@ require_once 'WeChatPay.class.php';
 require_once '../angeli.class.php';
 require_once('../../config.php');
 
+/*
+    这里有一个大坑！客户端传过来的参数，里面有数量和和金额，
+    服务器端并没有对这个进行判断，也就是说，客户端传多少钱和多少数量都是可以的。
+    也就是说，如果客户端被人请求，5毛钱也可以充值5000万个安个利币或者N个月会员都是没有问题的！
+    这个问题需要解决
+*/
 if(empty($_POST['openid'])){
     $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>'');
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
@@ -28,11 +34,11 @@ if($_GET['type']=='vip'){
     $body='安个利会员'.$_POST['number'].'个月';
     $name=1;
 }else{
-    $body='安个利充值积分'.$_POST['number'];
+    $body='安个利充值'.$_POST['number'].'个安个利币';
     $name=2;
 }
 
-$fee=$_POST['fee'];
+$fee=$_POST['fee']*100;
 
 $app=new angeli($config);
 $order=$app->createOrder($_POST['auid'],$name,$fee,$_POST['number'],$_POST['openid'],$dd);
@@ -54,10 +60,10 @@ if($order){
 function getOrderId($type,$auid){
     $time=getMillisecond();
     switch ($type){
-        case '1':
+        case 'vip':
             return 'LHSD1'.$auid.$time.mt_rand(1000,9999);
             break;
-        case '2':
+        case 'angelibi':
             return 'LHSD2'.$auid.$time.mt_rand(1000,9999);
             break;
         default:

@@ -179,6 +179,12 @@
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="set">
+							<view class="menuIcon aicon-shop"></view>
+							<view class="menuTiele">商城</view>
+							<view class="menuRight"></view>
+						</view>
+						<view class="menusolid"></view>
+						<view class="menuItem" @tap="set">
 							<view class="menuIcon aicon-set"></view>
 							<view class="menuTiele">设置</view>
 							<view class="menuRight"></view>
@@ -246,7 +252,8 @@
 				fensi:"0",
 				dengji:"0",
 				index:false,
-				userInfo:[]
+				userInfo:[],
+				menuList:['分享给朋友', '生成海报', '举报']
 			}
 		},
 		onShow:function(){
@@ -552,15 +559,33 @@
 			caidan:function(res){
 				console.log(res)
 				this.Dindex=res;
+				if(res.AuthorId==server.userinfo.Auid){
+					this.menuList=['分享给朋友', '生成海报', '举报','删除帖子']
+				}else{
+					this.menuList=['分享给朋友', '生成海报', '举报']
+				}
 				uni.showActionSheet({
-					itemList: ['分享给朋友', '生成海报', '举报'],
+					itemList:this.menuList,
 					success: function (res) {
-						if(res.tapIndex==0){
-							uni.showToast({
-								title: "分享"+res.Content,
-								position:'bottom',
-								icon:'none'
-							});
+						switch(res.tapIndex){
+							case 0:
+								uni.showToast({
+									title: "分享"+res.Content,
+									position:'bottom',
+									icon:'none'
+								});
+								break;
+							case 1:
+								
+								break;
+							case 2:
+								
+								break;
+							case 3:
+							
+								break;
+							default:
+								
 						}
 					},
 					fail: function (res) {

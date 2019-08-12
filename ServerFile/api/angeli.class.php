@@ -23,6 +23,41 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+
+
+    /**获取我的账单信息
+     * @return array
+     */
+    public function getMyBill($auid,$page=1,$count=20)
+    {
+        $pageNum=($page-1)*$count;
+        $sql = "SELECT * FROM angeli_jifen WHERE auid='$auid' ORDER BY opentime DESC LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            $data=[];
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $aa=array(
+                        'billId'=>$row['id'],
+                        'type'=>$row['type'],
+                        'number'=>$row['number'],
+                        'note'=>$row['note'],
+                        'time'=>date('Y-m-d H:i:s',$row['opentime'])
+                    );
+                    array_push($data,$aa);
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+
+
     /**
      * @return 标记已读信息
      */
@@ -664,7 +699,23 @@ class angeli
         }
     }
 
-
+    /*
+        *   修改等级
+        *   参数：用户uid类型，uid，新密码
+        */
+    public function setRank($auid,$number)
+    {
+        $sql = $this->mysqli->prepare("UPDATE angeli_user SET Rank=Rank+? WHERE AuId=?");
+        $sql->bind_param("ii",$number,$auid);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            $outmsg = array('code' =>'0','msg'=>'升级错误!'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+            return TRUE;
+        }
+    }
 
     /*
     *   修改邮箱地址
@@ -850,6 +901,51 @@ class angeli
             return TRUE;
         }
     }
+
+    /*
+    * 更新系统处理状态
+    */
+    public function upSystemStatus($orderId,$status){
+        $sql = $this->mysqli->prepare("UPDATE angeli_pay SET systemStatus=? WHERE orderId=?");
+        $time=time();
+        $sql->bind_param("ss",$status,$orderId);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            return false;
+        }else{
+            return TRUE;
+        }
+    }
+
+    /*
+     * 查询积分
+     */
+    public function getJifen($auid)
+    {
+        $sql = "SELECT * FROM angeli_user WHERE AuId='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $data = array(
+                        'auid' =>$row["auid"],
+                        'guanzhu' =>$row["FollowedCount"],
+                        'fensi' =>$row["FollowerCount"],
+                        'Zhongcao'=>$row['ZhongcaoCount'],
+                        'Points' =>$row["Points"],
+                        'Rank'=>$row["Rank"]
+                    );
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
     /*
      * 查询订单
      */
@@ -1253,7 +1349,6 @@ class angeli
                 $sql = $this->mysqli->prepare("UPDATE angeli_user SET Type=?, VIPEndTime=? WHERE AuId=?");
                 break;
             default:
-
                 return false;
                 break;
         }
@@ -1288,21 +1383,34 @@ class angeli
         $time=time();
         if($sql->affected_rows<1)
         {
+            $this->errorLog($this->mysqli->error);
             return false;
         }else{
-            if(!$this->checkLogin($uid)){
+            if($note=="登录赠送积分"){
+                if(!$this->checkLogin($uid)){
+                    $sql="INSERT INTO angeli_jifen(type,number,opentime,note,auid) VALUES ('$type','$num','$time','$note','$uid')";
+                    $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                    if($this->mysqli->affected_rows<1){
+                        //表示操作失败
+                        $this->errorLog($this->mysqli->error);
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }else{
+                    return TRUE;
+                }
+            }else{
                 $sql="INSERT INTO angeli_jifen(type,number,opentime,note,auid) VALUES ('$type','$num','$time','$note','$uid')";
                 $result=$this->mysqli->query($sql) or die($this->mysqli->error);
                 if($this->mysqli->affected_rows<1){
                     //表示操作失败
+                    $this->errorLog($this->mysqli->error);
                     return false;
                 }else{
                     return true;
                 }
-            }else{
-                return TRUE;
             }
-
         }
     }
 
@@ -1324,10 +1432,10 @@ class angeli
             $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
-
             return TRUE;
         }
     }
+
 
     /*
     *   获取帖子列表
@@ -1691,7 +1799,14 @@ class angeli
             }
         }
     }
-
+    //写到错误日志
+    function errorLog($str)
+    {
+        $path = "errorLog.txt";
+        $handle = fopen($path,"a+");
+        fwrite($handle,'['.date('Y-m-d H:i:s').']'.$str.PHP_EOL);
+        fclose($handle);
+    }
 
     function passWordMD5($passWord)
     {

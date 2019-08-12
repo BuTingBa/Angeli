@@ -12,6 +12,20 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 }
+.tip{
+	display: inline-block;
+	width: 36rpx;
+	height: 36rpx;
+	background-color: red;
+	position: absolute;
+	text-align: center;
+	line-height: 36rpx;
+	border-radius: 50%;
+	font-size:26rpx;
+	margin-left: -18rpx;
+	margin-top: -18rpx;
+	color:#FFFFFF;
+}
 .touxiang{
 	height: 100rpx;
 	width: 100rpx;
@@ -59,7 +73,11 @@
 	right: 38rpx;
 	top: 98rpx;
 }
-.mtop image{
+.mtop view {
+	position: relative;
+	vertical-align:top;
+}
+.mtop view image{
 	width: 85rpx;
 	height: 85rpx;
 	margin-bottom: 8rpx;

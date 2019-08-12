@@ -195,7 +195,7 @@
 										});
 										uni.request({
 											method:'GET',
-											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
+											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', 
 											data:{
 												auid:server.userinfo.Auid,
 												orderId:dd
@@ -206,7 +206,7 @@
 											},
 											success: (res) => {
 												if(res.data.code==1){
-													if(res.data.data.payStatus=='已支付'){
+													if(res.data.data.payStatus=='已支付' && res.data.data.payStatus=='OK'){
 														let endtime=res.data.data.userInfo.VIPEndTime;
 														this.endVipTime="你已成为安个利VIP，还有"+parseInt(endtime)+"天到期";
 														console.log('已支付',this.endVipTime)

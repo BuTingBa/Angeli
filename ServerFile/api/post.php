@@ -32,10 +32,16 @@ switch ($_GET['type']) {
             $outmsg = array('code' =>'2','msg'=>'有不恰当内容，请修改后再提交','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
+        $data=$post->getJifen($_SESSION['Auid']);
+        if($data['Points']<1){
+            $outmsg = array('code' =>'2','msg'=>'安个利币不足，请充值或者做任务','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         $add=$post->addPost($_SESSION['Auid'],$txt,$_POST['huati'],"1","0","0",$_POST['imageList']);
         if(!$add){
             die($add);
         }else{
+            $post->setPoints($_SESSION['Auid'],'-',1,"发布帖子");
             $outmsg = array('code' =>'1','msg'=>'发帖成功！','data'=>$_POST['txt']);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
@@ -243,6 +249,15 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         var_dump(checkText($_GET['txt']));
+        break;
+    case '':
+
+        break;
+
+    case 'test':
+        $post->setPoints('6666','+',500,'充值安个利币');
+        break;
+
     default:
         # code...
 

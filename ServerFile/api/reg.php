@@ -93,10 +93,11 @@ switch ($_GET['type']) {
             $_SESSION['UserName']=$userinfo['UserName'];
             setcookie("Auid",$userinfo['Auid'],time()+3600*24,'/');
             if(!$user->checkLogin($userinfo['Auid'])){
-                $jifen=$user->setPoints($userinfo['Auid'],"+",10,'登录赠送积分');
+                $jifen=$user->setPoints($userinfo['Auid'],"+",1,'登录赠送积分');
+                $user->setRank($userinfo['Auid'],1);
             }
             if($jifen){
-                $outmsg = array('code' =>'2','msg'=>'签到成功，赠送10积分','data'=>$userinfo);
+                $outmsg = array('code' =>'2','msg'=>'签到成功，赠送1个安个利币','data'=>$userinfo);
             }else{
                 $outmsg = array('code' =>'1','msg'=>'ok','data'=>$userinfo);
             }
