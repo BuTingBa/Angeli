@@ -25,6 +25,90 @@ class angeli
 
 
 
+    /**获取我私信
+     * @return array
+     */
+    public function getMyMsg($msgId,$auid,$page=1,$count=50)
+    {
+        $pageNum=($page-1)*$count;
+        $sql = "SELECT * FROM angeli_msg WHERE FromId+ToId=$msgId ORDER BY MsgSendTime ASC LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $d=array(
+                        'FromId'=>$this->getInfo($row['FromId']),
+                        'ToId'=>$this->getInfo($row['ToId']),
+                        'Msg'=>$row['Msg'],
+                        'type'=>$row['FromId']==$auid?'me':'he',
+                        'ff'=>$this->getInfo($row['FromId']==$auid?$row['ToId']:$row['FromId']),
+                        'mm'=>$this->getInfo($auid),
+                        'MsgStatus'=>$row['FromId']==$auid?'1':$row['MsgStatus'],
+                        'MsgSendTime'=>$this->uc_time_ago($row['MsgSendTime'])
+                    );
+                    $data[]=$d;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    /**获取我私信列表
+     * @return array
+     */
+    public function getMyMsgList($auid,$page=1,$count=20)
+    {
+        $pageNum=($page-1)*$count;
+        $sql = "select * from angeli_msg WHERE FromId=$auid OR ToId=$auid  group by FromId+ToId ORDER BY MsgSendTime DESC LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $d=array(
+                        'FromId'=>$this->getInfo($row['FromId']),
+                        'ToId'=>$this->getInfo($row['ToId']),
+                        'Msg'=>$row['Msg'],
+                        'type'=>$row['FromId']==$auid?'me':'he',
+                        'MsgStatus'=>$row['MsgStatus'],
+                        'MsgSendTime'=>$this->uc_time_ago($row['MsgSendTime'])
+                    );
+                    $data[]=$d;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+
+    /*
+     * 添加私信
+     */
+    public function addMsg($FromId,$ToId,$Msg)
+    {
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_msg (Msg,MsgSendTime,FromId,ToId) VALUES (?,?,?,?)");
+        $time=time();
+        $sql->bind_param("ssii",$Msg,$time,$FromId,$ToId);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            return false;
+        }else{
+
+            return TRUE;
+        }
+    }
+
+
     /**获取我的账单信息
      * @return array
      */
@@ -61,7 +145,7 @@ class angeli
     /**
      * @return 标记已读信息
      */
-    public function markNoRead($auid,$type)
+    public function markNoRead($auid,$type,$msgId=0)
     {
 
         switch ($type){
@@ -99,7 +183,17 @@ class angeli
                 }else{
                     return true;
                 }
-
+                break;
+            case 'msg':
+                $sql="UPDATE angeli_msg SET MsgStatus=1  WHERE FromId+ToId=$msgId";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                //echo $sql;
+                if($this->mysqli->affected_rows<1){
+                    //表示操作失败
+                    return false;
+                }else{
+                    return true;
+                }
                 break;
             default:
 
@@ -173,7 +267,6 @@ class angeli
             //表示操作失败
             return false;
         }else{
-
             if($this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()){
                     $ab=array(
@@ -242,7 +335,7 @@ class angeli
                 $Give=0;
             }
         }
-        $sql = "SELECT * FROM angeli_msg WHERE ToId='$auid' AND MsgStatus=0";
+        $sql = "SELECT * FROM angeli_msg WHERE ToId='$auid' AND MsgStatus=0 OR (ToId=1 AND FromId=1)";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败

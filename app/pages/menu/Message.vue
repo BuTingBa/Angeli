@@ -17,50 +17,69 @@
 			<text>新增粉丝</text>
 		</view>
 		<view class="messageListBox">
-			<view class="menusolid"></view>
-			<view class="messageList" >
-				<image src="../../static/11.png" mode="" class="touxiang"></image>
-				<text>粽子</text>
-				<text>下午 13:41</text>
-				<text>你猜我发现了什么？你永远打偶猜不到</text>
-				<text></text>
+			<view v-for="(list,index) in MsgList" :key="index">
+				<view class="messageList" @click="getChat(list.ToId.Auid,list.FromId.Auid)">
+					<image :src="list.ToId.Auid==auid?list.FromId.AuthorAvatarUrl:list.ToId.AuthorAvatarUrl" mode="" class="touxiang"></image>
+					<text>{{list.ToId.Auid==auid?list.FromId.AuthorName:list.ToId.AuthorName}}</text>
+					<text>{{list.MsgSendTime}}</text>
+					<text>{{list.Msg}}</text>
+					<text :class="list.MsgStatus=='0'?'hongdian':''"></text>
+				</view>
+				<view class="menusolid"></view>
 			</view>
-			<view class="menusolid"></view>
-			<view class="messageList">
-				<image src="../../static/11.png" mode="" class="touxiang"></image>
-				<text>粽子</text>
-				<text>下午 13:41</text>
-				<text>你猜我发现了什么？你永远打偶猜不到</text>
-				<text class="hongdian"></text>
-			</view>
-			<view class="menusolid"></view>
-			<view class="messageList">
-				<image src="../../static/11.png" mode="" class="touxiang"></image>
-				<text>粽子</text>
-				<text>下午 13:41</text>
-				<text>你猜我发现了什么？你永远打偶猜不到</text>
-				<text></text>
-			</view>
-			<view class="menusolid"></view>
+			<uni-load-more :status="status" />
 		</view>
 	</view>
 </template>
 
 <script>
 	import server from '../../server.js';
+	import uniLoadMore from '@/components/uni-load-more.vue';
 	export default {
+		components: {
+			uniLoadMore
+		},
 		data() {
 			return {
-				msgNumber:[]
+				msgNumber:[],
+				MsgList:[],
+				status: 'loading',
+				statusTypes: [{
+					value: 'more',
+					text: '加载前',
+					checked: true
+				}, {
+					value: 'loading',
+					text: '加载中',
+					checked: false
+				}, {
+					value: 'noMore',
+					text: '我是有底线的',
+					checked: false
+				}],
+				contentText: {
+					contentdown: '查看更多',
+					contentrefresh: '加载中',
+					contentnomore: '我是有底线的'
+				},
+				auid:0
 			}
 		},
 		onShow:function(){
 			this.getNoReadMsgNumber();
+			this.getMsgList();
 		},
 		onLoad:function(){
 			//this.getNoReadMsgNumber();
+			this.auid=server.userinfo.Auid
 		},
 		methods: {
+			getChat:function(id,id2){
+				let go=parseInt(id)+parseInt(id2)
+				uni.navigateTo({
+					url: 'chat?id='+go
+				});
+			},
 			getPage:function(e){
 				if(e==1){
 					uni.navigateTo({
@@ -96,10 +115,37 @@
 						console.log(res)
 						if(res.data.code=="1"){
 							this.msgNumber=res.data.data
-						}else{
-				
 						}
+						
+						
 						console.log(this.msgNumber)
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
+			getMsgList:function(){
+				this.status ="more";
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=getMyMsgList", //仅为示例，并非真实接口地址。
+					data: {
+						
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							this.MsgList=res.data.data
+						}
+						if(res.data.code=="0" ||res.data.data.length<50 ){
+							this.status ="noMore";
+						}
+						console.log(this.MsgList)
 					},
 					complete() {
 						uni.hideLoading();

@@ -86,7 +86,10 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $type=$_GET['class'];
-        if(!$app=$user->markNoRead($auid,$type)){
+        if(isset($_GET['msgId'])){
+            $msgId=$_GET['msgId'];
+        }
+        if(!$app=$user->markNoRead($auid,$type,$msgId)){
             $outmsg = array('code' =>'0','msg'=>'标记失败！','data'=>$outdata);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
@@ -127,7 +130,67 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'getMyMsgList':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        //$auid=6666;
 
+        $data=$user->getMyMsgList($auid,empty($_GET['page'])?'1':$_GET['page'],empty($_GET['count'])?'50':$_GET['count']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'查询失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
+        break;
+    case 'getMyMsg':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        //$auid=6666;
+        if(empty($_GET['msgid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $msgId=$_GET['msgid'];
+        $data=$user->getMyMsg($msgId,$auid,empty($_GET['page'])?'1':$_GET['page'],empty($_GET['count'])?'50':$_GET['count']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'查询失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'upmsg':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        if(empty($_POST['msg'])||empty($_POST['toid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$user->addMsg($auid,$_POST['toid'],$_POST['msg']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'发送失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
     default:
         $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));

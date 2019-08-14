@@ -4848,6 +4848,9 @@ scroll-view.cu-steps .cu-item {
 	width: 303rpx;
 	height: 321rpx;
 }
+.yuan{
+	border-radius: 50%;
+}
 .nullBox{
 	text-align: center;
 	margin-top: 132rpx;

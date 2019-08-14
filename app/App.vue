@@ -76,6 +76,9 @@
 		width: 303upx;
 		height: 321upx;
 	}
+	.yuan{
+		border-radius: 50%;
+	}
 	.nullBox{
 		text-align: center;
 		margin-top: 132upx;

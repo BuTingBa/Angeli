@@ -140,20 +140,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -188,25 +174,85 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { msgNumber: [] };}, onShow: function onShow() {this.getNoReadMsgNumber();}, onLoad: function onLoad() {//this.getNoReadMsgNumber();
-  }, methods: { getPage: function getPage(e) {if (e == 1) {uni.navigateTo({ url: 'zan' });}if (e == 2) {uni.navigateTo({ url: 'mpl' });}if (e == 3) {uni.navigateTo({ url: 'newFans' });}}, getNoReadMsgNumber: function getNoReadMsgNumber() {var _this = this;uni.showLoading({ title: '加载中' });uni.request({ method: 'GET', url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
-        data: {}, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.msgNumber = res.data.data;} else {
+var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { msgNumber: [], MsgList: [], status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, auid: 0 };}, onShow: function onShow() {this.getNoReadMsgNumber();this.getMsgList();
+  },
+  onLoad: function onLoad() {
+    //this.getNoReadMsgNumber();
+    this.auid = _server.default.userinfo.Auid;
+  },
+  methods: {
+    getChat: function getChat(id, id2) {
+      var go = parseInt(id) + parseInt(id2);
+      uni.navigateTo({
+        url: 'chat?id=' + go });
+
+    },
+    getPage: function getPage(e) {
+      if (e == 1) {
+        uni.navigateTo({
+          url: 'zan' });
+
+      }
+      if (e == 2) {
+        uni.navigateTo({
+          url: 'mpl' });
+
+      }
+      if (e == 3) {
+        uni.navigateTo({
+          url: 'newFans' });
+
+      }
+    },
+    getNoReadMsgNumber: function getNoReadMsgNumber() {var _this = this;
+      uni.showLoading({
+        title: '加载中' });
+
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
+        data: {},
+
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            _this.msgNumber = res.data.data;
           }
+
+
           console.log(_this.msgNumber);
+        },
+        complete: function complete() {
+          uni.hideLoading();
+        } });
+
+    },
+    getMsgList: function getMsgList() {var _this2 = this;
+      this.status = "more";
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=getMyMsgList", //仅为示例，并非真实接口地址。
+        data: {},
+
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            _this2.MsgList = res.data.data;
+          }
+          if (res.data.code == "0" || res.data.data.length < 50) {
+            _this2.status = "noMore";
+          }
+          console.log(_this2.MsgList);
         },
         complete: function complete() {
           uni.hideLoading();

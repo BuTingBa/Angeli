@@ -25,7 +25,8 @@
     "pages/menu/newFans",
     "pages/i/bieren",
     "pages/menu/wallet",
-    "pages/menu/tixian"
+    "pages/menu/tixian",
+    "pages/menu/chat"
   ],
   "subPackages": [],
   "window": {
