@@ -175,6 +175,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -246,9 +247,22 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgList: [], auid: 0, val: '', toid: 0, value: "" };}, onLoad: function onLoad(e) {this.auid = _server.default.userinfo.Auid;console.log(e.id);this.msgid = e.id;this.getMyMsg();}, methods: { input: function input(e) {this.val = e.target.value;}, upmsg: function upmsg() {var _this = this;uni.request({ method: 'POST', url: "https://api.angeli.top/user.php?type=upmsg", //仅为示例，并非真实接口地址。
-        data: { 'msg': this.val, 'toid': this.toid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.value = "";_this.getMyMsg();}if (res.data.code == "0" || res.data.code == null || res.data.code == false) {uni.showToast({ title: "发送失败，请稍后再试", position: 'bottom', icon: 'none' });}console.log(_this.MsgList);}, complete: function complete() {uni.hideLoading();} });}, markmsg: function markmsg() {uni.request({ method: 'GET', url: "https://api.angeli.top/user.php?type=mark&class=msg", //请求标记已读消息
-        data: { 'msgId': this.msgid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {console.log('已将信息标记为已读');} else {
+//
+var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgList: [], auid: 0, val: '', toid: 0, value: "" };}, onLoad: function onLoad(e) {this.auid = _server.default.userinfo.Auid;console.log(e.id);this.msgid = e.id;this.getMyMsg();}, onShow: function onShow() {this.markmsg();}, methods: { input: function input(e) {this.val = e.target.value;}, getbie: function getbie() {uni.navigateTo({ url: '../i/bieren?auid=' + this.toid });}, getme: function getme() {uni.navigateTo({ url: '../i/i' });}, upmsg: function upmsg() {var _this = this;uni.request({ method: 'POST', url: "https://api.angeli.top/user.php?type=upmsg", //仅为示例，并非真实接口地址。
+        data: { 'msg': this.val, 'toid': this.toid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.value = "";_this.getMyMsg();}if (res.data.code == "0" || res.data.code == null || res.data.code == false) {uni.showToast({ title: "发送失败，请稍后再试", position: 'bottom', icon: 'none' });}console.log(_this.MsgList);}, complete: function complete() {uni.hideLoading();} });}, markmsg: function markmsg() {uni.request({ method: 'GET',
+        url: "https://api.angeli.top/user.php?type=mark&class=msg", //请求标记已读消息
+        data: {
+          'msgId': this.msgid },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            console.log('已将信息标记为已读');
+          } else {
             console.log('标记已读失败！');
           }
 
@@ -280,7 +294,16 @@ var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgLi
           if (res.data.code == "1") {
             _this2.MsgList = res.data.data;
             _this2.toid = _this2.MsgList[0].ff.Auid;
-            _this2.markmsg();
+            setTimeout(function () {
+              uni.pageScrollTo({
+                scrollTop: 30000,
+                duration: 300 });
+
+              uni.pageScrollTo({
+                scrollTop: 30100,
+                duration: 300 });
+
+            }, 200);
           }
           if (res.data.code == "0" || res.data.data.length < 50) {
 
@@ -289,6 +312,8 @@ var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgLi
         },
         complete: function complete() {
           uni.hideLoading();
+
+
         } });
 
     } } };exports.default = _default;

@@ -2,91 +2,96 @@
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">积分查询</block>
+			<block slot="content">种草排行</block>
 		</cu-custom>
 		<view class="jifenTop">
-			<image src="../../static/dianzanimg.png" mode="aspectFill" class="jinfenTouxiang"></image>
-			<view class="name">不停</view>
+			<image :src="userinfo.AvatarUrl" mode="aspectFill" class="jinfenTouxiang"></image>
+			<view class="name">{{userinfo.UserName}}</view>
 			<view class="jifenMy">
 				<view class="titleText">
-					<text>5\n</text>
-					<text>签到天数</text>
+					<text>{{userinfo.ZhongcaoCount}}\n</text>
+					<text>种草总数</text>
 				</view>
 				<view class="titleText">
-					<text>5\n</text>
-					<text>签到天数</text>
+					<text>{{topList.index}}\n</text>
+					<text>本周排名</text>
 				</view>
 				<view class="titleText">
-					<text>5\n</text>
-					<text>签到天数</text>
+					<text>{{topList.count}}\n</text>
+					<text>本周种草</text>
 				</view>
 			</view>
 		</view>
 		<view class="jifenTiele">
 			本周排行榜
 		</view>
-		<view class="myJifen">
+		<!-- <view class="myJifen">
 			<text class="lpaihang">1254</text>
 			<image class="listTouxiang" src="" mode=""></image>
 			<text class="username">我是你爸爸</text>
 			<view class="jifen">132分</view>
-		</view>
+		</view> -->
 		<view class="jifenListBox">
-			<view class="jifenList">
-				<view class="myJifen">
-					<text class="lpaihang">1254</text>
-					<image class="listTouxiang" src="" mode=""></image>
-					<text class="username">我是你爸爸</text>
-					<view class="jifen">132分</view>
+			<view class="jifenList" v-for="(list,index) in topList.data" :key="index">
+				<view class="myJifen" @click="getBire(list.AuId.Auid)">
+					<text class="lpaihang">{{index+1}}</text>
+					<image class="listTouxiang" :src="list.AuId.AuthorAvatarUrl" mode=""></image>
+					<text class="username">{{list.AuId.AuthorName}}</text>
+					<view class="jifen">{{list.index}}个种草</view>
 				</view>
 				<view class="menusolid"></view>
-				<view class="myJifen">
-					<text class="lpaihang">1254</text>
-					<image class="listTouxiang" src="" mode=""></image>
-					<text class="username">我是你爸爸</text>
-					<view class="jifen">132分</view>
-				</view>
-				<view class="menusolid"></view>
-				<view class="myJifen">
-					<text class="lpaihang">1254</text>
-					<image class="listTouxiang" src="" mode=""></image>
-					<text class="username">我是你爸爸</text>
-					<view class="jifen">132分</view>
-				</view>
-				<view class="menusolid"></view>
-				<view class="myJifen">
-					<text class="lpaihang">1254</text>
-					<image class="listTouxiang" src="" mode=""></image>
-					<text class="username">我是你爸爸</text>
-					<view class="jifen">132分</view>
-				</view>
-				<view class="menusolid"></view>
-				<view class="myJifen">
-					<text class="lpaihang">1254</text>
-					<image class="listTouxiang" src="" mode=""></image>
-					<text class="username">我是你爸爸</text>
-					<view class="jifen">132分</view>
-				</view>
-				<view class="menusolid"></view>
-				<view class="myJifen">
-					<text class="lpaihang">1254</text>
-					<image class="listTouxiang" src="" mode=""></image>
-					<text class="username">我是你爸爸</text>
-					<view class="jifen">132分</view>
-				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
-				
+				topList:[],
+				userinfo:[]
 			}
 		},
+		onLoad:function(){
+			this.getTop();
+			this.userinfo=server.userinfo;
+			
+		},
 		methods: {
+			getBire:function(e){
+				uni.navigateTo({
+					url: '../i/bieren?auid='+e
+				})
+			},
+			getTop:function(){
+				uni.showLoading({
+					title: '获取数据中'
+				});
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/post.php?type=weekTop", //仅为示例，并非真实接口地址。
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						if(res.data.code=="1"){
+							this.topList=res.data.data
+						}else{
+							uni.showToast({
+								title: "获取失败！",
+								position:'bottom',
+								icon:'none'
+							});
+						}
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			}
 			
 		}
 	}
@@ -139,12 +144,14 @@
 	
 }
 .jifenTiele{
+	
 	padding: 16upx 38upx;
 	background-color: #FFFFFF;
 	font-size:32upx;
 	font-weight:500;
 	line-height:45upx;
 	color:rgba(54,54,54,1);
+	padding-top: 26upx;
 }
 .titleText text:nth-child(1){
 	font-size:28upx;

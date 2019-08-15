@@ -10,7 +10,7 @@
 				 <template v-if="list.type=='he'">
 				        <!-- 对方消息 -->
 				        <view class="cu-item">
-				        	<view class="cu-avatar radius yuan" :style="{'background-image':'url('+list.ff.AuthorAvatarUrl+')'}"></view>
+				        	<view class="cu-avatar radius yuan" :style="{'background-image':'url('+list.ff.AuthorAvatarUrl+')'}" @click="getbie"></view>
 				        	<view class="main">
 				        		<view class="content shadow">
 				        			<text>{{list.Msg}}</text>
@@ -27,7 +27,7 @@
 				 				<text>{{list.Msg}}</text>
 				 			</view>
 				 		</view>
-				 		<view class="cu-avatar radius yuan" :style="{'background-image':'url('+list.mm.AuthorAvatarUrl+')'}"></view>
+				 		<view class="cu-avatar radius yuan" :style="{'background-image':'url('+list.mm.AuthorAvatarUrl+')'}" @click="getme"></view>
 				 		<view class="date">{{list.MsgSendTime}}</view>
 				 	</view>
 				 </template>
@@ -59,11 +59,12 @@
 				<view class="date"> 13:23</view>
 			</view>
 			-->
-			<view style="height: 100upx;"></view>
+			
 		</view>
+		<view style="height: 100upx;"></view>
 		<view class="cu-bar foot input" :style="[{bottom:InputBottom+'px'}]">
 			<input class="solid-bottom " :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
-			 @focus="InputFocus" @blur="InputBlur" @input="input" :value="value"></input>
+			 @focus="InputFocus" @blur="InputBlur" @input="input" v-model="value"></input>
 			<button class="cu-btn bg-green shadow" @click="upmsg">发送</button>
 		</view>
 	</view>
@@ -90,9 +91,22 @@
 			this.getMyMsg()
 			
 		},
+		onShow:function(){
+			this.markmsg();
+		},
 		methods: {
 			input:function(e){
 				this.val=e.target.value 
+			},
+			getbie:function(){
+				uni.navigateTo({
+					url: '../i/bieren?auid='+this.toid
+				})
+			},
+			getme:function(){
+				uni.navigateTo({
+					url: '../i/i'
+				})
 			},
 			upmsg:function(){
 				uni.request({
@@ -175,7 +189,16 @@
 						if(res.data.code=="1"){
 							this.MsgList=res.data.data
 							this.toid=this.MsgList[0].ff.Auid
-							this.markmsg();
+							setTimeout(function () {
+								uni.pageScrollTo({
+								    scrollTop: 30000,
+								    duration: 300
+								});
+								uni.pageScrollTo({
+								    scrollTop: 30100,
+								    duration: 300
+								});
+							}, 200);
 						}
 						if(res.data.code=="0" ||res.data.data.length<50 ){
 							
@@ -184,10 +207,11 @@
 					},
 					complete() {
 						uni.hideLoading();
+						
+						
 					}
 				});
-			}
-			
+			},
 		}
 	}
 </script>

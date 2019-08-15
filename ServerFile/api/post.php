@@ -250,10 +250,24 @@ switch ($_GET['type']) {
         }
         var_dump(checkText($_GET['txt']));
         break;
-    case '':
+    case 'weekTop':
+
+        //$auid=$_SESSION['Auid'];
+        $auid=6666;
+        $out=$post->getWeekTop($auid);
+        if(!$out){
+            $outmsg = array('code' =>'0','msg'=>'获取失败！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'myTop':
+
+
 
         break;
-
     case 'test':
         $post->setPoints('6666','+',500,'充值安个利币');
         break;

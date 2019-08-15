@@ -105,95 +105,104 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
-  },
-  methods: {} };exports.default = _default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { topList: [], userinfo: [] };}, onLoad: function onLoad() {this.getTop();this.userinfo = _server.default.userinfo;}, methods: { getBire: function getBire(e) {uni.navigateTo({ url: '../i/bieren?auid=' + e });}, getTop: function getTop() {var _this = this;uni.showLoading({ title: '获取数据中' });uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=weekTop", //仅为示例，并非真实接口地址。
+        header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == "1") {_this.topList = res.data.data;} else {uni.showToast({ title: "获取失败！", position: 'bottom', icon: 'none' });}}, complete: function complete() {uni.hideLoading();} });} } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

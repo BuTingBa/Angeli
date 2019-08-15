@@ -64,7 +64,9 @@ class angeli
     public function getMyMsgList($auid,$page=1,$count=20)
     {
         $pageNum=($page-1)*$count;
-        $sql = "select * from angeli_msg WHERE FromId=$auid OR ToId=$auid  group by FromId+ToId ORDER BY MsgSendTime DESC LIMIT $pageNum, $count";
+
+        //$sql = "select * from angeli_msg WHERE FromId=$auid OR ToId=$auid  group by FromId+ToId ORDER BY MsgSendTime DESC LIMIT $pageNum, $count";
+        $sql="select * from (select * from angeli_msg WHERE FromId=$auid OR ToId=$auid ORDER BY MsgId DESC) as a group by a.FromId+a.ToId LIMIT $pageNum, $count";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -77,7 +79,7 @@ class angeli
                         'ToId'=>$this->getInfo($row['ToId']),
                         'Msg'=>$row['Msg'],
                         'type'=>$row['FromId']==$auid?'me':'he',
-                        'MsgStatus'=>$row['MsgStatus'],
+                        'MsgStatus'=>$this->chek($row['MsgStatus'],$auid,$row['ToId']),
                         'MsgSendTime'=>$this->uc_time_ago($row['MsgSendTime'])
                     );
                     $data[]=$d;
@@ -88,7 +90,18 @@ class angeli
             }
         }
     }
+    function chek($status,$auid,$id){
+        if($id==$auid){
+            if($status==0){
+                return 0;
+            }else{
+                return 1;
+            }
+        }else{
+            return 1;
+        }
 
+    }
 
     /*
      * 添加私信
@@ -185,7 +198,7 @@ class angeli
                 }
                 break;
             case 'msg':
-                $sql="UPDATE angeli_msg SET MsgStatus=1  WHERE FromId+ToId=$msgId";
+                $sql="UPDATE angeli_msg SET MsgStatus=1  WHERE FromId+ToId=$msgId AND ToId=$auid";
                 $result=$this->mysqli->query($sql) or die($this->mysqli->error);
                 //echo $sql;
                 if($this->mysqli->affected_rows<1){
@@ -1327,6 +1340,95 @@ class angeli
 
     }
 
+    /*
+     * 获取本周排行榜
+     */
+    public function getWeekTop($auid){
+        $beginThisweek=mktime(0,0,0,date('m'),date('d')-date('w')+1,date('Y'));
+        $endThisweek=mktime(23,59,59,date('m'),date('d')-date('w')+7,date('Y'));
+        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
+        //echo $sql;
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+
+                    $index=$index+1;
+                    if($row['AuthorId']==$auid){
+                       $ddd=$index;
+                       $dd=$row['lll'];
+                    }
+
+                    $d = array(
+                        'index' =>$row["lll"],
+                        'AuId' =>$this->getInfo($row['AuthorId']),
+                        'isMe'=>$row['AuthorId']==$auid?'true':'false'
+                    );
+                    $data['data'][]=$d;
+                }
+                $data['index']=$ddd;
+                $data['count']=$dd;
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+
+
+    }
+
+    /*
+   *   获取好友信息
+   *   参数：查询关键字类型，查询关键字
+   */
+    public function getFInfo($auid,$keyword)
+    {
+        $sql="SELECT * from angeli_user WHERE AuId='$keyword'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+
+            if($this->mysqli->affected_rows>0){
+                $data= [];
+                while($row = $result->fetch_assoc()) {
+                    $data = array(
+                        'Auid' =>$row["AuId"],
+                        'UserName' =>$row["UserName"],
+                        'Email' =>$row["UserEmail"],
+                        'Phone' =>"177******91",
+                        'Wxid' =>"***************",
+                        'wxOpenId'=>"***************",
+                        'Gender'=>$row['Gender'],
+                        'UserType' =>$this->isVip($row["VIPEndTime"]),
+                        'VIPEndTime' =>$this->getOverDay($row["VIPEndTime"]),
+                        'Status' =>$row["Status"],
+                        'BanDeadline' =>$row["BanDeadline"],
+                        'DateCreated' =>$row["DateCreated"],
+                        'AvatarUrl' =>$row["AvatarUrl"],
+                        'Synopsis' =>$row["Synopsis"],
+                        'FollowedCount' =>$row["FollowedCount"],
+                        'FollowerCount' =>$row["FollowerCount"],
+                        'ZhongcaoCount' =>$row["ZhongcaoCount"],
+                        'Aglc' =>$row["Aglc"],
+                        'Rank' =>$row["Rank"],
+                    );
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+
+
+    }
     /*
     *   获取用户列表到数组里
     *
