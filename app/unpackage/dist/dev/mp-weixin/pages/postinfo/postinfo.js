@@ -182,6 +182,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -258,24 +292,107 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { postInfo: [], pllist: [], InputBottom: 0, plnr: "", postid: "", setvar: "", Give: "0", huifu: false, pluid: "" };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { postInfo: [], pllist: [], showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1 };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);}return { title: this.postInfo.Content, path: '/pages/postinfo/postinfo?id=' + this.postid, desc: this.postInfo.Content, imageUrl: this.postInfo.PictureId[0] };}, onLoad: function onLoad(option) {var _this = this; //option为object类型，会序列化上个页面传递的参数
     console.log(option.id); //打印出上个页面传递的参数。
-    this.postid = option.id;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);} });} });}, methods: { Like: function Like(postid, auid, give) {var _this2 = this;if (give === true) {var modea = 'del';} else {var modea = 'add';}uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
-        data: { fuid: auid, postid: postid, mode: modea }, header: { 'content-type': 'application/x-www-form-urlencoded',
+    this.postid = option.id;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);} });} });}, methods: { getList: function getList() {uni.navigateTo({ url: "dashang?id=" + this.postid });}, getDashang: function getDashang() {var _this2 = this;console.log(this.monnumber);uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=dashang", //仅为示例，并非真实接口地址。
+        data: { toid: this.postInfo.AuthorId, postid: this.postid, number: this.monnumber }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == "1") {_this2.showVip = false;_this2.gaodu = '-710px';_this2.yanse = 'rgba(0,0,0,0)';uni.showToast({ title: "打赏成功！", position: 'bottom', icon: 'none' });_this2.$forceUpdate();} else {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none' });}}, complete: function complete() {} });
+    },
+    hideVip: function hideVip() {
+      this.showVip = false;
+      this.gaodu = '-710px';
+      this.yanse = 'rgba(0,0,0,0)';
+    },
+    xuanze: function xuanze(e) {
+      switch (e) {
+        case 1:
+          this.monnumber = 1;
+          break;
+        case 2:
+          this.monnumber = 2;
+          break;
+        case 3:
+          this.monnumber = 10;
+          break;
+        case 4:
+          this.monnumber = 20;
+          break;
+        default:
+          this.monnumber = 1;
+          break;}
+
+      this.xzId = e;
+      /* 新思路,点赞改变列表状态可以使用该方法,:class="当前ID是否等于列子ID，如果是那么就点赞，如果不是就没有点赞，"
+                     但是,这样只能存在一个点赞状态,其他的状态就会消失,带思考 */
+    },
+    showKaitong: function showKaitong() {
+      this.showVip = true;
+      this.gaodu = '0px';
+      this.yanse = 'rgba(0,0,0,0.4)';
+    },
+    Like: function Like(postid, auid, give) {var _this3 = this;
+      if (give === true) {
+        var modea = 'del';
+      } else {
+        var modea = 'add';
+      }
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+        data: {
+          fuid: auid,
+          postid: postid,
+          mode: modea },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
           'Cookie': _server.default.cookie },
 
         success: function success(res) {
           if (res.data.code == "1") {
             if (modea == 'add') {
-              _this2.postInfo.Give = true;
+              _this3.postInfo.Give = true;
               uni.showToast({
                 title: "种草成功！",
                 position: 'bottom',
                 icon: 'none' });
 
             } else {
-              _this2.postInfo.Give = false;
+              _this3.postInfo.Give = false;
               uni.showToast({
                 title: "取消种草成功！",
                 position: 'bottom',
@@ -283,7 +400,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
             }
 
-            _this2.$forceUpdate();
+            _this3.$forceUpdate();
           } else {
 
             uni.showToast({
@@ -344,7 +461,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
 
     },
-    sendpl: function sendpl(e) {var _this3 = this;
+    sendpl: function sendpl(e) {var _this4 = this;
       console.log(this.plnr);
       if (this.plnr == "null" || this.plnr == "") {
         uni.showToast({
@@ -386,12 +503,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
           success: function success(res) {
             if (res.data.code == '1') {
-              _this3.setvar = "";
+              _this4.setvar = "";
               uni.request({
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this3.postid },
+                  postid: _this4.postid },
 
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
@@ -399,8 +516,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
-                  _this3.pllist = res.data.data;
-                  console.log(_this3.pllist);
+                  _this4.pllist = res.data.data;
+                  console.log(_this4.pllist);
 
                 } });
 
@@ -432,12 +549,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
           success: function success(res) {
             if (res.data.code == '1') {
-              _this3.setvar = "";
+              _this4.setvar = "";
               uni.request({
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this3.postid },
+                  postid: _this4.postid },
 
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
@@ -445,8 +562,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
-                  _this3.pllist = res.data.data;
-                  console.log(_this3.pllist);
+                  _this4.pllist = res.data.data;
+                  console.log(_this4.pllist);
 
                 } });
 
@@ -462,7 +579,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
       }
     },
-    dianzan: function dianzan(plid, index) {var _this4 = this;
+    dianzan: function dianzan(plid, index) {var _this5 = this;
       console.log("点赞");
       uni.request({
         method: 'GET',
@@ -476,11 +593,11 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], Input
 
         success: function success(res) {
           if (res.data.code == "1") {
-            var give = _this4.pllist[index].Give;
+            var give = _this5.pllist[index].Give;
             console.log(give);
             give++;
             console.log(give);
-            _this4.$set(_this4.pllist[index], "Give", give);
+            _this5.$set(_this5.pllist[index], "Give", give);
           }
           uni.showToast({
             title: res.data.msg,

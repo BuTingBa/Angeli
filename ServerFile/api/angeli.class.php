@@ -23,7 +23,58 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+    /*
+     * 查询打赏列表
+     */
+    public function getDashangList($auid,$postid){
+        $sql="SELECT * FROM angeli_dashang WHERE postId=$postid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if($this->mysqli->affected_rows<1){
+            return 0;
+        }else{
+            while($row = $result->fetch_assoc()){
+                $d=array(
+                    'id'=>$row['postId'],
+                    'postId'=>$row['postId'],
+                    'toAuid'=>$row['toAuid'],
+                    'isMe'=>$row['fromAuid']==$auid?'true':'false',
+                    'fromAuid'=>$this->getInfo($row['fromAuid']),
+                    'number'=>$row['number'],
+                    'time'=>date("Y-m-d H:i:s",$row['addtime'])
+                );
+                $data[]=$d;
+            }
+            return $data;
+        }
 
+    }
+
+    /*
+     * 打赏
+     */
+
+    public function setDashang($auid,$postid,$authorId,$number){
+        if($this->checkDashang($auid,$postid)){
+            return 2;//已存在
+        }
+        $data=$this->getJifen($auid);
+        if($data['Points']<$number){
+            return 3;//积分不足
+        }
+        $time=time();
+        $sql="INSERT INTO angeli_dashang(postId,fromAuid,toAuid,number,addtime) VALUES ($postid,$auid,$authorId,$number,'$time')";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if($this->mysqli->affected_rows<1){
+            //表示操作失败
+            return 0;
+        }else{
+            $this->setPoints($auid,"-",$number,'打赏帖子');
+            if($this->setPoints($authorId,"+",$number,'打赏帖子')){
+                return 1;
+            }
+
+        }
+    }
 
     /**获取我私信
      * @return array
@@ -57,6 +108,7 @@ class angeli
             }
         }
     }
+
 
     /**获取我私信列表
      * @return array
@@ -1875,6 +1927,23 @@ class angeli
     */
     public function checkGive($auid,$postId){
         $sql = "SELECT * FROM angeli_favorite WHERE PostsId ='$postId' AND AuId='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+    /*
+     * 检查是已经打赏
+     */
+    public function checkDashang($auid,$postId){
+        $sql = "SELECT * FROM angeli_dashang WHERE postId ='$postId' AND fromAuid='$auid'";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败

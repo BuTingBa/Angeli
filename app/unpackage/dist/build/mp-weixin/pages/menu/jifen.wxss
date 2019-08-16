@@ -48,12 +48,14 @@
 	        align-items:center;
 }
 .jifenTiele{
+	
 	padding: 16rpx 38rpx;
 	background-color: #FFFFFF;
 	font-size:32rpx;
 	font-weight:500;
 	line-height:45rpx;
 	color:rgba(54,54,54,1);
+	padding-top: 26rpx;
 }
 .titleText text:nth-child(1){
 	font-size:28rpx;

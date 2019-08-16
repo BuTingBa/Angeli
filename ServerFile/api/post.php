@@ -252,8 +252,8 @@ switch ($_GET['type']) {
         break;
     case 'weekTop':
 
-        //$auid=$_SESSION['Auid'];
-        $auid=6666;
+        $auid=$_SESSION['Auid'];
+        //$auid=6666;
         $out=$post->getWeekTop($auid);
         if(!$out){
             $outmsg = array('code' =>'0','msg'=>'获取失败！','data'=>$out);
@@ -263,10 +263,51 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
-    case 'myTop':
+    case 'dashang':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就想看我的收藏？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if(empty($_GET['postid'])||empty($_GET['toid'])||empty($_GET['number'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
 
+        $code=$post->setDashang($auid,$_GET['postid'],$_GET['toid'],$_GET['number']);
+        if($code==0){
+            $outmsg = array('code' =>'0','msg'=>'操作失败！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($code==1){
+            $outmsg = array('code' =>'1','msg'=>'操作成功！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($code==2){
+            $outmsg = array('code' =>'0','msg'=>'你已经打赏过了，不能再打赏哦','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($code==3){
+            $outmsg = array('code' =>'0','msg'=>'安个利币不足，先去充值吧','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getDashangList':
 
-
+        $auid=$_SESSION['Auid'];
+        if(empty($_GET['postId'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$post->getDashangList($auid,$_GET['postId']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'没有打赏','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         break;
     case 'test':
         $post->setPoints('6666','+',500,'充值安个利币');

@@ -19,7 +19,10 @@
 				</view>
 				<view class="postBottom">
 					<view class="postClass">{{postInfo.Tag.ClassName}}</view>
-					<view :class="[postInfo.Give?'likeing':'like']"  @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give)"></view>
+					<view>
+						<view :class="[postInfo.Give?'likeing':'like']"  @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give)"></view>
+						<text>152</text>
+					</view>
 					<view class="postMenu" @click="caidan"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 				</view>
 			</view>
@@ -27,12 +30,43 @@
 		</view>
 		<view class="zan">
 			<view class="zananiu">
-				 <button class="cu-btn round bg-red button-hover">赞赏</button>
+				 <button class="cu-btn round bg-red button-hover" @tap="showKaitong">赞赏</button>
 			</view>
-			<view class="zanlist">
+			<!-- <view class="zanlist">
 				还没有人给过钱，快来做第一个给钱的吧！
+			</view> -->
+			<view class="dashangList" @click="getList">
+				<view class="jiaozheng">
+					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+				</view>
+				
 			</view>
 		</view>
+		<view :class="showVip?'mask':''" :style="{background:yanse}" @click="hideVip"></view>
+		<view class="pay" :style="{ bottom:gaodu}">
+			<text class="titlea">打赏安个利币</text>
+			<view class="vipBox">
+				<view :class="xzId==1?'vipItemXZ':'vipItem'" @click="xuanze(1)">
+					<text class="paynumber">1 安个利币</text>
+				</view>
+				<view :class="xzId==2?'vipItemXZ':'vipItem'" @click="xuanze(2)">
+					<text class="paynumber">5 安个利币</text>
+				</view>
+				<view :class="xzId==3?'vipItemXZ':'vipItem'" @click="xuanze(3)">
+					<text class="paynumber">10 安个利币</text>
+				</view>
+				<view :class="xzId==4?'vipItemXZ':'vipItem'" @click="xuanze(4)">
+					<text class="paynumber">20 安个利币</text>
+				</view>
+			</view>
+			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" @tap="getDashang">立即打赏</button>
+			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><!-- <text style="font-size: 22upx;">购买即视为同意《安个利会员用户协议》</text> --></view>
+		</view> 
 		<!-- 评论列表 -->
 		<view class="cu-list menu-avatar comment solids-top" >
 			<view class="cu-item" v-for="(pl,index) in pllist" :key="index"  style="margin-top: -4upx;">
@@ -60,7 +94,7 @@
 		</view>
 		<view style="margin-top: 50upx;height: 50upx;text-align: center;">没有更多评论了！</view>
 		<!-- 撰写评论 -->
-		<view class="cu-bar foot input" :style="[{bottom:InputBottom+'px'}]">
+		<view class="cu-bar foot input " :style="[{bottom:InputBottom+'px'}]" style="z-index: 777;">
 			<!-- <view class="action">
 				<text class="cuIcon-sound text-grey"></text>
 			</view> -->
@@ -81,14 +115,18 @@
 			return {
 				postInfo:[],
 				pllist:[],
+				showVip:false,
 				InputBottom: 0,
 				plnr:"",
+				xzId:1,
 				postid:"",
 				setvar:"",
 				Give:"0",
 				huifu:false,
-				
-				pluid:""
+				gaodu:'-710px',
+				yanse:'rgba(0,0,0,0)',
+				pluid:"",
+				monnumber:1
 			}
 		},
 		onShareAppMessage(res) {
@@ -139,7 +177,86 @@
 				}
 			});
 		},
+		
 		methods: {
+			getList:function(){
+				uni.navigateTo({
+					url:"dashang?id="+this.postid
+				})
+			},
+			getDashang:function(){
+				console.log(this.monnumber);
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/post.php?type=dashang", //仅为示例，并非真实接口地址。
+					data: {
+						toid: this.postInfo.AuthorId,
+						postid:this.postid,
+						number:this.monnumber
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						if(res.data.code=="1"){
+							this.showVip=false;
+							this.gaodu='-710px';
+							this.yanse='rgba(0,0,0,0)'
+							uni.showToast({
+								title: "打赏成功！",
+								position:'bottom',
+								icon:'none'
+							});
+							
+							this.$forceUpdate()
+						}else{
+							
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+					},
+					complete() {
+						
+					}
+				});
+				
+			},
+			hideVip:function(){
+				this.showVip=false;
+				this.gaodu='-710px';
+				this.yanse='rgba(0,0,0,0)'
+			},
+			xuanze:function(e){
+				switch (e){
+					case 1:
+						this.monnumber=1
+						break;
+					case 2:
+						this.monnumber=2
+						break;
+					case 3:
+						this.monnumber=10
+						break;
+					case 4:
+						this.monnumber=20
+						break;
+					default:
+						this.monnumber=1
+						break;
+				}
+				this.xzId=e
+				/* 新思路,点赞改变列表状态可以使用该方法,:class="当前ID是否等于列子ID，如果是那么就点赞，如果不是就没有点赞，"
+				但是,这样只能存在一个点赞状态,其他的状态就会消失,带思考 */
+			},
+			showKaitong:function(){
+				this.showVip=true
+				this.gaodu='0px'
+				this.yanse='rgba(0,0,0,0.4)'
+			},
 			Like:function(postid,auid,give){
 				if(give===true){
 					var modea='del'
@@ -397,16 +514,123 @@
 </script>
 
 <style>
+	.dslist{
+		position: absolute;
+		width: 50upx;
+		height: 50upx;
+		border-radius: 50%;
+	}
+	.jiaozheng{
+		position: absolute;
+		left: 50%;
+		height: 100%;
+		width: 260upx;
+		margin-left: -130Upx;
+	}
+	.dashangList image:nth-child(1){
+		left: 0upx;
+	}
+	.dashangList image:nth-child(2){
+		left: 45upx;
+	}
+	.dashangList image:nth-child(3){
+		left: 90upx;
+	}
+	.dashangList image:nth-child(4){
+		left: 135upx;
+	}
+	.dashangList image:nth-child(5){
+		left: 180upx;
+	}
+	.dashangList image:nth-child(6){
+		left: 225upx;
+	}
+	
+	.dashangList{
+		
+		padding-top: 20upx;
+		position: relative;
+		height: 60upx;
+		
+		text-align: center;
+	}
+	.mask{
+		position: fixed;
+		top: 0upx;
+		left: 0upx;
+		width: 100%;
+		height: 800upx;
+		background: rgba(0,0,0,0.4);
+		opacity:1;
+		transition: all 0.5s 0.2s;
+		z-index: 999;
+	}
+	.vipItem{
+		width: 332upx;
+		height: 169upx;
+		background-color: #F7F8FA;
+		color: #000000;
+		font-size: 28upx;
+		text-align: center;
+		margin-top: 10upx;
+		padding-top: 65upx;
+		
+	}
+	.paynumber{
+		
+		font-size: 28upx;
+		font-weight: 500;
+	}
+	.vipTitle{
+		font-size: 24upx;
+		margin-top: 16upx;
+		margin-bottom: 16upx;
+		color: #999999;
+	}
+	.vipItemXZ{
+		width: 332upx;
+		font-weight: 400;
+		height: 169upx;
+		background:rgba(121,196,152,0.3);
+		color: #79C498;
+		font-size: 28upx;
+		text-align: center;
+		margin-top: 10upx;
+		padding-top: 65upx;
+	}
+	.vipBox{
+		display: flex;
+		justify-content:space-between;
+		flex-wrap:wrap;
+		padding-top: 20upx;
+	}
+	.titlea{
+		margin: 16upx 0upx;
+		font-size: 32upx;
+		font-weight: Medium;
+		
+	}
+	.pay{
+		width: 100%;
+		padding: 38upx;
+		position: fixed;
+		height: 706upx;
+		bottom: -710upx;
+		background-color: #FFFFFF;
+		transition: all 0.4s;
+		z-index: 1000;
+	}
 	.zan{
 		margin-top: 1upx;
 		padding: 20px;
 		width: 100%;
-		height: 200upx;
+		
 		background-color: #FFFFFF;
 		text-align: center;
 	}
 	.zanlist{
-		margin-top: 10upx;
+		margin-top: 20upx;
+		
 	}
 	.usera{
 		display: grid;

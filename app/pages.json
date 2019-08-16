@@ -115,6 +115,10 @@
 		{
 			"path" : "pages/menu/chat",
 			"style" : {}
+		},
+		{
+			"path" : "pages/postinfo/dashang",
+			"style" : {}
 		}
     ],
 	"globalStyle": {
