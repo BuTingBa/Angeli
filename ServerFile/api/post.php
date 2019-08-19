@@ -302,6 +302,24 @@ switch ($_GET['type']) {
         }
         $data=$post->getDashangList($auid,$_GET['postId']);
         if(!$data){
+            $cout['count']=0;
+            $outmsg = array('code' =>'0','msg'=>'没有打赏','data'=>$data,'data'=>$cout);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getClassPostList':
+        $auid=$_SESSION['Auid'];
+        if(empty($_GET['classId'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
+        $data=$post->getClassPostList($_GET['classId'],empty($_GET['page'])?1:$_GET['page'],empty($_GET['count'])?20:$_GET['count'],$auid,$_GET['postType']);
+        if(!$data){
+            $cout['count']=0;
             $outmsg = array('code' =>'0','msg'=>'没有打赏','data'=>$data);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{

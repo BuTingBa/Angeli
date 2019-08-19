@@ -7,7 +7,7 @@
 		<view class="body">
 			
 			
-			<view class="friendList" v-for="(list,index) in list" :key="index">
+			<view class="friendList" v-for="(list,index) in list.data" :key="index">
 				<image :src="list.fromAuid.AuthorAvatarUrl" mode="scaleToFill"></image>
 				<view>{{list.fromAuid.AuthorName}}</view>
 				<view>+ 关注</view>
@@ -32,7 +32,6 @@
 		},
 		methods: {
 			getList:function(postid){
-				
 				uni.request({
 					method:'GET',
 					url: "https://api.angeli.top/post.php?type=getDashangList&postId="+postid, //仅为示例，并非真实接口地址。

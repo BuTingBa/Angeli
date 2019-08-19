@@ -105,76 +105,278 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));var _methods;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default =
 {
+  components: {
+    uniLoadMore: uniLoadMore },
+
   data: function data() {
     return {
-      TabCur: 0 };
+      TabCur: 0,
+      postList: [],
+      status: 'loading',
+      type: "new",
+      statusTypes: [{
+        value: 'more',
+        text: '加载前',
+        checked: true },
+      {
+        value: 'loading',
+        text: '加载中',
+        checked: false },
+      {
+        value: 'noMore',
+        text: '我是有底线的',
+        checked: false }],
+
+      contentText: {
+        contentdown: '查看更多',
+        contentrefresh: '加载中',
+        contentnomore: '我是有底线的' } };
+
 
   },
-  methods: {
-    tabSelect: function tabSelect(e) {
-      this.TabCur = e;
+  onLoad: function onLoad(e) {
+    this.classId = e.id;
+    this.getPostList(this.classId);
+  },
+  methods: (_methods = {
+    getbieren: function getbieren(e) {
+      uni.navigateTo({
+        url: '../i/bieren?auid=' + e });
 
-    } } };exports.default = _default;
+    },
+    getPostList: function getPostList(classId) {var _this = this;
+      uni.showLoading({
+        title: '获取数据中' });
+
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/post.php?type=getClassPostList', //仅为示例，并非真实接口地址。
+        data: {
+          page: 1,
+          count: 20,
+          classId: classId,
+          postType: this.type },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          uni.hideLoading();
+          _this.postList = [];
+          console.log("————————————帖子列表——————————");
+          _this.postList = res.data.data;
+          console.log(_this.postList);
+          _this.weikong = false;
+          if (res.data.code !== "1") {
+            uni.showToast({
+              title: '获取帖子失败，建议重启',
+              position: 'bottom',
+              icon: 'none' });
+
+          }
+          if (res.data.data == false) {
+            _this.weikong = true;
+          }
+          //this.$forceUpdate();
+        },
+        complete: function complete() {
+          uni.hideLoading();
+        } });
+
+
+    },
+    showImage: function showImage(res, c) {
+      uni.previewImage({
+        current: c,
+        urls: res,
+        longPressActions: {
+          itemList: ['发送给朋友', '保存图片', '收藏'],
+          success: function success(res) {
+
+            uni.showToast({
+              title: '选中了第' + (res.tapIndex + 1) + '个按钮',
+              position: 'bottom',
+              icon: 'none' });
+
+            console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+
+          },
+          fail: function fail(res) {
+            console.log(res.errMsg);
+          } } });
+
+
+    },
+    caidan: function caidan(res) {
+      console.log(res);
+      this.Dindex = res;
+      if (res.AuthorId == _server.default.userinfo.Auid) {
+        this.menuList = ['分享给朋友', '生成海报', '举报', '删除帖子'];
+      } else {
+        this.menuList = ['分享给朋友', '生成海报', '举报'];
+      }
+      uni.showActionSheet({
+        itemList: this.menuList,
+        success: function success(res) {
+          switch (res.tapIndex) {
+            case 0:
+              uni.showToast({
+                title: "分享" + res.Content,
+                position: 'bottom',
+                icon: 'none' });
+
+              break;
+            case 1:
+
+              break;
+            case 2:
+
+              break;
+            case 3:
+
+              break;
+            default:}
+
+
+        },
+        fail: function fail(res) {
+          console.log(res.errMsg);
+        } });
+
+    } }, _defineProperty(_methods, "showImage", function showImage(
+  res, c) {
+    uni.previewImage({
+      current: c,
+      urls: res,
+      longPressActions: {
+        itemList: ['发送给朋友', '保存图片', '收藏'],
+        success: function success(res) {
+
+          uni.showToast({
+            title: '选中了第' + (res.tapIndex + 1) + '个按钮',
+            position: 'bottom',
+            icon: 'none' });
+
+          console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+
+        },
+        fail: function fail(res) {
+          console.log(res.errMsg);
+        } } });
+
+
+  }), _defineProperty(_methods, "Like",
+  function Like(postid, auid, give, index) {var _this2 = this;
+    if (give === true) {
+      var modea = 'del';
+    } else {
+      var modea = 'add';
+    }
+    uni.request({
+      method: 'GET',
+      url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+      data: {
+        fuid: auid,
+        postid: postid,
+        mode: modea },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Cookie': _server.default.cookie },
+
+      success: function success(res) {
+        if (res.data.code == "1") {
+          if (modea == 'add') {
+            _this2.postList[index].Give = true;
+            uni.showToast({
+              title: "种草成功！",
+              position: 'bottom',
+              icon: 'none' });
+
+          } else {
+            _this2.postList[index].Give = false;
+            uni.showToast({
+              title: "取消种草成功！",
+              position: 'bottom',
+              icon: 'none' });
+
+          }
+
+          _this2.$forceUpdate();
+        } else {
+
+          uni.showToast({
+            title: "种草失败！",
+            position: 'bottom',
+            icon: 'none' });
+
+        }
+      },
+      complete: function complete() {
+
+      } });
+
+  }), _defineProperty(_methods, "tabSelect", function tabSelect(
+  e) {
+    this.TabCur = e;
+    if (e == 0) {
+      this.type = "new";
+    } else {
+      this.type = "hot";
+    }
+
+  }), _methods) };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

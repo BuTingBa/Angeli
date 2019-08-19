@@ -26,7 +26,8 @@
     "pages/i/bieren",
     "pages/menu/wallet",
     "pages/menu/tixian",
-    "pages/menu/chat"
+    "pages/menu/chat",
+    "pages/postinfo/dashang"
   ],
   "subPackages": [],
   "window": {

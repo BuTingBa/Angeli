@@ -10,7 +10,7 @@
 "use strict";
 /* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ 4);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | components/colorui/components/cu-custom */ "components/colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! components/colorui/components/cu-custom.vue */ 240));};var sunUiOos = function sunUiOos() {return Promise.all(/*! import() | components/sunui-upimg/sunui-upimg-alioos */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/sunui-upimg/sunui-upimg-alioos")]).then(__webpack_require__.bind(null, /*! ./components/sunui-upimg/sunui-upimg-alioos.vue */ 245));};
+var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | components/colorui/components/cu-custom */ "components/colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! components/colorui/components/cu-custom.vue */ 248));};var sunUiOos = function sunUiOos() {return Promise.all(/*! import() | components/sunui-upimg/sunui-upimg-alioos */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/sunui-upimg/sunui-upimg-alioos")]).then(__webpack_require__.bind(null, /*! ./components/sunui-upimg/sunui-upimg-alioos.vue */ 253));};
 
 
 _vue.default.component('cu-custom', cuCustom);
@@ -8179,6 +8179,23 @@ createPage(_chat.default);
 
 /***/ }),
 
+/***/ 240:
+/*!***********************************************************************!*\
+  !*** D:/Web/angeli/app/main.js?{"page":"pages%2Fpostinfo%2Fdashang"} ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _dashang = _interopRequireDefault(__webpack_require__(/*! ./pages/postinfo/dashang.vue */ 241));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_dashang.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
 /***/ 25:
 /*!***********************************!*\
   !*** D:/Web/angeli/app/server.js ***!
@@ -8199,7 +8216,7 @@ var postClass = [];var _default =
 
 /***/ }),
 
-/***/ 250:
+/***/ 258:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/config.js ***!
   \******************************************************************/
@@ -8225,7 +8242,7 @@ module.exports = config;
 
 /***/ }),
 
-/***/ 251:
+/***/ 259:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/base64.js ***!
   \******************************************************************/
@@ -8378,7 +8395,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 252:
+/***/ 260:
 /*!****************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/hmac.js ***!
   \****************************************************************/
@@ -8386,7 +8403,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var Crypto = __webpack_require__(/*! ./crypto.js */ 253);
+var Crypto = __webpack_require__(/*! ./crypto.js */ 261);
 
 (function () {
 
@@ -8423,7 +8440,7 @@ module.exports = Crypto;
 
 /***/ }),
 
-/***/ 253:
+/***/ 261:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/crypto.js ***!
   \******************************************************************/
@@ -8612,7 +8629,7 @@ module.exports = Crypto;
 
 /***/ }),
 
-/***/ 254:
+/***/ 262:
 /*!****************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/sha1.js ***!
   \****************************************************************/
@@ -8620,7 +8637,7 @@ module.exports = Crypto;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var Crypto = __webpack_require__(/*! ./crypto.js */ 253);
+var Crypto = __webpack_require__(/*! ./crypto.js */ 261);
 
 (function () {
 
@@ -8715,23 +8732,6 @@ module.exports = Crypto;
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _post = _interopRequireDefault(__webpack_require__(/*! ./pages/post/post.vue */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_post.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-
-/***/ 286:
-/*!***********************************************************************!*\
-  !*** D:/Web/angeli/app/main.js?{"page":"pages%2Fpostinfo%2Fdashang"} ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _dashang = _interopRequireDefault(__webpack_require__(/*! ./pages/postinfo/dashang.vue */ 287));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_dashang.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),

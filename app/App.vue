@@ -24,7 +24,11 @@
 					// #endif
 				}
 			})
+		},
+		methods:function(){
+			
 		}
+		
 	}
 </script>
 

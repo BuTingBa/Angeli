@@ -23,16 +23,98 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+
+    /**获取我的账单信息
+     * @return array
+     */
+    public function getClassInfo($classId)
+    {
+        $sql = "SELECT * FROM angeli_posts WHERE PostsId='$classId'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            $data=[];
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $aa=array(
+                        'billId'=>$row['id'],
+                        'type'=>$row['type'],
+                        'number'=>$row['number'],
+                        'note'=>$row['note'],
+                        'time'=>date('Y-m-d H:i:s',$row['opentime'])
+                    );
+                    array_push($data,$aa);
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+    /**
+     * 获取分类帖子列表
+     * @return array
+     */
+    public function getClassPostList($classId,$page=1,$count=20,$uid,$type)
+    {
+        $pageNum=($page-1)*$count;
+        if($type=="new"){
+            $sql = "SELECT * FROM angeli_posts WHERE Tag=$classId AND PostType='1' AND IsLock<>'2' ORDER BY PsotDate  DESC  LIMIT $pageNum, $count";
+        }else{
+            $sql = "SELECT * FROM angeli_posts WHERE Tag=$classId AND PostType='1' AND IsLock<>'2' ORDER BY ZhongcaoCount  DESC  LIMIT $pageNum, $count";
+        }
+
+        //echo $sql;
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+            if($this->mysqli->affected_rows>0){
+                $data= [];
+                while($row = $result->fetch_assoc()) {
+                    $da = array(
+                        'PostsId' =>$row["PostsId"],
+                        'AuthorId' =>$row["AuthorId"],
+                        'Content' =>$row["Content"],
+                        'Tag' =>$this->getClassinfo($row["Tag"]),
+                        'PsotDate' =>$this->uc_time_ago($row["PsotDate"]),
+                        'ZhongcaoCount' =>$row["ZhongcaoCount"],
+                        'ViewCount' =>$row["ViewCount"],
+                        'PostType' =>$row["PostType"],
+                        'PostSum' =>$row["PostSum"],
+                        'RewardEndTime' =>$row["RewardEndTime"],
+                        'PictureId' =>explode(',',$row["PictureId"]),
+                        'AuthorInfo'=>$this->getInfo($row["AuthorId"]),
+                        'Give'=>$this->checkGive($uid,$row["PostsId"])
+                    );
+                    $data[]=$da;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
     /*
      * 查询打赏列表
      */
+
+
     public function getDashangList($auid,$postid){
         $sql="SELECT * FROM angeli_dashang WHERE postId=$postid";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if($this->mysqli->affected_rows<1){
+
+
             return 0;
         }else{
             while($row = $result->fetch_assoc()){
+                $index++;
                 $d=array(
                     'id'=>$row['postId'],
                     'postId'=>$row['postId'],
@@ -42,8 +124,9 @@ class angeli
                     'number'=>$row['number'],
                     'time'=>date("Y-m-d H:i:s",$row['addtime'])
                 );
-                $data[]=$d;
+                $data['data'][]=$d;
             }
+            $data['count']=$index;
             return $data;
         }
 

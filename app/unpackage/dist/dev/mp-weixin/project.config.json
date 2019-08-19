@@ -1,68 +1,70 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.7.0",
-  "appid": "wxb2418420ae2cf37c",
-  "projectname": "安个利",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": 3,
-      "list": [
-        {
-          "name": "首页启动",
-          "query": "",
-          "id": 0,
-          "pathName": "pages/Home/Home"
-        },
-        {
-          "name": "注册",
-          "query": "",
-          "id": 1,
-          "pathName": "pages/reg/reg"
-        },
-        {
-          "name": "话题帖子",
-          "query": "",
-          "id": 2,
-          "pathName": "pages/classPost/classPost"
-        },
-        {
-          "name": "信息通知",
-          "query": "",
-          "id": 3,
-          "pathName": "pages/menu/Message"
-        },
-        {
-          "name": "olun",
-          "query": "",
-          "id": 4,
-          "pathName": "pages/menu/chat"
-        },
-        {
-          "name": "钱包",
-          "query": "",
-          "id": 5,
-          "pathName": "pages/menu/wallet"
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.7.0",
+	"appid": "wxb2418420ae2cf37c",
+	"projectname": "安个利",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 3,
+			"list": [
+				{
+					"name": "首页启动",
+					"query": "",
+					"id": 0,
+					"pathName": "pages/Home/Home"
+				},
+				{
+					"name": "注册",
+					"query": "",
+					"id": 1,
+					"pathName": "pages/reg/reg"
+				},
+				{
+					"name": "话题帖子",
+					"query": "",
+					"id": 2,
+					"pathName": "pages/classPost/classPost"
+				},
+				{
+					"name": "信息通知",
+					"query": "",
+					"id": 3,
+					"pathName": "pages/menu/Message"
+				},
+				{
+					"name": "olun",
+					"query": "",
+					"id": 4,
+					"pathName": "pages/menu/chat"
+				},
+				{
+					"name": "钱包",
+					"query": "",
+					"id": 5,
+					"pathName": "pages/menu/wallet"
+				}
+			]
+		}
+	}
 }

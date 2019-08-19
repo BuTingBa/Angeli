@@ -32,17 +32,13 @@
 			<view class="zananiu">
 				 <button class="cu-btn round bg-red button-hover" @tap="showKaitong">赞赏</button>
 			</view>
-			<!-- <view class="zanlist">
+			<view class="zanlist" v-if="dslist==0">
 				还没有人给过钱，快来做第一个给钱的吧！
-			</view> -->
-			<view class="dashangList" @click="getList">
+			</view>
+			<view class="dashangList" @click="getList" v-if="dslist.count>0">
 				<view class="jiaozheng">
-					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
-					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
-					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
-					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
-					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
-					<image :src="postInfo.AuthorInfo.AuthorAvatarUrl" mode="" class="dslist"></image>
+					<image v-for="(ds,id) in dslist.data" :key="id" :src="ds.fromAuid.AuthorAvatarUrl" mode="" class="dslist" >{{ds.fromAuid.AuthorAvatarUrl}}</image>
+					
 				</view>
 				
 			</view>
@@ -115,6 +111,7 @@
 			return {
 				postInfo:[],
 				pllist:[],
+				dslist:[],
 				showVip:false,
 				InputBottom: 0,
 				plnr:"",
@@ -143,6 +140,7 @@
 		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
 			console.log(option.id); //打印出上个页面传递的参数。
 			this.postid=option.id;
+			this.getdsList(this.postid);
 			uni.request({
 				method:'GET',
 				url: 'https://api.angeli.top/post.php?type=outPostInfo', 
@@ -176,9 +174,37 @@
 					});
 				}
 			});
+			
+			console.log(this.dslist)
 		},
 		
 		methods: {
+			getdsList:function(postid){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/post.php?type=getDashangList&postId="+postid, //仅为示例，并非真实接口地址。
+					data: {
+					
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						if(res.data.code=="1"){
+							this.dslist=res.data.data
+							console.log("打赏输出")
+							console.log(this.dslist);
+							this.$forceUpdate()
+						}else{
+							this.dslist=0;
+						}
+					},
+					complete() {
+						
+					}
+				});
+			},
 			getList:function(){
 				uni.navigateTo({
 					url:"dashang?id="+this.postid
@@ -515,43 +541,22 @@
 
 <style>
 	.dslist{
-		position: absolute;
 		width: 50upx;
 		height: 50upx;
 		border-radius: 50%;
+		margin: 0 4upx;
+		
 	}
 	.jiaozheng{
-		position: absolute;
-		left: 50%;
-		height: 100%;
-		width: 260upx;
-		margin-left: -130Upx;
+		text-align: center;
 	}
-	.dashangList image:nth-child(1){
-		left: 0upx;
-	}
-	.dashangList image:nth-child(2){
-		left: 45upx;
-	}
-	.dashangList image:nth-child(3){
-		left: 90upx;
-	}
-	.dashangList image:nth-child(4){
-		left: 135upx;
-	}
-	.dashangList image:nth-child(5){
-		left: 180upx;
-	}
-	.dashangList image:nth-child(6){
-		left: 225upx;
-	}
+	
 	
 	.dashangList{
 		
 		padding-top: 20upx;
 		position: relative;
 		height: 60upx;
-		
 		text-align: center;
 	}
 	.mask{

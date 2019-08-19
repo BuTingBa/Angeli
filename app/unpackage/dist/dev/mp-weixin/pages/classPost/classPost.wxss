@@ -47,5 +47,6 @@
 	height: 90rpx;
 	width: 90rpx;
 	background-image: url("https://pic.qqtn.com/up/2017-11/15114902797453337.gif");
+	position: relative;
 }
 
