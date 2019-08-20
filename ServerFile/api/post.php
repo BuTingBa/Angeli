@@ -327,8 +327,19 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
-    case 'test':
-        $post->setPoints('6666','+',500,'充值安个利币');
+    case 'getClassInfo':
+        if(empty($_GET['classId'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$post->getClassinfo($_GET['classId']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'获取失败','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         break;
 
     default:

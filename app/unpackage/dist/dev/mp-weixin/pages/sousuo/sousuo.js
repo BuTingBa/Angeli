@@ -409,7 +409,7 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
     },
     getPOST: function getPOST(id) {
       uni.navigateTo({
-        url: '../classPost/classPost' });
+        url: '../classPost/classPost?id=' + id });
 
     },
     getpostinfo: function getpostinfo(id) {

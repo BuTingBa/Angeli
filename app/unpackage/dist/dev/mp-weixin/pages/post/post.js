@@ -186,9 +186,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   onBackPress: function onBackPress() {
-    /* uni.redirectTo({
-                                       	url: '../Home/Home?type=plusPost'
-                                       }) */
+    uni.redirectTo({
+      url: '../Home/Home?type=plusPost' });
+
   },
 
   onShow: function onShow() {

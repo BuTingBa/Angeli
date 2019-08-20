@@ -174,7 +174,7 @@
 						<view class="menusolid"></view>
 						<view class="menuItem" @click="getJifen">
 							<view class="menuIcon aicon-jifen"></view>
-							<view class="menuTiele">积分查询</view>
+							<view class="menuTiele">种草排行</view>
 							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>

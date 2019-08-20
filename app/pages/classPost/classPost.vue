@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<view class="head" :style="{'background-image':'url('+'https://sz.oss.data.angeli.top/system/1%20%289%29.jpg'+')'}">
+		<view class="head" :style="{'background-image':'url('+classinfo.ClassImageMax+')'}">
 			<view class="titleBox">
-				<view class="title">美食探店</view>
-				<view class="fabu">立即参与</view>
+				<view class="title">{{classinfo.ClassName}}</view>
+				<view class="fabu" @click="getPushPost">立即参与</view>
 			</view>
 			<view class="info">
-				34人参与·15.1万次浏览
+				{{classinfo.canyu}}人参与·{{classinfo.ViewCount}}次浏览
 			</view>
 		</view>
 		<view class="daohang" >
@@ -56,6 +56,7 @@
 				postList:[],
 				status: 'loading',
 				type:"new",
+				classinfo:[],
 				statusTypes: [{
 					value: 'more',
 					text: '加载前',
@@ -78,9 +79,62 @@
 		},
 		onLoad:function(e){
 			this.classId=e.id;
+			this.getClassInfo(this.classId);
 			this.getPostList(this.classId);
 		},
 		methods: {
+			getPushPost:function(){
+				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+					uni.showToast({
+						title: "你还没有登录，请登录后再来吧",
+						position:'bottom',
+						icon:'none'
+					});
+					setTimeout(function () {
+						uni.navigateTo({
+							url: '../reg/reg'
+						})
+					}, 1200);
+				}else{
+					server.postClass=this.classinfo;
+					uni.navigateTo({
+						url: '../post/post'
+					})
+				}
+			},
+			getClassInfo:function(e){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/post.php?type=getClassInfo', //仅为示例，并非真实接口地址。
+					data: {
+						classId:e,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						uni.hideLoading();
+						this.classinfo=[]
+						this.classinfo=res.data.data;
+						console.log(this.classinfo);
+						this.weikong=false
+						if(res.data.code!=="1"){
+							uni.showToast({
+								title: '获取话题信息失败',
+								position:'bottom',
+								icon:'none'
+							});
+						}
+						this.$forceUpdate();
+					}
+				});
+			},
+			getpostinfo:function(id){
+				uni.navigateTo({
+					url: '../postinfo/postinfo?id='+id
+				});
+			},
 			getbieren:function(e){
 				uni.navigateTo({
 					url: '../i/bieren?auid='+e

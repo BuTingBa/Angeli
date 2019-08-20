@@ -79,9 +79,9 @@
 			}
 		},
 		onBackPress:function(){
-			/* uni.redirectTo({
+			uni.redirectTo({
 				url: '../Home/Home?type=plusPost'
-			}) */
+			})
 		}
 		,
 		onShow:function(){

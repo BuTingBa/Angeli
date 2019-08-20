@@ -19,7 +19,7 @@
 				<view class="TopName">话题分类</view>
 				<scroll-view class="lunbo " scroll-x="true" @scroll="log">
 					<view class="bianju"></view>
-					<view class="lunboItem radius shadow-blur " v-for="(typea,index) in classList" :key="index" :style="{'background-image':'url('+typea.ClassImage+')'}" @tap="getPOST(typea)">
+					<view class="lunboItem radius shadow-blur " v-for="(typea,index) in classList" :key="index" :style="{'background-image':'url('+typea.ClassImage+')'}" @tap="getPOST(typea.ClassId)">
 						<view class="text-c">{{typea.ClassName}}</view>
 					</view>
 					
@@ -302,8 +302,8 @@
 			},
 			getPOST:function(id){
 				uni.navigateTo({
-					url: '../classPost/classPost'
-				});
+					url: '../classPost/classPost?id='+id
+				})
 			},
 			getpostinfo:function(id){
 				uni.navigateTo({

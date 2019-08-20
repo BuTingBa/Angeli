@@ -23,36 +23,6 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
-
-    /**获取我的账单信息
-     * @return array
-     */
-    public function getClassInfo($classId)
-    {
-        $sql = "SELECT * FROM angeli_posts WHERE PostsId='$classId'";
-        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
-        if(!$result){
-            //表示操作失败
-            return false;
-        }else{
-            $data=[];
-            if($this->mysqli->affected_rows>0){
-                while($row = $result->fetch_assoc()){
-                    $aa=array(
-                        'billId'=>$row['id'],
-                        'type'=>$row['type'],
-                        'number'=>$row['number'],
-                        'note'=>$row['note'],
-                        'time'=>date('Y-m-d H:i:s',$row['opentime'])
-                    );
-                    array_push($data,$aa);
-                }
-                return $data;
-            }else{
-                return FALSE;
-            }
-        }
-    }
     /**
      * 获取分类帖子列表
      * @return array
@@ -1874,7 +1844,9 @@ class angeli
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
             if($this->mysqli->affected_rows>0){
+                $classid='';
                 while($row = $result->fetch_assoc()) {
+                    $classid=$row["Tag"];
                     $data = array(
                         'PostsId' =>$row["PostsId"],
                         'AuthorId' =>$row["AuthorId"],
@@ -1892,6 +1864,8 @@ class angeli
                     );
                 }
                 $sql="UPDATE angeli_posts SET ViewCount=ViewCount+1 WHERE PostsId='$postID'";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                $sql="UPDATE angeli_class SET ViewCount=ViewCount+1 WHERE ClassId='$classid'";
                 $result=$this->mysqli->query($sql) or die($this->mysqli->error);
                 return $data;
             }else{
@@ -2124,7 +2098,7 @@ class angeli
     }
 
     //获取分类信息
-    function getClassinfo($classId){
+    public function getClassinfo($classId){
         $sql="SELECT * from angeli_class WHERE ClassId='$classId'";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
@@ -2137,7 +2111,10 @@ class angeli
                         'ClassId' =>$row['ClassId'],
                         'ClassName'=>$row['ClassName'],
                         'ClassImage'=>$row['ClassImage'],
-                        'ClassOrder'=>$row['ClassOrder']
+                        'ClassImageMax'=>$row['ClassMaxImage'],
+                        'ClassOrder'=>$row['ClassOrder'],
+                        'ViewCount'=>$row['ViewCount'],
+                        'canyu'=>$this->getClassPostConut($classId)
                     );
                 }
                 return $outmsg;
@@ -2146,6 +2123,21 @@ class angeli
             }
         }
     }
+
+
+    function getClassPostConut($classId){
+        $sql="SELECT COUNT(*) as number FROM angeli_posts where Tag='$classId'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if($row=$this->mysqli->affected_rows>0){
+            while($row = $result->fetch_assoc()) {
+                return $row['number'];
+            }
+
+        }else{
+            return FALSE;
+        }
+    }
+
     //写到错误日志
     function errorLog($str)
     {

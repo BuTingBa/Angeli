@@ -163,6 +163,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       postList: [],
       status: 'loading',
       type: "new",
+      classinfo: [],
       statusTypes: [{
         value: 'more',
         text: '加载前',
@@ -185,15 +186,68 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
   },
   onLoad: function onLoad(e) {
     this.classId = e.id;
+    this.getClassInfo(this.classId);
     this.getPostList(this.classId);
   },
   methods: (_methods = {
+    getPushPost: function getPushPost() {
+      if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+        uni.showToast({
+          title: "你还没有登录，请登录后再来吧",
+          position: 'bottom',
+          icon: 'none' });
+
+        setTimeout(function () {
+          uni.navigateTo({
+            url: '../reg/reg' });
+
+        }, 1200);
+      } else {
+        _server.default.postClass = this.classinfo;
+        uni.navigateTo({
+          url: '../post/post' });
+
+      }
+    },
+    getClassInfo: function getClassInfo(e) {var _this = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/post.php?type=getClassInfo', //仅为示例，并非真实接口地址。
+        data: {
+          classId: e },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          uni.hideLoading();
+          _this.classinfo = [];
+          _this.classinfo = res.data.data;
+          console.log(_this.classinfo);
+          _this.weikong = false;
+          if (res.data.code !== "1") {
+            uni.showToast({
+              title: '获取话题信息失败',
+              position: 'bottom',
+              icon: 'none' });
+
+          }
+          _this.$forceUpdate();
+        } });
+
+    },
+    getpostinfo: function getpostinfo(id) {
+      uni.navigateTo({
+        url: '../postinfo/postinfo?id=' + id });
+
+    },
     getbieren: function getbieren(e) {
       uni.navigateTo({
         url: '../i/bieren?auid=' + e });
 
     },
-    getPostList: function getPostList(classId) {var _this = this;
+    getPostList: function getPostList(classId) {var _this2 = this;
       uni.showLoading({
         title: '获取数据中' });
 
@@ -212,11 +266,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         success: function success(res) {
           uni.hideLoading();
-          _this.postList = [];
+          _this2.postList = [];
           console.log("————————————帖子列表——————————");
-          _this.postList = res.data.data;
-          console.log(_this.postList);
-          _this.weikong = false;
+          _this2.postList = res.data.data;
+          console.log(_this2.postList);
+          _this2.weikong = false;
           if (res.data.code !== "1") {
             uni.showToast({
               title: '获取帖子失败，建议重启',
@@ -225,7 +279,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
           }
           if (res.data.data == false) {
-            _this.weikong = true;
+            _this2.weikong = true;
           }
           //this.$forceUpdate();
         },
@@ -316,7 +370,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
   }), _defineProperty(_methods, "Like",
-  function Like(postid, auid, give, index) {var _this2 = this;
+  function Like(postid, auid, give, index) {var _this3 = this;
     if (give === true) {
       var modea = 'del';
     } else {
@@ -337,14 +391,14 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       success: function success(res) {
         if (res.data.code == "1") {
           if (modea == 'add') {
-            _this2.postList[index].Give = true;
+            _this3.postList[index].Give = true;
             uni.showToast({
               title: "种草成功！",
               position: 'bottom',
               icon: 'none' });
 
           } else {
-            _this2.postList[index].Give = false;
+            _this3.postList[index].Give = false;
             uni.showToast({
               title: "取消种草成功！",
               position: 'bottom',
@@ -352,7 +406,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
           }
 
-          _this2.$forceUpdate();
+          _this3.$forceUpdate();
         } else {
 
           uni.showToast({
