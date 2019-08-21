@@ -23,6 +23,70 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+    /*
+     * 关注好友获取取消关注
+     */
+    public function gzORungz($guanzhuid,$beiguanzhu){
+
+        if(!$this->isGuanzhu($guanzhuid,$beiguanzhu)){
+            //关注
+            $time=time();
+            $sql="INSERT INTO angeli_guanzhu(guanzhu,beiguanzhu,opentime) VALUES ($guanzhuid,$beiguanzhu,$time)";
+            $txt='关注成功';
+            $result=$this->mysqli->query($sql);
+            if(!$result){
+                return false;
+            }else{
+                if($this->mysqli->affected_rows>0){
+                    $sql="UPDATE angeli_user SET FollowerCount=FollowerCount+1 WHERE AuId=$beiguanzhu";
+                    $this->mysqli->query($sql);
+                    $sql="UPDATE angeli_user SET FollowedCount=FollowedCount+1 WHERE AuId=$guanzhuid";
+                    $this->mysqli->query($sql);
+                    return $txt;
+                }else{
+                    $sql="UPDATE angeli_user SET FollowerCount=FollowerCount-1 WHERE AuId=$beiguanzhu";
+                    $this->mysqli->query($sql);
+                    $sql="UPDATE angeli_user SET FollowedCount=FollowedCount-1 WHERE AuId=$guanzhuid";
+                    $this->mysqli->query($sql);
+                    return false;
+                }
+            }
+        }else{
+            //取消关注
+            $sql="DELETE FROM angeli_guanzhu WHERE guanzhu=$guanzhuid AND beiguanzhu=$beiguanzhu";
+            $txt='取消关注成功';
+            $result=$this->mysqli->query($sql);
+            if(!$result){
+                return false;
+            }else{
+                if($this->mysqli->affected_rows>0){
+
+                    return $txt;
+                }else{
+                    return false;
+                }
+            }
+        }
+
+    }
+    /*
+     * 检查是否是关注关系
+     */
+    public function isGuanzhu($auid,$beichaxun){
+        $sql="SELECT * FROM angeli_guanzhu WHERE guanzhu=$auid AND beiguanzhu=$beichaxun";
+        $result=$this->mysqli->query($sql);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+    }
+
     /**
      * 获取分类帖子列表
      * @return array
@@ -35,7 +99,6 @@ class angeli
         }else{
             $sql = "SELECT * FROM angeli_posts WHERE Tag=$classId AND PostType='1' AND IsLock<>'2' ORDER BY ZhongcaoCount  DESC  LIMIT $pageNum, $count";
         }
-
         //echo $sql;
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
@@ -1376,7 +1439,7 @@ class angeli
     *   获取用户信息
     *   参数：查询关键字类型，查询关键字
     */
-    public function getUserInfo($type,$keyword)
+    public function getUserInfo($type,$keyword,$auid='0')
     {
         switch ($type) {
             case 'wxid':
@@ -1434,6 +1497,7 @@ class angeli
                         'Points' =>$row["Points"],
                         'Aglc' =>$row["Aglc"],
                         'Rank' =>$row["Rank"],
+                        'guanzhu'=>$this->isGuanzhu($auid,$row["AuId"])
                     );
                 }
                 return $data;

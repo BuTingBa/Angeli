@@ -22,7 +22,6 @@
 					<view class="lunboItem radius shadow-blur " v-for="(typea,index) in classList" :key="index" :style="{'background-image':'url('+typea.ClassImage+')'}" @tap="getPOST(typea.ClassId)">
 						<view class="text-c">{{typea.ClassName}}</view>
 					</view>
-					
 					<view class="bianju"></view>
 				</scroll-view>
 			</view>

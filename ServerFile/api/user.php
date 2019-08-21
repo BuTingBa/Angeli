@@ -23,7 +23,8 @@ if(empty($_GET['type']))
 
 switch ($_GET['type']){
     case 'getUserInfo':
-        $info=$user->getUserInfo('auid',$_GET['auid']);
+        $auid=$_SESSION['Auid'];
+        $info=$user->getUserInfo('auid',$_GET['auid'],$auid);
         if($info){
             $outmsg = array('code' =>'1','msg'=>'OK','data'=>$info);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
@@ -188,6 +189,26 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
             $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'gzORungz':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        if(empty($_GET['uid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$user->gzORungz($auid,$_GET['uid']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'操作失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>$data,'data'=>$data);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;

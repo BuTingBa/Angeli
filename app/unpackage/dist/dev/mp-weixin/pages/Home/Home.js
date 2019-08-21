@@ -810,7 +810,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         }, 1200);
       } else {
-        uni.redirectTo({
+        uni.navigateTo({
           url: '../post/post' });
 
       }

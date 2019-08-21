@@ -180,7 +180,7 @@
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="set">
 							<view class="menuIcon aicon-shop"></view>
-							<view class="menuTiele">商城</view>
+							<view class="menuTiele">Angeli Shop</view>
 							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>
@@ -703,7 +703,7 @@
 						})
 					}, 1200);
 				}else{
-					uni.redirectTo({
+					uni.navigateTo({
 						url: '../post/post'
 					})
 				}

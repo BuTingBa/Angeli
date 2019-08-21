@@ -235,9 +235,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
 //
 //
 //
@@ -370,7 +368,8 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
       header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this.classList = res.data.data;console.log(_this.classList);} });}, onReachBottom: function onReachBottom() {var _this2 = this;this.page++;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
       data: { keyword: this.inputVal, count: 20, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子列表——————————" + _this2.page);if (res.data.data.length == undefined) {_this2.page--;_this2.status = "noMore";} else {_this2.postList = _this2.postList.concat(res.data.data);_this2.status = "loading";_this2.$forceUpdate();console.log(_this2.postList);}} });}, methods: { sososo: function sososo(event) {//this.inputVal=event.detail.value;
       this.home = false;this.requestSousuo(0);}, requestSousuo: function requestSousuo(type) {var _this3 = this;if (type == 0) {uni.showLoading({ title: '搜索中..', mask: true });uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
-          data: { keyword: this.inputVal, count: 20, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this3.postList = [];console.log(res.data.data);console.log("————————————帖子列表——————————");_this3.postList = res.data.data;console.log(_this3.postList);_this3.weikong = false;if (res.data.code !== "1") {_this3.weikong = true;}if (res.data.data == false) {_this3.weikong = true;}if (res.data.data.length < 21) {_this3.status = "noMore";}_this3.$forceUpdate();}, complete: function complete() {uni.hideLoading();} });} else {uni.showLoading({ title: '搜索中..', mask: true });
+          data: { keyword: this.inputVal, count: 20, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this3.postList = [];console.log(res.data.data);console.log("————————————帖子列表——————————");_this3.postList = res.data.data;console.log(_this3.postList);_this3.weikong = false;if (res.data.code !== "1") {_this3.weikong = true;}if (res.data.data == false) {_this3.weikong = true;}if (res.data.data.length < 21) {_this3.status = "noMore";}_this3.$forceUpdate();}, complete: function complete() {uni.hideLoading();} });} else {uni.showLoading({ title: '搜索中..',
+          mask: true });
 
         uni.request({
           method: 'GET',

@@ -13,11 +13,10 @@
 						<view style="vertical-align: top;color: #0081FF;display: inline-block;font-weight:bold;font-size: 30upx;" :style="{color:(name.Gender==2?'#79C498':'#79C498')}">{{sex}}</view>
 						<view class='cu-tag line-green dengji' :style="{color:(name.Gender==2?'#FF1493':'#4169E1')}">Lv.{{name.Rank}}</view>
 						<text selectable="true" >\nID:{{name.Auid}}</text>
-						
 					</view>
 					<view class="editinfo" >
-						<button class="button-sixin" @tap="getEditInfo()"></button>
-						<button class="button-edituserinfo" @tap="getEditInfo()">+ 关注</button>
+						<button class="button-sixin" @tap="getChat(auid)"></button>
+						<button class="button-edituserinfo" @tap="getGuanzhu(auid)" :class="gz=='取消关注'?'button-edituserinfoXZ':'button-edituserinfo'">{{gz}}</button>
 					</view>
 					<view class="miaoshu"><text selectable="true">{{name.Synopsis}}</text></view>
 					
@@ -99,11 +98,13 @@
 			return {
 				name:[],
 				sex:'♀',
+				gz:'+关注',
 				TabCur: 0,
 				CustomBar: this.CustomBar,
 				page:1,
 				weikong:true,
 				postList:[],
+				auid:0,
 				status: 'loading',
 				statusTypes: [{
 					value: 'more',
@@ -127,6 +128,7 @@
 		},
 		onLoad:function(e){
 			console.log(e.auid)
+			this.auid=e.auid;
 			uni.request({
 				method:'GET',
 				url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
@@ -141,6 +143,9 @@
 					console.log(res)
 					this.name=res.data.data
 					this.getPostList(this.name.Auid)
+					if(res.data.data.guanzhu==true){
+						this.gz="取消关注";
+					}
 					
 				}
 			});
@@ -151,8 +156,39 @@
 			}
 		},
 		methods: {
+			getChat:function(id){
+				let go=parseInt(id)+parseInt(server.userinfo.Auid);
+				uni.navigateTo({
+					url: '../menu/chat?id='+go
+				});
+			},
 			tabSelect(e) {
 				this.TabCur = e
+			},
+			getGuanzhu:function(uid){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
+					data: {
+						uid: uid,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						});
+						if(res.data.msg=='关注成功'){
+							this.gz="取消关注";
+						}else{
+							this.gz="+关注";
+						}
+					}
+				}); 
 			},
 			getPost:function(id){
 				console.log(id)
@@ -188,8 +224,6 @@
 							this.weikong=false;
 							console.log(this.postList);
 						}
-						
-						
 					}
 				}); 
 			}
@@ -328,7 +362,17 @@
 		color: #FFFFFF;
 		border-radius: 25upx;
 		display: inline-block;
-		
+	}
+	.button-edituserinfoXZ{
+		background-color: #E5E4EA;
+		height: 49upx;
+		width: 116upx;
+		font-size: 24upx;
+		vertical-align:auto;
+		line-height: 49upx;
+		color: #999999;
+		border-radius: 25upx;
+		display: inline-block;
 	}
 	.button-sixin{
 		width: 49upx;

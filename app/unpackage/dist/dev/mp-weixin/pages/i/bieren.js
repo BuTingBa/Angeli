@@ -195,7 +195,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -285,23 +284,58 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
-var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { name: [], sex: '♀', TabCur: 0, CustomBar: this.CustomBar, page: 1, weikong: true, postList: [], status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' } };}, onLoad: function onLoad(e) {var _this = this;console.log(e.auid);uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
-      data: { auid: e.auid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);_this.name = res.data.data;_this.getPostList(_this.name.Auid);} });if (this.name.Gender == "2") {this.sex = '♀';} else {this.sex = '♂';}}, methods: { tabSelect: function tabSelect(e) {this.TabCur = e;}, getPost: function getPost(id) {console.log(id);uni.navigateTo({ url: '../postinfo/postinfo?id=' + id });}, getEditInfo: function getEditInfo() {uni.navigateTo({ url: '../editinfo/editinfo' });}, getPostList: function getPostList(auid) {var _this2 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=myPostList', //仅为示例，并非真实接口地址。
-        data: { uid: auid, count: 10, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.data.length == undefined) {_this2.status = "noMore";_this2.weikong = true;
+var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { name: [], sex: '♀', gz: '+关注', TabCur: 0, CustomBar: this.CustomBar, page: 1, weikong: true, postList: [], auid: 0, status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' } };}, onLoad: function onLoad(e) {var _this = this;console.log(e.auid);this.auid = e.auid;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
+      data: { auid: e.auid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);_this.name = res.data.data;_this.getPostList(_this.name.Auid);if (res.data.data.guanzhu == true) {_this.gz = "取消关注";}} });if (this.name.Gender == "2") {this.sex = '♀';} else {this.sex = '♂';}}, methods: { getChat: function getChat(id) {var go = parseInt(id) + parseInt(_server.default.userinfo.Auid);uni.navigateTo({ url: '../menu/chat?id=' + go });}, tabSelect: function tabSelect(e) {this.TabCur = e;}, getGuanzhu: function getGuanzhu(uid) {var _this2 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
+        data: { uid: uid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {uni.showToast({ title: res.data.msg, position: 'bottom',
+            icon: 'none' });
+
+          if (res.data.msg == '关注成功') {
+            _this2.gz = "取消关注";
           } else {
-            _this2.postList = res.data.data;
-            _this2.status = "more";
-            _this2.weikong = false;
-            console.log(_this2.postList);
+            _this2.gz = "+关注";
           }
+        } });
 
+    },
+    getPost: function getPost(id) {
+      console.log(id);
+      uni.navigateTo({
+        url: '../postinfo/postinfo?id=' + id });
 
+    },
+    getEditInfo: function getEditInfo() {
+      uni.navigateTo({
+        url: '../editinfo/editinfo' });
+
+    },
+    getPostList: function getPostList(auid) {var _this3 = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/post.php?type=myPostList', //仅为示例，并非真实接口地址。
+        data: {
+          uid: auid,
+          count: 10,
+          page: this.page },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          if (res.data.data.length == undefined) {
+            _this3.status = "noMore";
+            _this3.weikong = true;
+          } else {
+            _this3.postList = res.data.data;
+            _this3.status = "more";
+            _this3.weikong = false;
+            console.log(_this3.postList);
+          }
         } });
 
     } },
 
-  onReachBottom: function onReachBottom() {var _this3 = this;
+  onReachBottom: function onReachBottom() {var _this4 = this;
     this.status = "loading";
     this.page++;
     console.log("拉倒低了", this.page);
@@ -319,12 +353,12 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
 
       success: function success(res) {
         if (res.data.data.length == undefined) {
-          _this3.page--;
-          _this3.status = "noMore";
+          _this4.page--;
+          _this4.status = "noMore";
         } else {
-          _this3.postList = _this3.postList.concat(res.data.data);
-          _this3.status = "more";
-          console.log(_this3.postList);
+          _this4.postList = _this4.postList.concat(res.data.data);
+          _this4.status = "more";
+          console.log(_this4.postList);
         }
 
       } });
