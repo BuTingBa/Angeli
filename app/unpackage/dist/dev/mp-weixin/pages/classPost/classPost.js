@@ -243,9 +243,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     getbieren: function getbieren(e) {
-      uni.navigateTo({
-        url: '../i/bieren?auid=' + e });
+      if (e == _server.default.userinfo.Auid) {
+        uni.navigateTo({
+          url: '../i/i' });
 
+      } else {
+        uni.navigateTo({
+          url: '../i/bieren?auid=' + e });
+
+      }
     },
     getPostList: function getPostList(classId) {var _this2 = this;
       uni.showLoading({

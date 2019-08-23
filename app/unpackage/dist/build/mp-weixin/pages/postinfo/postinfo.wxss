@@ -160,7 +160,6 @@
 	margin-top:5px;
 	margin-bottom:15px;
 	margin-right:15px;
-	margin-left:15px;
 }
 .user{
   height: 200px;

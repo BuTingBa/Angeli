@@ -315,9 +315,10 @@
 						this.monnumber=1000
 						break;
 					case 4:
+						this.monnumber=100
 						break;
 					default:
-						this.monnumber=0
+						this.monnumber=100
 						break;
 				}
 				this.xzId=e

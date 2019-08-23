@@ -105,49 +105,87 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { dataList: [] };}, onLoad: function onLoad() {this.getMypengyou();}, methods: { getbieren: function getbieren(e) {if (e == _server.default.userinfo.Auid) {uni.navigateTo({ url: '../i/i' });} else {uni.navigateTo({ url: '../i/bieren?auid=' + e });}}, getChat: function getChat(id) {var go = parseInt(id) + parseInt(_server.default.userinfo.Auid);
+      uni.navigateTo({
+        url: '../menu/chat?id=' + go + '&toid=' + this.auid });
+
+    },
+    getMypengyou: function getMypengyou() {var _this = this;
+      uni.showLoading({
+        title: '加载中' });
+
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=getMyhaoyou", //请求标记已读消息
+        data: {},
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            _this.dataList = res.data.data;
+          } else {
+
+
+          }
+
+        },
+        complete: function complete() {
+          uni.hideLoading();
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

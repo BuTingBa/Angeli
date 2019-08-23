@@ -321,9 +321,20 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 var _default = { data: function data() {return { postInfo: [], pllist: [], dslist: [], showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1 };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);}return { title: this.postInfo.Content, path: '/pages/postinfo/postinfo?id=' + this.postid, desc: this.postInfo.Content, imageUrl: this.postInfo.PictureId[0] };}, onLoad: function onLoad(option) {var _this = this; //option为object类型，会序列化上个页面传递的参数
     console.log(option.id); //打印出上个页面传递的参数。
-    this.postid = option.id;this.getdsList(this.postid);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);} });} });console.log(this.dslist);}, methods: { getdsList: function getdsList(postid) {var _this2 = this;uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=getDashangList&postId=" + postid, //仅为示例，并非真实接口地址。
-        data: {}, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == "1") {_this2.dslist = res.data.data;console.log("打赏输出");console.log(_this2.dslist);_this2.$forceUpdate();} else {_this2.dslist = 0;}}, complete: function complete() {} });}, getList: function getList() {uni.navigateTo({ url: "dashang?id=" + this.postid });}, getDashang: function getDashang() {var _this3 = this;console.log(this.monnumber);uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=dashang", //仅为示例，并非真实接口地址。
-        data: { toid: this.postInfo.AuthorId,
+    this.postid = option.id;this.getdsList(this.postid);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);} });} });console.log(this.dslist);}, methods: { getbieren: function getbieren(e) {if (e == _server.default.userinfo.Auid) {uni.navigateTo({ url: '../i/i' });} else {uni.navigateTo({ url: '../i/bieren?auid=' + e });}}, getdsList: function getdsList(postid) {var _this2 = this;uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=getDashangList&postId=" + postid, //仅为示例，并非真实接口地址。
+        data: {}, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == "1") {_this2.dslist = res.data.data;console.log("打赏输出");console.log(_this2.dslist);_this2.$forceUpdate();} else {_this2.dslist = 0;}}, complete: function complete() {} });},
+    getList: function getList() {
+      uni.navigateTo({
+        url: "dashang?id=" + this.postid });
+
+    },
+    getDashang: function getDashang() {var _this3 = this;
+      console.log(this.monnumber);
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/post.php?type=dashang", //仅为示例，并非真实接口地址。
+        data: {
+          toid: this.postInfo.AuthorId,
           postid: this.postid,
           number: this.monnumber },
 

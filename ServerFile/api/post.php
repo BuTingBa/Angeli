@@ -41,7 +41,11 @@ switch ($_GET['type']) {
         if(!$add){
             die($add);
         }else{
-            $post->setPoints($_SESSION['Auid'],'-',1,"发布帖子");
+            if($post->vipIs($_SESSION['Auid'])){
+                $post->setPoints($_SESSION['Auid'],'-',1,"发布帖子");
+            }else{
+                $post->setPoints($_SESSION['Auid'],'-',2,"发布帖子");
+            }
             $outmsg = array('code' =>'1','msg'=>'发帖成功！','data'=>$_POST['txt']);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }

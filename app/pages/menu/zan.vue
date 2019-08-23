@@ -74,9 +74,15 @@
 				this.TabCur = e
 			},
 			getbieren:function(e){
-				uni.navigateTo({
-					url: '../i/bieren?auid='+e
-				})
+				if(e==server.userinfo.Auid){
+					uni.navigateTo({
+						url: '../i/i'
+					})
+				}else{
+					uni.navigateTo({
+						url: '../i/bieren?auid='+e
+					})
+				}
 			},
 			getPostInfo:function(e){
 				uni.navigateTo({

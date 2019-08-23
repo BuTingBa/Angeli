@@ -172,6 +172,23 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'getMynotReadGZ':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        $data=$user->getMyGZMsg($auid);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'发送失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
+        break;
     case 'upmsg':
         if(!$_SESSION['Auid'])
         {
@@ -209,6 +226,44 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
             $outmsg = array('code' =>'1','msg'=>$data,'data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getMyhaoyou':
+
+        $auid=6666;
+        $data=$user->getMyhaoyou($auid);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'操作失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'isvip':
+        if(empty($_GET['auid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少auid参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($user->vipIs($_GET['auid'])){
+            $outmsg = array('code' =>'1','msg'=>'你是VIP用户','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'你不是VIP用户','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getSysConfig':
+        if(empty($_GET['configName'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少auid参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($data=$user->getSystemConfig($_GET['configName'])){
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'获取失败','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;

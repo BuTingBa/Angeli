@@ -310,6 +310,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default =
 
 
@@ -358,6 +373,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       userid: "0",
       fensi: "0",
       dengji: "0",
+      systemConfig: '',
       index: false,
       userInfo: [],
       menuList: ['分享给朋友', '生成海报', '举报'] };
@@ -456,12 +472,25 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 if (res.data.code == "2") {
                   uni.showToast({
                     title: res.data.msg,
-                    position: 'bottom' });
+                    position: 'bottom',
+                    icon: 'none' });
 
                 } else {
-                  uni.showToast({
-                    title: '欢迎你，' + _this2.username,
-                    position: 'bottom' });
+                  if (_this2.userInfo.VIPEndTime > 0) {
+                    uni.showToast({
+                      title: '欢迎VIP：' + _this2.username,
+                      position: 'bottom',
+                      icon: 'none' });
+
+
+                  } else {
+                    uni.showToast({
+                      title: '欢迎你,' + _this2.username,
+                      position: 'bottom',
+                      icon: 'none' });
+
+                  }
+
 
                 }
                 _this2.getPostData('new', 0);
@@ -488,6 +517,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     }
 
+    this.getSysConfig('home_txt');
   },
   onReady: function onReady() {
     this.getHei();
@@ -495,15 +525,49 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   methods: {
+    getSysConfig: function getSysConfig(name) {var _this3 = this;
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=getSysConfig", //仅为示例，并非真实接口地址。
+        data: {
+          configName: name },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            _this3.systemConfig = res.data.data;
+            if (!res.data.data) {
+              _this3.modalName = '';
+            } else {
+              _this3.modalName = 'DialogModal2';
+            }
+          }
+          console.log(_this3.msgNumber);
+        },
+        complete: function complete() {
+
+        } });
+
+    },
     getFriend: function getFriend() {
       uni.navigateTo({
         url: '../menu/friend' });
 
     },
     getbieren: function getbieren(e) {
-      uni.navigateTo({
-        url: '../i/bieren?auid=' + e });
+      if (e == _server.default.userinfo.Auid) {
+        uni.navigateTo({
+          url: '../i/i' });
 
+      } else {
+        uni.navigateTo({
+          url: '../i/bieren?auid=' + e });
+
+      }
     },
     getShoucang: function getShoucang() {
       uni.navigateTo({
@@ -556,7 +620,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         url: '../classPost/classPost?id=' + id });
 
     },
-    showModal: function showModal(e) {var _this3 = this;
+    showModal: function showModal(e) {var _this4 = this;
       this.modalName = e.currentTarget.dataset.target;
       this.AvatarUrl = _server.default.userinfo.AvatarUrl;
       this.username = _server.default.userinfo.UserName;
@@ -582,11 +646,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         success: function success(res) {
           console.log(res);
           if (res.data.code == "1") {
-            _this3.msgNumber = res.data.data.count;
+            _this4.msgNumber = res.data.data.count;
           } else {
 
           }
-          console.log(_this3.msgNumber);
+          console.log(_this4.msgNumber);
         },
         complete: function complete() {
 
@@ -612,7 +676,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       }
 
     },
-    Like: function Like(postid, auid, give, index) {var _this4 = this;
+    Like: function Like(postid, auid, give, index) {var _this5 = this;
       if (give === true) {
         var modea = 'del';
       } else {
@@ -633,14 +697,14 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         success: function success(res) {
           if (res.data.code == "1") {
             if (modea == 'add') {
-              _this4.postList[index].Give = true;
+              _this5.postList[index].Give = true;
               uni.showToast({
                 title: "种草成功！",
                 position: 'bottom',
                 icon: 'none' });
 
             } else {
-              _this4.postList[index].Give = false;
+              _this5.postList[index].Give = false;
               uni.showToast({
                 title: "取消种草成功！",
                 position: 'bottom',
@@ -648,7 +712,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
             }
 
-            _this4.$forceUpdate();
+            _this5.$forceUpdate();
           } else {
 
             uni.showToast({
@@ -700,15 +764,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         } });
 
     },
-    getHei: function getHei() {var _this5 = this;
+    getHei: function getHei() {var _this6 = this;
 
       var view = uni.createSelectorQuery().select("#topbox");
       view.fields({
         size: true,
         scrollOffset: true },
       function (data) {
-        _this5.gaodu = data.height - 5;
-        console.log("总高度：" + _this5.gaodu);
+        _this6.gaodu = data.height - 5;
+        console.log("总高度：" + _this6.gaodu);
       }).exec();
     },
     showImage: function showImage(res, c) {
@@ -733,9 +797,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
     },
-    getPostData: function getPostData(type, classId) {var _this6 = this;
-      uni.showLoading({
-        title: '获取数据中' });
+    getPostData: function getPostData(type, classId) {var _this7 = this;
 
       console.log(type);
       uni.request({
@@ -752,13 +814,13 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           'Cookie': _server.default.cookie },
 
         success: function success(res) {
-          uni.hideLoading();
-          _this6.postList = [];
+
+          _this7.postList = [];
           console.log(res.data.data);
           console.log("————————————帖子列表——————————");
-          _this6.postList = res.data.data;
-          console.log(_this6.postList);
-          _this6.weikong = false;
+          _this7.postList = res.data.data;
+          console.log(_this7.postList);
+          _this7.weikong = false;
           if (res.data.code !== "1") {
             uni.showToast({
               title: '获取帖子失败，建议重启',
@@ -767,12 +829,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
           }
           if (res.data.data == false) {
-            _this6.weikong = true;
+            _this7.weikong = true;
           }
           //this.$forceUpdate();
         },
         complete: function complete() {
-          uni.hideLoading();
+
         } });
 
 
@@ -816,7 +878,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       }
 
     },
-    EndLoding: function EndLoding(e) {var _this7 = this;
+    EndLoding: function EndLoding(e) {var _this8 = this;
       this.page++;
       console.log(this.scrollTop);
       uni.request({
@@ -833,14 +895,14 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           'Cookie': _server.default.cookie },
 
         success: function success(res) {
-          console.log("————————————帖子列表——————————" + _this7.page);
+          console.log("————————————帖子列表——————————" + _this8.page);
           if (res.data.data.length == undefined) {
-            _this7.page--;
-            _this7.status = "noMore";
+            _this8.page--;
+            _this8.status = "noMore";
           } else {
-            _this7.postList = _this7.postList.concat(res.data.data);
-            _this7.status = "loading";
-            console.log(_this7.postList);
+            _this8.postList = _this8.postList.concat(res.data.data);
+            _this8.status = "loading";
+            console.log(_this8.postList);
           }
 
 

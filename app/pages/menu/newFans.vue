@@ -4,55 +4,138 @@
 			<block slot="backText">返回</block>
 			<block slot="content">我的好友</block>
 		</cu-custom>
-		<view class="listBox">
-			<view class="userBox">
-				<view class="touxiang"></view>
-				<view class="info">
-					<text>粽子\n</text>
-					<text>2小时前</text>
+		<view v-for="(list,index) in msgList" :key="index">
+			<view class="listBox">
+				<view class="userBox">
+					<view class="touxiang" :style="{'background-image':'url('+list.guanzhuId.AuthorAvatarUrl+')'}"></view>
+					<view class="info">
+						<text>{{list.guanzhuId.AuthorName}}\n</text>
+						<text>{{list.time}}</text>
+					</view>
+					<view class="guanzhu">
+						+ 关注
+					</view>
 				</view>
-				<view class="guanzhu">
-					+ 关注
-				</view>
-			</view>
-			<view class="plnr">
-				<text>我开始盯你了，给我小心点</text>
-			</view>
-		</view>
-		<view class="menusolid"></view>
-		<view class="listBox">
-			<view class="userBox">
-				<view class="touxiang"></view>
-				<view class="info">
-					<text>粽子\n</text>
-					<text>2小时前</text>
-				</view>
-				<view class="guanzhuX">
-					已关注
+				<view class="plnr">
+					<text>我开始盯你了，给我小心点</text>
 				</view>
 			</view>
-			<view class="plnr">
-				<text>开始关注你了，请注意哦</text>
-			</view>
+			<view class="menusolid"></view>
 		</view>
 	</view>
 </template>
 
 <script>
-</script>
-export default {
+	import server from '../../server.js';
+	export default {
 		data() {
 			return {
-				TabCur:0
+				TabCur:0,
+				msgList:[]
 			}
+		},
+		onLoad:function(){
+			uni.showLoading({
+				title: '加载中'
+			});
+			uni.request({
+				method:'GET',
+				url: "https://api.angeli.top/user.php?type=getMynotReadGZ", //仅为示例，并非真实接口地址。
+				data: {
+					
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+					'Cookie':server.cookie
+				},
+				success: (res) => {
+					console.log(res)
+					if(res.data.code=="1"){
+						this.msgList=res.data.data
+						this.markMsg()
+					}else{
+						uni.showToast({
+							title: "暂无新粉丝通知",
+							position:'bottom',
+							icon:'none'
+						})
+					}
+					
+				},
+				complete() {
+					uni.hideLoading();
+				}
+			});
 		},
 		methods: {
 			tabSelect(e) {
 				this.TabCur = e
-
+			},
+			getbieren:function(e){
+				uni.navigateTo({
+					url: '../i/bieren?auid='+e
+				})
+			},
+			getPostInfo:function(e){
+				uni.navigateTo({
+					url: '../postinfo/postinfo?id='+e
+				});
+			},
+			markMsg:function(){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=mark&class=fans", //请求标记已读消息
+					data: {
+						
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							console.log('已将信息标记为已读')
+						}else{
+							console.log('标记已读失败！')
+						}
+						
+					},
+					complete() {
+						
+					}
+				});
 			}
+		},
+		onBackPress:function(){
+			console.log('返回')
+			uni.request({
+				method:'GET',
+				url: "https://api.angeli.top/user.php?type=mark&class=fans", //请求标记已读消息
+				data: {
+					
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+					'Cookie':server.cookie
+				},
+				success: (res) => {
+					console.log(res)
+					if(res.data.code=="1"){
+						console.log('已将信息标记为已读')
+					}else{
+						console.log('标记已读失败！')
+					}
+					
+				},
+				complete() {
+					
+				}
+			});
 		}
 	}
+</script>
+
 <style>
 page{
 	background-color: #FFFFFF;

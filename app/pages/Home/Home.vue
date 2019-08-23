@@ -112,7 +112,22 @@
 			</view>
 		</scroll-view>	
 		
-		
+		<view class="cu-modal" :class="modalName=='DialogModal2'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">关于安个利测试通知</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					{{systemConfig}}
+				</view>
+				<view class="cu-bar bg-white">
+					<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">确定</view>
+				</view>
+			</view>
+		</view>
 		<!-- 右侧菜单栏 -->
 		<view class="DrawerClose" :class="modalName=='viewModal'?'show':''" @tap="hideModal">
 			<text class="cuIcon-pullright"></text>
@@ -251,6 +266,7 @@
 				userid:"0",
 				fensi:"0",
 				dengji:"0",
+				systemConfig:'',
 				index:false,
 				userInfo:[],
 				menuList:['分享给朋友', '生成海报', '举报']
@@ -349,13 +365,26 @@
 									if(res.data.code=="2"){
 										uni.showToast({
 											title: res.data.msg,
-											position:'bottom'
+											position:'bottom',
+											icon:'none'
 										})
 									}else{
-										uni.showToast({
-											title: '欢迎你，'+this.username,
-											position:'bottom'
-										})
+										if(this.userInfo.VIPEndTime>0){
+											uni.showToast({
+												title: '欢迎VIP：'+this.username,
+												position:'bottom',
+												icon:'none'
+											})
+											
+										}else{
+											uni.showToast({
+												title: '欢迎你,'+this.username,
+												position:'bottom',
+												icon:'none'
+											})
+										}
+										
+										
 									}
 									this.getPostData('new',0);
 								}
@@ -381,6 +410,7 @@
 				})
 			}
 			// #endif
+			this.getSysConfig('home_txt');
 		},
 		onReady: function() {
 			this.getHei()
@@ -388,15 +418,49 @@
 			
 		},
 		methods: {
+			getSysConfig:function(name){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=getSysConfig", //仅为示例，并非真实接口地址。
+					data: {
+						configName:name
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							this.systemConfig=res.data.data;
+							if(!res.data.data){
+								this.modalName = ''
+							}else{
+								this.modalName = 'DialogModal2'
+							}
+						}
+						console.log(this.msgNumber)
+					},
+					complete() {
+						
+					}
+				});
+			},
 			getFriend:function(){
 				uni.navigateTo({
 					url: '../menu/friend'
 				})
 			},
 			getbieren:function(e){
-				uni.navigateTo({
-					url: '../i/bieren?auid='+e
-				})
+				if(e==server.userinfo.Auid){
+					uni.navigateTo({
+						url: '../i/i'
+					})
+				}else{
+					uni.navigateTo({
+						url: '../i/bieren?auid='+e
+					})
+				}
 			},
 			getShoucang:function(){
 				uni.navigateTo({
@@ -627,9 +691,7 @@
 				})
 			},
 			getPostData(type,classId){
-				uni.showLoading({
-					title: '获取数据中'
-				});
+				
 				console.log(type)
 				uni.request({
 					method:'GET',
@@ -645,7 +707,7 @@
 						'Cookie':server.cookie
 					},
 					success: (res) => {
-						uni.hideLoading();
+						
 						this.postList=[]
 						console.log(res.data.data);
 						console.log("————————————帖子列表——————————");
@@ -665,7 +727,7 @@
 						//this.$forceUpdate();
 					},
 					complete:function(){
-						uni.hideLoading();
+						
 					},
 					
 				});

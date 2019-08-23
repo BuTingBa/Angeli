@@ -159,7 +159,7 @@
 			getChat:function(id){
 				let go=parseInt(id)+parseInt(server.userinfo.Auid);
 				uni.navigateTo({
-					url: '../menu/chat?id='+go
+					url: '../menu/chat?id='+go+'&toid='+this.auid
 				});
 			},
 			tabSelect(e) {

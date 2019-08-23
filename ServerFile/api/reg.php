@@ -88,16 +88,22 @@ switch ($_GET['type']) {
         if($userinfo)
         {
             $jifen=false;
-
             $_SESSION['Auid']=$userinfo['Auid'];
             $_SESSION['UserName']=$userinfo['UserName'];
             setcookie("Auid",$userinfo['Auid'],time()+3600*24,'/');
             if(!$user->checkLogin($userinfo['Auid'])){
-                $jifen=$user->setPoints($userinfo['Auid'],"+",1,'登录赠送积分');
-                $user->setRank($userinfo['Auid'],1);
+                if($user->vipIs($userinfo['Auid'])){
+                    $jifen=$user->setPoints($userinfo['Auid'],"+",2,'登录赠送积分');
+                    $user->setRank($userinfo['Auid'],2);
+                    $j=2;
+                }else{
+                    $jifen=$user->setPoints($userinfo['Auid'],"+",1,'登录赠送积分');
+                    $user->setRank($userinfo['Auid'],1);
+                    $j=1;
+                }
             }
             if($jifen){
-                $outmsg = array('code' =>'2','msg'=>'签到成功，赠送1个安个利币','data'=>$userinfo);
+                $outmsg = array('code' =>'2','msg'=>'签到成功，赠送'.$j.'个安个利币','data'=>$userinfo);
             }else{
                 $outmsg = array('code' =>'1','msg'=>'ok','data'=>$userinfo);
             }

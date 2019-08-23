@@ -23,6 +23,60 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+
+    /**获取系统配置
+     * @return array
+     */
+    public function getSystemConfig($configName)
+    {
+        $sql="SELECT * FROM angeli_config_system WHERE config_name='$configName'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $val=$row['config_val'];
+                }
+                return $val;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    /**获取我的好友列表
+     * @return array
+     */
+    public function getMyhaoyou($auid,$page=1,$count=100)
+    {
+        $pageNum=($page-1)*$count;
+        $sql = "select a.* from angeli_guanzhu as a left join angeli_guanzhu as b ON a.beiguanzhu=$auid AND a.guanzhu=b.beiguanzhu where (b.beiguanzhu=$auid OR b.guanzhu=$auid) AND (b.beiguanzhu=$auid OR b.guanzhu=$auid) ORDER BY opentime DESC LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $aa=array(
+                       'id'=>$row['id'],
+                        'guanzhuId'=>$this->getInfo($row['guanzhu']),
+                        'beiguanzhuId'=>$this->getInfo($row['beiguanzhu']),
+                        'time'=>$this->uc_time_ago($row['opentime']),
+                        'notMe'=>$this->getInfo($row['guanzhu']==$auid?$row['beiguanzhu']:$row['guanzhu'])
+                    );
+                    $data[]=$aa;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+
     /*
      * 关注好友获取取消关注
      */
@@ -69,6 +123,31 @@ class angeli
         }
 
     }
+
+    /*
+     * 获取我的关注信息
+     */
+    public function getMyGZMsg($auid){
+        $sql="SELECT * FROM angeli_guanzhu WHERE beiguanzhu=$auid AND mark=0 ORDER BY opentime  DESC";
+        $result=$this->mysqli->query($sql);
+        if($this->mysqli->affected_rows<1){
+            return 0;
+        }else{
+            while($row = $result->fetch_assoc()){
+                $d=array(
+                    'id'=>$row['postId'],
+                    'guanzhuId'=>$this->getInfo($row['guanzhu']),
+                    'myId'=>$this->getInfo($row['beiguanzhu']),
+                    'time'=>$this->uc_time_ago($row['opentime']),
+                    'isGZ'=>$this->isGuanzhu($row['guanzhu'],$auid)
+                );
+                $data[]=$d;
+            }
+            return $data;
+        }
+    }
+
+
     /*
      * 检查是否是关注关系
      */
@@ -2202,6 +2281,29 @@ class angeli
         }
     }
 
+    /*
+     * 检查是否为VIP
+     */
+    public function vipIs($auid){
+        $sql="SELECT * from angeli_user WHERE AuId='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($row=$this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $dd=$this->getOverDay($row["VIPEndTime"]);
+                }
+                if($dd>0){
+                    return true;
+                }
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
     //写到错误日志
     function errorLog($str)
     {
@@ -2224,10 +2326,11 @@ class angeli
             return FALSE;
         }
     }
+
     function isVip($VIPEndTime)
     {
         if($VIPEndTime>time()){
-            return "VIP";
+            return "true";
         }else{
             return "普通用户";
         }

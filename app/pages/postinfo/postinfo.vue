@@ -6,7 +6,7 @@
 		</cu-custom>
 		<view  :style="[{top:CustomBar + 'px'}]" class="postBox">
 			<view class="postList">
-				<view class="usera">
+				<view class="usera" @click="getbieren(postInfo.AuthorId)">
 					<view class="touxiang" :style="{'background-image':'url('+postInfo.AuthorInfo.AuthorAvatarUrl+')'}" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);"></view>
 					<view class="userName">{{postInfo.AuthorInfo.AuthorName}}</view>
 					<view class="postDate">{{postInfo.PsotDate}}</view>
@@ -179,6 +179,17 @@
 		},
 		
 		methods: {
+			getbieren:function(e){
+				if(e==server.userinfo.Auid){
+					uni.navigateTo({
+						url: '../i/i'
+					})
+				}else{
+					uni.navigateTo({
+						url: '../i/bieren?auid='+e
+					})
+				}
+			},
 			getdsList:function(postid){
 				uni.request({
 					method:'GET',
@@ -697,7 +708,7 @@
 		margin-top:5px;
 		margin-bottom:15px;
 		margin-right:15px;
-		margin-left:15px;
+		
 	}
 	.user{
 	  height: 200px;

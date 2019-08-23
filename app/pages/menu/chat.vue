@@ -88,6 +88,7 @@
 			this.auid=server.userinfo.Auid
 			console.log(e.id)
 			this.msgid=e.id
+			this.toid=e.toid
 			this.getMyMsg()
 			
 		},

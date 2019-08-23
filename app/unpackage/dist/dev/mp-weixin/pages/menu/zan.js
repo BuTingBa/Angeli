@@ -181,9 +181,15 @@ var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onL
       this.TabCur = e;
     },
     getbieren: function getbieren(e) {
-      uni.navigateTo({
-        url: '../i/bieren?auid=' + e });
+      if (e == _server.default.userinfo.Auid) {
+        uni.navigateTo({
+          url: '../i/i' });
 
+      } else {
+        uni.navigateTo({
+          url: '../i/bieren?auid=' + e });
+
+      }
     },
     getPostInfo: function getPostInfo(e) {
       uni.navigateTo({

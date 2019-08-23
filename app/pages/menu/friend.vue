@@ -9,38 +9,78 @@
 				<text>我的好友</text>
 				<text>（互相关注）</text>
 			</view>
-			<view class="menusolid"></view>
-			<view class="friendList">
-				<image src="../../static/guanzhuimg.png" mode="scaleToFill"></image>
-				<view>不停</view>
-				<image src="../../static/chat.png" mode="scaleToFill"></image>
-			</view>
-			
-			<view class="menusolid"></view>
-			<view class="friendList">
-				<image src="../../static/guanzhuimg.png" mode="scaleToFill"></image>
-				<view>不停</view>
-				<image src="../../static/chat.png" mode="scaleToFill"></image>
-			</view>
-			
-			<view class="menusolid"></view>
-			<view class="friendList">
-				<image src="../../static/guanzhuimg.png" mode="scaleToFill"></image>
-				<view>不停</view>
-				<image src="../../static/chat.png" mode="scaleToFill"></image>
-			</view>
-			
-			<view class="menusolid"></view>
-			<view class="friendList">
-				<image src="../../static/20.png" mode="scaleToFill"></image>
-				<view>不停</view>
-				<image src="../../static/chat.png" mode="scaleToFill"></image>
+			<view v-for="(list,index) in dataList" :key="index">
+				<view class="menusolid"></view>
+				<view class="friendList"  @click="getChat(list.notMe.Auid)"> 
+					<image src="../../static/guanzhuimg.png" :src="list.notMe.AuthorAvatarUrl" mode="scaleToFill"></image>
+					<view >{{list.notMe.AuthorName}}</view>
+					<image src="../../static/chat.png" mode="scaleToFill"></image>
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import server from '../../server.js';
+	export default {
+		data() {
+			return {
+				dataList:[]
+			}
+		},
+		onLoad:function(){
+			this.getMypengyou();
+		},
+		methods: {
+			getbieren:function(e){
+				if(e==server.userinfo.Auid){
+					uni.navigateTo({
+						url: '../i/i'
+					})
+				}else{
+					uni.navigateTo({
+						url: '../i/bieren?auid='+e
+					})
+				}
+			},
+			getChat:function(id){
+				let go=parseInt(id)+parseInt(server.userinfo.Auid);
+				uni.navigateTo({
+					url: '../menu/chat?id='+go+'&toid='+this.auid
+				});
+			},
+			getMypengyou:function(){
+				uni.showLoading({
+					title: '加载中'
+				});
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=getMyhaoyou", //请求标记已读消息
+					data: {
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							this.dataList=res.data.data;
+						}else{
+							
+							
+						}
+						
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			}
+		}
+		
+	}
 </script>
 
 <style>

@@ -112,6 +112,17 @@
 	border-radius: 25rpx;
 	display: inline-block;
 }
+.button-edituserinfoXZ{
+	background-color: #E5E4EA;
+	height: 49rpx;
+	width: 116rpx;
+	font-size: 24rpx;
+	vertical-align:auto;
+	line-height: 49rpx;
+	color: #999999;
+	border-radius: 25rpx;
+	display: inline-block;
+}
 .button-sixin{
 	width: 49rpx;
 	background-color: #79C498;
