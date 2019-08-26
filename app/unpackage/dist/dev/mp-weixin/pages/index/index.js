@@ -133,6 +133,20 @@ var _default =
   },
   onLoad: function onLoad() {var _this = this;
     //创建并执行定时器
+
+    uni.getStorage({
+      key: 'showAD',
+      success: function success(res) {
+        console.log(res.data);
+        if (res.data == 'true') {
+
+        } else {
+          _this.countDown();
+        }
+      } });
+
+
+
     this.timer = setInterval(function () {
       //当num等于100时清除定时器
       _this.num--;

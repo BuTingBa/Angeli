@@ -189,10 +189,31 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 {
   data: function data() {
     return {
-      shadow: 'checked',
+      shadow: true,
       isShowAD: true,
       modalName: '' };
 
+  },
+  onLoad: function onLoad() {var _this = this;
+    uni.getStorage({
+      key: 'showAD',
+      success: function success(res) {
+        console.log(res.data);
+        if (res.data == 'true') {
+          _this.isShowAD = true;
+          _this.shadow = true;
+        } else {
+          _this.isShowAD = false;
+          _this.shadow = false;
+        }
+      } });
+
+    if (_server.default.userinfo.VIPEndTime > 0) {
+      this.isShowAD = false;
+    } else {
+      this.isShowAD = true;
+      this.shadow = false;
+    }
   },
   methods: {
     kaitong: function kaitong() {
@@ -224,13 +245,42 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     },
     SetShadow: function SetShadow(e) {
       this.shadow = e.detail.value;
-      if (e.detail.value == false) {
+      if (this.shadow == false) {
         console.log("先冲会员");
+        if (_server.default.userinfo.VIPEndTime > 0) {
+          uni.setStorage({
+            key: 'showAD',
+            data: 'false',
+            success: function success() {
+              console.log('success');
+            } });
+
+        } else {
+          this.modalName = 'Image';
+          uni.setStorage({
+            key: 'showAD',
+            data: 'true',
+            success: function success() {
+              console.log('success');
+            } });
+
+        }
+      } else {
+        uni.setStorage({
+          key: 'showAD',
+          data: 'true',
+          success: function success() {
+            console.log('success');
+          } });
+
       }
+
+      console.log(this.shadow);
     },
     guanbi: function guanbi() {
-
-      this.modalName = 'Image';
+      if (_server.default.userinfo.VIPEndTime <= 0) {
+        this.modalName = 'Image';
+      }
     },
     getInfo: function getInfo() {
       uni.navigateTo({

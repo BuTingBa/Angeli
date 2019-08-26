@@ -141,6 +141,9 @@
 			console.log(option.id); //打印出上个页面传递的参数。
 			this.postid=option.id;
 			this.getdsList(this.postid);
+			uni.showLoading({
+				title: '加载中'
+			});
 			uni.request({
 				method:'GET',
 				url: 'https://api.angeli.top/post.php?type=outPostInfo', 
@@ -170,8 +173,14 @@
 							this.pllist=res.data.data;
 							console.log(this.pllist);
 							
+						},
+						complete() {
+							uni.hideLoading();
 						}
 					});
+				},
+				complete() {
+					
 				}
 			});
 			

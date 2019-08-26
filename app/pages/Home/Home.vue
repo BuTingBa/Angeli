@@ -193,7 +193,7 @@
 							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>
-						<view class="menuItem" @tap="set">
+						<view class="menuItem" @tap="getshop">
 							<view class="menuIcon aicon-shop"></view>
 							<view class="menuTiele">Angeli Shop</view>
 							<view class="menuRight"></view>
@@ -297,16 +297,15 @@
 				}
 			});
 		},
-		onLoad:function(e){
-			
-			console.log(e)
+		onLoad:function(){
+			this.postList=[];
+			/* console.log(e)
 			if(e.id==1){
-				
 				this.index=true;
 			}
 			if(e.type=='plusPost'){
 				this.getPostData('new',0);
-			}
+			} */
 			// #ifdef  APP-PLUS
 			console.log("APP:",server.userinfo);
 					uni.getStorage({
@@ -375,7 +374,6 @@
 												position:'bottom',
 												icon:'none'
 											})
-											
 										}else{
 											uni.showToast({
 												title: '欢迎你,'+this.username,
@@ -383,13 +381,12 @@
 												icon:'none'
 											})
 										}
-										
-										
 									}
-									this.getPostData('new',0);
+									
 								}
-								console.log("———————————用户信息——————————");
-								console.log(server.userinfo)
+							},
+							complete: () => {
+								this.getPostData('new',0);
 							},
 							fail:(src) =>{
 								uni.showToast({
@@ -409,15 +406,31 @@
 				    }
 				})
 			}
+			
 			// #endif
 			this.getSysConfig('home_txt');
+			//this.getPostData('new',0);
+			
 		},
 		onReady: function() {
 			this.getHei()
-			this.postList=[];
+			//setTimeout(this.aotuloding,1500)
 			
 		},
 		methods: {
+			aotuloding:function(){
+				uni.showToast({
+					title: "刚刚出现问题，已经为你修复",
+					position:'bottom',
+					icon:'none',
+					position:'center',
+				})
+				this.getPostData('new',0);
+			},
+			getshop:function(){
+				this.systemConfig="商城正在建设中"
+				this.modalName = 'DialogModal2'
+			},
 			getSysConfig:function(name){
 				uni.request({
 					method:'GET',
@@ -528,7 +541,7 @@
 				//请求 https://api.angeli.top/user.php?type=getMyNoRead
 				uni.request({
 					method:'GET',
-					url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
+					url: "https://api.angeli.top/user.php?type=getMyNoRead", 
 					data: {
 						auid:this.userid
 					},
@@ -691,7 +704,6 @@
 				})
 			},
 			getPostData(type,classId){
-				
 				console.log(type)
 				uni.request({
 					method:'GET',
@@ -726,10 +738,9 @@
 						}
 						//this.$forceUpdate();
 					},
-					complete:function(){
-						
-					},
-					
+					complete: () => {
+						this.$forceUpdate();
+					}
 				});
 				
 			},
@@ -743,8 +754,6 @@
 						url: '../i/i'
 					})
 				}
-				
-				
 			},
 			getVip:function(){
 				uni.navigateTo({
@@ -813,10 +822,9 @@
 			  console.log(res.target)
 			} 
 			return {
-			  title: this.postInfo.Content,
-			  path:'/pages/postinfo/postinfo?id='+this.postid,
-			  desc:this.postInfo.Content,
-			  imageUrl:this.postInfo.PictureId[0]
+			  title: "给你安利一个安个利",
+			  path:'/pages/Home/Home',
+			  desc:"超级无敌安个利！"
 			}
 		}
 	}

@@ -19,6 +19,20 @@
 		},
 		onLoad() {
             //创建并执行定时器
+			
+			uni.getStorage({
+			    key: 'showAD',
+			    success: (res) => {
+					console.log(res.data)
+			        if(res.data=='true'){
+						
+					}else{
+						this.countDown()
+					}
+			    }
+			});
+			
+			
 			this.timer = setInterval(() => {
               //当num等于100时清除定时器
 				this.num--;

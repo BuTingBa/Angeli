@@ -404,16 +404,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       } });
 
   },
-  onLoad: function onLoad(e) {var _this2 = this;
-
-    console.log(e);
-    if (e.id == 1) {
-
-      this.index = true;
-    }
-    if (e.type == 'plusPost') {
-      this.getPostData('new', 0);
-    }
+  onLoad: function onLoad() {var _this2 = this;
+    this.postList = [];
+    /* console.log(e)
+                        if(e.id==1){
+                        	this.index=true;
+                        }
+                        if(e.type=='plusPost'){
+                        	this.getPostData('new',0);
+                        } */
 
 
 
@@ -482,7 +481,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                       position: 'bottom',
                       icon: 'none' });
 
-
                   } else {
                     uni.showToast({
                       title: '欢迎你,' + _this2.username,
@@ -490,13 +488,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                       icon: 'none' });
 
                   }
-
-
                 }
-                _this2.getPostData('new', 0);
+
               }
-              console.log("———————————用户信息——————————");
-              console.log(_server.default.userinfo);
+            },
+            complete: function complete() {
+              _this2.getPostData('new', 0);
             },
             fail: function fail(src) {
               uni.showToast({
@@ -517,14 +514,30 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     }
 
+
     this.getSysConfig('home_txt');
+    //this.getPostData('new',0);
+
   },
   onReady: function onReady() {
     this.getHei();
-    this.postList = [];
+    //setTimeout(this.aotuloding,1500)
 
   },
   methods: {
+    aotuloding: function aotuloding() {
+      uni.showToast(_defineProperty({
+        title: "刚刚出现问题，已经为你修复",
+        position: 'bottom',
+        icon: 'none' }, "position",
+      'center'));
+
+      this.getPostData('new', 0);
+    },
+    getshop: function getshop() {
+      this.systemConfig = "商城正在建设中";
+      this.modalName = 'DialogModal2';
+    },
     getSysConfig: function getSysConfig(name) {var _this3 = this;
       uni.request({
         method: 'GET',
@@ -635,7 +648,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       //请求 https://api.angeli.top/user.php?type=getMyNoRead
       uni.request({
         method: 'GET',
-        url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
+        url: "https://api.angeli.top/user.php?type=getMyNoRead",
         data: {
           auid: this.userid },
 
@@ -798,7 +811,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     getPostData: function getPostData(type, classId) {var _this7 = this;
-
       console.log(type);
       uni.request({
         method: 'GET',
@@ -834,9 +846,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           //this.$forceUpdate();
         },
         complete: function complete() {
-
+          _this7.$forceUpdate();
         } });
-
 
 
     },
@@ -850,8 +861,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           url: '../i/i' });
 
       }
-
-
     },
     getVip: function getVip() {
       uni.navigateTo({
@@ -920,10 +929,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       console.log(res.target);
     }
     return {
-      title: this.postInfo.Content,
-      path: '/pages/postinfo/postinfo?id=' + this.postid,
-      desc: this.postInfo.Content,
-      imageUrl: this.postInfo.PictureId[0] };
+      title: "给你安利一个安个利",
+      path: '/pages/Home/Home',
+      desc: "超级无敌安个利！" };
 
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
