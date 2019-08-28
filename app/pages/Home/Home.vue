@@ -59,7 +59,7 @@
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
 					<block v-if="list.PictureId[0].length>5">
 						<view class="postImage" >
-							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="aspectFill"></image>
+							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="widthFix"></image>
 						</view>
 					</block>
 					
@@ -83,7 +83,7 @@
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
 					<block v-if="list.PictureId[0].length>5">
 						<view class="postImage" >
-							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="aspectFill"></image>
+							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="widthFix"></image>
 						</view>
 					</block>
 					

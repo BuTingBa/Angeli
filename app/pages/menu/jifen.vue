@@ -34,7 +34,10 @@
 		<view class="jifenListBox">
 			<view class="jifenList" v-for="(list,index) in topList.data" :key="index">
 				<view class="myJifen" @click="getBire(list.AuId.Auid)">
-					<text class="lpaihang">{{index+1}}</text>
+					<template  v-if="index==0"><view class="lpaihang1"></view></template>
+					<template  v-if="index==1"><view class="lpaihang2"></view></template>
+					<template  v-if="index==2"><view class="lpaihang3"></view></template>
+					<template  v-if="index!==0&&index!==1&&index!==2"><view class="lpaihang">{{index+1}}</view></template>
 					<image class="listTouxiang" :src="list.AuId.AuthorAvatarUrl" mode=""></image>
 					<text class="username">{{list.AuId.AuthorName}}</text>
 					<view class="jifen">{{list.index}}个种草</view>
@@ -44,7 +47,7 @@
 		</view>
 	</view>
 </template>
-
+ 
 <script>
 	import server from '../../server.js';
 	export default {
@@ -116,10 +119,31 @@
 	line-height:40upx;
 	color:rgba(54,54,54,1);
 }
+.lpaihang1{
+	height: 46upx;
+	width: 46upx;
+	background-image: url('../../static/top1.png');
+	background-size: 100% 100% ;
+}
+.lpaihang2{
+	height: 46upx;
+	width: 46upx;
+	background-image: url('../../static/top2.png');
+	background-size: 100% 100% ;
+}
+.lpaihang3{
+	height: 46upx;
+	width: 46upx;
+	background-image: url('../../static/top3.png');
+	background-size: 100% 100% ;
+}
 .lpaihang{
-	height: 102upx;
+	height: 46upx;
+	width: 46upx;
+	text-align: center;
 	font-size:26upx;
 	font-weight:500;
+
 }
 .listTouxiang{
 	height: 70upx;

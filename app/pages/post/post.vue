@@ -29,7 +29,7 @@
 					<image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAEmElEQVRYR62YfWhVZRzHv99zyy1fsFYiCGJZTSxJhfXi7jkLYzSK6IVyMAJRGN5zpgwG5s6ZYZeMnbOKUmQ7Z84M6QWdFIIUZUjmOXcJWZktMFO0KIJFNlByc97zizNc+Ie75xnc88+98Pt9vudznvM893m4xBQvO/JfBTjH001LFd004D+kxdyixXFHZ13Lyck4qgYmffkvu2eO3py5CMGIa5i3qLJ2FOwhsBrgGlfP7SmLjBP2PgzKMRH51jOsGlUZJwq+AVBTRLzidb3lWHlkCsFaCHZD5D3XsFZPQWYUwLSKseKs/Mr1l8ojEwVvANgoAtszzC4Vmc2FXQtiuXpeBL97hjm/FDOlOeNEwScAnowFT3cZ5kEVmfao5wkN2qcCHPJ0s6GMMv55gAsy5D2vZXNnVWScKNgIIBnRba5utpVFJj/YP210+ELy7q+4ulmhIpL0OGGwG8RaUNa5WauvpEz++3dvHb08tjQtXBAvYoxegZyhlmlO6/+/Xox7QNxH4QbJcPBGnLD4q7fCOk87Cs4RuDMtXAAkE0wg4Pg3xUsEIIGJz0kwychdtAvBNsayLC1aBAupcT4E5wD5La0/qQtQQfIRCK4A8vVkjJDDlTMq1ig/ohP6B0E+BY3PubW5AyoyHQN+g8T8DILDrmHWpzHKMnbonyW5EKItco11p9OCk7od+W0E3wKww9XN1jRGSeb6lXQmWzV9PxuLacHXZPoINgtgeboZpDFKMvaAv5wxv4PISdewUlfexE3t0C+QrAXiOldvCcsjE/kvEnwfIntdw2pKC52oO6F/EeTMEe2m29+ubb6QxqmNTBR0EnAEssXTra1poUl9U/TOvAzG/hDIkKdbc1UYVZkDBJ4Rygte1vpIJdgOe+pJ7QsBjni6uVKFUZMJg9Mk7oXGxW5t7pRKsBP6rSC3A+h2dXODCpMqk6ykkX8u/JuEndWrKlRXkhP5AcCcCNZ7htlTFpmOoz0PiKb9IMBPnm4uUQlNepzIPwrQEJGVnmEdUeFSR8YOgyYSH4pgv2eYjSqh4zLXVtIYZe6bWWtIhaNd8NcA2oJJm0UeI1CXTESQSk8IYgZjeUkgl0Et9UQosQx3GeZ22mEwTGJ2mnnKpntDfGKnT8tO6qS2nB2FncviuPjs5ADXk7ijKOjRIH+pBIN8kMnxFDhOkeSoWvJiRjuRbL4l58wq6c/cHY2f7qa0kuww6CbREhOtXVlzR5rMRL2kTEfBXyLCHwGccnVzsWqoE/rJ/HqUGuo7a83DqlxpmchvFHAfgI9d3XxeNdQJ/SGQcxhzXmdd7k9VrqSMHfp5kq8IZKunW1tUQtsGdlVVxlf/hsgl17BmqTBKr8kOg34Sq0hp6sxae1WC2wtBnSb4CiIF17B0FUZNJgoGCdzPOF5a6t+D629oR4FJwIegzzXMdWWRuX4lVd5WNT2/pPGKSrAd+TsIbgDY5uq5bSpM6sg44c5qMP5ZBL94hlmtGmpHwecEHheywcvmDqly4z98kzW3H++dzRE5AZEPPMN6WTXUDv3NJKyKSq06X5Mb3+1Vr9SNUjWoHH3/AfX73DAzBFC+AAAAAElFTkSuQmCC" mode="widthFix" @tap="getClassList"></image>
 					
 				</view>
-				<view style="width: 60%;left: 0upx;">{{huatiname}}</view>
+				<view style="width: 60%;left: 0upx;" @tap="getClassList">{{huatiname}}</view>
 				<view class="send">
 					<text style="font-size: 18px;" @tap="sendpost">发布</text>
 				</view>
@@ -48,7 +48,7 @@
 				modalName: null,
 				postcontent:"null",
 				huati:"",
-				huatiname:"",
+				huatiname:"选择话题",
 				oosArr: [],
 					// 阿里云oos相关配置
 				upImgOos: {
@@ -160,7 +160,7 @@
 					})
 					return;
 				}
-				if(!this.huati){
+				if(this.huati=='选择话题'){
 					uni.showToast({
 						title: "你还没有选择话题",
 						position:'bottom',

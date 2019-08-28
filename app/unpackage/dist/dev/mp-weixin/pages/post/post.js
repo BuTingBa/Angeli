@@ -155,7 +155,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       modalName: null,
       postcontent: "null",
       huati: "",
-      huatiname: "",
+      huatiname: "选择话题",
       oosArr: [],
       // 阿里云oos相关配置
       upImgOos: {
@@ -267,7 +267,7 @@ function onBackPress(e) {
 
       return;
     }
-    if (!this.huati) {
+    if (this.huati == '选择话题') {
       uni.showToast({
         title: "你还没有选择话题",
         position: 'bottom',

@@ -205,6 +205,7 @@
 		width: 222upx;
 		height: 222upx;
 		margin-top: 10upx;
+		overflow:hidden;
 	}
 	.postBottom{
 		padding: 5px 0upx;
