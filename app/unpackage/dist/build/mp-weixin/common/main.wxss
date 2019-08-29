@@ -4978,14 +4978,20 @@ scroll-view.cu-steps .cu-item {
 }
 .postImage{
 	display: grid;
-	grid-template-columns: 33.33% 33.33% 33.33%;
-	grid-template-rows: 33.33% 33.33% 33.33%;
+	grid-template-columns: repeat(auto-fill, 33%);
 	margin: 10rpx 0rpx;
+	grid-row-gap: 5rpx;
+	grid-column-gap: 0.5%;
+	-webkit-box-pack:justify;
+	-webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	        justify-content:space-between;
 }
 .postImageItem{
 	width: 222rpx;
 	height: 222rpx;
-	margin-top: 10rpx;
+	
+	overflow:hidden;
 }
 .postBottom{
 	padding: 5px 0rpx;

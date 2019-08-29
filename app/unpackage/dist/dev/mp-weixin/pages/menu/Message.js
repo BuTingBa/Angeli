@@ -140,6 +140,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -174,17 +183,17 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { msgNumber: [], MsgList: [], status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, auid: 0 };}, onShow: function onShow() {this.getNoReadMsgNumber();this.getMsgList();
-  },
-  onLoad: function onLoad() {
-    //this.getNoReadMsgNumber();
-    this.auid = _server.default.userinfo.Auid;
-  },
-  methods: {
-    getChat: function getChat(id, id2) {
-      var go = parseInt(id) + parseInt(id2);
-      uni.navigateTo({
-        url: 'chat?id=' + go });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { msgNumber: [], MsgList: [], status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, auid: 0 };}, onShow: function onShow() {this.getNoReadMsgNumber();this.getMsgList();}, onLoad: function onLoad() {//this.getNoReadMsgNumber();
+    this.auid = _server.default.userinfo.Auid;}, methods: { getChat: function getChat(id, id2) {var go = parseInt(id) + parseInt(id2);uni.navigateTo({ url: 'chat?id=' + go });
 
     },
     getPage: function getPage(e) {

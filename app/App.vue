@@ -197,14 +197,16 @@
 		}
 	.postImage{
 		display: grid;
-		grid-template-columns: 33.33% 33.33% 33.33%;
-		grid-template-rows: 33.33% 33.33% 33.33%;
+		grid-template-columns: repeat(auto-fill, 33%);
 		margin: 10upx 0upx;
+		grid-row-gap: 5upx;
+		grid-column-gap: 0.5%;
+		justify-content:space-between;
 	}
 	.postImageItem{
 		width: 222upx;
 		height: 222upx;
-		margin-top: 10upx;
+		
 		overflow:hidden;
 	}
 	.postBottom{

@@ -17,6 +17,15 @@
 			<text>新增粉丝</text>
 		</view>
 		<view class="messageListBox">
+			<!-- 系统通知 -->
+			<view class="messageList" @click="getChat(list.ToId.Auid,list.FromId.Auid)">
+				<image :src="list.ToId.Auid==auid?list.FromId.AuthorAvatarUrl:list.ToId.AuthorAvatarUrl" mode="" class="touxiang"></image>
+				<text>安个利官方通知</text>
+				<text>刚刚</text>
+				<text>安个利活动开启了</text>
+				<text :class="list.MsgStatus=='0'?'hongdian':''"></text>
+			</view>
+			<view class="menusolid"></view>
 			<view v-for="(list,index) in MsgList" :key="index">
 				<view class="messageList" @click="getChat(list.ToId.Auid,list.FromId.Auid)">
 					<image :src="list.ToId.Auid==auid?list.FromId.AuthorAvatarUrl:list.ToId.AuthorAvatarUrl" mode="" class="touxiang"></image>

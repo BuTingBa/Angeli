@@ -6,7 +6,29 @@
 		</cu-custom>
 		<view  :style="[{top:CustomBar + 'px'}]">
 			<view class="top" id="topbox">
-				<view class="info">
+				<view class="infoa">
+					<view class="lstouxiang " :style="{'background-image':'url('+name.AvatarUrl+')'}"></view>
+					<view class="nameandsex">
+						<view class="nameBox">
+							<view class="Yname">{{name.UserName}}</view>
+							<view :class="name.Gender==2?'Wsex':'Ysex'"></view>
+							<view class="dengjia">Lv.21</view>
+						</view>
+						<view class="auid">ID:{{name.Auid}}</view>
+					</view>
+					<view class="gz">
+						<view class="button-sixin" @tap="getChat(auid)"></view>
+						<view @tap="getGuanzhu(auid)" :class="gz=='取消关注'?'yiguanzhu':'guanzhua'">{{gz}}</view>
+					</view>
+				</view>
+				<view class="miaoshua">
+					{{name.Synopsis}}
+				</view>
+				
+			
+				
+				
+				<!-- <view class="info">
 					<view class="lstouxiang " :style="{'background-image':'url('+name.AvatarUrl+')'}"></view>
 					<view class="xinxi">
 						<text selectable="true" style="font-size: 40upx;padding-bottom: 10upx;">{{name.UserName}}</text>
@@ -20,7 +42,7 @@
 					</view>
 					<view class="miaoshu"><text selectable="true">{{name.Synopsis}}</text></view>
 					
-				</view>
+				</view> -->
 				<view style="height: 2upx;margin-left:30upx;margin-right:30upx;background-color: #EFEFF4; "><!-- 分割线 --></view>
 				<view class="sange">
 						<text class="Maxnum">{{name.FollowedCount}}</text>
@@ -261,6 +283,100 @@
 </script>
 
 <style>
+	.miaoshua{
+		margin-left: 172upx;
+		margin-right: 38upx;
+		margin-top: 24upx;
+		margin-bottom: 24upx;
+		
+	}
+	.guanzhua{
+		display: inline-block;
+		height:49upx;
+		background:rgba(121,196,152,1);
+		box-shadow:0upx 1upx 1upx rgba(121,196,152,0.3);
+		opacity:1;
+		line-height: 49upx;
+		border-radius:25px;
+		padding: 0 16upx;
+		color: #FFFFFF;
+		vertical-align: middle;
+		margin-left: 8upx;
+	}
+	.yiguanzhu{
+		display: inline-block;
+		height:49upx;
+		background:rgba(229,228,234,1);
+		box-shadow:0upx 1upx 1upx rgba(121,196,152,0.3);
+		opacity:1;
+		line-height: 49upx;
+		border-radius:25px;
+		padding: 0 16upx;
+		color:rgba(153,153,153,1);
+		vertical-align: middle;
+		margin-left: 8upx;
+	}	
+	.gz{
+		float: right;
+		position: absolute;
+		margin-right: 0upx;
+		right: 0upx;
+	}
+	.auid{
+		margin-top: 25upx;
+		font-size:28upx;
+		font-weight:400;
+		color:rgba(54,54,54,1);
+	}
+	.Ysex{
+		margin-left: 18upx;
+		vertical-align: middle;
+		height: 30upx;
+		width: 30upx;
+		background-image: url('../../static/nan.png');
+		background-size:100%;
+	}
+	.Wsex{
+		margin-left: 18upx;
+		vertical-align: middle;
+		height: 30upx;
+		width: 30upx;
+		background-image: url('../../static/nv.png');
+		background-size:100%;
+	}
+	.nameBox{
+		height: 45upx;
+		line-height: 45upx;
+		font-size:32upx;
+		font-weight: 500;
+		vertical-align: middle;
+	}
+	.nameBox view{
+		display: inline-block;
+	}
+	.dengjia{
+		margin-left: 18upx;
+		height: 30upx;
+		vertical-align: middle;
+		padding: 0upx 16upx;
+		background:rgba(121,196,152,0.3);
+		border-radius: 15upx;
+		font-size:22upx;
+		color:rgba(121,196,152,1);
+		line-height: 30upx;
+	}
+	.nameandsex{
+		margin-left: 24upx;
+		height: 110upx;
+	}
+	.infoa{
+		display: flex;
+		align-items:center;
+		margin-top: 68upx;
+		margin-left: 38upx;
+		margin-right: 38upx;
+		position: relative;
+	}
 	.top{
 		background-color: #FFFFFF;
 		padding-bottom: 30upx;
@@ -375,14 +491,13 @@
 		display: inline-block;
 	}
 	.button-sixin{
-		width: 49upx;
-		background-color: #79C498;
-		height: 49upx;
+		width: 52upx;
+		height: 52upx;
 		border-radius: 50%;
 		display: inline-block;
-		margin-right: 6upx;
 		background-image: url('../../static/sixin.png');
 		background-size: 100% 100%;
+		vertical-align: middle;
 	}
 	.dengji{
 		font-size:20upx;
@@ -399,8 +514,8 @@
 		align-items: center;
 	}
 	.lstouxiang{
-		width: 132upx;
-		height: 132upx;
+		width: 110upx;
+		height: 110upx;
 		background-size:100% 100%;
 		border-radius:50%;
 	}
@@ -409,5 +524,10 @@
 		line-height:40upx;
 		vertical-align:top;
 		line-height: 50upx;
+	}
+	page{
+		background-color: #FFFFFF;
+		margin: 0;
+		padding: 0;
 	}
 </style>
