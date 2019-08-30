@@ -18,12 +18,12 @@
 		</view>
 		<view class="messageListBox">
 			<!-- 系统通知 -->
-			<view class="messageList" @click="getChat(list.ToId.Auid,list.FromId.Auid)">
-				<image :src="list.ToId.Auid==auid?list.FromId.AuthorAvatarUrl:list.ToId.AuthorAvatarUrl" mode="" class="touxiang"></image>
+			<view class="messageList" @click="getsysChat()">
+				<image src="../../static/systemMsg.png" mode="" class="touxiang"></image>
 				<text>安个利官方通知</text>
-				<text>刚刚</text>
-				<text>安个利活动开启了</text>
-				<text :class="list.MsgStatus=='0'?'hongdian':''"></text>
+				<text>{{systemCount[0].time}}</text>
+				<text>{{systemCount[0].msg}}</text>
+				<text :class="systemCount[0].isRead==true?'hongdian':''"></text>
 			</view>
 			<view class="menusolid"></view>
 			<view v-for="(list,index) in MsgList" :key="index">
@@ -53,6 +53,7 @@
 				msgNumber:[],
 				MsgList:[],
 				status: 'loading',
+				systemCount:[],
 				statusTypes: [{
 					value: 'more',
 					text: '加载前',
@@ -77,12 +78,18 @@
 		onShow:function(){
 			this.getNoReadMsgNumber();
 			this.getMsgList();
+			this.getNosystemNumber();
 		},
 		onLoad:function(){
 			//this.getNoReadMsgNumber();
 			this.auid=server.userinfo.Auid
 		},
 		methods: {
+			getsysChat:function(){
+				uni.navigateTo({
+					url: 'systemMsg'
+				});
+			},
 			getChat:function(id,id2){
 				let go=parseInt(id)+parseInt(id2)
 				uni.navigateTo({
@@ -105,6 +112,28 @@
 						url: 'newFans'
 					})
 				}
+			},
+			getNosystemNumber:function(){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/user.php?type=getSystemMsg", //仅为示例，并非真实接口地址。
+					data: {
+						
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							this.systemCount=res.data.data
+						}
+						
+						
+						console.log(this.systemCount)
+					}
+				});
 			},
 			getNoReadMsgNumber:function(){
 				uni.showLoading({

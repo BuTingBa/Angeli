@@ -19,8 +19,6 @@ if(empty($_GET['type']))
     die("请输出请求类型参数！");
 }
 
-
-
 switch ($_GET['type']){
     case 'getUserInfo':
         $auid=$_SESSION['Auid'];
@@ -231,7 +229,7 @@ switch ($_GET['type']){
         break;
     case 'getMyhaoyou':
 
-        $auid=6666;
+        $auid=$_SESSION['Auid'];
         $data=$user->getMyhaoyou($auid);
         if(!$data){
             $outmsg = array('code' =>'0','msg'=>'操作失败！','data'=>"");
@@ -264,6 +262,24 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
             $outmsg = array('code' =>'0','msg'=>'获取失败','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+
+    case 'getSystemMsg':
+
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        $data=$user->getSystemMsg($auid);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'操作失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;

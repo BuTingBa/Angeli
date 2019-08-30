@@ -119,6 +119,10 @@
 		{
 			"path" : "pages/postinfo/dashang",
 			"style" : {}
+		},
+		{
+			"path" : "pages/menu/systemMsg",
+			"style" : {}
 		}
     ],
 	"globalStyle": {

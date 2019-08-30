@@ -24,6 +24,71 @@ class angeli
     }
 
 
+    /*
+         * 获取系统通知信息
+         */
+    public function getSystemMsg($auid){
+        $sql="SELECT * FROM angeli_system_msg WHERE toid='all' OR toid LIKE '%$auid%' ORDER BY addtime  DESC";
+        $result=$this->mysqli->query($sql);
+        if($this->mysqli->affected_rows<1){
+            echo $this->mysqli->error;
+            return 0;
+        }else{
+            while($row = $result->fetch_assoc()){
+                $yidu=$this->chekSystemNotRead($row['id'],$auid);
+                if($yidu){
+                    $wd++;
+                }
+
+                $d=array(
+                    'id'=>$row['id'],
+                    'msg'=>$row['msg'],
+                    'isRead'=>$yidu,
+                    'time'=>$this->uc_time_ago($row['addtime']),
+                    'notRead'=>$wd
+                );
+                $data[]=$d;
+            }
+            return $data;
+        }
+    }
+
+    /*
+     * 查询系统消息是否已读
+     * true=已读，false= 未读
+     */
+    function chekSystemNotRead($sid,$auid){
+        $sql = "SELECT * FROM angeli_system_msg_read WHERE system_msg_id =$sid AND auid=$auid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return TRUE;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    /*
+     * 添加系统广播私信,多个接收用户用,隔开，发送全部广播不用填写接收用户ID
+     */
+    public function addSystemMsg($txt,$ToId='all')
+    {
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_msg (msg,toid,addtime) VALUES (?,?,?)");
+        $time=time();
+        $sql->bind_param("sis",$txt,$ToId,$time);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            return false;
+        }else{
+            return TRUE;
+        }
+    }
+
     /**获取系统配置
      * @return array
      */
@@ -45,6 +110,9 @@ class angeli
             }
         }
     }
+
+
+
 
     /**获取我的好友列表
      * @return array
@@ -455,6 +523,10 @@ class angeli
                     return true;
                 }
                 break;
+            case 'system':
+
+
+                break;
             default:
 
                 break;
@@ -627,14 +699,31 @@ class angeli
             }
         }
 
-        $count=$pinglun+$Give+$Msg+$Guanzhu;
+        $systemmsg=0;
+        $sql="SELECT * FROM angeli_system_msg WHERE toid='all' OR toid LIKE '%$auid%' ORDER BY addtime  DESC";
+        $result=$this->mysqli->query($sql);
+        if($this->mysqli->affected_rows<1){
+            echo $this->mysqli->error;
+            $systemmsg=0;
+        }else{
+            while($row = $result->fetch_assoc()){
+                if($this->chekSystemNotRead($row['id'],$auid)){
+                    $systemmsg++;
+                }
+            }
+        }
+
+
+        $count=$pinglun+$Give+$Msg+$Guanzhu+$systemmsg;
 
         $data=array(
             'pinglun'=>$pinglun,
             'Give'=>$Give,
             'Msg'=>$Msg,
             'Guanzhu'=>$Guanzhu,
-            'count'=>$count
+            'SystemMsg'=>$systemmsg,
+            'count'=>$count,
+
         );
 
         return $data;

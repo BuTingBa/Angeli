@@ -192,8 +192,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { msgNumber: [], MsgList: [], status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, auid: 0 };}, onShow: function onShow() {this.getNoReadMsgNumber();this.getMsgList();}, onLoad: function onLoad() {//this.getNoReadMsgNumber();
-    this.auid = _server.default.userinfo.Auid;}, methods: { getChat: function getChat(id, id2) {var go = parseInt(id) + parseInt(id2);uni.navigateTo({ url: 'chat?id=' + go });
+var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { msgNumber: [], MsgList: [], status: 'loading', systemCount: [], statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, auid: 0 };}, onShow: function onShow() {this.getNoReadMsgNumber();this.getMsgList();this.getNosystemNumber();}, onLoad: function onLoad() {//this.getNoReadMsgNumber();
+    this.auid = _server.default.userinfo.Auid;}, methods: { getsysChat: function getsysChat() {uni.navigateTo({
+        url: 'systemMsg' });
+
+    },
+    getChat: function getChat(id, id2) {
+      var go = parseInt(id) + parseInt(id2);
+      uni.navigateTo({
+        url: 'chat?id=' + go });
 
     },
     getPage: function getPage(e) {
@@ -213,7 +220,29 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
 
       }
     },
-    getNoReadMsgNumber: function getNoReadMsgNumber() {var _this = this;
+    getNosystemNumber: function getNosystemNumber() {var _this = this;
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=getSystemMsg", //仅为示例，并非真实接口地址。
+        data: {},
+
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            _this.systemCount = res.data.data;
+          }
+
+
+          console.log(_this.systemCount);
+        } });
+
+    },
+    getNoReadMsgNumber: function getNoReadMsgNumber() {var _this2 = this;
       uni.showLoading({
         title: '加载中' });
 
@@ -230,18 +259,18 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         success: function success(res) {
           console.log(res);
           if (res.data.code == "1") {
-            _this.msgNumber = res.data.data;
+            _this2.msgNumber = res.data.data;
           }
 
 
-          console.log(_this.msgNumber);
+          console.log(_this2.msgNumber);
         },
         complete: function complete() {
           uni.hideLoading();
         } });
 
     },
-    getMsgList: function getMsgList() {var _this2 = this;
+    getMsgList: function getMsgList() {var _this3 = this;
       this.status = "more";
       uni.request({
         method: 'GET',
@@ -256,12 +285,12 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         success: function success(res) {
           console.log(res);
           if (res.data.code == "1") {
-            _this2.MsgList = res.data.data;
+            _this3.MsgList = res.data.data;
           }
           if (res.data.code == "0" || res.data.data.length < 50) {
-            _this2.status = "noMore";
+            _this3.status = "noMore";
           }
-          console.log(_this2.MsgList);
+          console.log(_this3.MsgList);
         },
         complete: function complete() {
           uni.hideLoading();

@@ -27,7 +27,8 @@
     "pages/menu/wallet",
     "pages/menu/tixian",
     "pages/menu/chat",
-    "pages/postinfo/dashang"
+    "pages/postinfo/dashang",
+    "pages/menu/systemMsg"
   ],
   "subPackages": [],
   "window": {
