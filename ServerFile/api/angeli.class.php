@@ -4,7 +4,7 @@
  * 安个利数据读写类
  * 作者：不停(张原粽)
  * 版权：深圳市鑫峰互联有限公司
- * 最后更新时间：2019年6月27日16:50:08
+ * 最后更新时间：2019年9月2日18:51:01
  */
 class angeli
 {
@@ -23,10 +23,50 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+    //推广注册
+    public function setTuiGuang($auid,$toAuid)
+    {
+        $time=time();
+        $sql="INSERT INTO angeli_tuiguang(auid,to_auid,addtime) VALUES ($auid,$toAuid,$time)";
+        $result=$this->mysqli->query($sql);
+        $this->getTuiGuang($auid);
+    }
+    //获取推广的信息
+    public function getTuiGuang($auid)
+    {
+        $sql="SELECT * FROM angeli_tuiguang WHERE auid=$auid  ORDER BY addtime  DESC";
+        $result=$this->mysqli->query($sql);
+        if($this->mysqli->affected_rows<1){
+            echo $this->mysqli->error;
+            return 0;
+        }else{
+            while($row = $result->fetch_assoc()){
+                $count++;
+                $d=array(
+                    'id'=>$row['id'],
+                    'auid'=>$row['auid'],
+                    'toAuid'=>$row['to_auid'],
+                    'time'=>date('Y-m-d H:i:s',$row['addtime'])
+                );
+                $data[]=$d;
+            }
+            if($count>=3){
+                if($this->setLongVip($auid,strtotime('+1month')))
+                {
+                    $this->addSystemMsg('恭喜你，已经分享给三位好友，你已经获得了30天安个利VIP！膜拜大佬！',$auid);
+                }else{
+                    $this->addSystemMsg('恭喜你，已经分享给三位好友，本来你是可以获取到30天VIP的，但是，系统好像出问题了，你可以直接跟客服联系，解决这个问题',$auid);
+                }
+
+            }
+
+            return $data;
+        }
+    }
 
     /*
-         * 获取系统通知信息
-         */
+     * 获取系统通知信息
+     */
     public function getSystemMsg($auid){
         $sql="SELECT * FROM angeli_system_msg WHERE toid='all' OR toid LIKE '%$auid%' ORDER BY addtime  DESC";
         $result=$this->mysqli->query($sql);
@@ -57,8 +97,9 @@ class angeli
      * 查询系统消息是否已读
      * true=已读，false= 未读
      */
-    function chekSystemNotRead($sid,$auid){
-        $sql = "SELECT * FROM angeli_system_msg_read WHERE system_msg_id =$sid AND auid=$auid";
+    function chekSystemNotRead($sid,$auid)
+    {
+        $sql = "SELECT * FROM angeli_system_msg_read WHERE  auid=$auid";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -75,16 +116,22 @@ class angeli
     /*
      * 添加系统广播私信,多个接收用户用,隔开，发送全部广播不用填写接收用户ID
      */
-    public function addSystemMsg($txt,$ToId='all')
+    public function addSystemMsg($txt,$ToId='all',$type='1',$val='0')
     {
-        $sql = $this->mysqli->prepare("INSERT INTO angeli_msg (msg,toid,addtime) VALUES (?,?,?)");
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_msg (msg,toid,addtime,type,type_value) VALUES (?,?,?,?,?)");
         $time=time();
-        $sql->bind_param("sis",$txt,$ToId,$time);
+        $sql->bind_param("sisis",$txt,$ToId,$time,$type,$val);
         $sql->execute();
         if($sql->affected_rows<1)
         {
             return false;
         }else{
+            if($ToId=='all'){
+                $sql="DELETE FROM angeli_system_msg_read";
+            }else{
+                $sql="DELETE FROM angeli_system_msg_read WHERE auid=$ToId";
+            }
+            $result=$this->mysqli->query($sql);
             return TRUE;
         }
     }
@@ -524,8 +571,14 @@ class angeli
                 }
                 break;
             case 'system':
-
-
+                $sql="INSERT INTO angeli_system_msg_read (system_msg_id,auid)VALUES(0,$auid)";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                if($this->mysqli->affected_rows<1){
+                    //表示操作失败
+                    return false;
+                }else{
+                    return true;
+                }
                 break;
             default:
 
@@ -1594,6 +1647,7 @@ class angeli
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
             if($this->mysqli->affected_rows>0){
+
                 $outmsg = array('code' =>'1','msg'=>'注册成功！'.$this->mysqli->error,'data'=>'');
                 return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
             }else{
@@ -1861,6 +1915,60 @@ class angeli
         }
     }
 
+    //查询VIP时间戳
+    public function qVipTime($auid)
+    {
+        $sql="SELECT * from angeli_user WHERE AuId='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($row=$this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $endtime=$row['VIPEndTime'];
+                }
+                return $endtime;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+
+
+    /**
+     * 延期VIP，主要是为了给下面的函数填坑
+     * $auid:操作账号ID
+     * $time:欲增加多少的Vip时间,时间戳
+     * @return true/false
+     */
+    public function setLongVip($auid,$time)
+    {
+        $timeCha=$this->qVipTime($auid)-time();
+        if($timeCha<0){
+            $time=abs($timeCha)+$time;
+            $sql="UPDATE angeli_user SET Type='VIP', VIPEndTime=$time WHERE AuId=$auid";
+        }else{
+            $time=$timeCha+$time;
+            $sql="UPDATE angeli_user SET Type='VIP', VIPEndTime=$time WHERE AuId=$auid";
+        }
+        $result=$this->mysqli->query($sql);
+        if(!$result){
+            return 0;
+        }else{
+            if($row=$this->mysqli->affected_rows>0){
+
+                return true;
+            }else{
+                return FALSE;
+            }
+        }
+
+
+    }
+
+
     /*
     *   增加VIP
     *   UID类型，用户UID，到期时间(如果时间戳比现在时间少，则撤回会员，如果时间戳在此时间多，就是VIP)
@@ -2120,7 +2228,6 @@ class angeli
         $dtime=time();
         $time=$vipTime-$dtime;
         return $time/86400;
-
     }
 
 

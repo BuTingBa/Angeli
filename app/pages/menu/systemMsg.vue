@@ -11,7 +11,8 @@
 					<view class="cu-avatar radius yuan" style="background-image: url('../../static/systemMsg.png');" @click="getbie"></view>
 					<view class="main">
 						<view class="content shadow">
-							<text>{{list.msg}}</text>
+							<text>{{list.msg}}\n<text style="color: #0081FF;">点击这里开始活动</text></text>
+							
 						</view>
 					</view>
 					<view class="date ">{{list.time}}</view>

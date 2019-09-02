@@ -36,8 +36,9 @@
 				</view>
 				<view class="menusolid"></view>
 			</view>
-			<uni-load-more :status="status" />
+			
 		</view>
+		<uni-load-more :status="status" />
 	</view>
 </template>
 

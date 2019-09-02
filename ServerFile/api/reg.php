@@ -78,8 +78,14 @@ switch ($_GET['type']) {
             $outmsg = array('code' =>'0','msg'=>'请传入用户code','data'=>'');
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
-        $wxuserinfo=$user->getWxID($_POST['code']);
         session_start();
+        if(isset($_POST['tuijianId'])){
+            $_SESSION['tjrId']=$_POST['tuijianId'];
+        }
+
+
+        $wxuserinfo=$user->getWxID($_POST['code']);
+
         $_SESSION['wxuid']=$wxuserinfo['openid'];
         $_SESSION['sessionKey']=$wxuserinfo['session_key'];
         setcookie("wxid",$wxuserinfo['openid'],time()+3600*24,'/');
@@ -123,8 +129,11 @@ switch ($_GET['type']) {
         $phone=$_POST['phone'];
         $email=time()."@angeli.top";
         $fankui=$user -> addUser($_POST['username'],"angeli",$_POST['gender'],$_POST['phone'],$_POST['openid'],$_POST['unionid'],$email,"1",$_SERVER['REMOTE_ADDR'],$_POST['avatarUrl']);
+        $userinfo=$user->getUserInfo('phone',$phone);
+        if($_SESSION['tjrId'] && is_numeric($_SESSION['tjrId'])){
+            $user->setTuiGuang($userinfo['Auid'],$_SESSION['tjrId']);
+        }
         die($fankui);
-
         # code...
         break;
     case 'getCode':
