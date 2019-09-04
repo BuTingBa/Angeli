@@ -129,33 +129,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -181,35 +154,41 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', value: "" };}, onLoad: function onLoad(e) {this.getMyMsg();}, onShow: function onShow() {this.markmsg();}, methods: { input: function input(e) {this.val = e.target.value;}, getme: function getme() {uni.navigateTo({ url: '../i/i' });}, markmsg: function markmsg() {uni.request({ method: 'GET', url: "https://api.angeli.top/user.php?type=mark&class=system", //请求标记已读消息
-        data: { 'msgId': this.msgid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {console.log('已将信息标记为已读');} else {console.log('标记已读失败！');}}, complete: function complete() {} });}, InputFocus: function InputFocus(e) {this.InputBottom = e.detail.height;
+var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', value: "" };}, onLoad: function onLoad(e) {this.getMyMsg();}, onShow: function onShow() {this.markmsg();}, methods: { input: function input(e) {this.val = e.target.value;}, getme: function getme() {uni.navigateTo({ url: '../i/i' });
+    },
+    getLink: function getLink(url) {
+      console.log(url);
+      uni.navigateTo({
+        url: url });
+
+    },
+    markmsg: function markmsg() {
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/user.php?type=mark&class=system", //请求标记已读消息
+        data: {
+          'msgId': this.msgid },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            console.log('已将信息标记为已读');
+          } else {
+            console.log('标记已读失败！');
+          }
+
+        },
+        complete: function complete() {
+
+        } });
+
+    },
+    InputFocus: function InputFocus(e) {
+      this.InputBottom = e.detail.height;
     },
     InputBlur: function InputBlur(e) {
       this.InputBottom = 0;
@@ -227,6 +206,7 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
 
         success: function success(res) {
           console.log(res);
+
           if (res.data.code == "1") {
             _this.MsgList = res.data.data;
           }

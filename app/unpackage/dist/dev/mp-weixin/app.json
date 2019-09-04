@@ -28,7 +28,8 @@
     "pages/menu/tixian",
     "pages/menu/chat",
     "pages/postinfo/dashang",
-    "pages/menu/systemMsg"
+    "pages/menu/systemMsg",
+    "pages/menu/huodong"
   ],
   "subPackages": [],
   "window": {
@@ -42,6 +43,5 @@
   "usingComponents": {
     "cu-custom": "/components/colorui/components/cu-custom",
     "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"
-  },
-  "sitemapLocation": "sitemap27.json"
+  }
 }

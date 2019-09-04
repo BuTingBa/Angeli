@@ -373,6 +373,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       userid: "0",
       fensi: "0",
       dengji: "0",
+      tuijianren: 0,
       systemConfig: '',
       index: false,
       userInfo: [],
@@ -404,15 +405,13 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       } });
 
   },
-  onLoad: function onLoad() {var _this2 = this;
+  onLoad: function onLoad(e) {var _this2 = this;
+    this.tuijianren = e.tuijianid;
+    this.tuijianren = 2121;
+    _server.default.tgid = this.tuijianren;
     this.postList = [];
-    /* console.log(e)
-                        if(e.id==1){
-                        	this.index=true;
-                        }
-                        if(e.type=='plusPost'){
-                        	this.getPostData('new',0);
-                        } */
+    console.log("推荐人ID", this.tuijianren);
+
 
 
 
@@ -442,7 +441,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
             method: 'POST',
             url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
             data: {
-              code: res.code },
+              code: res.code,
+              tuijianId: _this2.tuijianren },
 
             header: {
               'content-type': 'application/x-www-form-urlencoded' },
@@ -487,6 +487,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                       position: 'bottom',
                       icon: 'none' });
 
+                    _this2.getPostData('new', 0);
                   }
                 }
 
@@ -501,6 +502,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 position: 'bottom',
                 icon: 'none' });
 
+              _this2.getPostData('new', 0);
             } });
 
         },
@@ -510,8 +512,25 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
             position: 'bottom' }),
 
           console.error('授权登录失败：' + JSON.stringify(err));
+          _this2.getPostData('new', 0);
         } });
 
+    } else {
+      if (_server.default.userinfo.VIPEndTime > 0) {
+        uni.showToast({
+          title: '欢迎VIP：' + _server.default.userinfo.username,
+          position: 'bottom',
+          icon: 'none' });
+
+      } else {
+        uni.showToast({
+          title: '欢迎你,' + _server.default.userinfo.username,
+          position: 'bottom',
+          icon: 'none' });
+
+
+      }
+      this.getPostData('new', 0);
     }
 
 
@@ -929,7 +948,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       console.log(res.target);
     }
     return {
-      title: "给你安利一个安个利",
+      title: "超级无敌安个利",
       path: '/pages/Home/Home',
       desc: "超级无敌安个利！" };
 

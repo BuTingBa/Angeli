@@ -79,13 +79,10 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         session_start();
-        if(isset($_POST['tuijianId'])){
+        if(isset($_POST['tuijianId'])&&$_POST['tuijianId']!='0'){
             $_SESSION['tjrId']=$_POST['tuijianId'];
         }
-
-
         $wxuserinfo=$user->getWxID($_POST['code']);
-
         $_SESSION['wxuid']=$wxuserinfo['openid'];
         $_SESSION['sessionKey']=$wxuserinfo['session_key'];
         setcookie("wxid",$wxuserinfo['openid'],time()+3600*24,'/');
@@ -111,7 +108,7 @@ switch ($_GET['type']) {
             if($jifen){
                 $outmsg = array('code' =>'2','msg'=>'签到成功，赠送'.$j.'个安个利币','data'=>$userinfo);
             }else{
-                $outmsg = array('code' =>'1','msg'=>'ok','data'=>$userinfo);
+                $outmsg = array('code' =>'1','msg'=>'ok','data'=>$userinfo,'tuijianren'=>$_SESSION['tjrId']);
             }
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
@@ -119,6 +116,10 @@ switch ($_GET['type']) {
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         break;
     case 'wxreg':
+        session_start();
+        if(isset($_POST['tuijianId'])&&$_POST['tuijianId']!='0'){
+            $_SESSION['tjrId']=$_POST['tuijianId'];
+        }
         if(empty($_POST['unionid']) || $_POST['unionid']=="undefined"){
             $outmsg = array('code' =>'0','msg'=>'请传入用户unionid','data'=>'');
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
@@ -129,11 +130,18 @@ switch ($_GET['type']) {
         $phone=$_POST['phone'];
         $email=time()."@angeli.top";
         $fankui=$user -> addUser($_POST['username'],"angeli",$_POST['gender'],$_POST['phone'],$_POST['openid'],$_POST['unionid'],$email,"1",$_SERVER['REMOTE_ADDR'],$_POST['avatarUrl']);
-        $userinfo=$user->getUserInfo('phone',$phone);
-        if($_SESSION['tjrId'] && is_numeric($_SESSION['tjrId'])){
-            $user->setTuiGuang($userinfo['Auid'],$_SESSION['tjrId']);
+        $data=json_decode($fankui,true);
+        if($data['code']=='1'){
+            $userinfo=$user->getUserInfo('phone',$phone);
+            if($_POST['tuijianId'] && is_numeric($_POST['tuijianId'])){
+                $user->setTuiGuang($_POST['tuijianId'],$userinfo['Auid']);
+            }
+
+            $outmsg = array('code' =>'1','msg'=>'注册成功吖！','data'=>$userinfo,'TG'=>$_POST['tuijianId']);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else {
+            die($fankui);
         }
-        die($fankui);
         # code...
         break;
     case 'getCode':

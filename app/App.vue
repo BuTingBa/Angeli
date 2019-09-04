@@ -24,11 +24,7 @@
 					// #endif
 				}
 			})
-		},
-		methods:function(){
-			
 		}
-		
 	}
 </script>
 

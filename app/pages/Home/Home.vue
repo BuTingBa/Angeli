@@ -266,6 +266,7 @@
 				userid:"0",
 				fensi:"0",
 				dengji:"0",
+				tuijianren:0,
 				systemConfig:'',
 				index:false,
 				userInfo:[],
@@ -297,15 +298,13 @@
 				}
 			});
 		},
-		onLoad:function(){
+		onLoad:function(e){
+			this.tuijianren=e.tuijianid;
+			this.tuijianren=2121;
+			server.tgid=this.tuijianren
 			this.postList=[];
-			/* console.log(e)
-			if(e.id==1){
-				this.index=true;
-			}
-			if(e.type=='plusPost'){
-				this.getPostData('new',0);
-			} */
+			console.log("推荐人ID",this.tuijianren)
+			
 			// #ifdef  APP-PLUS
 			console.log("APP:",server.userinfo);
 					uni.getStorage({
@@ -335,7 +334,8 @@
 							method:'POST',
 							url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
 							data: {
-								code: res.code
+								code: res.code,
+								tuijianId:this.tuijianren
 							},
 							header: {
 								'content-type': 'application/x-www-form-urlencoded'
@@ -380,6 +380,7 @@
 												position:'bottom',
 												icon:'none'
 											})
+											this.getPostData('new',0);
 										}
 									}
 									
@@ -394,6 +395,7 @@
 									position:'bottom',
 									icon:'none'
 								})
+								this.getPostData('new',0);
 							},
 						});
 				    },
@@ -403,8 +405,25 @@
 							position:'bottom'
 						}),
 				        console.error('授权登录失败：' + JSON.stringify(err));
+						this.getPostData('new',0);
 				    }
 				})
+			}else{
+				if(server.userinfo.VIPEndTime>0){
+					uni.showToast({
+						title: '欢迎VIP：'+server.userinfo.username,
+						position:'bottom',
+						icon:'none'
+					})
+				}else{
+					uni.showToast({
+						title: '欢迎你,'+server.userinfo.username,
+						position:'bottom',
+						icon:'none'
+					})
+					
+				}
+				this.getPostData('new',0);
 			}
 			
 			// #endif
@@ -822,7 +841,7 @@
 			  console.log(res.target)
 			} 
 			return {
-			  title: "给你安利一个安个利",
+			  title: "超级无敌安个利",
 			  path:'/pages/Home/Home',
 			  desc:"超级无敌安个利！"
 			}

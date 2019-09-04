@@ -375,7 +375,8 @@
 								avatarUrl:this.userInfo.avatarUrl,
 								gender:this.userInfo.gender,
 								phone:this.phoneifo,
-								openid:this.userInfo.openId
+								openid:this.userInfo.openId,
+								tuijianId:server.tgid
 							},
 							header: {
 								'content-type': 'application/x-www-form-urlencoded',

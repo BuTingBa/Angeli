@@ -28,7 +28,8 @@
     "pages/menu/tixian",
     "pages/menu/chat",
     "pages/postinfo/dashang",
-    "pages/menu/systemMsg"
+    "pages/menu/systemMsg",
+    "pages/menu/huodong"
   ],
   "subPackages": [],
   "window": {

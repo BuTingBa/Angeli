@@ -28,6 +28,7 @@ class angeli
     {
         $time=time();
         $sql="INSERT INTO angeli_tuiguang(auid,to_auid,addtime) VALUES ($auid,$toAuid,$time)";
+        //echo $sql;
         $result=$this->mysqli->query($sql);
         $this->getTuiGuang($auid);
     }
@@ -38,14 +39,14 @@ class angeli
         $result=$this->mysqli->query($sql);
         if($this->mysqli->affected_rows<1){
             echo $this->mysqli->error;
-            return 0;
+            return false;
         }else{
             while($row = $result->fetch_assoc()){
                 $count++;
                 $d=array(
                     'id'=>$row['id'],
-                    'auid'=>$row['auid'],
-                    'toAuid'=>$row['to_auid'],
+                    'TG'=>$this->getInfo($row['auid']),
+                    'ToTG'=>$this->getInfo($row['to_auid']),
                     'time'=>date('Y-m-d H:i:s',$row['addtime'])
                 );
                 $data[]=$d;
@@ -85,7 +86,8 @@ class angeli
                     'msg'=>$row['msg'],
                     'isRead'=>$yidu,
                     'time'=>$this->uc_time_ago($row['addtime']),
-                    'notRead'=>$wd
+                    'type'=>$row['type'],
+                    'typeVal'=>$row['type_value']
                 );
                 $data[]=$d;
             }

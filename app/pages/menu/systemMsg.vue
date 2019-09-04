@@ -8,43 +8,16 @@
 			
 			<view v-for="(list,index) in MsgList" :key="index">
 				<view class="cu-item">
-					<view class="cu-avatar radius yuan" style="background-image: url('../../static/systemMsg.png');" @click="getbie"></view>
+					<view class="cu-avatar radius yuan" style="background-image: url('../../static/systemMsg.png');" ></view>
 					<view class="main">
 						<view class="content shadow">
-							<text>{{list.msg}}\n<text style="color: #0081FF;">点击这里开始活动</text></text>
+							<view>{{list.msg}}\n<text v-if="list.type==2" @click="getLink(list.typeVal)" style="color: #0081FF;" >点击这里查看详情</text></view>
 							
 						</view>
 					</view>
 					<view class="date ">{{list.time}}</view>
 				</view>
 			</view>
-			
-			
-			<!--
-			
-			中间系统消息 
-			<view class="cu-info round">对方撤回一条消息!</view>
-			
-			带图标的中间消息
-			<view class="cu-info">
-				<text class="cuIcon-roundclosefill text-red "></text> 对方拒绝了你的消息
-			</view>
-			 超长文本的中间消息，还有链接地址 
-			<view class="cu-info">
-				对方开启了好友验证，你还不是他(她)的好友。请先发送好友验证请求，对方验证通过后，才能聊天。
-				<text class="text-blue">发送好友验证</text>
-			</view>
-			
-			  图片消息
-			<view class="cu-item self">
-				<view class="main">
-					<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" class="radius" mode="widthFix"></image>
-				</view>
-				<view class="cu-avatar radius yuan" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
-				<view class="date"> 13:23</view>
-			</view>
-			-->
-			
 		</view>
 		
 	</view>
@@ -76,6 +49,12 @@
 			getme:function(){
 				uni.navigateTo({
 					url: '../i/i'
+				})
+			},
+			getLink:function(url){
+				console.log(url)
+				uni.navigateTo({
+					url: url
 				})
 			},
 			markmsg:function(){
@@ -122,6 +101,7 @@
 					},
 					success: (res) => {
 						console.log(res)
+						
 						if(res.data.code=="1"){
 							this.MsgList=res.data.data
 						}

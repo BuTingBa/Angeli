@@ -482,7 +482,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
               avatarUrl: _this2.userInfo.avatarUrl,
               gender: _this2.userInfo.gender,
               phone: _this2.phoneifo,
-              openid: _this2.userInfo.openId },
+              openid: _this2.userInfo.openId,
+              tuijianId: _server.default.tgid },
 
             header: {
               'content-type': 'application/x-www-form-urlencoded',
