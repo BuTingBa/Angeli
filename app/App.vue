@@ -2,6 +2,7 @@
 	import Vue from 'vue'
 	export default {
 		onLaunch: function() {
+			
 			uni.getSystemInfo({
 				success: function(e) {
 					// #ifndef MP
@@ -24,6 +25,7 @@
 					// #endif
 				}
 			})
+			
 		}
 	}
 </script>

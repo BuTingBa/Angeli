@@ -12,7 +12,6 @@
 					<view class="main">
 						<view class="content shadow">
 							<view>{{list.msg}}\n<text v-if="list.type==2" @click="getLink(list.typeVal)" style="color: #0081FF;" >点击这里查看详情</text></view>
-							
 						</view>
 					</view>
 					<view class="date ">{{list.time}}</view>

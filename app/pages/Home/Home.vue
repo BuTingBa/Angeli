@@ -299,8 +299,8 @@
 			});
 		},
 		onLoad:function(e){
+			
 			this.tuijianren=e.tuijianid;
-			this.tuijianren=2121;
 			server.tgid=this.tuijianren
 			this.postList=[];
 			console.log("推荐人ID",this.tuijianren)
@@ -652,21 +652,21 @@
 					}
 				});
 			},
-			caidan:function(res){
-				console.log(res)
-				this.Dindex=res;
-				if(res.AuthorId==server.userinfo.Auid){
+			caidan:function(resa){
+				console.log(resa)
+				this.Dindex=resa;
+				if(resa.AuthorId==server.userinfo.Auid){
 					this.menuList=['分享给朋友', '生成海报', '举报','删除帖子']
 				}else{
 					this.menuList=['分享给朋友', '生成海报', '举报']
 				}
 				uni.showActionSheet({
 					itemList:this.menuList,
-					success: function (res) {
+					success: (res) =>{
 						switch(res.tapIndex){
 							case 0:
 								uni.showToast({
-									title: "分享"+res.Content,
+									title: "分享"+resa.Content,
 									position:'bottom',
 									icon:'none'
 								});
@@ -675,6 +675,12 @@
 								
 								break;
 							case 2:
+								uni.showToast({
+									title:'举报成功',
+									position:'bottom',
+									icon:'none'
+								});
+								this.$jubao(resa.PostsId,server.userinfo.Auid,resa.AuthorId,'没有理由');
 								
 								break;
 							case 3:

@@ -128,7 +128,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -153,8 +152,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
 var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', value: "" };}, onLoad: function onLoad(e) {this.getMyMsg();}, onShow: function onShow() {this.markmsg();}, methods: { input: function input(e) {this.val = e.target.value;}, getme: function getme() {uni.navigateTo({ url: '../i/i' });
+
     },
     getLink: function getLink(url) {
       console.log(url);

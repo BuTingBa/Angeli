@@ -345,7 +345,22 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'jubao':
+        if(empty($_GET['postId'])||empty($_GET['auid'])||empty($_GET['beijubao'])||empty($_GET['liyou'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $postId=$_GET['postId'];
+        $data=$post->addJuBao($postId,$_GET['auid'],$_GET['beijubao'],$_GET['liyou']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'举报失败','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'举报成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
 
+        break;
     default:
         # code...
 

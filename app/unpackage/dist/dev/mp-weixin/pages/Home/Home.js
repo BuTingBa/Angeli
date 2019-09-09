@@ -406,8 +406,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   onLoad: function onLoad(e) {var _this2 = this;
+
     this.tuijianren = e.tuijianid;
-    this.tuijianren = 2121;
     _server.default.tgid = this.tuijianren;
     this.postList = [];
     console.log("推荐人ID", this.tuijianren);
@@ -759,10 +759,10 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         } });
 
     },
-    caidan: function caidan(res) {
-      console.log(res);
-      this.Dindex = res;
-      if (res.AuthorId == _server.default.userinfo.Auid) {
+    caidan: function caidan(resa) {var _this6 = this;
+      console.log(resa);
+      this.Dindex = resa;
+      if (resa.AuthorId == _server.default.userinfo.Auid) {
         this.menuList = ['分享给朋友', '生成海报', '举报', '删除帖子'];
       } else {
         this.menuList = ['分享给朋友', '生成海报', '举报'];
@@ -773,7 +773,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           switch (res.tapIndex) {
             case 0:
               uni.showToast({
-                title: "分享" + res.Content,
+                title: "分享" + resa.Content,
                 position: 'bottom',
                 icon: 'none' });
 
@@ -782,6 +782,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
               break;
             case 2:
+              uni.showToast({
+                title: '举报成功',
+                position: 'bottom',
+                icon: 'none' });
+
+              _this6.$jubao(resa.PostsId, _server.default.userinfo.Auid, resa.AuthorId, '没有理由');
 
               break;
             case 3:
@@ -796,15 +802,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         } });
 
     },
-    getHei: function getHei() {var _this6 = this;
+    getHei: function getHei() {var _this7 = this;
 
       var view = uni.createSelectorQuery().select("#topbox");
       view.fields({
         size: true,
         scrollOffset: true },
       function (data) {
-        _this6.gaodu = data.height - 5;
-        console.log("总高度：" + _this6.gaodu);
+        _this7.gaodu = data.height - 5;
+        console.log("总高度：" + _this7.gaodu);
       }).exec();
     },
     showImage: function showImage(res, c) {
@@ -829,7 +835,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
     },
-    getPostData: function getPostData(type, classId) {var _this7 = this;
+    getPostData: function getPostData(type, classId) {var _this8 = this;
       console.log(type);
       uni.request({
         method: 'GET',
@@ -846,12 +852,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         success: function success(res) {
 
-          _this7.postList = [];
+          _this8.postList = [];
           console.log(res.data.data);
           console.log("————————————帖子列表——————————");
-          _this7.postList = res.data.data;
-          console.log(_this7.postList);
-          _this7.weikong = false;
+          _this8.postList = res.data.data;
+          console.log(_this8.postList);
+          _this8.weikong = false;
           if (res.data.code !== "1") {
             uni.showToast({
               title: '获取帖子失败，建议重启',
@@ -860,12 +866,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
           }
           if (res.data.data == false) {
-            _this7.weikong = true;
+            _this8.weikong = true;
           }
           //this.$forceUpdate();
         },
         complete: function complete() {
-          _this7.$forceUpdate();
+          _this8.$forceUpdate();
         } });
 
 
@@ -906,7 +912,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       }
 
     },
-    EndLoding: function EndLoding(e) {var _this8 = this;
+    EndLoding: function EndLoding(e) {var _this9 = this;
       this.page++;
       console.log(this.scrollTop);
       uni.request({
@@ -923,14 +929,14 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           'Cookie': _server.default.cookie },
 
         success: function success(res) {
-          console.log("————————————帖子列表——————————" + _this8.page);
+          console.log("————————————帖子列表——————————" + _this9.page);
           if (res.data.data.length == undefined) {
-            _this8.page--;
-            _this8.status = "noMore";
+            _this9.page--;
+            _this9.status = "noMore";
           } else {
-            _this8.postList = _this8.postList.concat(res.data.data);
-            _this8.status = "loading";
-            console.log(_this8.postList);
+            _this9.postList = _this9.postList.concat(res.data.data);
+            _this9.status = "loading";
+            console.log(_this9.postList);
           }
 
 

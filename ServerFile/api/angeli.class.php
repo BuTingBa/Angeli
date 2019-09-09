@@ -23,6 +23,38 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+
+
+    /**
+     * 添加举报信息
+     */
+    public function addJuBao($postid,$auid,$beijubaoid,$yuanyin)
+    {
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_jubao (postid,jubaoid,beijubaoid,reason,addtime) VALUES (?,?,?,?,?)");
+        $time=time();
+        $sql->bind_param("iiisi",$postid,$auid,$beijubaoid,$yuanyin,$time);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            return false;
+        }else{
+
+            return TRUE;
+        }
+    }
+
+
+
+    /**
+     * 获取微信token
+     */
+    public function getWxAccessToken()
+    {
+        $html = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->wxAppid."&secret=".$this->wxSessionKey);
+        $arr=json_decode($html);
+        return $arr->access_token;
+    }
+
     //推广注册
     public function setTuiGuang($auid,$toAuid)
     {
@@ -2173,7 +2205,8 @@ class angeli
     }
 
     //获取帖子详情
-    public function getPostInfo($postID,$uid){
+    public function getPostInfo($postID,$uid='6666
+    '){
         if(!is_numeric($postID)){
             $outmsg = array('code' =>'0','msg'=>'系统错误，帖子ID必须为数字','data'=>'');
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
