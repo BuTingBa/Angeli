@@ -25,6 +25,30 @@ class angeli
 
 
 
+
+    /**
+     * 用户删除帖子
+     */
+    public function delPost($postid,$auid=0){
+        if($auid==0){
+            $sql="UPDATE angeli_posts SET IsLock=2 WHERE PostsId=$postid";
+        }else{
+            $sql="UPDATE angeli_posts SET IsLock=2 WHERE PostsId=$postid and AuthorId=$auid";
+        }
+
+        $result=$this->mysqli->query($sql);
+        if(!$result){
+            //表示操作失败
+            return TRUE;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
     /**
      * 添加举报信息
      */

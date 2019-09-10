@@ -11,8 +11,9 @@
 					<text class="cuIcon-search"></text>
 					<input type="text" disabled="true" placeholder="搜索热门话题" confirm-type="search" @click="sousuo"></input>
 				</view>
-				<view class="action">
-					<text class="cuIcon-sort " @tap="showModal" data-target="viewModal" style="font-size: 40px;"></text>
+				<view class="action" style="position: relative;">
+					<image src="../../static/caidana.png" @tap="showModal" data-target="viewModal" mode="aspectFit" style="width: 45upx; height: 42upx;"></image>
+					<image src="../../static/hongdain.png" v-if="msgNumber>0" mode="aspectFit" class="hongdiana"></image>
 				</view>
 			</view>
 		
@@ -43,7 +44,10 @@
 					
 					<view class="postBottom">
 						<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
-						<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index)"></view>
+						<view>
+							<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
+							
+						</view>
 						<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 					</view>
 				</view>
@@ -59,13 +63,16 @@
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
 					<block v-if="list.PictureId[0].length>5">
 						<view class="postImage" >
-							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="widthFix"></image>
+							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="aspectFill"></image>
 						</view>
 					</block>
 					
 					<view class="postBottom">
 						<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
-						<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index)"></view>
+						<view>
+							<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
+							
+						</view>
 						<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image>
 						</view>
 					</view>
@@ -83,13 +90,14 @@
 					<view class="postText" @tap="getpostinfo(list.PostsId)"><text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text></view>
 					<block v-if="list.PictureId[0].length>5">
 						<view class="postImage" >
-							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="widthFix"></image>
+							<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="aspectFill"></image>
 						</view>
 					</block>
-					
 					<view class="postBottom">
 						<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
-						<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index)"></view>
+						<view>
+							<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
+						</view>
 						<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 					</view>
 				</view>
@@ -555,8 +563,6 @@
 				this.dengji=server.userinfo.Rank;
 				this.userid=server.userinfo.Auid;
 				console.log("测试！：",this.username)
-				
-				
 				//请求 https://api.angeli.top/user.php?type=getMyNoRead
 				uni.request({
 					method:'GET',
@@ -601,7 +607,7 @@
 				}
 				
 			},
-			Like:function(postid,auid,give,index){
+			Like:function(postid,auid,give,index,zc){
 				if(give===true){
 					var modea='del'
 				}else{
@@ -622,6 +628,7 @@
 					success: (res) => {
 						if(res.data.code=="1"){
 							if(modea=='add'){
+								this.postList[index].ZhongcaoCount=Number(zc)+1;
 								this.postList[index].Give=true;
 								uni.showToast({
 									title: "种草成功！",
@@ -629,6 +636,7 @@
 									icon:'none'
 								});
 							}else{
+								this.postList[index].ZhongcaoCount=Number(zc)-1;
 								this.postList[index].Give=false;
 								uni.showToast({
 									title: "取消种草成功！",
@@ -656,9 +664,9 @@
 				console.log(resa)
 				this.Dindex=resa;
 				if(resa.AuthorId==server.userinfo.Auid){
-					this.menuList=['分享给朋友', '生成海报', '举报','删除帖子']
+					this.menuList=['生成海报', '举报','删除帖子']
 				}else{
-					this.menuList=['分享给朋友', '生成海报', '举报']
+					this.menuList=['生成海报', '举报']
 				}
 				uni.showActionSheet({
 					itemList:this.menuList,
@@ -672,19 +680,15 @@
 								});
 								break;
 							case 1:
-								
-								break;
-							case 2:
 								uni.showToast({
 									title:'举报成功',
 									position:'bottom',
 									icon:'none'
 								});
 								this.$jubao(resa.PostsId,server.userinfo.Auid,resa.AuthorId,'没有理由');
-								
 								break;
-							case 3:
-							
+							case 2:
+								this.$delPost(resa.PostsId);
 								break;
 							default:
 								
@@ -1060,11 +1064,18 @@
 	}
 	
 	.DrawerPage .cu-bar.tabbar .action button.cuIcon {
-		width: 64upx;
-		height: 64upx;
-		line-height: 64upx;
+		width: 45upx;
+		height: 42upx;
 		margin: 0;
 		display: inline-block;
+		
+	}
+	.hongdiana{
+		width: 16upx;
+		height:16upx;
+		position: absolute;
+		right: -8upx;
+		top: -8upx;
 	}
 	
 	.DrawerPage .cu-bar.tabbar .action .cu-avatar {

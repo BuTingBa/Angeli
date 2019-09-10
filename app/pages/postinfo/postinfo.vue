@@ -20,8 +20,8 @@
 				<view class="postBottom">
 					<view class="postClass">{{postInfo.Tag.ClassName}}</view>
 					<view>
-						<view :class="[postInfo.Give?'likeing':'like']"  @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give)"></view>
-						<text>152</text>
+						<view :class="[postInfo.Give?'likeing':'like']"  @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give,postInfo.ZhongcaoCount)"></view><view class="postviewcount" v-if="postInfo.ZhongcaoCount>0" @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give,postInfo.ZhongcaoCount)">{{postInfo.ZhongcaoCount}}</view>
+						
 					</view>
 					<view class="postMenu" @click="caidan"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 				</view>
@@ -303,7 +303,7 @@
 				this.gaodu='0px'
 				this.yanse='rgba(0,0,0,0.4)'
 			},
-			Like:function(postid,auid,give){
+			Like:function(postid,auid,give,zc){
 				if(give===true){
 					var modea='del'
 				}else{
@@ -325,6 +325,7 @@
 						if(res.data.code=="1"){
 							if(modea=='add'){
 								this.postInfo.Give=true;
+								this.postInfo.ZhongcaoCount=Number(zc)+1;
 								uni.showToast({
 									title: "种草成功！",
 									position:'bottom',
@@ -332,6 +333,7 @@
 								});
 							}else{
 								this.postInfo.Give=false;
+								this.postInfo.ZhongcaoCount=Number(zc)-1;
 								uni.showToast({
 									title: "取消种草成功！",
 									position:'bottom',

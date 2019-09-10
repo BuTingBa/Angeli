@@ -325,6 +325,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default =
 
 
@@ -662,8 +670,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       this.dengji = _server.default.userinfo.Rank;
       this.userid = _server.default.userinfo.Auid;
       console.log("测试！：", this.username);
-
-
       //请求 https://api.angeli.top/user.php?type=getMyNoRead
       uni.request({
         method: 'GET',
@@ -708,7 +714,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       }
 
     },
-    Like: function Like(postid, auid, give, index) {var _this5 = this;
+    Like: function Like(postid, auid, give, index, zc) {var _this5 = this;
       if (give === true) {
         var modea = 'del';
       } else {
@@ -729,6 +735,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         success: function success(res) {
           if (res.data.code == "1") {
             if (modea == 'add') {
+              _this5.postList[index].ZhongcaoCount = Number(zc) + 1;
               _this5.postList[index].Give = true;
               uni.showToast({
                 title: "种草成功！",
@@ -736,6 +743,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 icon: 'none' });
 
             } else {
+              _this5.postList[index].ZhongcaoCount = Number(zc) - 1;
               _this5.postList[index].Give = false;
               uni.showToast({
                 title: "取消种草成功！",
@@ -763,9 +771,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       console.log(resa);
       this.Dindex = resa;
       if (resa.AuthorId == _server.default.userinfo.Auid) {
-        this.menuList = ['分享给朋友', '生成海报', '举报', '删除帖子'];
+        this.menuList = ['生成海报', '举报', '删除帖子'];
       } else {
-        this.menuList = ['分享给朋友', '生成海报', '举报'];
+        this.menuList = ['生成海报', '举报'];
       }
       uni.showActionSheet({
         itemList: this.menuList,
@@ -779,19 +787,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
               break;
             case 1:
-
-              break;
-            case 2:
               uni.showToast({
                 title: '举报成功',
                 position: 'bottom',
                 icon: 'none' });
 
               _this6.$jubao(resa.PostsId, _server.default.userinfo.Auid, resa.AuthorId, '没有理由');
-
               break;
-            case 3:
-
+            case 2:
+              _this6.$delPost(resa.PostsId);
               break;
             default:}
 

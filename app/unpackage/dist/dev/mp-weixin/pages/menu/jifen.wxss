@@ -36,6 +36,7 @@
 .lpaihang{
 	height: 46rpx;
 	width: 46rpx;
+	line-height: 46rpx;
 	text-align: center;
 	font-size:26rpx;
 	font-weight:500;

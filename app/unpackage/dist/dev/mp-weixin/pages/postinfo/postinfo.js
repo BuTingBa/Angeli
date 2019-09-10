@@ -410,7 +410,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
       this.gaodu = '0px';
       this.yanse = 'rgba(0,0,0,0.4)';
     },
-    Like: function Like(postid, auid, give) {var _this4 = this;
+    Like: function Like(postid, auid, give, zc) {var _this4 = this;
       if (give === true) {
         var modea = 'del';
       } else {
@@ -432,6 +432,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
           if (res.data.code == "1") {
             if (modea == 'add') {
               _this4.postInfo.Give = true;
+              _this4.postInfo.ZhongcaoCount = Number(zc) + 1;
               uni.showToast({
                 title: "种草成功！",
                 position: 'bottom',
@@ -439,6 +440,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
             } else {
               _this4.postInfo.Give = false;
+              _this4.postInfo.ZhongcaoCount = Number(zc) - 1;
               uni.showToast({
                 title: "取消种草成功！",
                 position: 'bottom',

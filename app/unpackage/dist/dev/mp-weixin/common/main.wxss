@@ -29,8 +29,6 @@
 
 
 
-
-
 /*每个页面公共css */
 /*
   ColorUi for uniApp  v2.1.6 | by 文晓港 2019-05-31 10:44:24
@@ -4995,8 +4993,16 @@ scroll-view.cu-steps .cu-item {
 	padding: 5px 0rpx;
 	display: grid;
 	padding-bottom: 15rpx;
-	grid-template-columns: 10% 80% 10%;
+	grid-template-columns: 10% 75% 15%;
 	justify-items: end;
+}
+.postBottom view{
+	display: inline-block;
+}
+.postviewcount{
+	padding-left: 5rpx;
+	font-size:32rpx;
+	line-height:32rpx
 }
 .postClass{
 	justify-self:start;

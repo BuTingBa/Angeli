@@ -11,7 +11,7 @@
 /* WEBPACK VAR INJECTION */(function(uni, createApp) {__webpack_require__(/*! uni-pages */ 4);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
-var _server = _interopRequireDefault(__webpack_require__(/*! server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | components/colorui/components/cu-custom */ "components/colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! components/colorui/components/cu-custom.vue */ 262));};var sunUiOos = function sunUiOos() {return Promise.all(/*! import() | components/sunui-upimg/sunui-upimg-alioos */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/sunui-upimg/sunui-upimg-alioos")]).then(__webpack_require__.bind(null, /*! ./components/sunui-upimg/sunui-upimg-alioos.vue */ 267));};
+var _server = _interopRequireDefault(__webpack_require__(/*! server.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | components/colorui/components/cu-custom */ "components/colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! components/colorui/components/cu-custom.vue */ 262));};var sunUiOos = function sunUiOos() {return Promise.all(/*! import() | components/sunui-upimg/sunui-upimg-alioos */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/sunui-upimg/sunui-upimg-alioos")]).then(__webpack_require__.bind(null, /*! ./components/sunui-upimg/sunui-upimg-alioos.vue */ 267));};
 
 
 _vue.default.component('cu-custom', cuCustom);
@@ -29,6 +29,21 @@ _vue.default.prototype.$jubao = function (postId, auid, beijubao, liyou) {
       liyou: liyou },
 
     header: {
+      'content-type': 'application/x-www-form-urlencoded' },
+
+    success: function success(res) {
+      return res.data.msg;
+    } });
+
+};
+_vue.default.prototype.$delPost = function (postid) {
+  uni.request({
+    method: 'GET',
+    url: "https://api.angeli.top/post.php?type=delPost", //仅为示例，并非真实接口地址。
+    data: {
+      postId: postid },
+
+    header: {
       'content-type': 'application/x-www-form-urlencoded',
       'Cookie': _server.default.cookie },
 
@@ -36,7 +51,6 @@ _vue.default.prototype.$jubao = function (postId, auid, beijubao, liyou) {
       return res.data.msg;
     } });
 
-  return a;
 };
 
 
@@ -44,8 +58,8 @@ _vue.default.prototype.$jubao = function (postId, auid, beijubao, liyou) {
 
 _App.default.mpType = 'app';
 
-var app = new _vue.default({});
-
+var app = new _vue.default(_objectSpread({},
+_App.default));
 
 createApp(app).$mount();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"]))
@@ -783,7 +797,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7638,7 +7652,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7659,14 +7673,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7742,7 +7756,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));

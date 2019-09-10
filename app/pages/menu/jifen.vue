@@ -140,6 +140,7 @@
 .lpaihang{
 	height: 46upx;
 	width: 46upx;
+	line-height: 46upx;
 	text-align: center;
 	font-size:26upx;
 	font-weight:500;
