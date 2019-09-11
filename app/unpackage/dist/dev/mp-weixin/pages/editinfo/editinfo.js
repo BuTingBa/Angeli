@@ -105,77 +105,128 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      sex: '男' };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-  },
-  methods: {
-    toPage: function toPage(type) {
-      uni.navigateTo({
-        url: '../edit/edit?type=' + type });
 
-    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { sex: '男', user: [] };}, onShow: function onShow() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
+      data: { auid: _server.default.userinfo.Auid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == '1') {_server.default.userinfo = res.data.data;_this.user = res.data.data;}} });}, methods: { toPage: function toPage(type) {uni.navigateTo({ url: '../edit/edit?type=' + type });},
     setsex: function setsex() {
       uni.showActionSheet({
-        itemList: ['男', '女', '第三种性别', '保密'],
+        itemList: ['男', '女'],
         success: function success(res) {
-          console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+          uni.request({
+            method: 'GET',
+            url: 'https://api.angeli.top/user.php?type=setSex', //仅为示例，并非真实接口地址。
+            data: {
+              auid: _server.default.userinfo.Auid,
+              sex: res.tapIndex + 1 },
+
+            header: {
+              'content-type': 'application/x-www-form-urlencoded',
+              'Cookie': _server.default.cookie },
+
+            success: function success(res) {
+              if (res.data.code == '1') {
+                uni.showToast({
+                  title: res.data.msg,
+                  position: 'bottom',
+                  icon: 'none' });
+
+              }
+            } });
+
         },
         fail: function fail(res) {
+          uni.showToast({
+            title: res.errMsg,
+            position: 'bottom',
+            icon: 'none' });
+
           console.log(res.errMsg);
         } });
 
     },
-    uptouxiang: function uptouxiang() {
+    uptouxiang: function uptouxiang() {var _this2 = this;
       uni.chooseImage({
         count: 1, //默认9
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], //从相册选择
-        success: function success(res) {
-          var tempFilePaths = JSON.stringify(res.tempFilePaths);
+        success: function success(chooseImageRes) {
+          var tempFilePaths = chooseImageRes.tempFilePaths;
           uni.uploadFile({
-            url: 'https://www.example.com/upload?type=updata', //仅为示例，非真实的接口地址
-            filePath: tempFilePaths,
+            url: 'https://api.angeli.top/up/index.php', //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
             name: 'file',
             formData: {
               'type': 'test' },
 
+            header: {
+              'Cookie': _server.default.cookie },
+
             success: function success(uploadFileRes) {
               console.log(uploadFileRes.data);
+              _this2.user.AvatarUrl = uploadFileRes.data;
+
             },
             complete: function complete() {
               console.log("cuowu");
@@ -189,6 +240,9 @@ var _default =
             icon: 'none' });
 
         } });
+
+
+
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

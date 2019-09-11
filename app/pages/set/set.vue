@@ -36,11 +36,11 @@
 			<view class="menusolid"></view>
 			<view class="menuItem">
 				<view class="menuIcon aicon-help"></view>
-				<view class="menuTiele">帮助与客服</view>
+				<view class="menuTiele"><button class="kefuanniu" open-type="contact">帮助与客服</button></view>
 				<view class="menuRight"></view>
 			</view>
 			<view class="menusolid"></view>
-			<view class="menuItem">
+			<view class="menuItem" @click="getyinsi">
 				<view class="menuIcon aicon-yinsi"></view>
 				<view class="menuTiele">隐私政策</view>
 				<view class="menuRight"></view>
@@ -104,6 +104,11 @@
 			}	
 		},
 		methods: {
+			getyinsi:function(){
+				uni.navigateTo({
+					url: '../edit/edit?type=5'
+				})
+			},
 			kaitong:function(){
 				this.modalName=''
 				uni.navigateTo({
@@ -191,5 +196,23 @@ page{
 .menuClass{
 	font-size: 32rpx;
 	margin: 15rpx 37rpx;
+}
+.kefuanniu{
+	margin: 0upx;
+	padding: 0upx;
+	line-height: normal;
+	background-color: transparent;
+	outline: none;
+	font-size: 28upx;
+	left: 0upx;
+	text-align: left;
+}
+.kefuanniu::after{
+	border:none;
+}
+input{
+	outline:none;
+	border:none;
+	list-style: none;
 }
 </style>

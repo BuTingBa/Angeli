@@ -6,4 +6,22 @@ page{
 	font-size: 32rpx;
 	margin: 15rpx 37rpx;
 }
+.kefuanniu{
+	margin: 0rpx;
+	padding: 0rpx;
+	line-height: normal;
+	background-color: transparent;
+	outline: none;
+	font-size: 28rpx;
+	left: 0rpx;
+	text-align: left;
+}
+.kefuanniu::after{
+	border:none;
+}
+input{
+	outline:none;
+	border:none;
+	list-style: none;
+}
 

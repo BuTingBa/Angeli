@@ -12,7 +12,7 @@
 						<view class="nameBox">
 							<view class="Yname">{{name.UserName}}</view>
 							<view :class="name.Gender==2?'Wsex':'Ysex'"></view>
-							<view class="dengjia">Lv.21</view>
+							<view class="dengjia">Lv.{{name.Rank}}</view>
 						</view>
 						<view class="auid">ID:{{name.Auid}}</view>
 					</view>

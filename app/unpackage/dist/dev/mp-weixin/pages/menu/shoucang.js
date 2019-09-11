@@ -142,7 +142,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 25));
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 11));
 
 var _uniLoadMore = _interopRequireDefault(__webpack_require__(/*! @/components/uni-load-more.vue */ 177));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //

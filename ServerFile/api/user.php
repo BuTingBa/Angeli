@@ -299,6 +299,104 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'setName':
+        //$auid=6666;
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+
+        if(empty($_GET['newName'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $vip=$user->vipIs($auid);
+        $data=$user->getUserConfig($auid);
+        if($vip){
+            $count=12-$data['upname'];
+
+        }else{
+            $count=2-$data['upname'];
+        }
+        if($count<1){
+            $count=0;
+            $outmsg = array('code' =>'0','msg'=>'你的修改次数已经用完','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
+        $data=$user->setUserName('auid',$auid,$_GET['newName']);
+        if($data=='0'){
+            $outmsg = array('code' =>'1','msg'=>'修改成功','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>$data,'data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getNameCount':
+        if(empty($_GET['auid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少auid参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $vip=$user->vipIs($_GET['auid']);
+        $data=$user->getUserConfig($_GET['auid']);
+        if($vip){
+            $count=12-$data['upname'];
+
+        }else{
+            $count=2-$data['upname'];
+        }
+        if($count<1){
+            $count=0;
+        }
+
+        $outmsg = array('code' =>'1','msg'=>$count,'data'=>$count);
+        die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        break;
+    case 'setSex':
+        //$auid=6666;
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        if(empty($_GET['sex'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少auid参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$user->setSex($auid,$_GET['sex']);
+        if($data){
+            $outmsg = array('code' =>'1','msg'=>'修改成功','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'修改失败','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'setms':
+        //$auid=6666;
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        if(empty($_GET['ms'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少auid参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$user->setms($auid,$_GET['ms']);
+        if($data){
+            $outmsg = array('code' =>'1','msg'=>'修改成功','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'修改失败','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
     default:
         $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));

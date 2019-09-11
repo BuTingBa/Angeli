@@ -23,31 +23,85 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
-
-
-
     /**
-     * 用户删除帖子
+     * 修改个性签名
+     * @param $auid
+     * @param $txt
+     * @return bool
      */
-    public function delPost($postid,$auid=0){
-        if($auid==0){
-            $sql="UPDATE angeli_posts SET IsLock=2 WHERE PostsId=$postid";
-        }else{
-            $sql="UPDATE angeli_posts SET IsLock=2 WHERE PostsId=$postid and AuthorId=$auid";
-        }
+    function setms($auid,$txt)
+    {
+        $sql = "UPDATE angeli_user SET Synopsis='$txt' WHERE AuId=$auid";
 
-        $result=$this->mysqli->query($sql);
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
-            return TRUE;
+            return false;
         }else{
             if($this->mysqli->affected_rows<1){
-                return TRUE;
+                return false;
             }else{
-                return FALSE;
+                return TRUE;
             }
         }
     }
+
+    /**
+     * 修改性别
+     * @param $auid auid
+     * @param $sex 性别
+     * @return bool
+     */
+    function setSex($auid,$sex)
+    {
+        $sql = "UPDATE angeli_user SET Gender=$sex WHERE AuId=$auid";
+        echo $sql."<br />";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                return TRUE;
+            }
+        }
+    }
+
+    /**获取用户配置
+     * @return array
+     */
+    public function getUserConfig($auid)
+    {
+        $sql="SELECT * FROM angeli_config_user WHERE auid='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $data=array(
+                        'id'=>$row['id'],
+                        'auid'=>$row['auid'],
+                        'First_vip'=>$row['First_vip'],
+                        'upname'=>$row['upname']
+                    );
+                }
+                return $data;
+            }else{
+                $data=array(
+                    'id'=>'0',
+                    'auid'=>'0',
+                    'First_vip'=>'0',
+                    'upname'=>'0'
+                );
+                return $data;
+            }
+        }
+    }
+
 
     /**
      * 添加举报信息
@@ -150,6 +204,9 @@ class angeli
             return $data;
         }
     }
+
+
+
 
     /*
      * 查询系统消息是否已读
@@ -1398,21 +1455,21 @@ class angeli
                 break;
             default:
                 $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
-                return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+                return '服务器错误';
                 break;
         }
         if(!$this->checkUserName($newUserName)){
-            $outmsg = array('code' =>'0','msg'=>'该用户名已经被人抢注了哦','data'=>'');
-            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+            return '用户名已存在';
         }
         $sql->bind_param("ss",$newUserName,$uid);
         $sql->execute();
         if($sql->affected_rows<1)
         {
-            $outmsg = array('code' =>'0','msg'=>'修改用户名错误!'.$this->mysqli->error,'data'=>'');
-            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+            return '服务器错误';
         }else{
-            return TRUE;
+            $sql="INSERT INTO angeli_config_user (auid,First_vip,upname) VALUES ($uid,0,0)  ON DUPLICATE KEY UPDATE upname=upname+1";
+            $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+            return 0;
         }
     }
 
@@ -1782,7 +1839,35 @@ class angeli
                 }
                 return $data;
             }else{
-                return FALSE;
+                $data = array(
+                    'Auid' =>'-1',
+                    'UserName' =>'该用户已注销',
+                    'Email' =>'-1',
+                    'Phone' =>'-1',
+                    'Wxid' =>'-1',
+                    'wxOpenId'=>'-1',
+                    'Gender'=>'-1',
+                    'UserType' =>'-1',
+                    'VIPEndTime' =>'-1',
+                    'Status' =>'-1',
+                    'BanDeadline' =>'-1',
+                    'DateCreated' =>'-1',
+                    'IPCreated' =>'-1',
+                    'AvatarUrl' =>'https://sz.oss.data.angeli.top/angeli/QQ%E6%88%AA%E5%9B%BE20190911202158.png',
+                    'Synopsis' =>'该用户不存在或已被注销',
+                    'FollowedCount' =>'-1',
+                    'FollowerCount' =>'-1',
+                    'ZhongcaoCount' =>'-1',
+                    'Points' =>'-1',
+                    'Aglc' =>'-1',
+                    'Rank' =>'0',
+                    'guanzhu'=>false
+                );
+
+                return $data;
+
+                //========原来的是直接返回False
+                //return false;
             }
         }
 
@@ -2489,7 +2574,13 @@ class angeli
                 }
                 return $outmsg;
             }else{
-                return FALSE;
+                $outmsg = array(
+                    'AuthorName' =>'该用户已注销',
+                    'AuthorAvatarUrl'=>'https://sz.oss.data.angeli.top/angeli/QQ%E6%88%AA%E5%9B%BE20190911202158.png',
+                    'Auid'=>'-1',
+                    'VIPEndTime' =>'-1'
+                );
+                return $outmsg;
             }
         }
 

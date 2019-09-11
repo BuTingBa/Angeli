@@ -8,64 +8,141 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      type: 1,
-      title: "安个利" };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-  },
-  onLoad: function onLoad(val) {
-    console.log(val.type);
-    this.type = val.type;
-    if (val.type == '1') {
-      this.title = "修改名字";
-    }
-    if (val.type == '2') {
-      this.title = "个性签名";
-    }
-    if (val.type == '3') {
-      this.title = "等级特权";
-    }
-    if (val.type == '4') {
-      this.title = "关于安个利";
-    }
-  },
-  methods: {
-    inputing: function inputing(e) {
-      console.log(e.detail);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { type: 1, title: "安个利", upNameNumber: 0, newName: '' };}, onLoad: function onLoad(val) {console.log(val.type);this.type = val.type;if (val.type == '1') {this.title = "修改名字";this.getNumber();}if (val.type == '2') {this.title = "个性签名";}if (val.type == '3') {this.title = "等级特权";}if (val.type == '4') {this.title = "关于安个利";}if (val.type == '5') {this.title = "安个利隐私政策";}}, methods: { inputing: function inputing(e) {this.newName = e.detail.value;console.log(e.detail);}, setName: function setName() {
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=setName', //仅为示例，并非真实接口地址。
+        data: {
+          auid: _server.default.userinfo.Auid,
+          newName: this.newName },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+
+          uni.showToast({
+            title: res.data.msg,
+            position: 'bottom',
+            icon: 'none' });
+
+
+        } });
+
+    },
+    getNumber: function getNumber() {var _this = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=getNameCount', //仅为示例，并非真实接口地址。
+        data: {
+          auid: _server.default.userinfo.Auid },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          if (res.data.code == '1') {
+            _this.upNameNumber = res.data.data;
+            console.log(_this.upNameNumber, res.data.data);
+          }
+        } });
+
+    },
+    setms: function setms() {
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=setms', //仅为示例，并非真实接口地址。
+        data: {
+          auid: _server.default.userinfo.Auid,
+          ms: this.newName },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          uni.showToast({
+            title: res.data.msg,
+            position: 'bottom',
+            icon: 'none' });
+
+        } });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

@@ -6,16 +6,16 @@
 		</cu-custom>
 		<view class="body">
 			<view v-if="type=='1'" class="upname">
-				<text style="color: #888888;"> 更改昵称，普通用户一年只能修改两次</text>
+				<text style="color: #888888;"> 更改昵称，普通用户一年只能修改两次，你还要修改{{upNameNumber}}次</text>
 				<input type="text" value="" maxlength="24" focus="true" @input="inputing" class="in" />
 				<view class="dibu">
-					<button class="Angeli">确定修改</button>
+					<button class="Angeli" v-if="upNameNumber>0" @click="setName">确定修改</button>
 				</view>
 			</view>
 			<view class="upname" v-if="type=='2'" >
-				 <textarea placeholder-style="color:#888888" placeholder="用一句牛逼的话来描述自己,最多输入60个字" maxlength="60"/>
+				 <textarea placeholder-style="color:#888888" placeholder="用一句牛逼的话来描述自己,最多输入60个字" @input="inputing" maxlength="60"/>
 				 <view class="dibu">
-				 	<button class="Angeli">确定修改</button>
+				 	<button class="Angeli" @click="setms">确定修改</button>
 				 </view>
 			</view>
 			<view class="upname" v-if="type=='3'" >
@@ -24,16 +24,24 @@
 			<view class="upname" v-if="type=='4'" >
 				 <web-view src="https://api.angeli.top/html/updata.html"></web-view>
 			</view>
+			<view class="upname" v-if="type=='5'" >
+				 <web-view src="https://api.angeli.top/html/ys.html"></web-view>
+			</view>
+			
+			
 		</view>
 	</view>
 </template>
 
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
 				type:1,
-				title:"安个利"
+				title:"安个利",
+				upNameNumber:0,
+				newName:''
 			}
 		},
 		onLoad:function(val) {
@@ -41,6 +49,7 @@
 			this.type=val.type;
 			if(val.type=='1'){
 				this.title="修改名字"
+				this.getNumber();
 			}
 			if(val.type=='2'){
 				this.title="个性签名"
@@ -51,10 +60,77 @@
 			if(val.type=='4'){
 				this.title="关于安个利"
 			}
+			if(val.type=='5'){
+				this.title="安个利隐私政策"
+			}
 		},
 		methods: {
 			inputing:function(e){
+				this.newName=e.detail.value;
 				console.log(e.detail)
+			},
+			setName:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=setName', //仅为示例，并非真实接口地址。
+					data: {
+						auid: server.userinfo.Auid,
+						newName:this.newName
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						})
+						
+					}
+				});
+			},
+			getNumber:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=getNameCount', //仅为示例，并非真实接口地址。
+					data: {
+						auid: server.userinfo.Auid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.upNameNumber=res.data.data;
+							console.log(this.upNameNumber,res.data.data)
+						}
+					}
+				});
+			},
+			setms:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=setms', //仅为示例，并非真实接口地址。
+					data: {
+						auid: server.userinfo.Auid,
+						ms:this.newName
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						})
+					}
+				});
 			}
 		}
 	}
