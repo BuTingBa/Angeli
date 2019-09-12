@@ -214,27 +214,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -343,32 +322,48 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { gaodu: 0, classList: [], home: true, TabCur: 0, inputVal: "", postList: [], userList: [], page: 1, status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, weikong: true };}, onReady: function onReady() {this.getHei();}, onLoad: function onLoad() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
-      header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this.classList = res.data.data;console.log(_this.classList);} });}, onReachBottom: function onReachBottom() {var _this2 = this;this.page++;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
+var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 177));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { gaodu: 0, classList: [], home: true, TabCur: 0, inputVal: "", postList: [], userList: [], page: 1, status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, weikong: true, hotList: [] };}, onReady: function onReady() {this.getHei();}, onLoad: function onLoad() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
+      header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this.classList = res.data.data;console.log(_this.classList);} });this.getDayHot();}, onReachBottom: function onReachBottom() {var _this2 = this;this.page++;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
       data: { keyword: this.inputVal, count: 20, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子列表——————————" + _this2.page);if (res.data.data.length == undefined) {_this2.page--;_this2.status = "noMore";} else {_this2.postList = _this2.postList.concat(res.data.data);_this2.status = "loading";_this2.$forceUpdate();console.log(_this2.postList);}} });}, methods: { sososo: function sososo(event) {//this.inputVal=event.detail.value;
-      this.home = false;this.requestSousuo(0);}, requestSousuo: function requestSousuo(type) {var _this3 = this;if (type == 0) {uni.showLoading({ title: '搜索中..', mask: true });uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
-          data: { keyword: this.inputVal, count: 20, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this3.postList = [];console.log(res.data.data);console.log("————————————帖子列表——————————");_this3.postList = res.data.data;console.log(_this3.postList);_this3.weikong = false;if (res.data.code !== "1") {_this3.weikong = true;}if (res.data.data == false) {_this3.weikong = true;}if (res.data.data.length < 21) {_this3.status = "noMore";}_this3.$forceUpdate();}, complete: function complete() {uni.hideLoading();} });} else {uni.showLoading({ title: '搜索中..',
+      this.home = false;this.requestSousuo(0);}, getDayHot: function getDayHot() {var _this3 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getDayHot', //仅为示例，并非真实接口地址。
+        header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this3.hotList = res.data.data.data;console.log(_this3.hotList);} });}, requestSousuo: function requestSousuo(type) {var _this4 = this;if (type == 0) {uni.showLoading({ title: '搜索中..', mask: true });
+        uni.request({
+          method: 'GET',
+          url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
+          data: {
+            keyword: this.inputVal,
+            count: 20,
+            page: this.page },
+
+          header: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Cookie': _server.default.cookie },
+
+          success: function success(res) {
+            _this4.postList = [];
+            console.log(res.data.data);
+            console.log("————————————帖子列表——————————");
+            _this4.postList = res.data.data;
+            console.log(_this4.postList);
+            _this4.weikong = false;
+            if (res.data.code !== "1") {
+              _this4.weikong = true;
+            }
+            if (res.data.data == false) {
+              _this4.weikong = true;
+            }
+            if (res.data.data.length < 21) {
+              _this4.status = "noMore";
+            }
+            _this4.$forceUpdate();
+          },
+          complete: function complete() {
+            uni.hideLoading();
+          } });
+
+      } else {
+        uni.showLoading({
+          title: '搜索中..',
           mask: true });
 
         uni.request({
@@ -382,22 +377,22 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
             'Cookie': _server.default.cookie },
 
           success: function success(res) {
-            _this3.userList = [];
+            _this4.userList = [];
             console.log(res.data.data);
             console.log("————————————搜索用户列表——————————");
-            _this3.userList = res.data.data;
-            console.log(_this3.userList);
-            _this3.weikong = false;
+            _this4.userList = res.data.data;
+            console.log(_this4.userList);
+            _this4.weikong = false;
             if (res.data.code !== "1") {
-              _this3.weikong = true;
+              _this4.weikong = true;
             }
             if (res.data.data == false) {
-              _this3.weikong = true;
+              _this4.weikong = true;
             }
             if (res.data.data.length < 21) {
-              _this3.status = "noMore";
+              _this4.status = "noMore";
             }
-            _this3.$forceUpdate();
+            _this4.$forceUpdate();
           },
           complete: function complete() {
             uni.hideLoading();
@@ -460,14 +455,14 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         url: '../i/bieren?auid=' + e });
 
     },
-    getHei: function getHei() {var _this4 = this;
+    getHei: function getHei() {var _this5 = this;
       var view = uni.createSelectorQuery().select("#topbox");
       view.fields({
         size: true,
         scrollOffset: true },
       function (data) {
-        _this4.gaodu = data.height;
-        console.log("总高度：" + _this4.gaodu);
+        _this5.gaodu = data.height;
+        console.log("总高度：" + _this5.gaodu);
       }).exec();
     },
     log: function log(e) {
@@ -495,11 +490,29 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
 
 
     },
-    adduser: function adduser() {
-      uni.showToast({
-        title: "他不值得你关注",
-        position: 'bottom',
-        icon: 'none' });
+    adduser: function adduser(uid, index) {var _this6 = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
+        data: {
+          uid: uid },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          uni.showToast({
+            title: res.data.msg,
+            position: 'bottom',
+            icon: 'none' });
+
+          if (res.data.msg == '关注成功') {
+            _this6.hotList[index].AuId.isGz = true;
+          } else {
+            _this6.hotList[index].AuId.isGz = false;
+          }
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

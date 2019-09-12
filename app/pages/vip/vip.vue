@@ -56,7 +56,7 @@
 			<view class="vipBox">
 				<view :class="xzId==1?'vipItemXZ':'vipItem'" @click="xuanze(1)">
 					<view class="vipTitle">一个月</view>
-					<text class="paynumber">￥1</text>
+					<text class="paynumber">￥{{onemonn}}</text>
 				</view>
 				<view :class="xzId==2?'vipItemXZ':'vipItem'" @click="xuanze(2)">
 					<view class="vipTitle">三个月</view>
@@ -74,51 +74,6 @@
 			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" @tap="getVip">立即支付</button>
 			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;">购买即视为同意《安个利会员用户协议》</text></view>
 		</view> 
-		
-		
-		<!-- 以前的版本会员中心<view class="vipNote">
-			<text class="title">四大权益</text>
-			<view class="tequan">
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-				<view class="titem">
-					<view class="yuan"></view>
-					<text>会员尊贵标志</text>
-				</view>
-			</view>
-		</view>
-		<view class="line"></view>
-		<view class="pay">
-			<text class="titlea">充值会员</text>
-			<view class="vipBox">
-				<view :class="xzId==1?'vipItemXZ':'vipItem'" @click="xuanze(1)">
-					<view class="vipTitle">一个月</view>
-					<text class="paynumber">￥1</text>
-				</view>
-				<view :class="xzId==2?'vipItemXZ':'vipItem'" @click="xuanze(2)">
-					<view class="vipTitle">三个月</view>
-					<text class="paynumber">￥29</text>
-				</view>
-				<view :class="xzId==3?'vipItemXZ':'vipItem'" @click="xuanze(3)">
-					<view class="vipTitle">一整年</view>
-					<text class="paynumber">￥58</text>
-				</view>
-				<view :class="xzId==4?'vipItemXZ':'vipItem'" @click="xuanze(4)">
-					<view class="vipTitle">自定义</view>
-					<text class="paynumber">￥1</text>
-				</view>
-			</view>
-		</view> -->
 	</view>
 </template>
 
@@ -136,7 +91,8 @@
 				monnumber:1,
 				money:0,
 				endVipTime:'开通安个利VIP,畅享高级功能',
-				ann:false
+				ann:false,
+				onemonn:10
 			}
 		},
 		onLoad:function(){
@@ -146,12 +102,26 @@
 				this.ann=true
 			}
 			console.log(this.userInfo)
+			this.cxjg();
 		},
 		methods: {
+			cxjg:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=getisvip', 
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						this.onemonn=res.data.data	
+					}
+				});
+			},
 			getVip:function(){
 				if(this.monnumber>=1){
 					if(this.monnumber==1){
-						this.money=1
+						this.money=this.onemonn
 					}else{
 						this.money=this.monnumber*20-this.monnumber*4
 					}

@@ -389,7 +389,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
           this.monnumber = 1;
           break;
         case 2:
-          this.monnumber = 2;
+          this.monnumber = 5;
           break;
         case 3:
           this.monnumber = 10;

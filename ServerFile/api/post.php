@@ -33,7 +33,7 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $data=$post->getJifen($_SESSION['Auid']);
-        if($data['Points']<1){
+        if($data['Points']<2){
             $outmsg = array('code' =>'2','msg'=>'安个利币不足，请充值或者做任务','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }

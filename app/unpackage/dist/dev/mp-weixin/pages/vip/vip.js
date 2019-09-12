@@ -185,51 +185,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 11));
 var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 125));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
@@ -243,7 +198,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       monnumber: 1,
       money: 0,
       endVipTime: '开通安个利VIP,畅享高级功能',
-      ann: false };
+      ann: false,
+      onemonn: 10 };
 
   },
   onLoad: function onLoad() {
@@ -253,12 +209,26 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       this.ann = true;
     }
     console.log(this.userInfo);
+    this.cxjg();
   },
   methods: {
-    getVip: function getVip() {var _this = this;
+    cxjg: function cxjg() {var _this = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=getisvip',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          _this.onemonn = res.data.data;
+        } });
+
+    },
+    getVip: function getVip() {var _this2 = this;
       if (this.monnumber >= 1) {
         if (this.monnumber == 1) {
-          this.money = 1;
+          this.money = this.onemonn;
         } else {
           this.money = this.monnumber * 20 - this.monnumber * 4;
         }
@@ -315,10 +285,10 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
                       if (res.data.code == 1) {
                         if (res.data.data.payStatus == '已支付' && res.data.data.payStatus == 'OK') {
                           var endtime = res.data.data.userInfo.VIPEndTime;
-                          _this.endVipTime = "你已成为安个利VIP，还有" + parseInt(endtime) + "天到期";
-                          console.log('已支付', _this.endVipTime);
-                          _this.showVip = false;
-                          _this.ann = true;
+                          _this2.endVipTime = "你已成为安个利VIP，还有" + parseInt(endtime) + "天到期";
+                          console.log('已支付', _this2.endVipTime);
+                          _this2.showVip = false;
+                          _this2.ann = true;
 
                           uni.showToast(_defineProperty({
                             title: "已开通VIP",

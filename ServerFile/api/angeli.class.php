@@ -24,6 +24,62 @@ class angeli
     }
 
     /**
+     * 修改用户设置
+     * @param $auid
+     * @param $key 数据库字段名
+     * @param $val
+     * @return bool
+     */
+    function setUserConfig($auid,$key,$val)
+    {
+        $sql="INSERT INTO angeli_config_user (auid,First_vip,upname) VALUES ($auid,1,0)  ON DUPLICATE KEY UPDATE First_vip=1";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                return TRUE;
+            }
+        }
+    }
+
+    /*
+     * 获取当天很火的用户
+     */
+    public function getDayHot($auid){
+        $staTime=mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        $endTime=$staTime+60*60*24;
+        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$staTime AND addTime<$endTime GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
+        //echo $sql;
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $d = array(
+                        'index' =>$row["lll"],
+                        'AuId' =>$this->getInfo($row['AuthorId'],$auid),
+                        'isMe'=>$row['AuthorId']==$auid?'true':'false'
+                    );
+                    $data['data'][]=$d;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+
+
+    }
+
+    /**
      * 修改个性签名
      * @param $auid
      * @param $txt
@@ -2556,7 +2612,7 @@ class angeli
             }
         }
     }
-    function getInfo($audi){
+    function getInfo($audi,$auid='0'){
         $sql="SELECT * from angeli_user WHERE AuId='$audi'";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
@@ -2569,7 +2625,9 @@ class angeli
                         'AuthorName' =>$row['UserName'],
                         'AuthorAvatarUrl'=>$row['AvatarUrl'],
                         'Auid'=>$row['AuId'],
-                        'VIPEndTime' =>$this->getOverDay($row["VIPEndTime"])
+                        'ms'=>$row['Synopsis'],
+                        'VIPEndTime' =>$this->getOverDay($row["VIPEndTime"]),
+                        'isGz'=>$this->isGuanzhu($auid,$row["AuId"])
                     );
                 }
                 return $outmsg;

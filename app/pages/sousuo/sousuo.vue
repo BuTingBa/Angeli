@@ -26,42 +26,21 @@
 				</scroll-view>
 			</view>
 			<view class="tuijianBox">
-				<view class="TopName">热门推荐</view>
-				<view class="tuijian">
+				<view class="TopName">每日推荐</view>
+				
+				<view class="tuijian" v-for="(list,index) in hotList" :key="index">
 					<view class="userinfo">
-						<view class="touxiang"></view>
-						<view class="name">名字</view>
-						<view class="guanzhuuser" @click="adduser">
-							<button class="anniuguanzhu" ><text class="cuIcon-add" ></text>关注</button>
+						<view class="touxiang" :style="{'background-image':'url('+list.AuId.AuthorAvatarUrl+')'}"  @click="getbieren(list.AuId.Auid)"></view>
+						<view class="name">{{list.AuId.AuthorName}}</view>
+						<view class="guanzhuuser" @click="adduser(list.AuId.Auid,index)">
+							<view :class="list.AuId.isGz?'anniuguanzhuXZ':'anniuguanzhu'">{{list.AuId.isGz?'取消关注':'+关注'}}</view>
 						</view>
-						<view class="zhongcao">6666</view>
+						<view class="zhongcao">{{list.AuId.Auid}}</view>
 					</view>
-					<view class="miaoshu">推荐一个贼伟牛逼的</view>
+					<view class="miaoshu">{{list.AuId.ms}}</view>
 				</view>
 				
-				<view class="tuijian">
-					<view class="userinfo">
-						<view class="touxiang"></view>
-						<view class="name">名字</view>
-						<view class="guanzhuuser" @click="adduser">
-							<button class="anniuguanzhu" ><text class="cuIcon-add" ></text>关注</button>
-						</view>
-						<view class="zhongcao">6666</view>
-					</view>
-					<view class="miaoshu">推荐一个贼伟牛逼的</view>
-				</view>
 				
-				<view class="tuijian">
-					<view class="userinfo">
-						<view class="touxiang"></view>
-						<view class="name">名字</view>
-						<view class="guanzhuuser" @click="adduser">
-							<button class="anniuguanzhu" ><text class="cuIcon-add" ></text>关注</button>
-						</view>
-						<view class="zhongcao">6666</view>
-					</view>
-					<view class="miaoshu">推荐一个贼伟牛逼的</view>
-				</view>
 			</view>
 		</block>
 		<block v-if="home==false">
@@ -163,7 +142,8 @@
 					contentrefresh: '加载中',
 					contentnomore: '我是有底线的'
 				},
-				weikong:true
+				weikong:true,
+				hotList:[]
 			}
 		},
 		onReady: function() {
@@ -182,6 +162,7 @@
 					console.log(this.classList);
 				}
 			});
+			this.getDayHot();
 		},
 		onReachBottom:function(){
 			this.page++;
@@ -218,6 +199,20 @@
 				//this.inputVal=event.detail.value;
 				this.home=false;
 				this.requestSousuo(0)
+			},
+			getDayHot:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=getDayHot', //仅为示例，并非真实接口地址。
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						this.hotList=res.data.data.data;
+						console.log(this.hotList);
+					}
+				});
 			},
 			requestSousuo:function(type){
 				if(type==0){
@@ -388,12 +383,30 @@
 					}
 				})
 			},
-			adduser:function(){
-				uni.showToast({
-					title: "他不值得你关注",
-					position:'bottom',
-					icon:'none'
-				});
+			adduser:function(uid,index){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
+					data: {
+						uid: uid,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						});
+						if(res.data.msg=='关注成功'){
+							this.hotList[index].AuId.isGz=true;
+						}else{
+							this.hotList[index].AuId.isGz=false;
+						}
+					}
+				}); 
 			}
 		}
 	}
@@ -466,7 +479,7 @@
 	padding-right: 28upx;
 	margin-left: 35upx;
 	margin-right: 35upx;
-	background-color: #DDDDDD;
+	background-color: #F7F8FA;
 }
 .miaoshu{
 	margin-top: 20upx;
@@ -480,11 +493,26 @@
 	align-items:center;
 }
 .anniuguanzhu{
-	background-color: #443259;
+	background-color: #79C498;
 	height: 60upx;
 	font-size: 25upx;
 	vertical-align:auto;
 	color: #FFFFFF;
+	width: 130upx;
+	border-radius: 30upx;
+	text-align: center;
+	line-height: 60upx;
+}
+.anniuguanzhuXZ{
+	background-color: #E5E4EA;
+	height: 60upx;
+	font-size: 25upx;
+	vertical-align:auto;
+	color: #999999;
+	width: 130upx;
+	border-radius: 30upx;
+	text-align: center;
+	line-height: 60upx;
 }
 .touxiang{
 	/* grid-column-start: 1;

@@ -397,6 +397,39 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'getDayHot':
+
+        $auid=$_SESSION['Auid']?$_SESSION['Auid']:'0';
+        $data=$user->getDayHot($auid);
+        if($data){
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'获取失败','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getisvip':
+
+        //$auid=6666;
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+
+        $data=$user->getUserConfig($auid);
+        if($data['First_vip']=='0'){
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>'1');
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>'10');
+        }
+        die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        break;
+    case 'test':
+        var_dump($user->setUserConfig(6666,'First_vip','1'));
+        break;
     default:
         $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
