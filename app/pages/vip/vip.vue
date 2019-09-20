@@ -4,10 +4,14 @@
 			<block slot="backText">返回</block>
 			<block slot="content">会员中心</block>
 		</cu-custom>
-		<view style="text-align: center;width: 100%;margin-top: 37upx;"><view class="touxiang" :style="{'background-image':'url('+userInfo.AvatarUrl+')'}"></view></view>
+		<view style="text-align: center;width: 100%;margin-top: 37upx;">
+			<view class="touxiang" :style="{'background-image':'url('+userInfo.AvatarUrl+')'}">
+				<image src="../../static/VIPLogo2.png" mode="aspectFit" style="display: inline-block;width:40upx;height: 40upx;position: absolute; right: 0upx;bottom: 0upx;" v-if="isVip"></image>
+			</view>
+		</view>
 		<view class="vipCardBox">
 			<view class="vipCard">
-				<view class="vipCardName">
+				<view :class="isVip?'vipCardNameXZ':'vipCardName'">
 					{{userInfo.UserName?userInfo.UserName:'未知用户'}}
 				</view>
 				<view class="vipCardTitle">{{endVipTime}}</view>
@@ -92,19 +96,24 @@
 				money:0,
 				endVipTime:'开通安个利VIP,畅享高级功能',
 				ann:false,
-				onemonn:10
+				onemonn:10,
+				isVip:false
 			}
 		},
 		onLoad:function(){
-			this.userInfo=server.userinfo
-			if(this.userInfo.VIPEndTime>0){
-				this.endVipTime="你已成为安个利VIP，还有"+parseInt(this.userInfo.VIPEndTime)+"天到期";
-				this.ann=true
-			}
-			console.log(this.userInfo)
-			this.cxjg();
+			this.chushihua();
 		},
 		methods: {
+			chushihua:function(){
+				this.userInfo=server.userinfo
+				if(this.userInfo.VIPEndTime>0){
+					this.endVipTime="你已成为安个利VIP，还有"+parseInt(this.userInfo.VIPEndTime)+"天到期";
+					this.ann=true
+					this.isVip=true
+				}
+				console.log(this.userInfo)
+				this.cxjg();
+			},
 			cxjg:function(){
 				uni.request({
 					method:'GET',
@@ -175,29 +184,21 @@
 												'Cookie':server.cookie
 											},
 											success: (res) => {
-												if(res.data.code==1){
-													if(res.data.data.payStatus=='已支付' && res.data.data.payStatus=='OK'){
-														let endtime=res.data.data.userInfo.VIPEndTime;
-														this.endVipTime="你已成为安个利VIP，还有"+parseInt(endtime)+"天到期";
-														console.log('已支付',this.endVipTime)
-														this.showVip=false;
-														this.ann=true
-														
-														uni.showToast({
-															title: "已开通VIP",
-															position:'bottom',
-															icon:'none',
-															position:'center'
-														})
-														uni.navigateBack()
-													}else{
-														uni.showToast({
-															title: "支付失败！请联系客服",
-															position:'bottom',
-															icon:'none',
-															position:'center'
-														})
-													}
+												if(res.data.data.payStatus=='已支付' || res.data.data.payStatus=='OK'){
+													let endtime=res.data.data.userInfo.VIPEndTime;
+													this.endVipTime="你已成为安个利VIP，还有"+parseInt(endtime)+"天到期";
+													console.log('已支付',this.endVipTime)
+													this.showVip=false;
+													this.ann=true
+													uni.showToast({
+														title: "已开通VIP",
+														position:'bottom',
+														icon:'none',
+														position:'center'
+													})
+													this.$getUserinfo();
+													this.$forceUpdate();
+													//uni.navigateBack()
 												}else{
 													uni.showToast({
 														title: "支付失败！请联系客服",
@@ -206,6 +207,7 @@
 														position:'center'
 													})
 												}
+												this.chushihua();
 											},
 											complete: () => {
 												uni.hideLoading();
@@ -267,6 +269,7 @@
 						this.monnumber=12
 						break;
 					case 4:
+						this.monnumber=12
 						break;
 					default:
 						this.monnumber=0
@@ -344,6 +347,7 @@
 	background-size: 100% 100%;
 	margin-left: 50%;
 	transform: translateX(-50%);
+	
 }
 .vipCardTitle{
 	padding-top: 42upx;
@@ -354,6 +358,12 @@
 	font-size: 32upx;
 	font-weight: 400;
 	color: #FFFFFF;
+	padding-top: 81upx;
+}
+.vipCardNameXZ{
+	font-size: 32upx;
+	font-weight: 400;
+	color: #F8C259;
 	padding-top: 81upx;
 }
 .vipCard{

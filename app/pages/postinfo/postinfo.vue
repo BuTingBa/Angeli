@@ -18,12 +18,12 @@
 					<image class="postImageItem"  v-for="(img,id) in postInfo.PictureId" :key="id" :src="img"  @tap="showImage(postInfo.PictureId,id)" mode="aspectFill"></image>
 				</view>
 				<view class="postBottom">
-					<view class="postClass">{{postInfo.Tag.ClassName}}</view>
+					<view class="postClass" @tap="getClass(postInfo.Tag.ClassId)">{{postInfo.Tag.ClassName}}</view>
 					<view>
 						<view :class="[postInfo.Give?'likeing':'like']"  @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give,postInfo.ZhongcaoCount)"></view><view class="postviewcount" v-if="postInfo.ZhongcaoCount>0" @click="Like(postInfo.PostsId,postInfo.AuthorId,postInfo.Give,postInfo.ZhongcaoCount)">{{postInfo.ZhongcaoCount}}</view>
 						
 					</view>
-					<view class="postMenu" @click="caidan"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
+					<view class="postMenu" @click="caidan(postInfo)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 				</view>
 			</view>
 			
@@ -33,7 +33,7 @@
 				 <button class="cu-btn round bg-red button-hover" @tap="showKaitong">赞赏</button>
 			</view>
 			<view class="zanlist" v-if="dslist==0">
-				还没有人给过钱，快来做第一个给钱的吧！
+				还没有人赞赏过，快来做第一个赞赏人吧！
 			</view>
 			<view class="dashangList" @click="getList" v-if="dslist.count>0">
 				<view class="jiaozheng">
@@ -188,6 +188,55 @@
 		},
 		
 		methods: {
+			getClass:function(id){
+				uni.navigateTo({
+					url: '../classPost/classPost?id='+id
+				})
+			},
+			caidan:function(resa){
+				console.log(resa)
+				this.Dindex=resa;
+				if(resa.AuthorId==server.userinfo.Auid){
+					this.menuList=['生成海报', '举报','删除帖子']
+				}else{
+					this.menuList=['生成海报', '举报']
+				}
+				uni.showActionSheet({
+					itemList:this.menuList,
+					success: (res) =>{
+						switch(res.tapIndex){
+							case 0:
+								uni.showToast({
+									title: "生成海报还在内测中",
+									position:'bottom',
+									icon:'none'
+								});
+								break;
+							case 1:
+								uni.showToast({
+									title:'举报成功',
+									position:'bottom',
+									icon:'none'
+								});
+								this.$jubao(resa.PostsId,server.userinfo.Auid,resa.AuthorId,'没有理由');
+								break;
+							case 2:
+							uni.showToast({
+								title:'已删除',
+								position:'bottom',
+								icon:'none'
+							});
+								this.$delPost(resa.PostsId);
+								break;
+							default:
+								
+						}
+					},
+					fail: function (res) {
+						console.log(res.errMsg);
+					}
+				});
+			},
 			getbieren:function(e){
 				if(e==server.userinfo.Auid){
 					uni.navigateTo({
@@ -231,6 +280,14 @@
 				})
 			},
 			getDashang:function(){
+				if(this.postInfo.AuthorId==server.userinfo.Auid){
+					uni.showToast({
+						title: "不能给自己打赏",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
 				console.log(this.monnumber);
 				uni.request({
 					method:'GET',
@@ -304,6 +361,14 @@
 				this.yanse='rgba(0,0,0,0.4)'
 			},
 			Like:function(postid,auid,give,zc){
+				if(auid==server.userinfo.Auid){
+					uni.showToast({
+						title: "不能给自己种草",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
 				if(give===true){
 					var modea='del'
 				}else{

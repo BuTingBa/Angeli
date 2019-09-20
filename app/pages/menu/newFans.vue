@@ -40,7 +40,7 @@
 			});
 			uni.request({
 				method:'GET',
-				url: "https://api.angeli.top/user.php?type=getMynotReadGZ", //仅为示例，并非真实接口地址。
+				url: "https://api.angeli.top/user.php?type=getMynotReadGZ",
 				data: {
 					
 				},

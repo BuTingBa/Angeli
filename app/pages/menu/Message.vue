@@ -27,7 +27,7 @@
 			</view>
 			<view class="menusolid"></view>
 			<view v-for="(list,index) in MsgList" :key="index">
-				<view class="messageList" @click="getChat(list.ToId.Auid,list.FromId.Auid)">
+				<view class="messageList" @click="getChat(list.ToId.Auid,list.FromId.Auid)" >
 					<image :src="list.ToId.Auid==auid?list.FromId.AuthorAvatarUrl:list.ToId.AuthorAvatarUrl" mode="" class="touxiang"></image>
 					<text>{{list.ToId.Auid==auid?list.FromId.AuthorName:list.ToId.AuthorName}}</text>
 					<text>{{list.MsgSendTime}}</text>
@@ -286,3 +286,6 @@
 	
 }
 </style>
+
+
+

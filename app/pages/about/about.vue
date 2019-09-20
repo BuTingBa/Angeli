@@ -10,7 +10,7 @@
 		</view>
 		<view class="menuList">
 			
-			<view class="menuList-2c" @click="getUpdataLog">
+			<view class="menuList-2c" @click="getpage(1)">
 				<view class="menuTiele">更新日志</view>
 				<view class="jiantou"></view>
 			</view>
@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<view class="banquan">
-			<text >《安个利软件许可及服务协议》和《安个利隐私保护指引》\n\n</text>
+			<text class="weburl" @click="getpage(2)">《安个利软件许可及服务协议》</text>和<text class="weburl" @click="getpage(3)">《安个利隐私保护指引》\n\n</text>
 			<text style="color: #999999;">鑫峰互联 版权所有\n</text>
 			<text style="color: #999999;">Copyright © 2019 Xinfeng.All Rights Reserved.</text>
 		</view>
@@ -42,10 +42,23 @@
 			}
 		},
 		methods: {
-			getUpdataLog:function(){
-				uni.navigateTo({
-					url:"../edit/edit?type=4"
-				})
+			getpage:function(id){
+				if(id==1){
+					uni.navigateTo({
+						url:"../edit/edit?type=4"
+					})
+				}
+				if(id==2){
+					uni.navigateTo({
+						url:"../edit/edit?type=6"
+					})
+				}
+				if(id==3){
+					uni.navigateTo({
+						url:"../edit/edit?type=5"
+					})
+				}
+				
 			}
 		}
 	}

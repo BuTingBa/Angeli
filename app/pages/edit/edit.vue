@@ -7,7 +7,7 @@
 		<view class="body">
 			<view v-if="type=='1'" class="upname">
 				<text style="color: #888888;"> 更改昵称，普通用户一年只能修改两次，你还要修改{{upNameNumber}}次</text>
-				<input type="text" value="" maxlength="24" focus="true" @input="inputing" class="in" />
+				<input type="text" value="" maxlength="7" focus="true" @input="inputing" class="in" />
 				<view class="dibu">
 					<button class="Angeli" v-if="upNameNumber>0" @click="setName">确定修改</button>
 				</view>
@@ -27,7 +27,9 @@
 			<view class="upname" v-if="type=='5'" >
 				 <web-view src="https://api.angeli.top/html/ys.html"></web-view>
 			</view>
-			
+			<view class="upname" v-if="type=='6'" >
+				 <web-view src="https://api.angeli.top/html/user.html"></web-view>
+			</view>
 			
 		</view>
 	</view>
@@ -62,6 +64,9 @@
 			}
 			if(val.type=='5'){
 				this.title="安个利隐私政策"
+			}
+			if(val.type=='6'){
+				this.title="安个利用户协议"
 			}
 		},
 		methods: {

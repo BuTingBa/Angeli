@@ -40,6 +40,9 @@
 		display: flex;
 		justify-content:space-between;
 	}
+	.weburl{
+		color: #007AFF;
+	}
 	.jiantou{
 		width: 20upx;
 		height: 20upx;

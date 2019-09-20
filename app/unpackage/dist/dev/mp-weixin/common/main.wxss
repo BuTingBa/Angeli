@@ -4807,6 +4807,9 @@ scroll-view.cu-steps .cu-item {
 	    -ms-flex-pack:justify;
 	        justify-content:space-between;
 }
+.weburl{
+	color: #007AFF;
+}
 .jiantou{
 	width: 20rpx;
 	height: 20rpx;

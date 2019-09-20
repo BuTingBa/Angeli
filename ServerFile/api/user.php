@@ -427,6 +427,45 @@ switch ($_GET['type']){
         }
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         break;
+    case 'tixian':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        if(empty($_GET['fee'])||empty($_GET['openid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $fee=floatval($_GET['fee']);
+        if($user->vipIs($auid))
+        {
+            if($fee<80){
+                $outmsg = array('code' =>'0','msg'=>'最低提现金额不得的低于80','data'=>"");
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+        }else{
+            if($fee<100){
+                $outmsg = array('code' =>'0','msg'=>'最低提现金额不得的低于100','data'=>"");
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+        }
+        $openid=$_GET['openid'];
+        $data=$user->addTixian($auid,$fee,$openid);
+        if($data==3){
+            $outmsg = array('code' =>'0','msg'=>'剩余积分不足以提现','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($data==1){
+            $outmsg = array('code' =>'0','msg'=>'系统错误','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($data==0){
+            $outmsg = array('code' =>'1','msg'=>'已提交后台等待审核','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
     case 'test':
         var_dump($user->setUserConfig(6666,'First_vip','1'));
         break;

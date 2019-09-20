@@ -8,18 +8,18 @@
 			<view class="top" id="topbox">
 				<view class="info">
 					<view class="lstouxiang " :style="{'background-image':'url('+name.AvatarUrl+')'}"></view>
-					<view class="xinxi">
-						<text selectable="true" style="font-size: 40upx;padding-bottom: 10upx;">{{name.UserName}}</text>
-						<view style="vertical-align: top;color: #0081FF;display: inline-block;font-weight:bold;font-size: 30upx;" :style="{color:(name.Gender==2?'#79C498':'#79C498')}">{{sex}}</view>
-						<view class='cu-tag line-green dengji' :style="{color:(name.Gender==2?'#FF1493':'#4169E1')}">Lv.{{name.Rank}}</view>
-						<text selectable="true" >\nID:{{name.Auid}}</text>
-						
+					<view class="nameandsex">
+						<view class="nameBox">
+							<view class="Yname">{{name.UserName}}</view>
+							<view :class="name.Gender==2?'Wsex':'Ysex'"></view>
+							<view class="dengjia">Lv.{{name.Rank}}</view>
+						</view>
+						<view class="auid">ID:{{name.Auid}}</view>
 					</view>
 					<view class="editinfo" >
 						<button class="button-edituserinfo" @tap="getEditInfo()">编辑资料</button>
 					</view>
 					<view class="miaoshu"><text selectable="true">{{name.Synopsis}}</text></view>
-					
 				</view>
 				<view style="height: 2upx;margin-left:30upx;margin-right:30upx;background-color: #EFEFF4; "><!-- 分割线 --></view>
 				<view class="sange">
@@ -41,11 +41,8 @@
 						<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
 						<view class="itemText">{{post.Content}}</view>
 						<view class="dibudianzan">
-							<view class="text-gray text-sm">
-								<text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-								<text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-								<text class="cuIcon-messagefill margin-lr-xs"></text> 30
-							</view>
+								<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
+								<text class="giveconut">{{post.Give}}</text>
 						</view>
 					</view>
 				</view>
@@ -54,15 +51,12 @@
 			
 			<block v-if="TabCur==1">
 				<view class="duoList">
-					<view class="items" v-for="(post,index) in postList" :key="index">
-						<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
-						<view class="itemText">{{post.Content}}</view>
+					<view class="items" v-for="(post,index) in MyzcList" :key="index">
+						<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post[0].PictureId[0]+')'}"></view>
+						<view class="itemText">{{post[0].Content}}</view>
 						<view class="dibudianzan">
-							<view class="text-gray text-sm">
-								<text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-								<text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-								<text class="cuIcon-messagefill margin-lr-xs"></text> 30
-							</view>
+								<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
+								<text class="giveconut">{{post[0].ZhongcaoCount}}</text>
 						</view>
 					</view>
 				</view>
@@ -88,6 +82,7 @@
 				TabCur: 0,
 				CustomBar: this.CustomBar,
 				page:1,
+				MyzcList:[],
 				postList:[],
 				status: 'loading',
 				statusTypes: [{
@@ -144,8 +139,47 @@
 			});
 		},
 		methods: {
+			getMyzc:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
+					data: {
+						page:1,
+						count:20
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						
+						if(res.data.code!=="1"){
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none',
+								duration:2000,
+								mask:true
+							});
+							this.weikong=true
+						}else{
+							
+							this.MyzcList=res.data.data
+							this.weikong=false
+						}
+						
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
 			tabSelect(e) {
 				this.TabCur = e
+				if(e==1){
+					this.getMyzc()
+				}
+				
 			},
 			getPost:function(id){
 				console.log(id)
@@ -192,6 +226,68 @@
 </script>
 
 <style>
+	.dibudianzan{
+		float: right;
+	}
+	.giveconut{
+		font-size: 32upx;
+		font-weight: 500;
+		
+	}
+	.infoa{
+		display: flex;
+		align-items:center;
+		margin-top: 68upx;
+		margin-left: 38upx;
+		margin-right: 38upx;
+		position: relative;
+	}
+	.nameBox{
+		height: 45upx;
+		line-height: 45upx;
+		font-size:32upx;
+		font-weight: 500;
+		vertical-align: middle;
+	}
+	.dengjia{
+		margin-left: 18upx;
+		height: 30upx;
+		vertical-align: middle;
+		padding: 0upx 16upx;
+		background:rgba(121,196,152,0.3);
+		border-radius: 15upx;
+		font-size:22upx;
+		color:rgba(121,196,152,1);
+		line-height: 30upx;
+	}
+	.nameBox view{
+		display: inline-block;
+	}
+	.Ysex{
+		margin-left: 18upx;
+		vertical-align: middle;
+		height: 30upx;
+		width: 30upx;
+		background-image: url('../../static/nan.png');
+		background-size:100%;
+	}
+	.Wsex{
+		margin-left: 18upx;
+		vertical-align: middle;
+		height: 30upx;
+		width: 30upx;
+		background-image: url('../../static/nv.png');
+		background-size:100%;
+	}
+	.nameandsex{
+		
+		height: 110upx;
+	}
+	.give{
+		width: 32upx;
+		height: 32upx;
+		
+	}
 	.top{
 		background-color: #FFFFFF;
 		padding-bottom: 30upx;
@@ -204,12 +300,14 @@
 	.itemText{
 		width: 100%;
 		padding: 5upx;
-		height: 76upx;
+		font-size: 28upx;
+		line-height: 28upx;
+		height: 63upx;
 		overflow:hidden;
 		text-overflow:ellipsis;
 		display:-webkit-box;
-		-webkit-box-orient:vertical;
-		-webkit-line-clamp:2; 
+		box-orient:vertical;
+		line-clamp:2; 
 	}
 	.miaoshu{
 		grid-column-start: 2;
@@ -230,7 +328,7 @@
 	.hangIng{
 		font-weight: 600;
 		color: #79C498;
-		border-bottom:2px solid #79C498;
+		border-bottom:2upx solid #79C498;
 	}
 	.daohang{
 		margin-top: 5upx;
@@ -306,8 +404,8 @@
 		align-items: center;
 	}
 	.lstouxiang{
-		width: 132upx;
-		height: 132upx;
+		width: 110upx;
+		height: 110upx;
 		background-size:100% 100%;
 		border-radius:50%;
 	}

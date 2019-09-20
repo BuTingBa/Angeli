@@ -10,8 +10,8 @@
 				<view class="wurentou" :style="{'background-image':'url('+MsgList[1].ToTG.AuthorAvatarUrl+')'}"></view>
 				<view class="wurentou" :style="{'background-image':'url('+MsgList[2].ToTG.AuthorAvatarUrl+')'}"></view>
 			</view>
-			<button class="fenx" open-type="share">立即分享</button>
-			
+			<button class="fenx" open-type="share" v-if="tuijianren==0">立即分享</button>
+			<button class="fenx" v-if="tuijianren!=0" @click="getreg">进入安个利</button>
 			
 		</view>
 	</view>
@@ -25,17 +25,30 @@
 				MsgList:[],
 				auid:0,
 				val:'',
-				value:""
+				value:"",
+				tuijianren:0
 			}
 		},
 		onLoad:function(e){
 			this.getMyMsg()
+			if(this.tuijianren){
+				this.tuijianren=e.tuijianid;
+				server.tgid=this.tuijianren;
+				
+			}
+			
+			
+			
 		},
 		onShow:function(){
 			
 		},
 		methods: {
-			
+			getreg:function(){
+				uni.navigateTo({
+					url: '../reg/reg'
+				})
+			},
 			input:function(e){
 				this.val=e.target.value 
 			},
@@ -103,7 +116,7 @@
 			
 		    return {
 		      title: '给你安利一个好东西',
-		      path: '/pages/Home/Home?tuijianid='+server.userinfo.Auid
+		      path: '/pages/menu/huodong?tuijianid='+server.userinfo.Auid
 		    }
 		}
 	}

@@ -7,7 +7,7 @@
 		<view  v-for="(list,index) in msgList" :key='index'>
 			<view class="listBox">
 				<view class="userBox">
-					<view class="touxiang" :style="{'background-image':'url('+list.userInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.userInfo.AuthorId)"></view>
+					<view class="touxiang" :style="{'background-image':'url('+list.userInfo.AuthorAvatarUrl+')'}"  @click="getbieren(list.userInfo.Auid)"></view>
 					<view class="info">
 						<text>{{list.userInfo.AuthorName}}\n</text>
 						<text>{{list.time}}</text>

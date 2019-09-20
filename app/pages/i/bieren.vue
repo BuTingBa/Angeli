@@ -55,7 +55,7 @@
 			</view>
 			<view class="daohang">
 				<view class="hang" :class="TabCur==0?'hangIng':''" @tap="tabSelect(0)">发布记录</view>
-				<view class="hang" :class="TabCur==1?'hangIng':''" @tap="tabSelect(1)">悬赏记录</view>
+				<view class="hang" :class="TabCur==1?'hangIng':''" @tap="tabSelect(1)">他的种草</view>
 			</view>
 			<block v-if="TabCur==0">
 				<template v-if="weikong==false">
@@ -64,11 +64,8 @@
 							<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
 							<view class="itemText">{{post.Content}}</view>
 							<view class="dibudianzan">
-								<view class="text-gray text-sm">
-									<text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-									<text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-									<text class="cuIcon-messagefill margin-lr-xs"></text> 30
-								</view>
+									<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
+									<text class="giveconut">{{post.Give}}</text>
 							</view>
 						</view>
 					</view>
@@ -88,11 +85,8 @@
 							<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
 							<view class="itemText">{{post.Content}}</view>
 							<view class="dibudianzan">
-								<view class="text-gray text-sm">
-									<text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-									<text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-									<text class="cuIcon-messagefill margin-lr-xs"></text> 30
-								</view>
+									<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
+									<text class="giveconut">{{post.Give}}</text>
 							</view>
 						</view>
 					</view>
@@ -100,7 +94,7 @@
 				<template v-else>
 					<view class="nullBox">
 						<image src="../../static/null.png" mode="" class="nullImg"></image>
-						<text class="nullText">\nTA还没有悬赏记录</text>
+						<text class="nullText">\nTA还没有种草过</text>
 					</view>
 				</template>
 			</block>
@@ -289,6 +283,18 @@
 		margin-top: 24upx;
 		margin-bottom: 24upx;
 		
+	}
+	.dibudianzan{
+		float: right;
+	}
+	.giveconut{
+		font-size: 32upx;
+		font-weight: 500;
+		
+	}
+	.give{
+		width: 32upx;
+		height: 32upx;
 	}
 	.guanzhua{
 		display: inline-block;

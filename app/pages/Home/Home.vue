@@ -153,7 +153,7 @@
 				<view class="sange">
 						<text class="Maxnum">{{guanzhu}}</text>
 						<text class="Maxnum">{{fensi}}</text>
-						<text class="Maxnum">{{zhongcao}}</text>
+						<text class="Maxnum" >{{zhongcao}}</text>
 						<text>关注</text>
 						<text>粉丝</text>
 						<text>种草</text>
@@ -174,12 +174,12 @@
 							<view class="menuTiele">我的好友</view>
 							<view class="menuRight"></view>
 						</view>
-						<view class="menusolid"></view>
+						<!-- <view class="menusolid"></view>
 						<view class="menuItem" @tap="getShoucang">
 							<view class="menuIcon aicon-keep"></view>
 							<view class="menuTiele">我的种草</view>
 							<view class="menuRight"></view>
-						</view>
+						</view> -->
 					</view>
 					<view class="solidMax"></view>
 					<view class="menuListBox">
@@ -608,6 +608,15 @@
 				
 			},
 			Like:function(postid,auid,give,index,zc){
+				if(auid==server.userinfo.Auid){
+					uni.showToast({
+						title: "不能给自己种草",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
+				
 				if(give===true){
 					var modea='del'
 				}else{

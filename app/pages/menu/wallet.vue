@@ -38,7 +38,7 @@
 				</view>
 				<view style="text-align: right;">
 					<text style="font-size: 28upx;color:rgba(121,196,152,1);">{{list.type+list.number}}\n</text>
-					<text style="font-size: 24upx;">成功</text>
+					<text style="font-size: 24upx;">{{list.status}}</text>
 				</view>
 			</view>
 			
@@ -93,6 +93,10 @@
 				billList:[]
 			}
 		},
+		onShow:function(){
+			this.userInfo=server.userinfo;
+			this.getjifen();
+		},
 		onLoad:function(){
 			this.userInfo=server.userinfo;
 			this.getjifen();
@@ -138,7 +142,15 @@
 			},
 			getVip:function(){
 				if(this.monnumber>=10){
+					
 					this.money=this.monnumber/10
+					if(this.money<1){
+						uni.showToast({
+							title: "最低充值不低于1元",
+							position:'bottom',
+							icon:'none'
+						});
+					}
 					console.log('安个利币：'+this.monnumber,'金额：'+this.money)
 					uni.showLoading({
 						title: '加载中'
@@ -190,7 +202,7 @@
 											},
 											success: (res) => {
 												if(res.data.code==1){
-													if(res.data.data.payStatus=='已支付' && res.data.data.payStatus=='OK'){
+													if(res.data.data.payStatus=='已支付' || res.data.data.payStatus=='OK'){
 														console.log('已支付',this.endVipTime)
 														uni.showToast({
 															title: "已充值",
@@ -198,7 +210,9 @@
 															icon:'none',
 															position:'center'
 														})
-														uni.navigateBack()
+														this.getjifen();
+														this.$getUserinfo();
+														this.$forceUpdate();
 													}else{
 														uni.showToast({
 															title: "支付失败！请联系客服",
@@ -264,7 +278,7 @@
 			getBill:function(){
 				uni.showLoading({
 					title: '正在查询中...'
-				});
+				}); 
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/account.php?type=cx', //仅为示例，并非真实接口地址。
@@ -292,10 +306,17 @@
 				});
 			},
 			inputVip:function(e){
-				this.monnumber=e.target.value
+				this.monnumber=e.target.value*10
 				this.angelibi=e.target.value*10+"安个利币"
 				if(e.target.value==""||e.target.value==null){
 					this.angelibi="自定义"
+				}
+				if(e.target.value<1){
+					uni.showToast({
+						title: "最低充值不低于1元",
+						position:'bottom',
+						icon:'none'
+					});
 				}
 			},
 			hideVip:function(){

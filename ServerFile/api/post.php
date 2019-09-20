@@ -375,10 +375,10 @@ switch ($_GET['type']) {
 
         $data=$post->delPost($_GET['postId'],$auid);
         if(!$data){
-            $outmsg = array('code' =>'0','msg'=>'举报失败','data'=>$data);
+            $outmsg = array('code' =>'0','msg'=>'删除失败！','data'=>$data);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
-            $outmsg = array('code' =>'1','msg'=>'举报成功','data'=>$data);
+            $outmsg = array('code' =>'1','msg'=>'删除成功!','data'=>$data);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
 

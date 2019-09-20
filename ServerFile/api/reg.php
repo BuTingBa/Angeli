@@ -93,6 +93,7 @@ switch ($_GET['type']) {
             $jifen=false;
             $_SESSION['Auid']=$userinfo['Auid'];
             $_SESSION['UserName']=$userinfo['UserName'];
+            $_SESSION['openid']=$userinfo['wxOpenId'];
             setcookie("Auid",$userinfo['Auid'],time()+3600*24,'/');
             if(!$user->checkLogin($userinfo['Auid'])){
                 if($user->vipIs($userinfo['Auid'])){

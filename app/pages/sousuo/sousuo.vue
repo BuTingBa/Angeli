@@ -67,7 +67,7 @@
 						</block>
 						<view class="postBottom">
 							<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
-							<view class="like"  @click="Like(list.PostsId)"></view>
+							<view class="like"  @click="Like(list.PostsId,list.AuthorId,list.Give,list.ZhongcaoCount)"></view>
 							<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image>
 							</view>
 						</view>
@@ -309,11 +309,66 @@
 					url: '../classPost/classPost?id='+id
 				})
 			},
-			Like:function(e){
-				uni.showToast({
-					title: "给帖子ID为："+e+"点赞",
-					position:'bottom',
-					icon:'none'
+			Like:function(postid,auid,give,index,zc){
+				if(auid==server.userinfo.Auid){
+					uni.showToast({
+						title: "不能给自己种草",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
+				
+				if(give===true){
+					var modea='del'
+				}else{
+					var modea='add'
+				}
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+					data: {
+						fuid: auid,
+						postid:postid,
+						mode:modea
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						if(res.data.code=="1"){
+							if(modea=='add'){
+								this.postList[index].ZhongcaoCount=Number(zc)+1;
+								this.postList[index].Give=true;
+								uni.showToast({
+									title: "种草成功！",
+									position:'bottom',
+									icon:'none'
+								});
+							}else{
+								this.postList[index].ZhongcaoCount=Number(zc)-1;
+								this.postList[index].Give=false;
+								uni.showToast({
+									title: "取消种草成功！",
+									position:'bottom',
+									icon:'none'
+								});
+							}
+							
+							this.$forceUpdate()
+						}else{
+							
+							uni.showToast({
+								title: "种草失败！",
+								position:'bottom',
+								icon:'none'
+							});
+						}
+					},
+					complete() {
+						
+					}
 				});
 			},
 			zan:function(){
@@ -323,11 +378,37 @@
 					icon:'none'
 				});
 			},
-			caidan:function(){
+			caidan:function(resa){
+				if(resa.AuthorId==server.userinfo.Auid){
+					this.menuList=['生成海报', '举报','删除帖子']
+				}else{
+					this.menuList=['生成海报', '举报']
+				}
 				uni.showActionSheet({
-					itemList: ['分享给朋友', '生成海报', '举报'],
-					success: function (res) {
-						console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+					itemList:this.menuList,
+					success: (res) =>{
+						switch(res.tapIndex){
+							case 0:
+								uni.showToast({
+									title: "分享"+resa.Content,
+									position:'bottom',
+									icon:'none'
+								});
+								break;
+							case 1:
+								uni.showToast({
+									title:'举报成功',
+									position:'bottom',
+									icon:'none'
+								});
+								this.$jubao(resa.PostsId,server.userinfo.Auid,resa.AuthorId,'没有理由');
+								break;
+							case 2:
+								this.$delPost(resa.PostsId);
+								break;
+							default:
+								
+						}
 					},
 					fail: function (res) {
 						console.log(res.errMsg);

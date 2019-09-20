@@ -24,13 +24,68 @@ class angeli
     }
 
     /**
+     * 新增提现请求
+     * @param $auid
+     * @param $jifen
+     * @return bool
+     */
+    public function addTixian($auid,$fee,$openid)
+    {
+
+        $jifen=$fee*10;
+        $data=$this->getJifen($auid);
+        if($data['Points']<$jifen){
+            return 3;//积分不足
+        }
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_tixian (auid,jifen,status,fee,openid,addtime) VALUES (?,?,?,?,?,?)");
+        $time=time();
+        $sta='正在审核';
+        $sql->bind_param("iisssi",$auid,$jifen,$sta,$fee,$openid,$time);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            return 1;
+        }else{
+            $this->setPoints($auid,'-',$jifen,'提现');
+            return 0;
+        }
+
+    }
+
+
+    /**
+     * 删除帖子
+     * @param $postid
+     * @param $auid
+     * @return bool
+     */
+    public function delPost($postid,$auid)
+    {
+        $sql = "UPDATE angeli_posts SET IsLock=2 WHERE PostsId=$postid AND AuthorId=$auid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                return TRUE;
+            }
+        }
+
+
+
+    }
+
+    /**
      * 修改用户设置
      * @param $auid
      * @param $key 数据库字段名
      * @param $val
      * @return bool
      */
-    function setUserConfig($auid,$key,$val)
+    public function setUserConfig($auid,$key,$val)
     {
         $sql="INSERT INTO angeli_config_user (auid,First_vip,upname) VALUES ($auid,1,0)  ON DUPLICATE KEY UPDATE First_vip=1";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
@@ -153,7 +208,15 @@ class angeli
                     'First_vip'=>'0',
                     'upname'=>'0'
                 );
-                return $data;
+                $sql="INSERT INTO angeli_config_user (auid,First_vip,upname) VALUES ($auid,0,0)";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                if(!$result){
+                    //表示操作失败
+                    return false;
+                }else{
+                    return $data;
+                }
+
             }
         }
     }
@@ -235,7 +298,7 @@ class angeli
      * 获取系统通知信息
      */
     public function getSystemMsg($auid){
-        $sql="SELECT * FROM angeli_system_msg WHERE toid='all' OR toid LIKE '%$auid%' ORDER BY addtime  DESC";
+        $sql="SELECT * FROM angeli_system_msg WHERE toid='all' OR toid LIKE '%$auid%' ORDER BY addtime  DESC ";
         $result=$this->mysqli->query($sql);
         if($this->mysqli->affected_rows<1){
             echo $this->mysqli->error;
@@ -262,6 +325,41 @@ class angeli
     }
 
 
+    /**
+     * 查询提现状态
+     * @param $auid
+     * @param $addtime
+     * @return array|bool
+     */
+    public function sakTixianStatus($auid,$addtime)
+    {
+        $sql = "SELECT * FROM angeli_tixian WHERE  auid=$auid AND addtime=$addtime";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return FALSE;
+            }else{
+                while($row = $result->fetch_assoc()){
+
+                    $val=array(
+                        'auid'=>$row['auid'],
+                        'jifen'=>$row['jifen'],
+                        'status'=>$row['status'],
+                        'fee'=>$row['fee'],
+                        'operator'=>$row['operator'],
+                        'to'=>$row['openid'],
+                        'addtime'=>$row['addtime']
+                    );
+
+                }
+                return $val;
+
+            }
+        }
+    }
 
 
     /*
@@ -414,7 +512,7 @@ class angeli
      * 获取我的关注信息
      */
     public function getMyGZMsg($auid){
-        $sql="SELECT * FROM angeli_guanzhu WHERE beiguanzhu=$auid AND mark=0 ORDER BY opentime  DESC";
+        $sql="SELECT * FROM angeli_guanzhu WHERE beiguanzhu=$auid  ORDER BY opentime  DESC";
         $result=$this->mysqli->query($sql);
         if($this->mysqli->affected_rows<1){
             return 0;
@@ -425,7 +523,9 @@ class angeli
                     'guanzhuId'=>$this->getInfo($row['guanzhu']),
                     'myId'=>$this->getInfo($row['beiguanzhu']),
                     'time'=>$this->uc_time_ago($row['opentime']),
-                    'isGZ'=>$this->isGuanzhu($row['guanzhu'],$auid)
+                    'isGZ'=>$this->isGuanzhu($row['guanzhu'],$auid),
+                    'mark'=>$row['mark']
+
                 );
                 $data[]=$d;
             }
@@ -670,13 +770,29 @@ class angeli
             $data=[];
             if($this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()){
-                    $aa=array(
-                        'billId'=>$row['id'],
-                        'type'=>$row['type'],
-                        'number'=>$row['number'],
-                        'note'=>$row['note'],
-                        'time'=>date('Y-m-d H:i:s',$row['opentime'])
-                    );
+                    if($row['note']=='提现'){
+                        $status=$this->sakTixianStatus($auid,$row['opentime']);
+                        $aa=array(
+                            'billId'=>$row['id'],
+                            'type'=>$row['type'],
+                            'number'=>$row['number'],
+                            'note'=>$row['note'],
+                            'status'=>$status['status'],
+                            'time'=>date('Y-m-d H:i:s',$row['opentime'])
+                        );
+                    }else{
+                        $aa=array(
+                            'billId'=>$row['id'],
+                            'type'=>$row['type'],
+                            'number'=>$row['number'],
+                            'note'=>$row['note'],
+                            'status'=>'成功',
+                            'time'=>date('Y-m-d H:i:s',$row['opentime'])
+                        );
+                    }
+
+
+
                     array_push($data,$aa);
                 }
                 return $data;
