@@ -28,7 +28,7 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $txt=textCheck($_REQUEST['txt']);
-        if(checkText($txt)!==0){
+        if(checkText($txt)==1){
             $outmsg = array('code' =>'2','msg'=>'有不恰当内容，请修改后再提交','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
@@ -98,6 +98,11 @@ switch ($_GET['type']) {
         if(empty($_POST['txt'])||empty($_POST['auid'])||empty($_POST['uid'])){
             die("缺少必要的参数！");
         }
+        if(checkText($_POST['txt'])!==0){
+            $outmsg = array('code' =>'2','msg'=>'有不恰当内容，请修改后再提交','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
         $out=$post->addComment($_POST['postid'],$_POST['txt'],$_POST['auid'],$_POST['uid']);
         if(!$out)
         {
@@ -395,8 +400,8 @@ function checkText($txt){
     $data=$html['result']['spam'];
     // array_push($data,$html['result']['review']);
     return $data;
-
 }
+
 function textCheck($txt){
     $html = file_get_contents('https://api.angeli.top/contentCensor.php?type=text&text='.$txt);
     $html=json_decode($html,true);
@@ -410,7 +415,15 @@ function textCheck($txt){
     }
     return $txt;
 }
-
+function checkImage($url){
+    $html = file_get_contents('https://api.angeli.top/contentCensor.php?type=image&imageUrl='.$url);
+    $html=json_decode($html,true);
+    if($html['conclusion']=='合规'){
+        return $url;
+    }else{
+        return false;
+    }
+}
 
 
 

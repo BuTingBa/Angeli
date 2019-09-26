@@ -29,7 +29,8 @@
     "pages/menu/chat",
     "pages/postinfo/dashang",
     "pages/menu/systemMsg",
-    "pages/menu/huodong"
+    "pages/menu/huodong",
+    "pages/menu/guanzhu"
   ],
   "subPackages": [],
   "window": {

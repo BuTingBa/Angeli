@@ -45,19 +45,30 @@ if ((($_FILES["file"]["type"] == "image/gif")
         try{
             $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
             $ossClient->uploadFile($bucket, $object, $filePath);
-            /*if(!$_SESSION['Auid'])
+            if(!$_SESSION['Auid'])
             {
                 $outmsg = array('code' =>'0','msg'=>'没有登录就想评论？','data'=>"");
                 die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
             }
-            $auid=$_SESSION['Auid'];*/
-            $auid=6666;
+            $auid=$_SESSION['Auid'];
+            //$auid=6666;
+            if(checkImage($imageUrl.$object)==2){
+                $outmsg = array('code' =>'2','msg'=>'图片包含敏感内容，请更换其他','data'=>"");
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+
             $app=new angeli($config);
+
+
             $data=$app->setAvatar('auid',$auid,$imageUrl.$object);
             if($data==true){
-                die(json_encode($imageUrl.$object,JSON_UNESCAPED_UNICODE));
+
+                $outmsg = array('code' =>'1','msg'=>'修改成功！','data'=>$imageUrl.$object);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+
             }else{
-                die($data);
+                $outmsg = array('code' =>'0','msg'=>'修改失败！','data'=>$data);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
             }
         } catch(OssException $e) {
             printf(__FUNCTION__ . ": FAILED\n");
@@ -74,7 +85,17 @@ else
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 
+function checkImage($url){
+    $html = file_get_contents('https://api.angeli.top/contentCensor.php?type=image&imageUrl='.$url);
+    $html=json_decode($html,true);
+    return $html['conclusionType'];
 
+    if($html['conclusion']=='合规'){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 
 

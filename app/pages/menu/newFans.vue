@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">我的好友</block>
+			<block slot="content">我的粉丝</block>
 		</cu-custom>
 		<view v-for="(list,index) in msgList" :key="index">
 			<view class="listBox">
@@ -12,8 +12,8 @@
 						<text>{{list.guanzhuId.AuthorName}}\n</text>
 						<text>{{list.time}}</text>
 					</view>
-					<view class="guanzhu">
-						+ 关注
+					<view class="guanzhu" :class="list.isGZ?'guanzhuX':'guanzhu'" @click="guanzhu(index,list.guanzhuId.Auid)">
+						{{list.isGZ?'取消关注':'+ 关注'}}
 					</view>
 				</view>
 				<view class="plnr">
@@ -70,6 +70,32 @@
 		methods: {
 			tabSelect(e) {
 				this.TabCur = e
+			},
+			guanzhu:function(index,uid){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
+					data: {
+						uid: uid,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						});
+						if(res.data.msg=='关注成功'){
+							
+							this.msgList.isGZ=true;
+						}else{
+							this.msgList.isGZ=false;
+						}
+					}
+				}); 
 			},
 			getbieren:function(e){
 				uni.navigateTo({
@@ -149,6 +175,7 @@ page{
 	box-shadow:0px 1px 1px rgba(229,228,234,0.3);
 	text-align: center;
 	line-height: 49upx;
+	font-size:24upx;
 	color: #999999;
 }
 .guanzhu{
@@ -160,6 +187,7 @@ page{
 	box-shadow:0px 1px 1px rgba(121,196,152,0.3);
 	text-align: center;
 	line-height: 49upx;
+	font-size:24upx;
 	color: #FFFFFF;
 }
 .mynr{

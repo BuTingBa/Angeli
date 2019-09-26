@@ -151,12 +151,12 @@
 					</view>
 				</view>
 				<view class="sange">
-						<text class="Maxnum">{{guanzhu}}</text>
-						<text class="Maxnum">{{fensi}}</text>
+						<text class="Maxnum" @click="guanzhua">{{guanzhu}}</text>
+						<text class="Maxnum" @click="fensia">{{fensi}}</text>
 						<text class="Maxnum" >{{zhongcao}}</text>
-						<text>关注</text>
-						<text>粉丝</text>
-						<text>种草</text>
+						<text @click="guanzhua">关注</text>
+						<text @click="fensia">粉丝</text>
+						<text >种草</text>
 				</view>
 				
 			</view>
@@ -350,6 +350,7 @@
 							},
 							success: (res) => {
 								console.log(res);
+								
 								if(res.data.code=="0"){
 									server.usersk=res.data.data.session_key
 									uni.showToast({
@@ -358,7 +359,7 @@
 										icon:'none'
 									});
 									this.AvatarUrl="https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png";
-								}else if(res.data.code=="1" || res.data.code=="2"){
+								}else if(res.data.code=="1" ||res.data.code=="2"){
 									this.AvatarUrl=res.data.data.AvatarUrl;
 									this.username=res.data.data.UserName;
 									this.zhongcao=res.data.data.ZhongcaoCount;
@@ -445,6 +446,16 @@
 			
 		},
 		methods: {
+			guanzhua:function(){
+				uni.navigateTo({
+					url: '../menu/guanzhu'
+				})
+			},
+			fensia:function(){
+				uni.navigateTo({
+					url: '../menu/newFans'
+				})
+			},
 			aotuloding:function(){
 				uni.showToast({
 					title: "刚刚出现问题，已经为你修复",

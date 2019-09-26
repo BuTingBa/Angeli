@@ -88,7 +88,7 @@ switch ($_GET['type']) {
         setcookie("wxid",$wxuserinfo['openid'],time()+3600*24,'/');
         setcookie("sekey",$wxuserinfo['session_key'],time()+3600*24,'/');
         $userinfo=$user->getUserInfo("openid",$wxuserinfo['openid']);
-        if($userinfo)
+        if($userinfo['Auid']!='-1')
         {
             $jifen=false;
             $_SESSION['Auid']=$userinfo['Auid'];

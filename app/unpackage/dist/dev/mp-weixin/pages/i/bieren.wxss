@@ -5,6 +5,14 @@
 	margin-top: 24rpx;
 	margin-bottom: 24rpx;
 }
+.text-A{
+	overflow:hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	display:-webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient:vertical;
+}
 .dibudianzan{
 	float: right;
 }
@@ -123,7 +131,7 @@
 .itemText{
 	width: 100%;
 	padding: 5rpx;
-	height: 76rpx;
+	
 	overflow:hidden;
 	-o-text-overflow:ellipsis;
 	   text-overflow:ellipsis;

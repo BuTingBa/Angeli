@@ -474,6 +474,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
             success: function success(res) {
               console.log(res);
+
               if (res.data.code == "0") {
                 _server.default.usersk = res.data.data.session_key;
                 uni.showToast({
@@ -569,6 +570,16 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   methods: {
+    guanzhua: function guanzhua() {
+      uni.navigateTo({
+        url: '../menu/guanzhu' });
+
+    },
+    fensia: function fensia() {
+      uni.navigateTo({
+        url: '../menu/newFans' });
+
+    },
     aotuloding: function aotuloding() {
       uni.showToast(_defineProperty({
         title: "刚刚出现问题，已经为你修复",

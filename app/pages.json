@@ -127,6 +127,10 @@
 		{
 			"path" : "pages/menu/huodong",
 			"style" : {}
+		},
+		{
+			"path" : "pages/menu/guanzhu",
+			"style" : {}
 		}
     ],
 	"globalStyle": {

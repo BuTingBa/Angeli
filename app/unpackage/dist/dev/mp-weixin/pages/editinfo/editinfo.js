@@ -242,8 +242,20 @@ var _default = { data: function data() {return { sex: '男', user: [] };}, onSho
 
             success: function success(uploadFileRes) {
               console.log(uploadFileRes.data);
-              _this2.user.AvatarUrl = uploadFileRes.data;
+              if (uploadFileRes.data.code == 1) {
+                _this2.user.AvatarUrl = uploadFileRes.data;
+                uni.showToast({
+                  title: "修改成功！",
+                  position: 'bottom',
+                  icon: 'none' });
 
+              } else {
+                uni.showToast({
+                  title: uploadFileRes.data.msg,
+                  position: 'bottom',
+                  icon: 'none' });
+
+              }
             },
             complete: function complete() {
               console.log("cuowu");

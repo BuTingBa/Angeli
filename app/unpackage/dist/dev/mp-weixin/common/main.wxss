@@ -29,6 +29,14 @@
 
 
 
+
+
+
+
+
+
+
+
 /*每个页面公共css */
 /*
   ColorUi for uniApp  v2.1.6 | by 文晓港 2019-05-31 10:44:24
@@ -1709,9 +1717,10 @@ to {
 .nav.fixed {
 	position: fixed;
 	width: 100%;
-	/* top: 0; */
+	top: 0;
 	z-index: 1024;
-	/* box-shadow: 0 1upx 6upx rgba(0, 0, 0, 0.1); */
+	-webkit-box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.1);
+	        box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.1);
 }
 .cu-bar.foot {
 	position: fixed;

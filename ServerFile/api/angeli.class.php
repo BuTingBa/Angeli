@@ -24,6 +24,38 @@ class angeli
     }
 
     /**
+     * 获取我关注的用户
+     * @param $auid 欲查询的用户ID
+     * @return array|bool
+     */
+    public function getMyfollows($auid)
+    {
+        $sql = "select * from angeli_guanzhu WHERE guanzhu=$auid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $aa=array(
+                        'id'=>$row['id'],
+                        'guanzhuId'=>$this->getInfo($row['guanzhu']),
+                        'beiguanzhuId'=>$this->getInfo($row['beiguanzhu']),
+                        'time'=>$this->uc_time_ago($row['opentime']),
+                        'notMe'=>$this->getInfo($row['guanzhu']==$auid?$row['beiguanzhu']:$row['guanzhu'])
+                    );
+                    $data[]=$aa;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+
+    /**
      * 新增提现请求
      * @param $auid
      * @param $jifen
@@ -482,10 +514,6 @@ class angeli
                     $this->mysqli->query($sql);
                     return $txt;
                 }else{
-                    $sql="UPDATE angeli_user SET FollowerCount=FollowerCount-1 WHERE AuId=$beiguanzhu";
-                    $this->mysqli->query($sql);
-                    $sql="UPDATE angeli_user SET FollowedCount=FollowedCount-1 WHERE AuId=$guanzhuid";
-                    $this->mysqli->query($sql);
                     return false;
                 }
             }
@@ -498,7 +526,10 @@ class angeli
                 return false;
             }else{
                 if($this->mysqli->affected_rows>0){
-
+                    $sql="UPDATE angeli_user SET FollowerCount=FollowerCount-1 WHERE AuId=$beiguanzhu";
+                    $this->mysqli->query($sql);
+                    $sql="UPDATE angeli_user SET FollowedCount=FollowedCount-1 WHERE AuId=$guanzhuid";
+                    $this->mysqli->query($sql);
                     return $txt;
                 }else{
                     return false;
@@ -699,7 +730,7 @@ class angeli
         $pageNum=($page-1)*$count;
 
         //$sql = "select * from angeli_msg WHERE FromId=$auid OR ToId=$auid  group by FromId+ToId ORDER BY MsgSendTime DESC LIMIT $pageNum, $count";
-        $sql="select * from (select * from angeli_msg WHERE FromId=$auid OR ToId=$auid ORDER BY MsgId DESC) as a group by a.FromId+a.ToId LIMIT $pageNum, $count";
+        $sql="select * from (select * from angeli_msg WHERE FromId=$auid OR ToId=$auid ORDER BY MsgId ASC) as a group by a.FromId+a.ToId ORDER BY a.MsgSendTime desc LIMIT $pageNum, $count";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败

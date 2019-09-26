@@ -39,7 +39,7 @@
 				<view class="duoList">
 					<view class="items" v-for="(post,index) in postList" :key="index" @tap="getPost(post.PostId)">
 						<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
-						<view class="itemText">{{post.Content}}</view>
+						<view class="itemText"><text class="text-A">{{post.Content}}</text></view>
 						<view class="dibudianzan">
 								<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
 								<text class="giveconut">{{post.Give}}</text>
@@ -53,7 +53,7 @@
 				<view class="duoList">
 					<view class="items" v-for="(post,index) in MyzcList" :key="index">
 						<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post[0].PictureId[0]+')'}"></view>
-						<view class="itemText">{{post[0].Content}}</view>
+						<view class="itemText"><text class="text-A">{{post[0].Content}}</text></view>
 						<view class="dibudianzan">
 								<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
 								<text class="giveconut">{{post[0].ZhongcaoCount}}</text>
@@ -221,6 +221,11 @@
 					
 				}
 			});
+			
+			
+			
+			
+			
 		}
 	}
 </script>
@@ -233,6 +238,14 @@
 		font-size: 32upx;
 		font-weight: 500;
 		
+	}
+	
+	.text-A{
+		overflow:hidden;
+		text-overflow: ellipsis;
+		display:-webkit-box;
+		-webkit-line-clamp:2;
+		-webkit-box-orient:vertical;
 	}
 	.infoa{
 		display: flex;
@@ -302,7 +315,7 @@
 		padding: 5upx;
 		font-size: 28upx;
 		line-height: 28upx;
-		height: 63upx;
+		
 		overflow:hidden;
 		text-overflow:ellipsis;
 		display:-webkit-box;

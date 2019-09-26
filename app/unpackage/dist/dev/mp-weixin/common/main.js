@@ -10,7 +10,7 @@
 /* WEBPACK VAR INJECTION */(function(uni, createApp) {__webpack_require__(/*! uni-pages */ 4);__webpack_require__(/*! @dcloudio/uni-stat */ 5);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 9));
-var _server = _interopRequireDefault(__webpack_require__(/*! server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | components/colorui/components/cu-custom */ "components/colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! components/colorui/components/cu-custom.vue */ 266));};var sunUiOos = function sunUiOos() {return Promise.all(/*! import() | components/sunui-upimg/sunui-upimg-alioos */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/sunui-upimg/sunui-upimg-alioos")]).then(__webpack_require__.bind(null, /*! ./components/sunui-upimg/sunui-upimg-alioos.vue */ 271));};
+var _server = _interopRequireDefault(__webpack_require__(/*! server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | components/colorui/components/cu-custom */ "components/colorui/components/cu-custom").then(__webpack_require__.bind(null, /*! components/colorui/components/cu-custom.vue */ 274));};var sunUiOos = function sunUiOos() {return Promise.all(/*! import() | components/sunui-upimg/sunui-upimg-alioos */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/sunui-upimg/sunui-upimg-alioos")]).then(__webpack_require__.bind(null, /*! ./components/sunui-upimg/sunui-upimg-alioos.vue */ 279));};
 
 
 _vue.default.component('cu-custom', cuCustom);
@@ -168,10 +168,18 @@ var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _i
 
 
 
+
         _vue.default.prototype.StatusBar = e.statusBarHeight;
-        var custom = wx.getMenuButtonBoundingClientRect();
-        _vue.default.prototype.Custom = custom;
-        _vue.default.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+        var capsule = wx.getMenuButtonBoundingClientRect();
+        if (capsule) {
+          _vue.default.prototype.Custom = capsule;
+          // Vue.prototype.capsuleSafe = uni.upx2px(750) - capsule.left + uni.upx2px(750) - capsule.right;
+          _vue.default.prototype.CustomBar = capsule.bottom + capsule.top - e.statusBarHeight;
+        } else {
+          _vue.default.prototype.CustomBar = e.statusBarHeight + 50;
+        }
+
+
 
 
 

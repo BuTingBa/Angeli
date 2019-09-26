@@ -521,7 +521,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
               } else {
                 uni.showModal({
                   title: '注册失败！',
-                  content: '错误原因' + res.data.msg,
+                  content: '错误原因' + res.data,
                   showCancel: false });
 
               }

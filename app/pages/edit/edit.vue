@@ -154,7 +154,7 @@
 .dibu{
 	position: absolute;
 	width: 90%;
-	bottom: 10upx;
+	bottom: 50upx;
 	margin: 0upx 20upx;
 }
 .in{

@@ -62,7 +62,7 @@
 					<view class="duoList">
 						<view class="items" v-for="(post,index) in postList" :key="index" @tap="getPost(post.PostId)">
 							<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
-							<view class="itemText">{{post.Content}}</view>
+							<view class="itemText"><text class="text-A">{{post.Content}}</text></view>
 							<view class="dibudianzan">
 									<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
 									<text class="giveconut">{{post.Give}}</text>
@@ -83,7 +83,7 @@
 					<view class="duoList">
 						<view class="items" v-for="(post,index) in postList" :key="index">
 							<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
-							<view class="itemText">{{post.Content}}</view>
+							<view class="itemText"><text class="text-A">{{post.Content}}</text></view>
 							<view class="dibudianzan">
 									<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
 									<text class="giveconut">{{post.Give}}</text>
@@ -284,6 +284,13 @@
 		margin-bottom: 24upx;
 		
 	}
+	.text-A{
+		overflow:hidden;
+		text-overflow: ellipsis;
+		display:-webkit-box;
+		-webkit-line-clamp:2;
+		-webkit-box-orient:vertical;
+	}
 	.dibudianzan{
 		float: right;
 	}
@@ -395,7 +402,7 @@
 	.itemText{
 		width: 100%;
 		padding: 5upx;
-		height: 76upx;
+		
 		overflow:hidden;
 		text-overflow:ellipsis;
 		display:-webkit-box;

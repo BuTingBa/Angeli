@@ -175,7 +175,7 @@
 				});
 				uni.request({
 					method:'POST',
-					url: 'https://api.angeli.top/post.php?type=addPost', //仅为示例，并非真实接口地址。
+					url: 'https://api.angeli.top/post.php?type=addPost',
 					data: {
 						imageList: this.oosArr.join().split(','),
 						txt:this.postcontent,

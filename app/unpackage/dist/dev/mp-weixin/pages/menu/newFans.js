@@ -195,6 +195,32 @@ var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onL
     tabSelect: function tabSelect(e) {
       this.TabCur = e;
     },
+    guanzhu: function guanzhu(index, uid) {var _this2 = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
+        data: {
+          uid: uid },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Cookie': _server.default.cookie },
+
+        success: function success(res) {
+          uni.showToast({
+            title: res.data.msg,
+            position: 'bottom',
+            icon: 'none' });
+
+          if (res.data.msg == '关注成功') {
+
+            _this2.msgList.isGZ = true;
+          } else {
+            _this2.msgList.isGZ = false;
+          }
+        } });
+
+    },
     getbieren: function getbieren(e) {
       uni.navigateTo({
         url: '../i/bieren?auid=' + e });

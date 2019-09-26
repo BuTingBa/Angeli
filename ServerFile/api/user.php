@@ -198,6 +198,11 @@ switch ($_GET['type']){
             $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
+        if(checkText($_POST['msg'])!==0){
+            $outmsg = array('code' =>'2','msg'=>'有不恰当内容，请修改后再提交','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
         $data=$user->addMsg($auid,$_POST['toid'],$_POST['msg']);
         if(!$data){
             $outmsg = array('code' =>'0','msg'=>'发送失败！','data'=>"");
@@ -312,6 +317,11 @@ switch ($_GET['type']){
             $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
+        if(checkText($_GET['newName'])!==0){
+            $outmsg = array('code' =>'2','msg'=>'有不恰当内容，请修改后再提交','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
         $vip=$user->vipIs($auid);
         $data=$user->getUserConfig($auid);
         if($vip){
@@ -383,12 +393,22 @@ switch ($_GET['type']){
             $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
+
+
+
         $auid=$_SESSION['Auid'];
         if(empty($_GET['ms'])){
             $outmsg = array('code' =>'0','msg'=>'缺少auid参数','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
-        $data=$user->setms($auid,$_GET['ms']);
+
+        $ms=$_GET['ms'];
+
+        if(checkText($ms)!==0){
+            $outmsg = array('code' =>'2','msg'=>'有不恰当内容，请修改后再提交','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$user->setms($auid,$ms);
         if($data){
             $outmsg = array('code' =>'1','msg'=>'修改成功','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
@@ -466,6 +486,21 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'getMyFans':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        $data=$user->getMyfollows($auid);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'error','data'=>$data);
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>$data);
+        }
+        die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        break;
     case 'test':
         var_dump($user->setUserConfig(6666,'First_vip','1'));
         break;
@@ -478,7 +513,24 @@ switch ($_GET['type']){
 
 
 
+function checkText($txt){
+    $html = file_get_contents('https://api.angeli.top/contentCensor.php?type=text&text='.$txt);
+    $html=json_decode($html,true);
+    $data=$html['result']['spam'];
+    // array_push($data,$html['result']['review']);
+    return $data;
+}
+function checkImage($url){
+    $html = file_get_contents('https://api.angeli.top/contentCensor.php?type=image&imageUrl='.$url);
+    $html=json_decode($html,true);
+    return $html['conclusionType'];
 
+    if($html['conclusion']=='合规'){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 
 

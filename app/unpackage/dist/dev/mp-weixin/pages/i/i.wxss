@@ -6,6 +6,14 @@
 	font-size: 32rpx;
 	font-weight: 500;
 }
+.text-A{
+	overflow:hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	display:-webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient:vertical;
+}
 .infoa{
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -79,7 +87,7 @@
 	padding: 5rpx;
 	font-size: 28rpx;
 	line-height: 28rpx;
-	height: 63rpx;
+	
 	overflow:hidden;
 	-o-text-overflow:ellipsis;
 	   text-overflow:ellipsis;
