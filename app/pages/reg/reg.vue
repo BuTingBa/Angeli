@@ -439,13 +439,11 @@
 							
 						}else{
 							uni.showToast({
-								title: '登录失败了啊！',
+								title: '错误：'+res.data,
 								position:'bottom',
 								icon:'none'
 							});
 						}
-						
-						
 					}
 				});
 				

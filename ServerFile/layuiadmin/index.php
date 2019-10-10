@@ -124,7 +124,7 @@ if($_SESSION['id']!=$_COOKIE["adminid"]){
           
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
             <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                <a lay-href="html/console.html">
+                <a lay-href="html/console.php">
 					<i class="layui-icon layui-icon-home"></i>
 					<cite>仪表盘</cite>
 				</a>

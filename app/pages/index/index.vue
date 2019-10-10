@@ -1,6 +1,6 @@
 <template>
 	<view class="content">	
-		<image class="logding" src="../../static/g.png" ></image>
+		<image class="logding" src="../../static/g.png" :src="image"></image>
 		<view class="anniu">
 			<button class="mini-btn" type="default" size="mini" plain="true" @tap="countDown">跳过{{num}}</button>
 		</view>
@@ -15,11 +15,39 @@
 			return {
 				timer:"",
 				num:5,
+				image:'../../static/g.png'
 			}
 		},
-		onLoad() {
-            //创建并执行定时器
+		onLoad(){
+			uni.request({
+				method:'GET',
+				url: "https://api.angeli.top/user.php?type=getSysConfig", //仅为示例，并非真实接口地址。
+				data: {
+					configName:'home_imageurl'
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					console.log(res)
+					if(res.data.code=="1"){
+						this.systemConfig=res.data.data;
+						if(!res.data.data){
+							this.image = ''
+						}else{
+							this.image = res.data.data
+						}
+					}
+					console.log(this.image)
+				},
+				complete() {
+					
+				}
+			});
 			
+		},
+		onReady() {
+            //创建并执行定时器
 			uni.getStorage({
 			    key: 'showAD',
 			    success: (res) => {
@@ -31,8 +59,6 @@
 					}
 			    }
 			});
-			
-			
 			this.timer = setInterval(() => {
               //当num等于100时清除定时器
 				this.num--;

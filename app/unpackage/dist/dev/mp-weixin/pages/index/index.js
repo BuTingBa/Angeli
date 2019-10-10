@@ -148,12 +148,40 @@ var _default =
   data: function data() {
     return {
       timer: "",
-      num: 5 };
+      num: 5,
+      image: '../../static/g.png' };
 
   },
   onLoad: function onLoad() {var _this = this;
-    //创建并执行定时器
+    uni.request({
+      method: 'GET',
+      url: "https://api.angeli.top/user.php?type=getSysConfig", //仅为示例，并非真实接口地址。
+      data: {
+        configName: 'home_imageurl' },
 
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      success: function success(res) {
+        console.log(res);
+        if (res.data.code == "1") {
+          _this.systemConfig = res.data.data;
+          if (!res.data.data) {
+            _this.image = '';
+          } else {
+            _this.image = res.data.data;
+          }
+        }
+        console.log(_this.image);
+      },
+      complete: function complete() {
+
+      } });
+
+
+  },
+  onReady: function onReady() {var _this2 = this;
+    //创建并执行定时器
     uni.getStorage({
       key: 'showAD',
       success: function success(res) {
@@ -161,19 +189,17 @@ var _default =
         if (res.data == 'true') {
 
         } else {
-          _this.countDown();
+          _this2.countDown();
         }
       } });
 
-
-
     this.timer = setInterval(function () {
       //当num等于100时清除定时器
-      _this.num--;
-      console.log(_this.num);
-      if (_this.num == 0) {
-        clearInterval(_this.timer);
-        _this.num = "";
+      _this2.num--;
+      console.log(_this2.num);
+      if (_this2.num == 0) {
+        clearInterval(_this2.timer);
+        _this2.num = "";
         uni.redirectTo({
           url: '../Home/Home?id=1' });
 

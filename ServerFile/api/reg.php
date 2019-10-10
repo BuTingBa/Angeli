@@ -36,7 +36,8 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $email=time()."@angeli.top";
-        $fankui=$user -> addUser($_GET['username'],"angeli",$_GET['gender'],$_GET['phone'],"","",$email,"1",$_SERVER['REMOTE_ADDR'],"");
+        $nickname = preg_replace('/[\x{10000}-\x{10FFFF}]/u', '', $_GET['username']);
+        $fankui=$user -> addUser($nickname,"angeli",$_GET['gender'],$_GET['phone'],"","",$email,"1",$_SERVER['REMOTE_ADDR'],"");
         $data=json_decode($fankui,true);
         if($data['code']=="1"){
             $userinfo=$user->getUserInfo("phone",$_GET['phone']);
@@ -133,6 +134,7 @@ switch ($_GET['type']) {
         $fankui=$user -> addUser($_POST['username'],"angeli",$_POST['gender'],$_POST['phone'],$_POST['openid'],$_POST['unionid'],$email,"1",$_SERVER['REMOTE_ADDR'],$_POST['avatarUrl']);
         $data=json_decode($fankui,true);
         if($data['code']=='1'){
+
             $userinfo=$user->getUserInfo('phone',$phone);
             if($_POST['tuijianId'] && is_numeric($_POST['tuijianId'])){
                 $user->setTuiGuang($_POST['tuijianId'],$userinfo['Auid']);
@@ -224,6 +226,9 @@ switch ($_GET['type']) {
             }
         }
         break;
+    case 'test':
+            
+            break;    
     default:
         # code...
         break;

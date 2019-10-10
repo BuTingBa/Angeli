@@ -14,7 +14,7 @@
 				<view class="postText"><text decode="false" selectable="true" space="nbsp" >
 					{{postInfo.Content}}</text>
 				</view>
-				<view class="postImage">
+				<view class="postImage" v-if="postInfo.PictureId[0].length>5">
 					<image class="postImageItem"  v-for="(img,id) in postInfo.PictureId" :key="id" :src="img"  @tap="showImage(postInfo.PictureId,id)" mode="aspectFill"></image>
 				</view>
 				<view class="postBottom">
@@ -361,6 +361,19 @@
 				this.yanse='rgba(0,0,0,0.4)'
 			},
 			Like:function(postid,auid,give,zc){
+				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+					uni.showToast({
+						title: "你还没有登录，请登录后再来吧",
+						position:'bottom',
+						icon:'none'
+					});
+					setTimeout(function () {
+						uni.navigateTo({
+							url: '../reg/reg'
+						})
+					}, 1200);
+					return;
+				}
 				if(auid==server.userinfo.Auid){
 					uni.showToast({
 						title: "不能给自己种草",
@@ -468,6 +481,7 @@
 				})
 			},
 			sendpl:function(e){
+				
 				console.log(this.plnr);
 				if(this.plnr=="null" ||this.plnr==""){
 					uni.showToast({
@@ -487,12 +501,14 @@
 					})
 					return;
 				}
-				
 				if(this.huifuid && this.huifu==true){
 					//回复评论模式
 					//console.log("回复评论",this.plnr)
 					let qian=this.plnr.substring(0,this.plnr.indexOf(':')+1);
 					let nr=this.plnr.replace(qian,"");
+					uni.showLoading({
+						title: '正在提交数据'
+					});
 					uni.request({
 						method:'POST',
 						url: 'https://api.angeli.top/post.php?type=hfpl', //仅为示例，并非真实接口地址。
@@ -523,6 +539,7 @@
 									success: (res) => {
 										console.log("————————————评论详情——————————");
 										this.pllist=res.data.data;
+										this.plnr==""
 										console.log(this.pllist);
 										
 									}
@@ -535,11 +552,21 @@
 								duration:2000,
 								mask:true
 							});
+							
+							setTimeout(function () {
+								uni.hideLoading()
+							}, 2000);
+						},
+						complete() {
+							uni.hideLoading();
 						}
 					});
 					
 				}else{
 					//评论模式
+					uni.showLoading({
+						title: '正在提交数据'
+					});
 					uni.request({
 						method:'POST',
 						url: 'https://api.angeli.top/post.php?type=pl', //仅为示例，并非真实接口地址。
@@ -570,6 +597,7 @@
 										console.log("————————————评论详情——————————");
 										this.pllist=res.data.data;
 										console.log(this.pllist);
+										this.plnr==""
 										
 									}
 								});
@@ -581,6 +609,12 @@
 								duration:2000,
 								mask:true
 							});
+							setTimeout(function () {
+								uni.hideLoading()
+							}, 2000);
+						},
+						complete() {
+							uni.hideLoading()
 						}
 					});
 				}

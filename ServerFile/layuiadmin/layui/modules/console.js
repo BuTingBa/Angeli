@@ -191,13 +191,14 @@ layui.define(function(exports){
     //今日热搜
     table.render({
       elem: '#LAY-index-topSearch'
-      ,url: layui.setter.base + 'json/console/top-search.js' //模拟接口
-      ,page: true
+      ,url: '../api/post.php?type=getNewPost' //模拟接口
+      ,page: true,
+	  limit:20
       ,cols: [[
         {type: 'numbers', fixed: 'left'}
-        ,{field: 'keywords', title: '关键词', minWidth: 300, templet: '<div><a href="https://www.baidu.com/s?wd={{ d.keywords }}" target="_blank" class="layui-table-link">{{ d.keywords }}</div>'}
-        ,{field: 'frequency', title: '搜索次数', minWidth: 120, sort: true}
-        ,{field: 'userNums', title: '用户数', sort: true}
+        ,{field: 'Content',width:'70%', title: '内容摘要', minWidth: 400, templet: '<div><a href="https://www.baidu.com/s?wd={{ d.Content }}" target="_blank" class="layui-table-link">{{ d.Content }}</div>'}
+        ,{field: 'AuthorName', title: '发布作者', minWidth: 50, sort: true,templet:'<div><a href="https://www.baidu.com/s?wd={{ d.AuthorInfo.AuthorName }}" target="_blank" class="layui-table-link">{{ d.AuthorInfo.AuthorName }}</div>'}
+        ,{field: 'PsotDate', title: '发布时间', sort: true}
       ]]
       ,skin: 'line'
     });
@@ -211,10 +212,10 @@ layui.define(function(exports){
 	  height:700
       ,cols: [[
         {type: 'numbers', fixed: 'left'}
-        ,{field: 'title', title: '标题', minWidth: 300, templet: '<div><a href="{{ d.href }}" target="_blank" class="layui-table-link">{{ d.title }}</div>'}
-        ,{field: 'username', title: '发帖者'}
-        ,{field: 'channel', title: '类别'}
-        ,{field: 'crt', title: '点击率', sort: true}
+        ,{field: 'title', title: '内容摘要', minWidth: 300, templet: '<div><a href="{{ d.href }}" target="_blank" class="layui-table-link">{{ d.title }}</div>'}
+        ,{field: 'username', title: '发布作者'}
+        ,{field: 'channel', title: '种草数量'}
+        ,{field: 'crt', title: '发布时间', sort: true}
       ]]
       ,skin: 'line'
     });

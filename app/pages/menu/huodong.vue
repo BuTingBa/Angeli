@@ -12,7 +12,6 @@
 			</view>
 			<button class="fenx" open-type="share" v-if="tuijianren==0">立即分享</button>
 			<button class="fenx" v-if="tuijianren!=0" @click="getreg">进入安个利</button>
-			
 		</view>
 	</view>
 </template>
@@ -30,13 +29,43 @@
 			}
 		},
 		onLoad:function(e){
+			console.log(e);
+			console.log('推荐人：'+e.tuijianid);
 			this.getMyMsg()
-			if(this.tuijianren){
+			if(e.tuijianid){
 				this.tuijianren=e.tuijianid;
 				server.tgid=this.tuijianren;
-				
 			}
-			
+			uni.login({
+			    provider: 'weixin',
+			    success: (res) => {
+					console.log(res);
+					uni.request({
+						method:'POST',
+						url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
+						data: {
+							code: res.code,
+							tuijianId:this.tuijianren
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: (res) => {
+							console.log(res);
+							server.usersk=res.data.data.session_key
+							server.cookie=res.header['Set-Cookie'];
+							if(res.data.code!="0"){
+								console.log('已经存在有账号了，就不要注册了');
+								this.tuijianren=0
+								console.log(this.tuijianren)
+								server.userinfo=res.data.data;
+							}
+							console.log('输出登录结果')
+							console.log(res)
+						},
+					});
+			    }
+			})
 			
 			
 		},
@@ -44,6 +73,8 @@
 			
 		},
 		methods: {
+			
+			
 			getreg:function(){
 				uni.navigateTo({
 					url: '../reg/reg'
@@ -51,6 +82,9 @@
 			},
 			input:function(e){
 				this.val=e.target.value 
+			},
+			login:function(){
+				
 			},
 			getme:function(){
 				uni.navigateTo({
@@ -110,13 +144,14 @@
 			}
 		},
 		onShareAppMessage(res) {
+			console.log('MyId:'+server.userinfo.Auid)
 		   if (res.from === 'button') {// 来自页面内分享按钮
 		      console.log(res.target)
 		    }
-			
 		    return {
 		      title: '给你安利一个好东西',
-		      path: '/pages/menu/huodong?tuijianid='+server.userinfo.Auid
+		      path: '/pages/menu/huodong?tuijianid='+server.userinfo.Auid,
+			  
 		    }
 		}
 	}

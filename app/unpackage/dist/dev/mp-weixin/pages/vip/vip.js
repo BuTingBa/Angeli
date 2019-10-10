@@ -238,6 +238,11 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       console.log(this.userInfo);
       this.cxjg();
     },
+    getxieyi: function getxieyi() {
+      uni.navigateTo({
+        url: "../edit/edit?type=6" });
+
+    },
     cxjg: function cxjg() {var _this = this;
       uni.request({
         method: 'GET',

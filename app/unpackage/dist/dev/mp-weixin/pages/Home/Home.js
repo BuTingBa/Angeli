@@ -743,6 +743,20 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     Like: function Like(postid, auid, give, index, zc) {var _this5 = this;
+      if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+        uni.showToast({
+          title: "你还没有登录，请登录后再来吧",
+          position: 'bottom',
+          icon: 'none' });
+
+        setTimeout(function () {
+          uni.navigateTo({
+            url: '../reg/reg' });
+
+        }, 1200);
+        return;
+      }
+
       if (auid == _server.default.userinfo.Auid) {
         uni.showToast({
           title: "不能给自己种草",

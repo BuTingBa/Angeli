@@ -229,7 +229,8 @@ class angeli
                         'id'=>$row['id'],
                         'auid'=>$row['auid'],
                         'First_vip'=>$row['First_vip'],
-                        'upname'=>$row['upname']
+                        'upname'=>$row['upname'],
+                        'huodongvip'=>$row['huodongvip']
                     );
                 }
                 return $data;
@@ -312,17 +313,38 @@ class angeli
                 );
                 $data[]=$d;
             }
-            if($count>=3){
-                if($this->setLongVip($auid,strtotime('+1month')))
-                {
-                    $this->addSystemMsg('恭喜你，已经分享给三位好友，你已经获得了30天安个利VIP！膜拜大佬！',$auid);
-                }else{
-                    $this->addSystemMsg('恭喜你，已经分享给三位好友，本来你是可以获取到30天VIP的，但是，系统好像出问题了，你可以直接跟客服联系，解决这个问题',$auid);
-                }
 
+            $cc=$this->getUserConfig($auid);
+
+            if($count>=3){
+                if($cc['huodongvip']!=1){
+                    if($this->setLongVip($auid,strtotime('+1month')))
+                    {
+                        $this->setUserH($auid);
+
+                        $this->addSystemMsg('恭喜你，已经分享给三位好友，你已经获得了30天安个利VIP！膜拜大佬！',$auid);
+                    }else{
+                        $this->addSystemMsg('恭喜你，已经分享给三位好友，本来你是可以获取到30天VIP的，但是，系统好像出问题了，你可以直接跟客服联系，解决这个问题',$auid);
+                    }
+                }
             }
 
             return $data;
+        }
+    }
+
+    public function setUserH($auid){
+        $sql="INSERT INTO angeli_config_user (auid,First_vip,upname,huodongvip) VALUES ($auid,0,0,1)  ON DUPLICATE KEY UPDATE huodongvip=1";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                return TRUE;
+            }
         }
     }
 
@@ -419,9 +441,9 @@ class angeli
      */
     public function addSystemMsg($txt,$ToId='all',$type='1',$val='0')
     {
-        $sql = $this->mysqli->prepare("INSERT INTO angeli_msg (msg,toid,addtime,type,type_value) VALUES (?,?,?,?,?)");
+        $sql = $this->mysqli->prepare("INSERT INTO angeli_system_msg (msg,toid,addtime,type,type_value) VALUES (?,?,?,?,?)");
         $time=time();
-        $sql->bind_param("sisis",$txt,$ToId,$time,$type,$val);
+        $sql->bind_param("sssis",$txt,$ToId,$time,$type,$val);
         $sql->execute();
         if($sql->affected_rows<1)
         {
@@ -2292,7 +2314,7 @@ class angeli
     public function setLongVip($auid,$time)
     {
         $timeCha=$this->qVipTime($auid)-time();
-        if($timeCha<0){
+        if($timeCha<=0){
             $time=abs($timeCha)+$time;
             $sql="UPDATE angeli_user SET Type='VIP', VIPEndTime=$time WHERE AuId=$auid";
         }else{

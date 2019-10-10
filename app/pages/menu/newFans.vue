@@ -17,7 +17,7 @@
 					</view>
 				</view>
 				<view class="plnr">
-					<text>我开始盯你了，给我小心点</text>
+					<text>恭喜获得可爱粉丝一枚</text>
 				</view>
 			</view>
 			<view class="menusolid"></view>

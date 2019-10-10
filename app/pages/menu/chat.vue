@@ -86,7 +86,7 @@
 		},
 		onLoad:function(e){
 			this.auid=server.userinfo.Auid
-			console.log(e.id)
+			console.log(e.id,e.toid)
 			this.msgid=e.id
 			this.toid=e.toid
 			this.getMyMsg()
@@ -110,6 +110,10 @@
 				})
 			},
 			upmsg:function(){
+				uni.showLoading({
+					title: '发送中..',
+					mask:true
+				});
 				uni.request({
 					method:'POST',
 					url: "https://api.angeli.top/user.php?type=upmsg", //仅为示例，并非真实接口地址。

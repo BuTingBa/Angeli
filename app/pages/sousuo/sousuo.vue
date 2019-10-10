@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">搜索</block>
 		</cu-custom>
-		<view class="cu-bar bg-white search fixed"  id="topbox" style="box-shadow:0 0rpx 0rpx rgba(0, 0, 0, 0.1);">
+		<view class="cu-bar bg-white search "  id="topbox" style="box-shadow:0 0rpx 0rpx rgba(0, 0, 0, 0.1);" >
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
 				<input type="text" focus="true" placeholder="搜索帖子/用户" confirm-type="search" @input="input" @confirm="sososo"></input>
@@ -13,7 +13,7 @@
 				搜索
 			</view>
 		</view>
-		<view :style="[{height:gaodu+ 'px'}]"></view>
+		<!-- <view :style="[{height:gaodu+ 'px'}]"></view> -->
 		<block v-if="home==true">
 			<view class="Top">
 				<view class="TopName">话题分类</view>

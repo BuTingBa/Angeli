@@ -5,7 +5,6 @@
 				<block slot="content">安个利</block>
 			</cu-custom>
 			<!-- 搜索框 -->
-			
 			<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]" id="topbox" style="box-shadow:0 0rpx 0rpx rgba(0, 0, 0, 0.1);">
 				<view class="search-form round">
 					<text class="cuIcon-search"></text>
@@ -113,6 +112,7 @@
 				
 			</block>
 			
+			<!-- 发送帖子 -->
 			<view class="plus" style="width: 100upx;height: 100upx;">
 				<button class="cu-btn cuIcon " style="width: 100upx;height: 100upx;background-color: #79C498;box-shadow:0 0 20upx 0 #555555" @tap="pluspost">
 					<text class="cuIcon-add" style="font-size: 70upx;"></text>
@@ -619,6 +619,20 @@
 				
 			},
 			Like:function(postid,auid,give,index,zc){
+				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+					uni.showToast({
+						title: "你还没有登录，请登录后再来吧",
+						position:'bottom',
+						icon:'none'
+					});
+					setTimeout(function () {
+						uni.navigateTo({
+							url: '../reg/reg'
+						})
+					}, 1200);
+					return;
+				}
+				
 				if(auid==server.userinfo.Auid){
 					uni.showToast({
 						title: "不能给自己种草",

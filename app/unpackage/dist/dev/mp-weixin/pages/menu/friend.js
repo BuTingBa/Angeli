@@ -171,7 +171,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 var _default = { data: function data() {return { dataList: [] };}, onLoad: function onLoad() {this.getMypengyou();}, methods: { getbieren: function getbieren(e) {if (e == _server.default.userinfo.Auid) {uni.navigateTo({ url: '../i/i' });} else {uni.navigateTo({ url: '../i/bieren?auid=' + e });}}, getChat: function getChat(id) {var go = parseInt(id) + parseInt(_server.default.userinfo.Auid);
       uni.navigateTo({
-        url: '../menu/chat?id=' + go + '&toid=' + this.auid });
+        url: '../menu/chat?id=' + go + '&toid=' + id });
 
     },
     getMypengyou: function getMypengyou() {var _this = this;

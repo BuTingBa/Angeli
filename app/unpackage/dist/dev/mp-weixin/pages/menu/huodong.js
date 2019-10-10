@@ -141,7 +141,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -160,14 +159,46 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
-var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', value: "", tuijianren: 0 };}, onLoad: function onLoad(e) {this.getMyMsg();if (this.tuijianren) {this.tuijianren = e.tuijianid;_server.default.tgid = this.tuijianren;}
+var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', value: "", tuijianren: 0 };}, onLoad: function onLoad(e) {var _this = this;console.log(e);console.log('推荐人：' + e.tuijianid);this.getMyMsg();if (e.tuijianid) {this.tuijianren = e.tuijianid;_server.default.tgid = this.tuijianren;}
+    uni.login({
+      provider: 'weixin',
+      success: function success(res) {
+        console.log(res);
+        uni.request({
+          method: 'POST',
+          url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
+          data: {
+            code: res.code,
+            tuijianId: _this.tuijianren },
+
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' },
+
+          success: function success(res) {
+            console.log(res);
+            _server.default.usersk = res.data.data.session_key;
+            _server.default.cookie = res.header['Set-Cookie'];
+            if (res.data.code != "0") {
+              console.log('已经存在有账号了，就不要注册了');
+              _this.tuijianren = 0;
+              console.log(_this.tuijianren);
+              _server.default.userinfo = res.data.data;
+            }
+            console.log('输出登录结果');
+            console.log(res);
+          } });
+
+      } });
+
+
 
   },
   onShow: function onShow() {
 
   },
   methods: {
+
+
     getreg: function getreg() {
       uni.navigateTo({
         url: '../reg/reg' });
@@ -175,6 +206,9 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
     },
     input: function input(e) {
       this.val = e.target.value;
+    },
+    login: function login() {
+
     },
     getme: function getme() {
       uni.navigateTo({
@@ -212,7 +246,7 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
     InputBlur: function InputBlur(e) {
       this.InputBottom = 0;
     },
-    getMyMsg: function getMyMsg() {var _this = this;
+    getMyMsg: function getMyMsg() {var _this2 = this;
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=getMyTG",
@@ -226,21 +260,22 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
         success: function success(res) {
           console.log(res);
           if (res.data.code == "1") {
-            _this.MsgList = res.data.data;
+            _this2.MsgList = res.data.data;
           }
-          console.log(_this.MsgList);
+          console.log(_this2.MsgList);
         } });
 
     } },
 
   onShareAppMessage: function onShareAppMessage(res) {
+    console.log('MyId:' + _server.default.userinfo.Auid);
     if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);
     }
-
     return {
       title: '给你安利一个好东西',
       path: '/pages/menu/huodong?tuijianid=' + _server.default.userinfo.Auid };
+
 
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

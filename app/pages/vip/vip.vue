@@ -76,7 +76,7 @@
 				</view>
 			</view>
 			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" @tap="getVip">立即支付</button>
-			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;">购买即视为同意《安个利会员用户协议》</text></view>
+			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;" @click="getxieyi">购买即视为同意《安个利用户协议》</text></view>
 		</view> 
 	</view>
 </template>
@@ -113,6 +113,11 @@
 				}
 				console.log(this.userInfo)
 				this.cxjg();
+			},
+			getxieyi:function(){
+				uni.navigateTo({
+					url:"../edit/edit?type=6"
+				})
 			},
 			cxjg:function(){
 				uni.request({

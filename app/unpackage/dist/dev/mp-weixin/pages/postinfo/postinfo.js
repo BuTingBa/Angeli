@@ -485,6 +485,19 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
       this.yanse = 'rgba(0,0,0,0.4)';
     },
     Like: function Like(postid, auid, give, zc) {var _this5 = this;
+      if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+        uni.showToast({
+          title: "你还没有登录，请登录后再来吧",
+          position: 'bottom',
+          icon: 'none' });
+
+        setTimeout(function () {
+          uni.navigateTo({
+            url: '../reg/reg' });
+
+        }, 1200);
+        return;
+      }
       if (auid == _server.default.userinfo.Auid) {
         uni.showToast({
           title: "不能给自己种草",
@@ -592,6 +605,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
     },
     sendpl: function sendpl(e) {var _this6 = this;
+
       console.log(this.plnr);
       if (this.plnr == "null" || this.plnr == "") {
         uni.showToast({
@@ -611,12 +625,14 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         return;
       }
-
       if (this.huifuid && this.huifu == true) {
         //回复评论模式
         //console.log("回复评论",this.plnr)
         var qian = this.plnr.substring(0, this.plnr.indexOf(':') + 1);
         var nr = this.plnr.replace(qian, "");
+        uni.showLoading({
+          title: '正在提交数据' });
+
         uni.request({
           method: 'POST',
           url: 'https://api.angeli.top/post.php?type=hfpl', //仅为示例，并非真实接口地址。
@@ -647,6 +663,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
                   _this6.pllist = res.data.data;
+                  _this6.plnr == "";
                   console.log(_this6.pllist);
 
                 } });
@@ -659,11 +676,21 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
               duration: 2000,
               mask: true });
 
+
+            setTimeout(function () {
+              uni.hideLoading();
+            }, 2000);
+          },
+          complete: function complete() {
+            uni.hideLoading();
           } });
 
 
       } else {
         //评论模式
+        uni.showLoading({
+          title: '正在提交数据' });
+
         uni.request({
           method: 'POST',
           url: 'https://api.angeli.top/post.php?type=pl', //仅为示例，并非真实接口地址。
@@ -694,6 +721,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
                   console.log("————————————评论详情——————————");
                   _this6.pllist = res.data.data;
                   console.log(_this6.pllist);
+                  _this6.plnr == "";
 
                 } });
 
@@ -705,6 +733,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
               duration: 2000,
               mask: true });
 
+            setTimeout(function () {
+              uni.hideLoading();
+            }, 2000);
+          },
+          complete: function complete() {
+            uni.hideLoading();
           } });
 
       }

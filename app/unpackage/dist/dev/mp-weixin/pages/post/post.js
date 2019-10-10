@@ -284,7 +284,7 @@ function onBackPress(e) {
 
       return;
     }
-    if (this.huati == '选择话题') {
+    if (this.huati == null || this.huati == false || this.huati == 0 || this.huati == '选择话题') {
       uni.showToast({
         title: "你还没有选择话题",
         position: 'bottom',
@@ -292,6 +292,9 @@ function onBackPress(e) {
         mask: true });
 
       return;
+    }
+    if (!this.huati) {
+      this.huati = 1;
     }
     uni.showLoading({
       title: '发送帖子中..',

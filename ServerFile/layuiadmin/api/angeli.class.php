@@ -2457,7 +2457,7 @@ class angeli
     *   获取帖子列表
     *   帖子类型，获取数目,页码，排序规则字段
     */
-    public function getPosts($type="new",$count=20,$page,$tag="4",$auid='0'){
+    public function getPosts($type="new",$count=20,$page=1,$tag="4",$auid='0'){
         $pageNum=($page-1)*$count;
         //return $sql;
         switch ($type){

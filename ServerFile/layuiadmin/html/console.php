@@ -123,19 +123,12 @@
                       </li>
                       <li class="layui-col-xs6">
                         <a href="javascript:;" onclick="layer.tips('不跳转', this, {tips: 3});" class="layadmin-backlog-body">
-                          <h3>待发货</h3>
+                          <h3>新增用户</h3>
                           <p><cite>20</cite></p>
                         </a>
                       </li>
                     </ul>
-                    <ul class="layui-row layui-col-space10">
-                      <li class="layui-col-xs6">
-                        <a href="javascript:;" class="layadmin-backlog-body">
-                          <h3>待审友情链接</h3>
-                          <p><cite style="color: #FF5722;">5</cite></p>
-                        </a>
-                      </li>
-                    </ul>
+                    
                   </div>
                 </div>
               </div>
@@ -160,7 +153,7 @@
               <div class="layui-tab layui-tab-brief layadmin-latestData">
                 <ul class="layui-tab-title">
                   <li class="layui-this">最新帖子</li>
-                  <li>今日热帖</li>
+                  <li>提现申请</li>
                 </ul>
                 <div class="layui-tab-content">
                   <div class="layui-tab-item layui-show">
@@ -209,8 +202,8 @@
                  </td>
                 </tr>
                 <tr>
-                  <td>更新日期</td>
-                  <td>2019年9月26日17:22:18</td>
+                  <td>IP/CPU/RAM</td>
+                  <td>47.107.64.83 &nbsp;/&nbsp; 2 vCPU 2 GiB</td>
                 </tr>
                
               </tbody>
@@ -218,33 +211,42 @@
           </div>
         </div>
         
+		
+		<div class="layui-card">
+		  <div class="layui-card-header">实时监控</div>
+		  <div class="layui-card-body layadmin-takerates">
+		    <div class="layui-progress" lay-showPercent="yes">
+		      <h3>CPU使用率</h3>
+		      <div class="layui-progress-bar" lay-percent="50%" id="CPU"></div>
+		    </div>
+		    <div class="layui-progress" lay-showPercent="yes">
+		      <h3>内存占用率</h3>
+		      <div class="layui-progress-bar" lay-percent="50%" id="RAM"></div>
+		    </div>
+		  </div>
+		</div>
         <div class="layui-card">
           <div class="layui-card-header">服务器</div>
           <div class="layui-card-body layadmin-takerates">
             <div class="layui-progress" lay-showPercent="yes">
               <h3>服务器磁盘</h3>
-              <div class="layui-progress-bar" lay-percent="65%"></div>
+			  <?php  
+					$max=disk_total_space(dirname(__FILE__));
+					$keyong=disk_free_space(dirname(__FILE__));
+					$bi=$keyong/$max;
+					$val=100*sprintf("%.2f", 1-$bi);
+					//$val=82;
+			   ?>
+              <div class="layui-progress-bar <?php echo $val>80?'layui-bg-red':'' ?>" lay-percent="<?php echo $val.'%'; ?>"></div>
             </div>
             <div class="layui-progress" lay-showPercent="yes">
               <h3>数据库大小</h3>
-              <div class="layui-progress-bar" lay-percent="32%"></div>
+              <div class="layui-progress-bar" lay-percent="90%"></div>
             </div>
           </div>
         </div>
         
-        <div class="layui-card">
-          <div class="layui-card-header">实时监控</div>
-          <div class="layui-card-body layadmin-takerates">
-            <div class="layui-progress" lay-showPercent="yes">
-              <h3>CPU使用率</h3>
-              <div class="layui-progress-bar" lay-percent="58%"></div>
-            </div>
-            <div class="layui-progress" lay-showPercent="yes">
-              <h3>内存占用率</h3>
-              <div class="layui-progress-bar layui-bg-red" lay-percent="90%"></div>
-            </div>
-          </div>
-        </div>
+        
         
         
       </div>
@@ -258,7 +260,34 @@
     base: '../layui/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'console']);
+  }).use(['index', 'console','element'],function(){
+	  var $ = layui.jquery;
+	  var element = layui.element;
+	  
+	  
+	  //轮询服务器状态信息
+	  setInterval(function(){
+		$.get("../api/systemInfo.php",function(data,status){
+			console.log(data);
+			data=JSON.parse(data);
+		    $("#CPU").attr("lay-percent",data.CPU+"%");
+			$("#RAM").attr("lay-percent",data.RAM+"%");
+			if(data.CPU>90){
+				$("#CPU").addClass("layui-bg-red");
+			}else{
+				$("#CPU").removeClass("layui-bg-red");
+			}
+			if(data.RAM>90){
+				$("#RAM").addClass("layui-bg-red");
+			}else{
+				$("#RAM").removeClass("layui-bg-red");
+			}
+			element.render('progress');
+		});
+	  }, 1000);
+  });
+  
+  
   </script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 		<view  :style="[{top:CustomBar + 'px'}]">
 			
 			<view class="textedit">
-				<textarea maxlength="1000" :disabled="modalName!=null" @input="textareaAInput" placeholder="在这里输入你想分享的内容"  ></textarea>
+				<textarea maxlength="1000" :disabled="modalName!=null" @input="textareaAInput" placeholder="在这里输入你想分享的内容，如找不到相应话题可以直接发布在其他闲聊。\n 注意：发帖需要消耗两枚安个利币，每天登陆即可获得一枚，请确认后再编辑内容！（其他获取方式请关注安个利官方通知的信息）"  ></textarea>
 			</view>
 			
 			<sunui-upoos :upImgConfig="upImgOos" @onUpImg="upOosData" @onImgDel="delImgInfo" ref="uImage"></sunui-upoos>
@@ -160,7 +160,7 @@
 					})
 					return;
 				}
-				if(this.huati=='选择话题'){
+				if(this.huati==null || this.huati==false||this.huati==0||this.huati=='选择话题'){
 					uni.showToast({
 						title: "你还没有选择话题",
 						position:'bottom',
@@ -168,6 +168,9 @@
 						mask:true
 					})
 					return;
+				}
+				if(!this.huati){
+					this.huati=1
 				}
 				uni.showLoading({
 					title: '发送帖子中..',
@@ -229,6 +232,7 @@
 		width: 100%;
 		height:400upx;
 		background-color: #FFFFFF;
+		padding: 10upx 38upx;
 		
 	}
 	textarea{
