@@ -318,10 +318,9 @@ class angeli
 
             if($count>=3){
                 if($cc['huodongvip']!=1){
-                    if($this->setLongVip($auid,strtotime('+1month')))
+                    if($this->setLongVip($auid,'+1month'))
                     {
                         $this->setUserH($auid);
-
                         $this->addSystemMsg('恭喜你，已经分享给三位好友，你已经获得了30天安个利VIP！膜拜大佬！',$auid);
                     }else{
                         $this->addSystemMsg('恭喜你，已经分享给三位好友，本来你是可以获取到30天VIP的，但是，系统好像出问题了，你可以直接跟客服联系，解决这个问题',$auid);
@@ -2313,12 +2312,16 @@ class angeli
      */
     public function setLongVip($auid,$time)
     {
-        $timeCha=$this->qVipTime($auid)-time();
+        $vipTime=$this->qVipTime($auid);
+        $vip=date('Y-m-d H:i:s',$vipTime);//将VIP时间转换为时间格式
+        $timeCha=$vipTime-time();  //VIP到期时间减去当前时间，获得时间差
+        //如果时间差小于等于0则说明当前用户不是VIP，则需要将vip到期时间转为当前时间戳
         if($timeCha<=0){
-            $time=abs($timeCha)+$time;
+            $time=strtotime($time);
             $sql="UPDATE angeli_user SET Type='VIP', VIPEndTime=$time WHERE AuId=$auid";
         }else{
-            $time=$timeCha+$time;
+            //时间差大于0，则说明这个用户是VIP，在原来的事件上，加上时间就是新的到期时间
+            $time=strtotime($time,$vip);
             $sql="UPDATE angeli_user SET Type='VIP', VIPEndTime=$time WHERE AuId=$auid";
         }
         $result=$this->mysqli->query($sql);
