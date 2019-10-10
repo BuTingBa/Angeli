@@ -114,6 +114,14 @@
 					title: '发送中..',
 					mask:true
 				});
+				if(this.val==''||this.val==null){
+					uni.showToast({
+						title: "请输入发送内容！",
+						position:'bottom',
+						icon:'none'
+					})
+					return;
+				}
 				uni.request({
 					method:'POST',
 					url: "https://api.angeli.top/user.php?type=upmsg", //仅为示例，并非真实接口地址。
@@ -129,10 +137,10 @@
 						console.log(res)
 						if(res.data.code=="1"){
 							this.value="";
+							this.val=''
 							this.getMyMsg()
 							
 						}
-						
 						if(res.data.code=="0" ||res.data.code==null||res.data.code==false ){
 							uni.showToast({
 								title: "发送失败，请稍后再试",
@@ -148,6 +156,7 @@
 				});
 			},
 			markmsg:function(){
+				
 				uni.request({
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=mark&class=msg", //请求标记已读消息

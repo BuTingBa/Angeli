@@ -752,7 +752,7 @@ class angeli
         $pageNum=($page-1)*$count;
 
         //$sql = "select * from angeli_msg WHERE FromId=$auid OR ToId=$auid  group by FromId+ToId ORDER BY MsgSendTime DESC LIMIT $pageNum, $count";
-        $sql="select * from (select * from angeli_msg WHERE FromId=$auid OR ToId=$auid ORDER BY MsgId ASC) as a group by a.FromId+a.ToId ORDER BY a.MsgSendTime desc LIMIT $pageNum, $count";
+        $sql="select * from (select * from angeli_msg WHERE FromId=$auid OR ToId=$auid ORDER BY MsgId desc) as a group by a.FromId+a.ToId ORDER BY a.MsgSendTime desc LIMIT $pageNum, $count";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败

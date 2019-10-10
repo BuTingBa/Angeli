@@ -526,6 +526,7 @@
 						success: (res) => {
 							if(res.data.code=='1'){
 								this.setvar="";
+								this.plnr=''
 								uni.request({
 									method:'GET',
 									url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
@@ -582,6 +583,7 @@
 						},
 						success: (res) => {
 							if(res.data.code=='1'){
+								this.plnr=''
 								this.setvar="";
 								uni.request({
 									method:'GET',

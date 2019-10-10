@@ -650,6 +650,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
           success: function success(res) {
             if (res.data.code == '1') {
               _this6.setvar = "";
+              _this6.plnr = '';
               uni.request({
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
@@ -706,6 +707,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
           success: function success(res) {
             if (res.data.code == '1') {
+              _this6.plnr = '';
               _this6.setvar = "";
               uni.request({
                 method: 'GET',
