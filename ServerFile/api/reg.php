@@ -134,7 +134,6 @@ switch ($_GET['type']) {
         $fankui=$user -> addUser($_POST['username'],"angeli",$_POST['gender'],$_POST['phone'],$_POST['openid'],$_POST['unionid'],$email,"1",$_SERVER['REMOTE_ADDR'],$_POST['avatarUrl']);
         $data=json_decode($fankui,true);
         if($data['code']=='1'){
-
             $userinfo=$user->getUserInfo('phone',$phone);
             if($_POST['tuijianId'] && is_numeric($_POST['tuijianId'])){
                 $user->setTuiGuang($_POST['tuijianId'],$userinfo['Auid']);

@@ -1424,15 +1424,47 @@ class angeli
         }
     }
 
-
+    /**获取单个评论
+     * @return array
+     */
+    public function getComment($plid)
+    {
+        $sql="SELECT * FROM angeli_comments WHERE CommentsId=$plid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $data=array(
+                        'CommentsId' =>$row["CommentsId"],
+                        'PostId' =>$row["PostId"],
+                        'Content' =>$row["CommentsContent"],
+                        'FromUid' =>$row["CommentsFromUid"],
+                        'Time' =>$this->uc_time_ago($row["AddTime"]),
+                        'userinfo'=>$this->getInfo($row["CommentsFromUid"]),
+                    );
+                }
+                return $data;
+            }else{
+                return false;
+            }
+        }
+    }
 
     /**
      * @return 评论列表
      */
-    public function getCommentList($postid,$count=20,$page="1")
+    public function getCommentList($postid,$xu='false',$count=20,$page="1")
     {
         $pageNum=($page-1)*$count;
-        $sql = "SELECT * FROM angeli_comments WHERE PostId='$postid' ORDER BY Zan DESC  LIMIT $pageNum, $count";
+        if($xu=='false'){
+            $sql = "SELECT * FROM angeli_comments WHERE PostId='$postid' ORDER BY AddTime ASC  LIMIT $pageNum, $count";
+        }else{
+            $sql = "SELECT * FROM angeli_comments WHERE PostId='$postid' ORDER BY AddTime desc  LIMIT $pageNum, $count";
+        }
+
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -1450,7 +1482,7 @@ class angeli
                         'Time' =>$this->uc_time_ago($row["AddTime"]),
                         'Give' =>$row["Zan"],
                         'userinfo'=>$this->getInfo($row["CommentsFromUid"]),
-                        'replyList'=>$this->getReplyList($row["CommentsId"])
+                        'replyList'=>$this->get2CommentList($postid,$row["CommentsId"],2)
                     );
                     $data[]=$da;
 
@@ -1462,7 +1494,41 @@ class angeli
         }
     }
 
-
+    /**
+     * @return 二级评论列表
+     */
+    public function get2CommentList($postid,$huifuid,$pluid=0,$count=20,$page="1")
+    {
+        $pageNum=($page-1)*$count;
+        $sql = "SELECT * FROM angeli_reply WHERE PostId=$postid AND CommentId=$huifuid ORDER BY AddTime ASC  LIMIT $pageNum, $count";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+            return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+        }else{
+            if($this->mysqli->affected_rows>0){
+                $data= [];
+                while($row = $result->fetch_assoc()) {
+                    $da = array(
+                        'id' =>$row["ReplyId"],
+                        'CommentId' =>$row["CommentId"],
+                        'PostId' =>$row["PostId"],
+                        'ReplyContent' =>$row["ReplyContent"],
+                        'ReplyUid' =>$this->getInfo($row["ReplyUid"]),
+                        'ReplyTo' =>$this->getInfo($row["ReplyTo"]),
+                        'AddTime'=>$this->uc_time_ago($row["AddTime"]),
+                        'mark'=>$this->getReplyList($row["mark"]),
+                        'type'=>$row["ReplyTo"]==$pluid?0:1
+                    );
+                    $data[]=$da;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
 
     /*
      * 添加评论

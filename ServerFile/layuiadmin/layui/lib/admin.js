@@ -832,5 +832,5 @@ layui.define('view', function(exports){
   $win.on('resize', layui.data.resizeSystem);
   
   //接口输出
-  exports('admin', admin);
+  exports('Admin.php', admin);
 });

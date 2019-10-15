@@ -120,7 +120,36 @@ switch ($_GET['type']) {
         }
         $c=$_GET['count']?$_GET['count']:20;
         $p=$_GET['page']?$_GET['page']:1;
-        if(!$out=$post->getCommentList($_GET['postid'],$c,$p)){
+        if(!$out=$post->getCommentList($_GET['postid'],$_GET['xu'],$c,$p)){
+            $outmsg = array('code' =>'0','msg'=>'获取失败！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'gethflist':
+        if(empty($_GET['postid'])||empty($_GET['CommentsId']))
+        {
+            die("缺少参数！");
+        }
+        $c=$_GET['count']?$_GET['count']:20;
+        $p=$_GET['page']?$_GET['page']:1;
+        $pluid=$_GET['pluid']?$_GET['pluid']:0;
+        if(!$out=$post->get2CommentList($_GET['postid'],$_GET['CommentsId'],$pluid,$c,$p)){
+            $outmsg = array('code' =>'0','msg'=>'获取失败！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'获取成功！','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'getdupl':
+        if(empty($_GET['CommentsId']))
+        {
+            die("缺少参数！");
+        }
+        if(!$out=$post->getComment($_GET['CommentsId'])){
             $outmsg = array('code' =>'0','msg'=>'获取失败！','data'=>$out);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{

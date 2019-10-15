@@ -30,7 +30,8 @@
     "pages/postinfo/dashang",
     "pages/menu/systemMsg",
     "pages/menu/huodong",
-    "pages/menu/guanzhu"
+    "pages/menu/guanzhu",
+    "pages/postinfo/plinfo"
   ],
   "subPackages": [],
   "window": {
@@ -45,5 +46,5 @@
     "cu-custom": "/components/colorui/components/cu-custom",
     "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"
   },
-  "sitemapLocation": "sitemap53.json"
+  "sitemapLocation": "sitemap50.json"
 }

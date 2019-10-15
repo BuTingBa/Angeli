@@ -7903,7 +7903,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 284:
+/***/ 292:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/config.js ***!
   \******************************************************************/
@@ -7929,7 +7929,7 @@ module.exports = config;
 
 /***/ }),
 
-/***/ 285:
+/***/ 293:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/base64.js ***!
   \******************************************************************/
@@ -8082,7 +8082,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 286:
+/***/ 294:
 /*!****************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/hmac.js ***!
   \****************************************************************/
@@ -8090,7 +8090,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var Crypto = __webpack_require__(/*! ./crypto.js */ 287);
+var Crypto = __webpack_require__(/*! ./crypto.js */ 295);
 
 (function () {
 
@@ -8127,7 +8127,7 @@ module.exports = Crypto;
 
 /***/ }),
 
-/***/ 287:
+/***/ 295:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/crypto.js ***!
   \******************************************************************/
@@ -8316,7 +8316,7 @@ module.exports = Crypto;
 
 /***/ }),
 
-/***/ 288:
+/***/ 296:
 /*!****************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/sha1.js ***!
   \****************************************************************/
@@ -8324,7 +8324,7 @@ module.exports = Crypto;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var Crypto = __webpack_require__(/*! ./crypto.js */ 287);
+var Crypto = __webpack_require__(/*! ./crypto.js */ 295);
 
 (function () {
 
@@ -10144,7 +10144,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/Home/Home": { "navigationBarTitleText": "安个利" }, "pages/post/post": {}, "pages/reg/reg": {}, "pages/i/i": {}, "pages/postinfo/postinfo": {}, "pages/editinfo/editinfo": {}, "pages/huati/huati": {}, "pages/sousuo/sousuo": {}, "pages/classPost/classPost": {}, "pages/edit/edit": {}, "pages/set/set": {}, "pages/about/about": {}, "pages/vip/vip": {}, "pages/newUser/newUser": {}, "pages/anquan/anquan": {}, "pages/menu/Message": {}, "pages/menu/friend": {}, "pages/menu/jifen": {}, "pages/menu/shoucang": {}, "pages/menu/mpl": {}, "pages/menu/zan": {}, "pages/menu/newFans": {}, "pages/i/bieren": {}, "pages/menu/wallet": {}, "pages/menu/tixian": {}, "pages/menu/chat": {}, "pages/postinfo/dashang": {}, "pages/menu/systemMsg": {}, "pages/menu/huodong": {}, "pages/menu/guanzhu": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "安个利", "navigationBarBackgroundColor": "#FFF", "backgroundColor": "#FFF", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/Home/Home": { "navigationBarTitleText": "安个利" }, "pages/post/post": {}, "pages/reg/reg": {}, "pages/i/i": {}, "pages/postinfo/postinfo": {}, "pages/editinfo/editinfo": {}, "pages/huati/huati": {}, "pages/sousuo/sousuo": {}, "pages/classPost/classPost": {}, "pages/edit/edit": {}, "pages/set/set": {}, "pages/about/about": {}, "pages/vip/vip": {}, "pages/newUser/newUser": {}, "pages/anquan/anquan": {}, "pages/menu/Message": {}, "pages/menu/friend": {}, "pages/menu/jifen": {}, "pages/menu/shoucang": {}, "pages/menu/mpl": {}, "pages/menu/zan": {}, "pages/menu/newFans": {}, "pages/i/bieren": {}, "pages/menu/wallet": {}, "pages/menu/tixian": {}, "pages/menu/chat": {}, "pages/postinfo/dashang": {}, "pages/menu/systemMsg": {}, "pages/menu/huodong": {}, "pages/menu/guanzhu": {}, "pages/postinfo/plinfo": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "安个利", "navigationBarBackgroundColor": "#FFF", "backgroundColor": "#FFF", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 

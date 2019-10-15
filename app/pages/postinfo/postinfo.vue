@@ -64,7 +64,41 @@
 			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><!-- <text style="font-size: 22upx;">购买即视为同意《安个利会员用户协议》</text> --></view>
 		</view> 
 		<!-- 评论列表 -->
-		<view class="cu-list menu-avatar comment solids-top" >
+		<view class="header">
+			<text class="pltitle">评论</text>
+			<text style="float: right;margin-right: 38upx;line-height: 77upx;font-size: 24upx;color: #999999;" @click="setshunxu">
+				{{shunxu?'倒序':'正序'}}
+			</text>
+		</view>
+		<view class="plList" v-for="(pl,index) in pllist" :key="index" >
+			<view class="pluserinfo">
+				<view class="pltouxiang" :style="{'background-image':'url('+pl.userinfo.AuthorAvatarUrl+')'}" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+				<view class="plinfo">
+					<text >{{pl.userinfo.AuthorName}}\n</text>
+					<text style="font-size: 22upx;">{{pl.Time}}</text>
+				</view>
+			</view>
+			<view class="pltxt" @tap="huifua(pl.CommentsId,pl.userinfo.AuthorName,pl.CommentsId,pl.FromUid)">{{pl.Content}}</view>
+			<view class="plhuifulist" v-if="pl.replyList.length>0">
+				<view class="huifuiteam" v-if="pl.replyList[0].ReplyContent" @tap="huifua(pl.CommentsId,pl.replyList[0].ReplyUid.AuthorName,pl.CommentsId,pl.replyList[0].ReplyUid.Auid)"><text class="yanseee">{{pl.replyList[0].ReplyUid.AuthorName}}:</text>{{pl.replyList[0].ReplyContent}}</view>
+				<view class="huifuiteam" v-if="pl.replyList[1].ReplyContent" @tap="huifua(pl.CommentsId,pl.replyList[1].ReplyUid.AuthorName,pl.CommentsId,pl.replyList[1].ReplyUid.Auid)"><text class="yanseee">{{pl.replyList[1].ReplyUid.AuthorName}}:</text>{{pl.replyList[1].ReplyContent}}</view>
+				<view class="huifuiteam" @click="getpllist(pl.CommentsId)"><text class="yanseee">查看评论详情></text></view>
+			</view>
+			<view class="soli"></view>
+		</view>
+		
+		<view style="margin-top: 50upx;height: 50upx;text-align: center;">没有更多评论了！</view>
+		<view style="height: 100upx;width: 100%; bottom: 0px;"></view>
+		<!-- 撰写评论 -->
+		<view class="cu-bar foot input " :style="[{bottom:InputBottom+'px'}]" style="z-index: 777;">
+			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
+			 @focus="InputFocus" @blur="InputBlur" @input="pinglun" v-model="setvar"></input>
+			<button class="cu-btn bg-green shadow" @tap="sendpl">评论</button>
+		</view>
+			
+		
+		
+		<!-- 之前的评论<view class="cu-list menu-avatar comment solids-top" >
 			<view class="cu-item" v-for="(pl,index) in pllist" :key="index"  style="margin-top: -4upx;">
 				<view class="cu-avatar round" :style="{'background-image':'url('+pl.userinfo.AuthorAvatarUrl+')'}" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
 				<view class="content">
@@ -87,20 +121,9 @@
 					</view>
 				</view>
 			</view>
-		</view>
-		<view style="margin-top: 50upx;height: 50upx;text-align: center;">没有更多评论了！</view>
-		<!-- 撰写评论 -->
-		<view class="cu-bar foot input " :style="[{bottom:InputBottom+'px'}]" style="z-index: 777;">
-			<!-- <view class="action">
-				<text class="cuIcon-sound text-grey"></text>
-			</view> -->
-			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
-			 @focus="InputFocus" @blur="InputBlur" @input="pinglun" v-model="setvar"></input>
-			<!-- <view class="action">
-				<text class="cuIcon-emojifill text-grey"></text>
-			</view> -->
-			<button class="cu-btn bg-green shadow" @tap="sendpl">评论</button>
-		</view>
+		</view> -->
+		
+		
 	</view>
 </template>
 
@@ -123,7 +146,8 @@
 				gaodu:'-710px',
 				yanse:'rgba(0,0,0,0)',
 				pluid:"",
-				monnumber:1
+				monnumber:1,
+				shunxu:false
 			}
 		},
 		onShareAppMessage(res) {
@@ -158,26 +182,7 @@
 					console.log("————————————帖子详情——————————");
 					this.postInfo=res.data.data;
 					console.log(this.postInfo);
-					uni.request({
-						method:'GET',
-						url: 'https://api.angeli.top/post.php?type=getpl', 
-						data: {
-							postid: option.id
-						},
-						header: {
-							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
-						},
-						success: (res) => {
-							console.log("————————————评论详情——————————");
-							this.pllist=res.data.data;
-							console.log(this.pllist);
-							
-						},
-						complete() {
-							uni.hideLoading();
-						}
-					});
+					this.getplLista(option.id)
 				},
 				complete() {
 					
@@ -188,6 +193,44 @@
 		},
 		
 		methods: {
+			getplLista:function(postid){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/post.php?type=getpl', 
+					data: {
+						postid: postid,
+						xu:this.shunxu,
+						count:40,
+						page:1
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log("————————————评论详情——————————");
+						this.pllist=res.data.data;
+						console.log(this.pllist);
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
+			setshunxu(){
+				if(this.shunxu){
+					this.shunxu=false;
+				}else{
+					this.shunxu=true;
+				}
+				console.log(this.shunxu)
+				this.getplLista(this.postid)
+			},
+			getpllist(CommentsId){
+				uni.navigateTo({
+					url: 'plinfo?CommentsId='+CommentsId+"&postId="+this.postid
+				})
+			},
 			getClass:function(id){
 				uni.navigateTo({
 					url: '../classPost/classPost?id='+id
@@ -481,7 +524,6 @@
 				})
 			},
 			sendpl:function(e){
-				
 				console.log(this.plnr);
 				if(this.plnr=="null" ||this.plnr==""){
 					uni.showToast({
@@ -651,18 +693,76 @@
 				});
 			},
 			huifua:function(e,n,plid,uid){
-				this.huifuid=e;
+				this.huifuid=e;//e=评论id
 				this.setvar="@"+n+": ";
 				this.huifu=true;
-				this.pluid=uid;
+				this.pluid=uid;//父级评论id
 				console.log("回复",e,n)
-
 			}
 		}
 	}
 </script>
 
 <style>
+	.yanseee{
+		color: #79C498;
+	}
+	.huifuiteam{
+		margin: 5upx 0;
+		
+	}
+	.plhuifulist{
+		background:rgba(247,248,250,1);
+		margin-top: 8upx;
+		margin-bottom: 16upx;
+		margin-left: 124upx;
+		margin-right: 38upx;
+		padding: 10upx;
+		font-size: 26upx;
+	}
+	.soli{
+		margin-left: 124upx;
+		margin-right: 38upx;
+		height:1px;
+		background:rgba(229,228,234,1);
+	}
+	.pltxt{
+		padding-left: 124upx;
+		padding-right: 38upx;
+		margin-top: 8upx;
+		margin-bottom: 10upx;
+		font-size:26upx;
+	}
+	.plinfo{
+		margin-left: 16upx;
+		font-size:24upx;
+		font-weight:400;
+		color:rgba(153,153,153,1);
+	}
+	.pltouxiang{
+		width: 70upx;
+		height: 70upx;
+		border-radius: 50%;
+		background-size: auto 100%;
+	}
+	.pluserinfo{
+		padding: 0 38upx;
+		height: 70upx;
+		margin: 14upx 0;
+		display: flex;
+	}
+	.pltitle{
+		margin-left: 38upx;
+		font-size:32upx;
+		font-weight:500;
+		line-height:77upx;
+	}
+	.header{
+		background-color: #fff;
+		height: 77upx;
+		border-bottom: 1upx solid rgba(229,228,234,1);
+		border-top:  1upx solid rgba(229,228,234,1);
+	}
 	.dslist{
 		width: 50upx;
 		height: 50upx;
@@ -749,10 +849,9 @@
 		z-index: 1000;
 	}
 	.zan{
-		margin-top: 1upx;
+		border-top:  1upx solid rgba(229,228,234,1);
 		padding: 20px;
 		width: 100%;
-		
 		background-color: #FFFFFF;
 		text-align: center;
 	}
@@ -833,5 +932,8 @@
 		margin-right:5%;
 		margin-left:5%;
 		color: #FFFFFF;
+	}
+	page{
+		background-color: #fff;
 	}
 </style>

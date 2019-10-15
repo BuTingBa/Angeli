@@ -229,6 +229,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -335,14 +358,34 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { postInfo: [], pllist: [], dslist: [], showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1 };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { postInfo: [], pllist: [], dslist: [], showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1, shunxu: false };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);}return { title: this.postInfo.Content, path: '/pages/postinfo/postinfo?id=' + this.postid, desc: this.postInfo.Content, imageUrl: this.postInfo.PictureId[0] };}, onLoad: function onLoad(option) {var _this = this; //option为object类型，会序列化上个页面传递的参数
     console.log(option.id); //打印出上个页面传递的参数。
-    this.postid = option.id;this.getdsList(this.postid);uni.showLoading({ title: '加载中' });uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this.pllist = res.data.data;console.log(_this.pllist);}, complete: function complete() {uni.hideLoading();} });}, complete: function complete() {} });console.log(this.dslist);}, methods: { getClass: function getClass(id) {uni.navigateTo({ url: '../classPost/classPost?id=' + id });}, caidan: function caidan(resa) {var _this2 = this;console.log(resa);this.Dindex = resa;if (resa.AuthorId == _server.default.userinfo.Auid) {this.menuList = ['生成海报', '举报', '删除帖子'];} else {this.menuList = ['生成海报', '举报'];}uni.showActionSheet({ itemList: this.menuList, success: function success(res) {switch (res.tapIndex) {case 0:uni.showToast({ title: "生成海报还在内测中", position: 'bottom', icon: 'none' });break;case 1:uni.showToast({ title: '举报成功',
-                position: 'bottom',
-                icon: 'none' });
-
-              _this2.$jubao(resa.PostsId, _server.default.userinfo.Auid, resa.AuthorId, '没有理由');
+    this.postid = option.id;this.getdsList(this.postid);uni.showLoading({ title: '加载中' });uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=outPostInfo', data: { id: option.id }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子详情——————————");_this.postInfo = res.data.data;console.log(_this.postInfo);_this.getplLista(option.id);}, complete: function complete() {} });console.log(this.dslist);}, methods: { getplLista: function getplLista(postid) {var _this2 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getpl', data: { postid: postid, xu: this.shunxu, count: 40, page: 1 }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————评论详情——————————");_this2.pllist = res.data.data;console.log(_this2.pllist);}, complete: function complete() {uni.hideLoading();} });}, setshunxu: function setshunxu() {if (this.shunxu) {this.shunxu = false;} else {this.shunxu = true;}console.log(this.shunxu);this.getplLista(this.postid);}, getpllist: function getpllist(CommentsId) {uni.navigateTo({ url: 'plinfo?CommentsId=' + CommentsId + "&postId=" + this.postid });}, getClass: function getClass(id) {uni.navigateTo({ url: '../classPost/classPost?id=' + id });}, caidan: function caidan(resa) {var _this3 = this;console.log(resa);this.Dindex = resa;if (resa.AuthorId == _server.default.userinfo.Auid) {this.menuList = ['生成海报', '举报', '删除帖子'];} else {this.menuList = ['生成海报', '举报'];}uni.showActionSheet({ itemList: this.menuList, success: function success(res) {switch (res.tapIndex) {case 0:uni.showToast({ title: "生成海报还在内测中", position: 'bottom', icon: 'none' });break;case 1:uni.showToast({ title: '举报成功', position: 'bottom', icon: 'none' });
+              _this3.$jubao(resa.PostsId, _server.default.userinfo.Auid, resa.AuthorId, '没有理由');
               break;
             case 2:
               uni.showToast({
@@ -350,7 +393,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
                 position: 'bottom',
                 icon: 'none' });
 
-              _this2.$delPost(resa.PostsId);
+              _this3.$delPost(resa.PostsId);
               break;
             default:}
 
@@ -372,7 +415,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
       }
     },
-    getdsList: function getdsList(postid) {var _this3 = this;
+    getdsList: function getdsList(postid) {var _this4 = this;
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/post.php?type=getDashangList&postId=" + postid, //仅为示例，并非真实接口地址。
@@ -385,12 +428,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         success: function success(res) {
           if (res.data.code == "1") {
-            _this3.dslist = res.data.data;
+            _this4.dslist = res.data.data;
             console.log("打赏输出");
-            console.log(_this3.dslist);
-            _this3.$forceUpdate();
+            console.log(_this4.dslist);
+            _this4.$forceUpdate();
           } else {
-            _this3.dslist = 0;
+            _this4.dslist = 0;
           }
         },
         complete: function complete() {
@@ -403,7 +446,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
         url: "dashang?id=" + this.postid });
 
     },
-    getDashang: function getDashang() {var _this4 = this;
+    getDashang: function getDashang() {var _this5 = this;
       if (this.postInfo.AuthorId == _server.default.userinfo.Auid) {
         uni.showToast({
           title: "不能给自己打赏",
@@ -427,16 +470,16 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         success: function success(res) {
           if (res.data.code == "1") {
-            _this4.showVip = false;
-            _this4.gaodu = '-710px';
-            _this4.yanse = 'rgba(0,0,0,0)';
+            _this5.showVip = false;
+            _this5.gaodu = '-710px';
+            _this5.yanse = 'rgba(0,0,0,0)';
             uni.showToast({
               title: "打赏成功！",
               position: 'bottom',
               icon: 'none' });
 
 
-            _this4.$forceUpdate();
+            _this5.$forceUpdate();
           } else {
 
             uni.showToast({
@@ -484,7 +527,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
       this.gaodu = '0px';
       this.yanse = 'rgba(0,0,0,0.4)';
     },
-    Like: function Like(postid, auid, give, zc) {var _this5 = this;
+    Like: function Like(postid, auid, give, zc) {var _this6 = this;
       if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
         uni.showToast({
           title: "你还没有登录，请登录后再来吧",
@@ -526,16 +569,16 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
         success: function success(res) {
           if (res.data.code == "1") {
             if (modea == 'add') {
-              _this5.postInfo.Give = true;
-              _this5.postInfo.ZhongcaoCount = Number(zc) + 1;
+              _this6.postInfo.Give = true;
+              _this6.postInfo.ZhongcaoCount = Number(zc) + 1;
               uni.showToast({
                 title: "种草成功！",
                 position: 'bottom',
                 icon: 'none' });
 
             } else {
-              _this5.postInfo.Give = false;
-              _this5.postInfo.ZhongcaoCount = Number(zc) - 1;
+              _this6.postInfo.Give = false;
+              _this6.postInfo.ZhongcaoCount = Number(zc) - 1;
               uni.showToast({
                 title: "取消种草成功！",
                 position: 'bottom',
@@ -543,7 +586,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
             }
 
-            _this5.$forceUpdate();
+            _this6.$forceUpdate();
           } else {
 
             uni.showToast({
@@ -604,8 +647,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
 
     },
-    sendpl: function sendpl(e) {var _this6 = this;
-
+    sendpl: function sendpl(e) {var _this7 = this;
       console.log(this.plnr);
       if (this.plnr == "null" || this.plnr == "") {
         uni.showToast({
@@ -649,13 +691,13 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
           success: function success(res) {
             if (res.data.code == '1') {
-              _this6.setvar = "";
-              _this6.plnr = '';
+              _this7.setvar = "";
+              _this7.plnr = '';
               uni.request({
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this6.postid },
+                  postid: _this7.postid },
 
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
@@ -663,9 +705,9 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
-                  _this6.pllist = res.data.data;
-                  _this6.plnr == "";
-                  console.log(_this6.pllist);
+                  _this7.pllist = res.data.data;
+                  _this7.plnr == "";
+                  console.log(_this7.pllist);
 
                 } });
 
@@ -707,13 +749,13 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
           success: function success(res) {
             if (res.data.code == '1') {
-              _this6.plnr = '';
-              _this6.setvar = "";
+              _this7.plnr = '';
+              _this7.setvar = "";
               uni.request({
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this6.postid },
+                  postid: _this7.postid },
 
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
@@ -721,9 +763,9 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
-                  _this6.pllist = res.data.data;
-                  console.log(_this6.pllist);
-                  _this6.plnr == "";
+                  _this7.pllist = res.data.data;
+                  console.log(_this7.pllist);
+                  _this7.plnr == "";
 
                 } });
 
@@ -745,7 +787,7 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
       }
     },
-    dianzan: function dianzan(plid, index) {var _this7 = this;
+    dianzan: function dianzan(plid, index) {var _this8 = this;
       console.log("点赞");
       uni.request({
         method: 'GET',
@@ -759,11 +801,11 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         success: function success(res) {
           if (res.data.code == "1") {
-            var give = _this7.pllist[index].Give;
+            var give = _this8.pllist[index].Give;
             console.log(give);
             give++;
             console.log(give);
-            _this7.$set(_this7.pllist[index], "Give", give);
+            _this8.$set(_this8.pllist[index], "Give", give);
           }
           uni.showToast({
             title: res.data.msg,
@@ -775,12 +817,11 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
     },
     huifua: function huifua(e, n, plid, uid) {
-      this.huifuid = e;
+      this.huifuid = e; //e=评论id
       this.setvar = "@" + n + ": ";
       this.huifu = true;
-      this.pluid = uid;
+      this.pluid = uid; //父级评论id
       console.log("回复", e, n);
-
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

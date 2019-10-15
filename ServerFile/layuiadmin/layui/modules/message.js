@@ -8,7 +8,7 @@
  */
 
 
-layui.define(['admin', 'table', 'util'], function(exports){
+layui.define(['Admin.php', 'table', 'util'], function(exports){
   var $ = layui.$
   ,admin = layui.admin
   ,table = layui.table

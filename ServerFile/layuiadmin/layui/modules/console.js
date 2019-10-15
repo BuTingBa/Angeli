@@ -16,7 +16,7 @@ layui.define(function(exports){
   
   
   //区块轮播切换
-  layui.use(['admin', 'carousel'], function(){
+  layui.use(['Admin.php', 'carousel'], function(){
     var $ = layui.$
     ,admin = layui.admin
     ,carousel = layui.carousel
@@ -42,7 +42,7 @@ layui.define(function(exports){
   });
 
   //数据概览
-  layui.use(['admin', 'carousel', 'echarts'], function(){
+  layui.use(['Admin.php', 'carousel', 'echarts'], function(){
     var $ = layui.$
     ,admin = layui.admin
     ,carousel = layui.carousel
