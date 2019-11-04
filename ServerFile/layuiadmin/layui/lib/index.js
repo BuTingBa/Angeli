@@ -11,7 +11,7 @@ layui.extend({
   setter: 'config' //配置模块
   ,admin: 'lib/admin' //核心模块
   ,view: 'lib/view' //视图渲染模块
-}).define(['setter', 'Admin.php'], function(exports){
+}).define(['setter', 'admin'], function(exports){
   var setter = layui.setter
   ,element = layui.element
   ,admin = layui.admin

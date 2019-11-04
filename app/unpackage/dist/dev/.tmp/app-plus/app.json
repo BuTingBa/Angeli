@@ -16,9 +16,22 @@
     "pages/newUser/newUser",
     "pages/anquan/anquan",
     "pages/menu/Message",
-    "pages/menu/friend"
+    "pages/menu/friend",
+    "pages/menu/jifen",
+    "pages/menu/shoucang",
+    "pages/menu/mpl",
+    "pages/menu/zan",
+    "pages/menu/newFans",
+    "pages/i/bieren",
+    "pages/menu/wallet",
+    "pages/menu/tixian",
+    "pages/menu/chat",
+    "pages/postinfo/dashang",
+    "pages/menu/systemMsg",
+    "pages/menu/huodong",
+    "pages/menu/guanzhu",
+    "pages/postinfo/plinfo"
   ],
-  "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "安个利",
@@ -27,12 +40,13 @@
     "navigationStyle": "custom"
   },
   "nvueCompiler": "weex",
+  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
   "appname": "安个利",
-  "compilerVersion": "2.1.1",
+  "compilerVersion": "2.3.7",
   "usingComponents": {
     "cu-custom": "/components/colorui/components/cu-custom",
     "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"

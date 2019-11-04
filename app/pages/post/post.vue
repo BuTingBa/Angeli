@@ -91,12 +91,7 @@
 			
 		},
 		onLoad: function(e) {
-			
-		},
-		onBackPress:function(e){
-			uni.redirectTo({
-				url: '../Home/Home?type=plusPost'
-			})
+
 		},
 		methods: {
 			getClassList:function(){

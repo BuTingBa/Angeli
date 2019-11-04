@@ -69,7 +69,7 @@
 	padding-right: 28rpx;
 	margin-left: 35rpx;
 	margin-right: 35rpx;
-	background-color: #DDDDDD;
+	background-color: #F7F8FA;
 }
 .miaoshu{
 	margin-top: 20rpx;
@@ -85,11 +85,26 @@
 	        align-items:center;
 }
 .anniuguanzhu{
-	background-color: #443259;
+	background-color: #79C498;
 	height: 60rpx;
 	font-size: 25rpx;
 	vertical-align:auto;
 	color: #FFFFFF;
+	width: 130rpx;
+	border-radius: 30rpx;
+	text-align: center;
+	line-height: 60rpx;
+}
+.anniuguanzhuXZ{
+	background-color: #E5E4EA;
+	height: 60rpx;
+	font-size: 25rpx;
+	vertical-align:auto;
+	color: #999999;
+	width: 130rpx;
+	border-radius: 30rpx;
+	text-align: center;
+	line-height: 60rpx;
 }
 .touxiang{
 	/* grid-column-start: 1;

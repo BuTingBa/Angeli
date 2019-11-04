@@ -208,7 +208,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       gaodu: '-710px',
       yanse: 'rgba(0,0,0,0)',
       userInfo: [],
-      monnumber: 10,
+      monnumber: 100,
       money: 0,
       endVipTime: '1,234.32',
       ann: false,
@@ -240,6 +240,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       }
     },
     getjifen: function getjifen() {var _this = this;
+      console.log("获取积分cookie：", _server.default.cookie);
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=cxjf", //仅为示例，并非真实接口地址。
@@ -280,6 +281,15 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
           title: '加载中' });
 
         var wxkey = (0, _md.default)('不停' + String(Date.now()));
+        //如果是APP支付
+
+
+
+
+
+
+        //如果是小程序支付
+
         uni.request({
           method: 'POST',
           url: "https://api.angeli.top/WeChat/pay.php?type=angelibi", //仅为示例，并非真实接口地址。
@@ -367,6 +377,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
                   'center'));
 
                 } });
+
 
 
             } else {

@@ -1,0 +1,42 @@
+.homeimage{
+	max-height: 720px;
+}
+.admin-navtab{
+	text-align: center;
+}
+.admin-tabul{
+	text-align: center;
+	white-space: nowrap;
+}
+.admin-tabul li{
+	display: inline-block;
+	margin: 10px;
+}
+.morenfont{
+	border-bottom-width: 1px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: 700;
+	border: 0;
+	color: rgba(255, 255, 255, 0.7);
+}
+.hang{
+	border-color: #2b3553;
+	border-radius: 0.4285rem;
+	font-size: 0.75rem;
+	padding: 10px 18px 10px 18px;
+	width: 300px;
+	height: calc(2.25rem + 2px);
+	padding: 0.5rem 0.7rem;
+	font-size: 0.875rem;
+	font-weight: 400;
+	line-height: 1.428571;
+	color: rgba(255, 255, 255, 0.8);
+	background-color: transparent;
+	background-clip: padding-box;
+	border: 1px solid #cad1d7;
+	outline-color:#FF4ECA;
+	border-radius: 0.25rem;
+	box-shadow: none;
+	transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}

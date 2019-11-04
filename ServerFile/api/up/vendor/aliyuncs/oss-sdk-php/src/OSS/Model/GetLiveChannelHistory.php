@@ -3,7 +3,7 @@
 namespace OSS\Model;
 /**
  * Class GetLiveChannelHistory
- * @package OSS\Model
+ * @package OSS\model
  */
 class GetLiveChannelHistory implements XmlConfig
 {

@@ -5,7 +5,7 @@ namespace OSS\Model;
 /**
  * Class RefererConfig
  *
- * @package OSS\Model
+ * @package OSS\model
  * @link http://help.aliyun.com/document_detail/oss/api-reference/bucket/PutBucketReferer.html
  */
 class RefererConfig implements XmlConfig

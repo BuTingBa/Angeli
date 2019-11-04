@@ -84,7 +84,7 @@
 				gaodu:'-710px',
 				yanse:'rgba(0,0,0,0)',
 				userInfo:[],
-				monnumber:10,
+				monnumber:100,
 				money:0,
 				endVipTime:'1,234.32',
 				ann:false,
@@ -116,6 +116,7 @@
 				}
 			},
 			getjifen:function(){
+				console.log("获取积分cookie：",server.cookie)
 				uni.request({
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=cxjf", //仅为示例，并非真实接口地址。
@@ -156,6 +157,15 @@
 						title: '加载中'
 					});
 					let wxkey=md5('不停'+String(Date.now()));
+					//如果是APP支付
+					// #ifdef APP-PLUS
+					
+					
+					// #endif
+					
+					
+					//如果是小程序支付
+					// #ifdef MP-WEIXIN
 					uni.request({
 						method:'POST',
 						url: "https://api.angeli.top/WeChat/pay.php?type=angelibi", //仅为示例，并非真实接口地址。
@@ -245,6 +255,7 @@
 									}
 								});
 								
+								
 							}else{
 					
 							}
@@ -254,7 +265,7 @@
 							uni.hideLoading();
 						}
 					});
-					
+					// #endif
 				}else{
 					uni.showToast({
 						title: "必须选择充值数量",

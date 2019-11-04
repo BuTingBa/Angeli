@@ -7,7 +7,7 @@ use OSS\Core\OssException;
 
 /**
  * Class CnameConfig
- * @package OSS\Model
+ * @package OSS\model
  *
  * TODO: fix link
  * @link http://help.aliyun.com/document_detail/oss/api-reference/cors/PutBucketcors.html

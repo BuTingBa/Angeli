@@ -12,7 +12,7 @@ layui.define(function(exports){
   var admin = layui.admin;
   
   //区块轮播切换
-  layui.use(['Admin.php', 'carousel'], function(){
+  layui.use(['admin', 'carousel'], function(){
     var $ = layui.$
     ,admin = layui.admin
     ,carousel = layui.carousel

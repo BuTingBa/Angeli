@@ -134,21 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="layui-col-md12">
-            <!-- <div class="layui-card">
-              <div class="layui-card-header">数据概览</div>
-              <div class="layui-card-body">
-                
-                <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
-                  <div carousel-item id="LAY-index-dataview">
-                    <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-                
-              </div>
-            </div> -->
+          <!-- <div class="layui-col-md12">
             <div class="layui-card">
               <div class="layui-tab layui-tab-brief layadmin-latestData">
                 <ul class="layui-tab-title">
@@ -165,7 +151,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       
@@ -261,10 +247,8 @@
   }).extend({
     index: 'lib/index' //主入口模块
   }).use(['index', 'console','element'],function(){
-	  var $ = layui.jquery;
 	  var element = layui.element;
-	  
-	  
+	  var $ = layui.jquery;
 	  //轮询服务器状态信息
 	  setInterval(function(){
 		$.get("../api/systemInfo.php",function(data,status){

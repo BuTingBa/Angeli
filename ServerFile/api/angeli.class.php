@@ -490,6 +490,7 @@ class angeli
     {
         $pageNum=($page-1)*$count;
         $sql = "select a.* from angeli_guanzhu as a left join angeli_guanzhu as b ON a.beiguanzhu=$auid AND a.guanzhu=b.beiguanzhu where (b.beiguanzhu=$auid OR b.guanzhu=$auid) AND (b.beiguanzhu=$auid OR b.guanzhu=$auid) ORDER BY opentime DESC LIMIT $pageNum, $count";
+        //die($sql);
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -1018,7 +1019,7 @@ class angeli
      */
     public function getMyNoreadNumber($auid)
     {
-        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid' AND mark=0";
+        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid' AND AuthorId<>$auid AND mark=0";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             $pinglun=0;
@@ -1032,7 +1033,7 @@ class angeli
                 $pinglun=0;
             }
         }
-        $sql = "SELECT * FROM angeli_reply WHERE ReplyTo='$auid' AND mark=0";
+        $sql = "SELECT * FROM angeli_reply WHERE ReplyTo='$auid' AND ReplyUid<>$auid AND mark=0";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             $pinglun=0;
@@ -1137,9 +1138,17 @@ class angeli
             $result=$this->mysqli->query($sql) or die($this->mysqli->error);
             $time=time();
             if($result -> num_rows>0){
-                return 2;
+                $sql="UPDATE angeli_favorite SET `show`=0 WHERE PostsId ='$postId' AND AuId='$auid'";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                if($this->mysqli->affected_rows<1){
+                    //表示操作失败
+                    return 2;
+                }else{
+                    return 1;
+                }
+
             }else{
-                $sql="INSERT INTO angeli_favorite(AuId,PostsId,addTime,AuthorId) VALUES ('$auid','$postId','$time','$AuthorId')";
+                $sql="INSERT INTO angeli_favorite(AuId,PostsId,addTime,AuthorId,`show`) VALUES ('$auid','$postId','$time','$AuthorId',0)";
                 $result=$this->mysqli->query($sql) or die($this->mysqli->error);
                 if($this->mysqli->affected_rows<1){
                     //表示操作失败
@@ -1170,7 +1179,9 @@ class angeli
             if(empty($postId)){
                 return 0;
             }
-            $sql="DELETE FROM angeli_favorite WHERE PostsId ='$postId' AND AuId='$auid'";
+            //$sql="DELETE FROM angeli_favorite WHERE PostsId ='$postId' AND AuId='$auid'";
+            $sql="UPDATE angeli_favorite SET `show`=1 WHERE PostsId ='$postId' AND AuId='$auid'";
+
             $result=$this->mysqli->query($sql) or die($this->mysqli->error);
             if($this->mysqli->affected_rows<1){
                 //表示操作失败
@@ -1202,7 +1213,7 @@ class angeli
     public function getMyFavorite($auid,$page=1,$count=20)
     {
         $pageNum=($page-1)*$count;
-        $sql = "SELECT * FROM angeli_favorite WHERE AuId='$auid' ORDER BY addTime DESC LIMIT $pageNum, $count";
+        $sql = "SELECT * FROM angeli_favorite WHERE AuId='$auid' AND `show`=0 ORDER BY addTime DESC LIMIT $pageNum, $count";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -1316,7 +1327,7 @@ class angeli
     {
 
         $pageNum=($page-1)*$count;
-        $sql = "SELECT * FROM angeli_posts WHERE AuthorId='$uid' ORDER BY PsotDate DESC  LIMIT $pageNum, $count";
+        $sql = "SELECT * FROM angeli_posts WHERE AuthorId='$uid' AND  IsLock<>'2' ORDER BY PsotDate DESC  LIMIT $pageNum, $count";
 
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
@@ -1548,6 +1559,10 @@ class angeli
             return TRUE;
         }
     }
+
+
+
+
 
 
     /*
@@ -2087,6 +2102,9 @@ class angeli
             case 'openid':
                 $sql="SELECT * from angeli_user WHERE wxopenid='$keyword'";
                 break;
+            case 'unionid':
+                $sql="SELECT * from angeli_user WHERE WxUid='$keyword'";
+                break;
             default:
                 $outmsg = array('code' =>'0','msg'=>'非法请求','data'=>'');
                 return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
@@ -2170,7 +2188,7 @@ class angeli
     public function getWeekTop($auid){
         $beginThisweek=mktime(0,0,0,date('m'),date('d')-date('w')+1,date('Y'));
         $endThisweek=mktime(23,59,59,date('m'),date('d')-date('w')+7,date('Y'));
-        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
+        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek AND `show`=0 GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
         //echo $sql;
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
@@ -2181,13 +2199,11 @@ class angeli
 
             if($this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()) {
-
                     $index=$index+1;
                     if($row['AuthorId']==$auid){
                        $ddd=$index;
                        $dd=$row['lll'];
                     }
-
                     $d = array(
                         'index' =>$row["lll"],
                         'AuId' =>$this->getInfo($row['AuthorId']),
@@ -2195,8 +2211,8 @@ class angeli
                     );
                     $data['data'][]=$d;
                 }
-                $data['index']=$ddd;
-                $data['count']=$dd;
+                $data['index']=isset($ddd)?$ddd:'0';
+                $data['count']=isset($dd)?$dd:'0';
                 return $data;
             }else{
                 return FALSE;
@@ -2683,6 +2699,35 @@ class angeli
         list($t1, $t2) = explode(' ', microtime());
         return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
     }
+
+    /* 查询今天评论赠送安个利个数
+     * return 不能在赠送就返回真，否则返回假
+     */
+    public function checkplangeli($auid)
+    {
+        $starTime=strtotime(date("Y-m-d"));
+        $endTime=$starTime+24*60*60;
+        $sql = "SELECT count(*) as nunumber FROM angeli_jifen WHERE auid ='$auid' AND opentime>'$starTime' AND opentime<'$endTime' AND note='评论奖励积分'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $count=$row['nunumber'];
+                }
+                if($count>=5){
+                    return TRUE;
+                }else{
+                    return FALSE;
+                }
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
     /* 查询今天是否签到
      * return 已经签到返回真，否则false
      */
@@ -2760,7 +2805,7 @@ class angeli
     *
     */
     public function checkGive($auid,$postId){
-        $sql = "SELECT * FROM angeli_favorite WHERE PostsId ='$postId' AND AuId='$auid'";
+        $sql = "SELECT * FROM angeli_favorite WHERE PostsId ='$postId' AND AuId='$auid' AND `show`=0";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败

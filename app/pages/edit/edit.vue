@@ -6,7 +6,7 @@
 		</cu-custom>
 		<view class="body">
 			<view v-if="type=='1'" class="upname">
-				<text style="color: #888888;"> 更改昵称，普通用户一年只能修改两次，你还要修改{{upNameNumber}}次</text>
+				<text style="color: #888888;"> 更改昵称，普通用户一年只能修改两次，你还能修改{{upNameNumber}}次</text>
 				<input type="text" value="" maxlength="7" focus="true" @input="inputing" class="in" />
 				<view class="dibu">
 					<button class="Angeli" v-if="upNameNumber>0" @click="setName">确定修改</button>
@@ -75,6 +75,9 @@
 				console.log(e.detail)
 			},
 			setName:function(){
+				uni.showLoading({
+					title: '正在提交数据'
+				});
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/user.php?type=setName', //仅为示例，并非真实接口地址。
@@ -87,17 +90,28 @@
 						'Cookie':server.cookie
 					},
 					success: (res) => {
-						
 						uni.showToast({
 							title: res.data.msg,
 							position:'bottom',
 							icon:'none'
 						})
+						if(res.data.code=="1"){
+							setTimeout(function () {
+								uni.hideLoading()
+								uni.navigateBack({
+								    delta: 1
+								});
+							}, 1500);
+						}
 						
+					},
+					complete() {
+						uni.hideLoading();
 					}
 				});
 			},
 			getNumber:function(){
+				
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/user.php?type=getNameCount', //仅为示例，并非真实接口地址。
@@ -117,6 +131,9 @@
 				});
 			},
 			setms:function(){
+				uni.showLoading({
+					title: '正在提交数据'
+				});
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/user.php?type=setms', //仅为示例，并非真实接口地址。
@@ -134,6 +151,17 @@
 							position:'bottom',
 							icon:'none'
 						})
+						if(res.data.code=="1"){
+							setTimeout(function () {
+								uni.hideLoading()
+								uni.navigateBack({
+								    delta: 1
+								});
+							}, 1500);
+						}
+					},
+					complete() {
+						uni.hideLoading();
 					}
 				});
 			}

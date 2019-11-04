@@ -87,6 +87,12 @@
 	color: #FFFFFF;
 	padding-top: 81rpx;
 }
+.vipCardNameXZ{
+	font-size: 32rpx;
+	font-weight: 400;
+	color: #F8C259;
+	padding-top: 81rpx;
+}
 .vipCard{
 	height: 298rpx;
 	width: 674rpx;

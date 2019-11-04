@@ -21,7 +21,7 @@
 		<view class="fenge">会员特权</view>
 		<view class="tequanList">
 			<image src="../../static/vipname.png" mode="" class="tu"></image>
-			<view><text style="font-size:  28upx;color: #000000;font-weight: 500;">会员昵称\n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员拥有尊贵VIP标识，红色昵称</text></view>
+			<view><text style="font-size:  28upx;color: #000000;font-weight: 500;">会员昵称\n</text><text style="font-size: 24upx;color: #999999;font-weight: 400;">会员拥有尊贵VIP标识，橙色昵称</text></view>
 		</view>
 		<view class="menusolid"></view>
 		
@@ -60,15 +60,15 @@
 			<view class="vipBox">
 				<view :class="xzId==1?'vipItemXZ':'vipItem'" @click="xuanze(1)">
 					<view class="vipTitle">一个月</view>
-					<text class="paynumber">￥{{onemonn}}</text>
+					<text class="paynumber">￥20</text>
 				</view>
 				<view :class="xzId==2?'vipItemXZ':'vipItem'" @click="xuanze(2)">
 					<view class="vipTitle">三个月</view>
-					<text class="paynumber">￥48</text>
+					<text class="paynumber">￥54</text>
 				</view>
 				<view :class="xzId==3?'vipItemXZ':'vipItem'" @click="xuanze(3)">
 					<view class="vipTitle">一整年</view>
-					<text class="paynumber">￥192</text>
+					<text class="paynumber">￥216</text>
 				</view>
 				<view :class="xzId==4?'vipItemXZ':'vipItem'" @click="xuanze(4)">
 					<view class="vipTitle">自定义</view>

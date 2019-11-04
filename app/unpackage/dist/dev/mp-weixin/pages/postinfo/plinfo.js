@@ -209,8 +209,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0, setvar: '', pluid: 0, InputBottom: 0, postid: 0 };}, onLoad: function onLoad(e) {console.log(e);this.huifuid = e.CommentsId;this.postid = e.postId;this.getpl(e.CommentsId, e.postId);}, methods: { getbieren: function getbieren(e) {if (e == _server.default.userinfo.Auid) {uni.navigateTo({ url: '../i/i' });} else {uni.navigateTo({ url: '../i/bieren?auid=' + e });}}, sendpl: function sendpl(e) {var _this = this;console.log(this.plnr);if (this.plnr == "null" || this.plnr == "") {uni.showToast({ title: "请输入评论内容！", position: 'bottom', icon: 'none', mask: true });return;}if (this.plnr.length > 300 || this.plnr.length < 1) {
-        uni.showToast({
+var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0, setvar: '', pluid: 0, InputBottom: 0, postid: 0 };}, onLoad: function onLoad(e) {console.log(e);this.huifuid = e.CommentsId;this.postid = e.postId;this.getpl(e.CommentsId, e.postId);}, methods: { getbieren: function getbieren(e) {if (e == _server.default.userinfo.Auid) {uni.navigateTo({ url: '../i/i' });} else {uni.navigateTo({ url: '../i/bieren?auid=' + e });}}, sendpl: function sendpl(e) {var _this = this;console.log(this.plnr);if (this.plnr == "null" || this.plnr == "") {uni.showToast({ title: "请输入评论内容！", position: 'bottom', icon: 'none', mask: true });return;}if (this.plnr.length > 300 || this.plnr.length < 1) {uni.showToast({
           title: "内容最少1个字，最多300字",
           position: 'bottom',
           icon: 'none',

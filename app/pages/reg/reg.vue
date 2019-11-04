@@ -93,7 +93,75 @@
 							uni.login({
 								provider: 'weixin',
 								success: function (loginRes) {
-									console.log(JSON.stringify(loginRes));
+									console.log(loginRes)
+									console.log(loginRes.authResult.unionid)
+									
+									uni.request({
+										method:'POST',
+										url: 'https://api.angeli.top/reg.php?type=appwxlogin', 
+										data: {
+											unionid: loginRes.authResult.unionid,
+										},
+										header: {
+											'content-type': 'application/x-www-form-urlencoded'
+										},
+										success: (res) => {
+											
+											console.log(res);
+											if(res.data.code=="0"){
+												server.usersk=res.data.data.session_key
+												uni.showToast({
+													title: "你的微信还没有注册，请注册先",
+													position:'bottom',
+													icon:'none'
+												});
+												return;
+												
+											}else if(res.data.code=="1" ||res.data.code=="2"){
+												server.userinfo=res.data.data;
+												server.cookie=res.header['Set-Cookie'];
+												console.log("记录cookie：",server.cookie)
+												if(res.data.code=="2"){
+													uni.showToast({
+														title: res.data.msg,
+														position:'bottom',
+														icon:'none'
+													})
+												}else{
+													if(server.userinfo.VIPEndTime>0){
+														uni.showToast({
+															title: '欢迎VIP：'+server.userinfo.UserName,
+															position:'bottom',
+															icon:'none'
+														})
+													}else{
+														uni.showToast({
+															title: '欢迎你,'+server.userinfo.UserName,
+															position:'bottom',
+															icon:'none'
+														})
+													}
+												}
+												
+												setTimeout(function () {
+													uni.redirectTo({
+														url: '../Home/Home'
+													})
+												}, 2000);
+											}
+										},
+										complete: () => {
+											this.getPostData('new',0);
+										},
+										fail:(src) =>{
+											uni.showToast({
+												title: "未知原因，登录失败！",
+												position:'bottom',
+												icon:'none'
+											})
+											this.getPostData('new',0);
+										},
+									});
 								}
 							});
 						}
@@ -101,7 +169,16 @@
 				})
 			},
 			getQQOauth:function(){
-				uni.getProvider({
+				uni.showToast({
+					title: '手机QQ暂时停止服务',
+					position:'bottom',
+					icon:'none',
+					position:'center'
+				});
+				
+				
+				
+				/* uni.getProvider({
 					service: 'oauth',
 					success: function (res) {
 						console.log(res.provider)
@@ -114,7 +191,7 @@
 							});
 						}
 					}
-				})
+				}) */
 			},
 			getTokenCode:function(){
 				uni.showLoading({
@@ -148,7 +225,7 @@
 					}, 1000);
 					uni.request({
 						method:'POST',
-						url: 'https://api.angeli.top/reg.php?type=getCode', //仅为示例，并非真实接口地址。
+						url: 'https://api.angeli.top/reg.php?type=getCode',//获取验证码
 						data: {
 							phone:this.user
 						},
@@ -157,10 +234,9 @@
 							'Cookie':server.cookie
 						},
 						success: (res) => {
-							
+							console.log(res);
 							if(res.data.code=="1"){
-								server.cookie=res.header['Set-Cookie'];
-								console.log(res);
+								//server.cookie=res.header['Set-Cookie'];
 								console.log("获取验证码")
 								uni.showToast({
 									title: '验证码发送成功！',
@@ -168,6 +244,8 @@
 									icon:'none',
 									position:'center'
 								});
+								
+								console.log('获取验证码cookie',server.cookie);
 							}else{
 								uni.showToast({
 									title: '验证码发送失败！',
@@ -211,6 +289,7 @@
 					});
 					return;
 				}
+				console.log('提交的cookie：',server.cookie);
 				uni.request({
 					method:'POST',
 					url: 'https://api.angeli.top/reg.php?type=codeLogin', //仅为示例，并非真实接口地址。
@@ -255,11 +334,8 @@
 									});
 								}
 							});
-							
-							
 						}
 						if(res.data.code=="2"){//新用户注册
-							
 							uni.navigateTo({
 								url: '../newUser/newUser?phone='+res.data.data
 							});

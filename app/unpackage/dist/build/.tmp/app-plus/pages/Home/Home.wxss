@@ -31,11 +31,16 @@ page {
 		margin-left: 30rpx;
 		line-height:40rpx;
 }
+.listvip{
+		width: 35rpx;
+		height: 35rpx;
+}
 .lstouxiang{
 		width: 132rpx;
 		height: 132rpx;
 		background-size:100% 100%;
 		border-radius:50%;
+		position: relative;
 }
 .plus{
 		position: fixed;
@@ -61,6 +66,10 @@ page {
 		margin-top: 30upx;
 		margin-bottom: 10upx;
 		height: 332upx; */
+}
+.listnamea{
+		font-size: 40rpx;
+		padding-bottom: 10rpx;
 }
 .daohangBox{
 		width: 100%;
@@ -128,6 +137,7 @@ page {
 		height: 90rpx;
 		width: 90rpx;
 		background-image: url("https://pic.qqtn.com/up/2017-11/15114902797453337.gif");
+		position: relative;
 }
 .Luserinfo{
 		top: 0rpx;
@@ -222,11 +232,17 @@ page {
 		color: #fff;
 }
 .DrawerPage .cu-bar.tabbar .action button.cuIcon {
-		width: 64rpx;
-		height: 64rpx;
-		line-height: 64rpx;
+		width: 45rpx;
+		height: 42rpx;
 		margin: 0;
 		display: inline-block;
+}
+.hongdiana{
+		width: 16rpx;
+		height:16rpx;
+		position: absolute;
+		right: -8rpx;
+		top: -8rpx;
 }
 .DrawerPage .cu-bar.tabbar .action .cu-avatar {
 		margin: 0;

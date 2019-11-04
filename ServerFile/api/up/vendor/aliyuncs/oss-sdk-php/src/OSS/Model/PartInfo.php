@@ -4,7 +4,7 @@ namespace OSS\Model;
 
 /**
  * Class PartInfo
- * @package OSS\Model
+ * @package OSS\model
  */
 class PartInfo
 {

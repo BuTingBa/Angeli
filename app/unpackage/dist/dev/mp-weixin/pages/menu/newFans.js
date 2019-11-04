@@ -195,6 +195,11 @@ var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onL
     tabSelect: function tabSelect(e) {
       this.TabCur = e;
     },
+    getBire: function getBire(e) {
+      uni.navigateTo({
+        url: '../i/bieren?auid=' + e });
+
+    },
     guanzhu: function guanzhu(index, uid) {var _this2 = this;
       uni.request({
         method: 'GET',

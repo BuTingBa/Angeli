@@ -3,6 +3,8 @@ require_once('../config.php');
 require_once('angeli.class.php');
 require_once('sendsms.class.php');
 error_reporting(E_ALL^E_NOTICE);
+
+session_start();
 $allow_origin = array(
     'https://api.angeli.top',
     'http://www.angeli.top',
@@ -19,7 +21,7 @@ if(empty($_GET['type']))
 }
 switch ($_GET['type']) {
     case 'reg':
-        session_start();
+        //session_start();
         if(empty($_GET['username']))
         {
             $outmsg = array('code' =>'0','msg'=>'请传入用户名','data'=>'');
@@ -62,13 +64,12 @@ switch ($_GET['type']) {
         die($user -> getUserList());
         break;
     case 'login':
-        session_start();
         $data=$user -> Login($_POST['phone'],$_POST['password']);
         $userinfo=$user->getUserInfo("auid",$data['Auid']);
         $outmsg = array('code' =>'1','msg'=>'登录成功！','data'=>$userinfo);
         $_SESSION['Auid']=$data['Auid'];
         $_SESSION['UserName']=$data['NickName'];
-        setcookie("Auid",$data['Auid'],time()+3600*24*30,'/');
+        //setcookie("Auid",$data['Auid'],time()+3600*24*30,'/');
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         break;
     case 'set':
@@ -79,7 +80,7 @@ switch ($_GET['type']) {
             $outmsg = array('code' =>'0','msg'=>'请传入用户code','data'=>'');
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
-        session_start();
+        //session_start();
         if(isset($_POST['tuijianId'])&&$_POST['tuijianId']!='0'){
             $_SESSION['tjrId']=$_POST['tuijianId'];
         }
@@ -95,7 +96,7 @@ switch ($_GET['type']) {
             $_SESSION['Auid']=$userinfo['Auid'];
             $_SESSION['UserName']=$userinfo['UserName'];
             $_SESSION['openid']=$userinfo['wxOpenId'];
-            setcookie("Auid",$userinfo['Auid'],time()+3600*24,'/');
+            //setcookie("Auid",$userinfo['Auid'],time()+3600*24,'/');
             if(!$user->checkLogin($userinfo['Auid'])){
                 if($user->vipIs($userinfo['Auid'])){
                     $jifen=$user->setPoints($userinfo['Auid'],"+",2,'登录赠送积分');
@@ -118,7 +119,7 @@ switch ($_GET['type']) {
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         break;
     case 'wxreg':
-        session_start();
+        //session_start();
         if(isset($_POST['tuijianId'])&&$_POST['tuijianId']!='0'){
             $_SESSION['tjrId']=$_POST['tuijianId'];
         }
@@ -147,7 +148,7 @@ switch ($_GET['type']) {
         # code...
         break;
     case 'getCode':
-        session_start();
+       // session_start();
         $phone=$_POST['phone'];
         $code=mt_rand(1000,9999);
         $data=sendSms("reg",$phone,$code);
@@ -155,7 +156,7 @@ switch ($_GET['type']) {
             $_SESSION['code']=$code;
             $_SESSION['phone']=$phone;
             $_SESSION['codeTime']=time();
-            setcookie('sessionID',session_id(),time()+360,"/");
+            //setcookie('sessionID',session_id(),time()+360,"/");
             $outmsg = array('code' =>'1','msg'=>'发送验证码成功！','data'=>$code);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
@@ -164,13 +165,15 @@ switch ($_GET['type']) {
         }
         break;
     case 'codeLogin':
-        session_start();
+
+        //session_id($_COOKIE['sessionID']);
+
         if(empty($_POST['phone'])||empty($_POST['code'])){
             $outmsg = array('code' =>'0','msg'=>'请输入验证码和手机号','data'=>'');
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         if($_SESSION['phone']!==$_POST['phone']){
-            $outmsg = array('code' =>'0','msg'=>'两次手机号码不一致','data'=>'');
+            $outmsg = array('code' =>'0','msg'=>'两次手机号码不一致','data'=>$_SESSION['phone'].'缓存|传递'.$_POST['phone'].'|id:'.session_id());
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         if($_SESSION['code']==$_POST['code']){
@@ -224,6 +227,41 @@ switch ($_GET['type']) {
                 die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
             }
         }
+        break;
+    case 'appwxlogin':
+        if(empty($_POST['unionid'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数unionid','data'=>'');
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $userinfo=$user->getUserInfo("unionid",$_POST['unionid']);
+
+        if($userinfo['Auid']!='-1')
+        {
+            $jifen=false;
+            $_SESSION['Auid']=$userinfo['Auid'];
+            $_SESSION['UserName']=$userinfo['UserName'];
+            $_SESSION['openid']=$userinfo['wxOpenId'];
+            //setcookie("Auid",$userinfo['Auid'],time()+3600*24,'/');
+            if(!$user->checkLogin($userinfo['Auid'])){
+                if($user->vipIs($userinfo['Auid'])){
+                    $jifen=$user->setPoints($userinfo['Auid'],"+",2,'登录赠送积分');
+                    $user->setRank($userinfo['Auid'],2);
+                    $j=2;
+                }else{
+                    $jifen=$user->setPoints($userinfo['Auid'],"+",1,'登录赠送积分');
+                    $user->setRank($userinfo['Auid'],1);
+                    $j=1;
+                }
+            }
+            if($jifen){
+                $outmsg = array('code' =>'2','msg'=>'签到成功，赠送'.$j.'个安个利币','data'=>$userinfo);
+            }else{
+                $outmsg = array('code' =>'1','msg'=>'ok','data'=>$userinfo,'tuijianren'=>$_SESSION['tjrId']);
+            }
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $outmsg = array('code' =>'0','msg'=>'没有查询到该用户','data'=>$userinfo);
+        die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         break;
     case 'test':
             

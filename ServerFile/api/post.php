@@ -76,12 +76,12 @@ switch ($_GET['type']) {
             $outmsg = array('code' =>'0','msg'=>'缺少必要的参数','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
-        if(!$_SESSION['Auid'])
+        $auid=6666;
+        if($_SESSION['Auid'])
         {
-            $outmsg = array('code' =>'0','msg'=>'没有登录？','data'=>"");
-            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            $auid= $_SESSION['Auid'];
         }
-        $postinfo=$post->getPostInfo($_GET['id'],$_SESSION['Auid']);
+        $postinfo=$post->getPostInfo($_GET['id'],$auid);
         if(!$postinfo){
             $outmsg = array('code' =>'0','msg'=>'获取失败吖！','data'=>"0 data");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
@@ -109,8 +109,19 @@ switch ($_GET['type']) {
             $outmsg = array('code' =>'0','msg'=>'评论失败！','data'=>$out);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
-            $outmsg = array('code' =>'1','msg'=>'评论成功！','data'=>'');
-            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            if(!$post->checkplangeli($_POST['auid'])){
+                if($post->vipIs($_POST['auid'])){
+                    $jifen=$post->setPoints($_POST['auid'],"+",2,'评论奖励积分');
+                    $outmsg = array('code' =>'1','msg'=>'评论成功！并奖励2个安个利币','data'=>'');
+                }else{
+                    $jifen=$post->setPoints($_POST['auid'],"+",1,'评论奖励积分');
+                    $outmsg = array('code' =>'1','msg'=>'评论成功！并奖励1个安个利币','data'=>'');
+                }
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $outmsg = array('code' =>'1','msg'=>'评论成功！','data'=>'');
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
         }
         break;
     case 'getpl':
@@ -271,7 +282,9 @@ switch ($_GET['type']) {
             $outmsg = array('code' =>'0','msg'=>'没有登录就想看我的收藏？','data'=>"");
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
-        $auid=$_SESSION['Auid'];
+
+        $auid=empty($_GET['auid'])?$_SESSION['Auid']:$_GET['auid'];
+
         $out=$post->getMyFavorite($auid,empty($_GET['page'])?1:$_GET['page'],empty($_GET['count'])?20:$_GET['count']);
         if(!$out){
             $outmsg = array('code' =>'0','msg'=>'没有任何收藏！','data'=>$out);

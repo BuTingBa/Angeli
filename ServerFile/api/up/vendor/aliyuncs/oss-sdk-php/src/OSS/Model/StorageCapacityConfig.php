@@ -5,7 +5,7 @@ namespace OSS\Model;
 /**
  * Class StorageCapacityConfig
  *
- * @package OSS\Model
+ * @package OSS\model
  * @link http://docs.alibaba-inc.com/pages/viewpage.action?pageId=271614763
  */
 class StorageCapacityConfig implements XmlConfig

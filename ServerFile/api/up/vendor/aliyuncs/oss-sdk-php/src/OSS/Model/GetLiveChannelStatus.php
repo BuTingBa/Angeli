@@ -3,7 +3,7 @@
 namespace OSS\Model;
 /**
  * Class GetLiveChannelStatus
- * @package OSS\Model
+ * @package OSS\model
  */
 class GetLiveChannelStatus implements XmlConfig
 {

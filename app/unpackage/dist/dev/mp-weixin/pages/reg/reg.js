@@ -216,8 +216,76 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           if (~res.provider.indexOf('weixin')) {
             uni.login({
               provider: 'weixin',
-              success: function success(loginRes) {
-                console.log(JSON.stringify(loginRes));
+              success: function success(loginRes) {var _this = this;
+                console.log(loginRes);
+                console.log(loginRes.authResult.unionid);
+
+                uni.request({
+                  method: 'POST',
+                  url: 'https://api.angeli.top/reg.php?type=appwxlogin',
+                  data: {
+                    unionid: loginRes.authResult.unionid },
+
+                  header: {
+                    'content-type': 'application/x-www-form-urlencoded' },
+
+                  success: function success(res) {
+
+                    console.log(res);
+                    if (res.data.code == "0") {
+                      _server.default.usersk = res.data.data.session_key;
+                      uni.showToast({
+                        title: "你的微信还没有注册，请注册先",
+                        position: 'bottom',
+                        icon: 'none' });
+
+                      return;
+
+                    } else if (res.data.code == "1" || res.data.code == "2") {
+                      _server.default.userinfo = res.data.data;
+                      _server.default.cookie = res.header['Set-Cookie'];
+                      console.log("记录cookie：", _server.default.cookie);
+                      if (res.data.code == "2") {
+                        uni.showToast({
+                          title: res.data.msg,
+                          position: 'bottom',
+                          icon: 'none' });
+
+                      } else {
+                        if (_server.default.userinfo.VIPEndTime > 0) {
+                          uni.showToast({
+                            title: '欢迎VIP：' + _server.default.userinfo.UserName,
+                            position: 'bottom',
+                            icon: 'none' });
+
+                        } else {
+                          uni.showToast({
+                            title: '欢迎你,' + _server.default.userinfo.UserName,
+                            position: 'bottom',
+                            icon: 'none' });
+
+                        }
+                      }
+
+                      setTimeout(function () {
+                        uni.redirectTo({
+                          url: '../Home/Home' });
+
+                      }, 2000);
+                    }
+                  },
+                  complete: function complete() {
+                    _this.getPostData('new', 0);
+                  },
+                  fail: function fail(src) {
+                    uni.showToast({
+                      title: "未知原因，登录失败！",
+                      position: 'bottom',
+                      icon: 'none' });
+
+                    _this.getPostData('new', 0);
+                  } });
+
               } });
 
           }
@@ -225,22 +293,31 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     getQQOauth: function getQQOauth() {
-      uni.getProvider({
-        service: 'oauth',
-        success: function success(res) {
-          console.log(res.provider);
-          if (~res.provider.indexOf('qq')) {
-            uni.login({
-              provider: 'qq',
-              success: function success(loginRes) {
-                console.log(JSON.stringify(loginRes));
-              } });
+      uni.showToast(_defineProperty({
+        title: '手机QQ暂时停止服务',
+        position: 'bottom',
+        icon: 'none' }, "position",
+      'center'));
 
-          }
-        } });
 
+
+
+      /* uni.getProvider({
+                  	service: 'oauth',
+                  	success: function (res) {
+                  		console.log(res.provider)
+                  		if (~res.provider.indexOf('qq')) {
+                  			uni.login({
+                  				provider: 'qq',
+                  				success: function (loginRes) {
+                  					console.log(JSON.stringify(loginRes));
+                  				}
+                  			});
+                  		}
+                  	}
+                  }) */
     },
-    getTokenCode: function getTokenCode() {var _this = this;
+    getTokenCode: function getTokenCode() {var _this2 = this;
       uni.showLoading({
         title: '获取中' });
 
@@ -258,21 +335,21 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         this.code = false;
         this.timer = setInterval(function () {
           //当num等于100时清除定时器
-          _this.num--;
-          if (_this.num == 0) {
-            _this.code = true;
-            clearInterval(_this.timer);
-            _this.num = 58;
-            _this.codeTitle = "获取验证码";
+          _this2.num--;
+          if (_this2.num == 0) {
+            _this2.code = true;
+            clearInterval(_this2.timer);
+            _this2.num = 58;
+            _this2.codeTitle = "获取验证码";
 
           } else {
-            _this.codeTitle = _this.num + "s";
-            _this.code = false;
+            _this2.codeTitle = _this2.num + "s";
+            _this2.code = false;
           }
         }, 1000);
         uni.request({
           method: 'POST',
-          url: 'https://api.angeli.top/reg.php?type=getCode', //仅为示例，并非真实接口地址。
+          url: 'https://api.angeli.top/reg.php?type=getCode', //获取验证码
           data: {
             phone: this.user },
 
@@ -281,10 +358,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
             'Cookie': _server.default.cookie },
 
           success: function success(res) {
-
+            console.log(res);
             if (res.data.code == "1") {
-              _server.default.cookie = res.header['Set-Cookie'];
-              console.log(res);
+              //server.cookie=res.header['Set-Cookie'];
               console.log("获取验证码");
               uni.showToast(_defineProperty({
                 title: '验证码发送成功！',
@@ -292,6 +368,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 icon: 'none' }, "position",
               'center'));
 
+
+              console.log('获取验证码cookie', _server.default.cookie);
             } else {
               uni.showToast(_defineProperty({
                 title: '验证码发送失败！',
@@ -299,11 +377,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 icon: 'none' }, "position",
               'center'));
 
-              clearInterval(_this.timer);
-              _this.code = true;
-              clearInterval(_this.timer);
-              _this.num = 58;
-              _this.codeTitle = "获取验证码";
+              clearInterval(_this2.timer);
+              _this2.code = true;
+              clearInterval(_this2.timer);
+              _this2.num = 58;
+              _this2.codeTitle = "获取验证码";
             }
 
           },
@@ -335,6 +413,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         return;
       }
+      console.log('提交的cookie：', _server.default.cookie);
       uni.request({
         method: 'POST',
         url: 'https://api.angeli.top/reg.php?type=codeLogin', //仅为示例，并非真实接口地址。
@@ -379,11 +458,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
               } });
 
-
-
           }
           if (res.data.code == "2") {//新用户注册
-
             uni.navigateTo({
               url: '../newUser/newUser?phone=' + res.data.data });
 
@@ -475,7 +551,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       this.modalName = "";
 
     },
-    phone: function phone(e) {var _this2 = this;
+    phone: function phone(e) {var _this3 = this;
       uni.request({
         method: 'POST',
         url: 'https://api.angeli.top/WeChat/demo.php', //仅为示例，并非真实接口地址。
@@ -489,17 +565,17 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           'Cookie': _server.default.cookie },
 
         success: function success(res) {
-          _this2.phoneifo = res.data.phoneNumber;
+          _this3.phoneifo = res.data.phoneNumber;
           uni.request({
             method: 'POST',
             url: 'https://api.angeli.top/reg.php?type=wxreg', //仅为示例，并非真实接口地址。
             data: {
-              unionid: _this2.userInfo.unionId,
-              username: _this2.userInfo.nickName,
-              avatarUrl: _this2.userInfo.avatarUrl,
-              gender: _this2.userInfo.gender,
-              phone: _this2.phoneifo,
-              openid: _this2.userInfo.openId,
+              unionid: _this3.userInfo.unionId,
+              username: _this3.userInfo.nickName,
+              avatarUrl: _this3.userInfo.avatarUrl,
+              gender: _this3.userInfo.gender,
+              phone: _this3.phoneifo,
+              openid: _this3.userInfo.openId,
               tuijianId: _server.default.tgid },
 
             header: {
@@ -531,7 +607,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         } });
 
     },
-    mpGetUserInfo: function mpGetUserInfo(result) {var _this3 = this;
+    mpGetUserInfo: function mpGetUserInfo(result) {var _this4 = this;
       console.log(result);
       if (result.detail.errMsg !== 'getUserInfo:ok') {
         uni.showModal({
@@ -555,11 +631,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         success: function success(res) {
           if (res.data.openId) {
-            _this3.reg = true;
-            _this3.disabled = false;
-            _this3.userInfo = res.data;
-            console.log('userinfo||', _this3.userInfo);
-            _this3.modalName = 'Image';
+            _this4.reg = true;
+            _this4.disabled = false;
+            _this4.userInfo = res.data;
+            console.log('userinfo||', _this4.userInfo);
+            _this4.modalName = 'Image';
 
           } else {
             uni.showToast({

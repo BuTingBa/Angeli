@@ -60,7 +60,6 @@
 			this.huifuid=e.CommentsId;
 			this.postid=e.postId
 			this.getpl(e.CommentsId,e.postId)
-			
 		},
 		methods: {
 			getbieren:function(e){

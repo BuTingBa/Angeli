@@ -402,6 +402,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       systemConfig: '',
       index: false,
       userInfo: [],
+      postype: 'new',
       menuList: ['分享给朋友', '生成海报', '举报'] };
 
   },
@@ -417,6 +418,10 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         'Cookie': _server.default.cookie },
 
       success: function success(res) {
+
+
+
+
         console.log(res);
         if (res.data.code == "1") {
           _this.msgNumber = res.data.data.count;
@@ -455,6 +460,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
 
+
+
+
+
+
+
     //上面只在APP，下面仅在微信小程序
 
     if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
@@ -474,7 +485,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
             success: function success(res) {
               console.log(res);
-
               if (res.data.code == "0") {
                 _server.default.usersk = res.data.data.session_key;
                 uni.showToast({
@@ -494,6 +504,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 _this2.userInfo = res.data.data;
                 _server.default.userinfo = res.data.data;
                 _server.default.cookie = res.header['Set-Cookie'];
+                console.log("记录cookie：", _server.default.cookie);
                 if (res.data.code == "2") {
                   uni.showToast({
                     title: res.data.msg,
@@ -735,9 +746,13 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       console.log(e);
       if (e == 0) {//最新
         this.getPostData('new', 0);
+        this.postype = 'new';
       } else if (e == 1) {//最热
+        this.postype = 'hot';
         this.getPostData('hot', 0);
+
       } else if (e == 2) {//关注
+        this.postype = 'guanzhu';
         this.getPostData('guanzhu', 0);
       }
 
@@ -802,7 +817,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 icon: 'none' });
 
             }
-
             _this5.$forceUpdate();
           } else {
 
@@ -892,11 +906,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     },
     getPostData: function getPostData(type, classId) {var _this8 = this;
       console.log(type);
+      this.page = 1;
       uni.request({
         method: 'GET',
         url: 'https://api.angeli.top/post.php?type=outPostList', //仅为示例，并非真实接口地址。
         data: {
-          page: 0,
+          page: 1,
           postType: type,
           count: 10,
           classId: classId },
@@ -975,7 +990,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         url: 'https://api.angeli.top/post.php?type=outPostList', //仅为示例，并非真实接口地址。
         data: {
           page: this.page,
-          posttype: "1",
+          postType: this.postype,
           sort: 'PsotDate',
           count: 10 },
 

@@ -4,7 +4,7 @@ namespace OSS\Model;
 
 /**
  * Interface XmlConfig
- * @package OSS\Model
+ * @package OSS\model
  */
 interface XmlConfig
 {

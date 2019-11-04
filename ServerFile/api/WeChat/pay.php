@@ -30,15 +30,28 @@ if(empty($_POST['auid'])){
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 $dd=getOrderId($_GET['type'],$_POST['auid']);
+
 if($_GET['type']=='vip'){
     $body='安个利会员'.$_POST['number'].'个月';
+    if($_POST['number']=='1'){
+        $fee=$_POST['number']*100*20;
+    }else{
+        $fee=$_POST['number']*100*20*0.9;
+    }
+
     $name=1;
+
 }else{
     $body='安个利充值'.$_POST['number'].'个安个利币';
+    $fee=$_POST['number']*100/10;
     $name=2;
+
 }
 
-$fee=$_POST['fee']*100;
+//$fee=$_POST['fee']*100; //上线需要乘以100
+
+
+
 
 $app=new angeli($config);
 $order=$app->createOrder($_POST['auid'],$name,$fee,$_POST['number'],$_POST['openid'],$dd);

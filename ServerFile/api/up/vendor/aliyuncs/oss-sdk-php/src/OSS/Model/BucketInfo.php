@@ -7,7 +7,7 @@ namespace OSS\Model;
  * Bucket信息，ListBuckets接口返回数据
  *
  * Class BucketInfo
- * @package OSS\Model
+ * @package OSS\model
  */
 class BucketInfo
 {

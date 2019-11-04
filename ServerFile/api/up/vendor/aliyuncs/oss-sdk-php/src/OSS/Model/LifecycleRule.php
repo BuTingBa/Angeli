@@ -5,7 +5,7 @@ namespace OSS\Model;
 
 /**
  * Class LifecycleRule
- * @package OSS\Model
+ * @package OSS\model
  *
  * @link http://help.aliyun.com/document_detail/oss/api-reference/bucket/PutBucketLifecycle.html
  */

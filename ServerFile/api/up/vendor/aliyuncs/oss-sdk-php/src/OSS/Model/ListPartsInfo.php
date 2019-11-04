@@ -4,7 +4,7 @@ namespace OSS\Model;
 
 /**
  * Class ListPartsInfo
- * @package OSS\Model
+ * @package OSS\model
  * @link http://help.aliyun.com/document_detail/oss/api-reference/multipart-upload/ListParts.html
  */
 class ListPartsInfo

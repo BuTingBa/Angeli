@@ -26,7 +26,7 @@ $time = $attr['time_end'];//完成支付时间
 $wxTeadeNo=$attr['transaction_id'];//微信订单号
 $status=$attr['result_code'];//支付结果，	SUCCESS/FAIL
 $time=strtotime($time);
-
+testLog( $paysta);
 if($status=="SUCCESS"){
     //支付成功
     $app=new angeli($config);
@@ -41,6 +41,7 @@ if($status=="SUCCESS"){
         exit;
     }
     $paysta=$app->upOrder($wxTeadeNo,$time,$open_id,$out_trade_no);
+    testLog( $paysta);
     if(!$paysta){
         testLog("【商家订单号】".$yOrder['orderId']."更新订单失败！！".$wxTeadeNo);
         exit;
@@ -49,6 +50,7 @@ if($status=="SUCCESS"){
         $yue=$yOrder['number'];
         $endtime=strtotime("+$yue months");
         if($app->setVIP('auid',$yOrder['auid'],$endtime)){
+            $app->setUserConfig($yOrder['auid'],'First_vip','1');
             $app->upSystemStatus($out_trade_no,"OK");
         }else{
             $app->upSystemStatus($out_trade_no,"ERROR");

@@ -27,7 +27,7 @@
   },
   "plus": {
     "useragent": {
-      "value": "uni-app appservice",
+      "value": "uni-app",
       "concatenate": true
     },
     "splashscreen": {
@@ -40,7 +40,8 @@
     "launchwebview": {
       "render": "always",
       "id": "1",
-      "kernel": "WKWebview"
+      "kernel": "WKWebview",
+      "uni-app": "auto"
     },
     "statusbar": {
       "immersed": "supportedDevice",
@@ -122,8 +123,10 @@
         "push": {},
         "share": {},
         "payment": {
+          "appleiap": {},
           "weixin": {
-            "appid": "wxb20ffcea11df81b0"
+            "appid": "wxb20ffcea11df81b0",
+            "UniversalLinks": ""
           }
         },
         "audio": {
@@ -133,12 +136,14 @@
         }
       }
     },
-    "arguments": "{\"name\":\"信息通知\",\"query\":\"\",\"id\":3,\"pathName\":\"pages/menu/Message\"}",
+    "nativePlugins": {},
+    "arguments": "{\"name\":\"首页启动\",\"query\":\"\",\"id\":0,\"pathName\":\"pages/Home/Home\"}",
     "allowsInlineMediaPlayback": true,
     "uni-app": {
-      "compilerVersion": "2.1.1",
+      "compilerVersion": "2.3.7",
       "control": "v8",
-      "nvueCompiler": "weex"
+      "nvueCompiler": "weex",
+      "renderer": "auto"
     }
   }
 }

@@ -182,6 +182,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 var _default = { data: function data() {return { type: 1, title: "安个利", upNameNumber: 0, newName: '' };}, onLoad: function onLoad(val) {console.log(val.type);this.type = val.type;if (val.type == '1') {this.title = "修改名字";this.getNumber();}if (val.type == '2') {this.title = "个性签名";}if (val.type == '3') {this.title = "等级特权";}if (val.type == '4') {this.title = "关于安个利";}if (val.type == '5') {this.title = "安个利隐私政策";}if (val.type == '6') {this.title = "安个利用户协议";}}, methods: { inputing: function inputing(e) {this.newName = e.detail.value;console.log(e.detail);},
     setName: function setName() {
+      uni.showLoading({
+        title: '正在提交数据' });
+
       uni.request({
         method: 'GET',
         url: 'https://api.angeli.top/user.php?type=setName', //仅为示例，并非真实接口地址。
@@ -194,17 +197,28 @@ var _default = { data: function data() {return { type: 1, title: "安个利", up
           'Cookie': _server.default.cookie },
 
         success: function success(res) {
-
           uni.showToast({
             title: res.data.msg,
             position: 'bottom',
             icon: 'none' });
 
+          if (res.data.code == "1") {
+            setTimeout(function () {
+              uni.hideLoading();
+              uni.navigateBack({
+                delta: 1 });
 
+            }, 1500);
+          }
+
+        },
+        complete: function complete() {
+          uni.hideLoading();
         } });
 
     },
     getNumber: function getNumber() {var _this = this;
+
       uni.request({
         method: 'GET',
         url: 'https://api.angeli.top/user.php?type=getNameCount', //仅为示例，并非真实接口地址。
@@ -224,6 +238,9 @@ var _default = { data: function data() {return { type: 1, title: "安个利", up
 
     },
     setms: function setms() {
+      uni.showLoading({
+        title: '正在提交数据' });
+
       uni.request({
         method: 'GET',
         url: 'https://api.angeli.top/user.php?type=setms', //仅为示例，并非真实接口地址。
@@ -241,6 +258,17 @@ var _default = { data: function data() {return { type: 1, title: "安个利", up
             position: 'bottom',
             icon: 'none' });
 
+          if (res.data.code == "1") {
+            setTimeout(function () {
+              uni.hideLoading();
+              uni.navigateBack({
+                delta: 1 });
+
+            }, 1500);
+          }
+        },
+        complete: function complete() {
+          uni.hideLoading();
         } });
 
     } } };exports.default = _default;

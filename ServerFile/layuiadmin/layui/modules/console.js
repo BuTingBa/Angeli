@@ -16,7 +16,7 @@ layui.define(function(exports){
   
   
   //区块轮播切换
-  layui.use(['Admin.php', 'carousel'], function(){
+  layui.use(['admin', 'carousel'], function(){
     var $ = layui.$
     ,admin = layui.admin
     ,carousel = layui.carousel
@@ -42,7 +42,7 @@ layui.define(function(exports){
   });
 
   //数据概览
-  layui.use(['Admin.php', 'carousel', 'echarts'], function(){
+  layui.use(['admin', 'carousel', 'echarts'], function(){
     var $ = layui.$
     ,admin = layui.admin
     ,carousel = layui.carousel
@@ -187,18 +187,17 @@ layui.define(function(exports){
   layui.use('table', function(){
     var $ = layui.$
     ,table = layui.table;
-    
+    console.log('asdasd');
     //今日热搜
     table.render({
       elem: '#LAY-index-topSearch'
-      ,url: '../api/post.php?type=getNewPost' //模拟接口
-      ,page: true,
-	  limit:20
+      ,url: layui.setter.base + 'json/console/top-search.js' //模拟接口
+      ,page: true
       ,cols: [[
         {type: 'numbers', fixed: 'left'}
-        ,{field: 'Content',width:'70%', title: '内容摘要', minWidth: 400, templet: '<div><a href="https://www.baidu.com/s?wd={{ d.Content }}" target="_blank" class="layui-table-link">{{ d.Content }}</div>'}
-        ,{field: 'AuthorName', title: '发布作者', minWidth: 50, sort: true,templet:'<div><a href="https://www.baidu.com/s?wd={{ d.AuthorInfo.AuthorName }}" target="_blank" class="layui-table-link">{{ d.AuthorInfo.AuthorName }}</div>'}
-        ,{field: 'PsotDate', title: '发布时间', sort: true}
+        ,{field: 'keywords', title: '帖子内容', minWidth: 600, templet: '<div><a href="https://www.baidu.com/s?wd={{ d.keywords }}" target="_blank" class="layui-table-link">{{ d.keywords }}</div>'}
+        ,{field: 'frequency', title: '发帖者', minWidth: 100, sort: true}
+        ,{field: 'userNums', title: '发帖时间', sort: true}
       ]]
       ,skin: 'line'
     });
@@ -206,16 +205,16 @@ layui.define(function(exports){
     //今日热贴
     table.render({
       elem: '#LAY-index-topCard'
-      ,url: layui.setter.base + 'json/console/top-card.js' //模拟接口
+      ,url: '../../api/post.php?type=getNewPost' //模拟接口
       ,page: true
       ,cellMinWidth: 120,
 	  height:700
       ,cols: [[
         {type: 'numbers', fixed: 'left'}
-        ,{field: 'title', title: '内容摘要', minWidth: 300, templet: '<div><a href="{{ d.href }}" target="_blank" class="layui-table-link">{{ d.title }}</div>'}
-        ,{field: 'username', title: '发布作者'}
-        ,{field: 'channel', title: '种草数量'}
-        ,{field: 'crt', title: '发布时间', sort: true}
+        ,{field: 'title', title: '标题', minWidth: 300, templet: '<div><a href="{{ d.href }}" target="_blank" class="layui-table-link">{{ d.title }}</div>'}
+        ,{field: 'username', title: '发帖者'}
+        ,{field: 'channel', title: '类别'}
+        ,{field: 'crt', title: '点击率', sort: true}
       ]]
       ,skin: 'line'
     });

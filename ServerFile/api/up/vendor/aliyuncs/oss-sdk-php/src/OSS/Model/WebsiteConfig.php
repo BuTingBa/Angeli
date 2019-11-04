@@ -8,7 +8,7 @@ use OSS\Core\OssException;
 
 /**
  * Class WebsiteConfig
- * @package OSS\Model
+ * @package OSS\model
  * @link http://help.aliyun.com/document_detail/oss/api-reference/bucket/PutBucketWebsite.html
  */
 class WebsiteConfig implements XmlConfig

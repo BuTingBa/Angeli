@@ -3,7 +3,7 @@
 namespace OSS\Model;
 /**
  * Class LiveChannelInfo
- * @package OSS\Model
+ * @package OSS\model
  *
  */
 class LiveChannelInfo implements XmlConfig

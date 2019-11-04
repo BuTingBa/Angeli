@@ -133,7 +133,7 @@ switch ($_GET['type']){
         if(!$_SESSION['Auid'])
         {
             $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
-            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            die(json_encode($outmsg,getMyNoReadJSON_UNESCAPED_UNICODE));
         }
         $auid=$_SESSION['Auid'];
         //$auid=6666;

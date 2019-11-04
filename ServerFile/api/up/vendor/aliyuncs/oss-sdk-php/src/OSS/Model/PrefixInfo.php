@@ -10,7 +10,7 @@ namespace OSS\Model;
  * 一个是拿到的Object列表【可以理解成对应文件系统中的文件列表】
  * 一个是拿到的Prefix列表【可以理解成对应文件系统中的目录列表】
  *
- * @package OSS\Model
+ * @package OSS\model
  * @link http://help.aliyun.com/document_detail/oss/api-reference/bucket/GetBucket.html
  */
 class PrefixInfo

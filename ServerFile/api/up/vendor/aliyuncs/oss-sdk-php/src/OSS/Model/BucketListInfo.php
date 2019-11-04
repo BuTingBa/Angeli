@@ -7,7 +7,7 @@ namespace OSS\Model;
  *
  * ListBuckets接口返回的数据类型
  *
- * @package OSS\Model
+ * @package OSS\model
  */
 class BucketListInfo
 {

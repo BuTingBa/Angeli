@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "安个利",
   "usingComponents": {
+    "cu-custom": "/components/colorui/components/cu-custom",
     "uni-load-more": "/components/uni-load-more"
   }
 }

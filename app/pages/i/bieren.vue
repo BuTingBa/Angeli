@@ -55,7 +55,7 @@
 			</view>
 			<view class="daohang">
 				<view class="hang" :class="TabCur==0?'hangIng':''" @tap="tabSelect(0)">发布记录</view>
-				<view class="hang" :class="TabCur==1?'hangIng':''" @tap="tabSelect(1)">他的种草</view>
+				<view class="hang" :class="TabCur==1?'hangIng':''" @tap="tabSelect(1)">{{name.Gender==2?'她':'他'}}的种草</view>
 			</view>
 			<block v-if="TabCur==0">
 				<template v-if="weikong==false">
@@ -81,12 +81,12 @@
 			<block v-if="TabCur==1">
 				<template v-if="weikong==false">
 					<view class="duoList">
-						<view class="items" v-for="(post,index) in postList" :key="index">
-							<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post.PictureId[0]+')'}"></view>
-							<view class="itemText"><text class="text-A">{{post.Content}}</text></view>
+						<view class="items" v-for="(post,index) in MyzcList" :key="index" @tap="getPost(post[0].PostsId)">
+							<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post[0].PictureId[0]+')'}"></view>
+							<view class="itemText"><text class="text-A">{{post[0].Content}}</text></view>
 							<view class="dibudianzan">
 									<image src="../../static/zcxz.png" class="give" mode="aspectFit"></image>
-									<text class="giveconut">{{post.Give}}</text>
+									<text class="giveconut">{{post[0].ZhongcaoCount}}</text>
 							</view>
 						</view>
 					</view>
@@ -120,6 +120,7 @@
 				page:1,
 				weikong:true,
 				postList:[],
+				MyzcList:[],
 				auid:0,
 				status: 'loading',
 				statusTypes: [{
@@ -172,6 +173,42 @@
 			}
 		},
 		methods: {
+			getMyzc:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
+					data: {
+						page:1,
+						count:20,
+						auid:this.auid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						
+						if(res.data.code!=="1"){
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none',
+								duration:2000,
+								mask:true
+							});
+							this.weikong=true
+						}else{
+							
+							this.MyzcList=res.data.data
+							this.weikong=false
+						}
+						
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
 			getChat:function(id){
 				let go=parseInt(id)+parseInt(server.userinfo.Auid);
 				uni.navigateTo({
@@ -180,6 +217,9 @@
 			},
 			tabSelect(e) {
 				this.TabCur = e
+				if(e==1){
+					this.getMyzc()
+				}
 			},
 			getGuanzhu:function(uid){
 				uni.request({

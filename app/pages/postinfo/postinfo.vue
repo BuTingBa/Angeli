@@ -92,7 +92,7 @@
 		<!-- 撰写评论 -->
 		<view class="cu-bar foot input " :style="[{bottom:InputBottom+'px'}]" style="z-index: 777;">
 			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
-			 @focus="InputFocus" @blur="InputBlur" @input="pinglun" v-model="setvar"></input>
+			 @focus="InputFocus" @blur="InputBlur" @input="pinglun" v-model="setvar" placeholder="评论可获得安个利币"></input>
 			<button class="cu-btn bg-green shadow" @tap="sendpl">评论</button>
 		</view>
 			
@@ -162,37 +162,147 @@
 			}
 		},
 		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-			console.log(option.id); //打印出上个页面传递的参数。
+			console.log('ID:',option.id); //打印出上个页面传递的参数。
 			this.postid=option.id;
 			this.getdsList(this.postid);
-			uni.showLoading({
-				title: '加载中'
-			});
-			uni.request({
-				method:'GET',
-				url: 'https://api.angeli.top/post.php?type=outPostInfo', 
-				data: {
-					id: option.id
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
-				},
-				success: (res) => {
-					console.log("————————————帖子详情——————————");
-					this.postInfo=res.data.data;
-					console.log(this.postInfo);
-					this.getplLista(option.id)
-				},
-				complete() {
-					
-				}
-			});
+			
+			if(option.type=='fenxiang'){
+				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+					uni.showLoading({
+						title: '加载中'
+					});
+					uni.login({
+					    provider: 'weixin',
+					    success: (res) => {
+							console.log(res);
+							uni.request({
+								method:'POST',
+								url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
+								data: {
+									code: res.code,
+									tuijianId:this.tuijianren
+								},
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: (res) => {
+									console.log(res);
+									if(res.data.code=="0"){
+										server.usersk=res.data.data.session_key
+										uni.showToast({
+											title: "欢迎你，游客",
+											position:'bottom',
+											icon:'none'
+										});
+										this.AvatarUrl="https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png";
+									}else if(res.data.code=="1" ||res.data.code=="2"){
+										this.AvatarUrl=res.data.data.AvatarUrl;
+										this.username=res.data.data.UserName;
+										this.zhongcao=res.data.data.ZhongcaoCount;
+										this.guanzhu=res.data.data.FollowedCount;
+										this.fensi=res.data.data.FollowerCount;
+										this.dengji=res.data.data.Rank;
+										this.userid=res.data.data.Auid;
+										this.userInfo=res.data.data;
+										server.userinfo=res.data.data;
+										server.cookie=res.header['Set-Cookie'];
+										console.log("记录cookie：",server.cookie)
+										if(res.data.code=="2"){
+											uni.showToast({
+												title: res.data.msg,
+												position:'bottom',
+												icon:'none'
+											})
+										}else{
+											if(this.userInfo.VIPEndTime>0){
+												uni.showToast({
+													title: '欢迎VIP：'+this.username,
+													position:'bottom',
+													icon:'none'
+												})
+											}else{
+												uni.showToast({
+													title: '欢迎你,'+this.username,
+													position:'bottom',
+													icon:'none'
+												})
+											}
+										}
+										
+									}
+								},
+								complete: () => {
+									this.getpostinfo(option.id);
+									uni.hideLoading();
+								},
+								fail:(src) =>{
+									uni.showToast({
+										title: "未知原因，登录失败！",
+										position:'bottom',
+										icon:'none'
+									})
+								},
+							});
+					    },
+					    fail: (err) => {
+							uni.showToast({
+								title: "登录失败",
+								position:'bottom'
+							}),
+							this.getpostinfo(option.id);
+					        console.error('授权登录失败：' + JSON.stringify(err));
+					    }
+					})
+				}else{
+					if(server.userinfo.VIPEndTime>0){
+						uni.showToast({
+							title: '欢迎VIP：'+server.userinfo.username,
+							position:'bottom',
+							icon:'none'
+						})
+					}else{
+						uni.showToast({
+							title: '欢迎你,'+server.userinfo.username,
+							position:'bottom',
+							icon:'none'
+						})
+						
+					}
+					this.getpostinfo(option.id);
+				}	
+			}else{
+				this.getpostinfo(option.id);
+			}
 			
 			console.log(this.dslist)
 		},
 		
 		methods: {
+			getpostinfo:function(postid){
+				uni.showLoading({
+					title: '加载中'
+				});
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/post.php?type=outPostInfo', 
+					data: {
+						id: postid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'Cookie':server.cookie
+					},
+					success: (res) => {
+						console.log("————————————帖子详情——————————");
+						this.postInfo=res.data.data;
+						console.log(this.postInfo);
+						this.getplLista(postid)
+					},
+					complete() {
+						
+					}
+				});
+			},
 			getplLista:function(postid){
 				uni.request({
 					method:'GET',
@@ -432,7 +542,7 @@
 				}
 				uni.request({
 					method:'GET',
-					url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+					url: "https://api.angeli.top/post.php?type=Like", 
 					data: {
 						fuid: auid,
 						postid:postid,
@@ -497,7 +607,7 @@
 				}
 				return {
 				  title: this.postInfo.Content,
-				  path:'/pages/postinfo/postinfo?id='+this.postid,
+				  path:'/pages/postinfo/postinfo?id='+this.postid+'&type=fenxiang',
 				  desc:this.postInfo.Content,
 				  imageUrl:this.postInfo.PictureId[0]
 				}
@@ -596,12 +706,12 @@
 								mask:true
 							});
 							
+						
+						},
+						complete() {
 							setTimeout(function () {
 								uni.hideLoading()
 							}, 2000);
-						},
-						complete() {
-							uni.hideLoading();
 						}
 					});
 					
@@ -653,12 +763,12 @@
 								duration:2000,
 								mask:true
 							});
+							
+						},
+						complete() {
 							setTimeout(function () {
 								uni.hideLoading()
 							}, 2000);
-						},
-						complete() {
-							uni.hideLoading()
 						}
 					});
 				}

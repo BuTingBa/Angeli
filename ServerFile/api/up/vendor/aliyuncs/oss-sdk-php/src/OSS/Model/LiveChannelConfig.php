@@ -5,7 +5,7 @@ namespace OSS\Model;
 
 /**
  * Class LiveChannelConfig
- * @package OSS\Model
+ * @package OSS\model
  */
 class LiveChannelConfig implements XmlConfig
 {

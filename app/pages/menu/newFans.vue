@@ -7,7 +7,7 @@
 		<view v-for="(list,index) in msgList" :key="index">
 			<view class="listBox">
 				<view class="userBox">
-					<view class="touxiang" :style="{'background-image':'url('+list.guanzhuId.AuthorAvatarUrl+')'}"></view>
+					<view class="touxiang" :style="{'background-image':'url('+list.guanzhuId.AuthorAvatarUrl+')'}" @click="getBire(list.guanzhuId.Auid)"></view>
 					<view class="info">
 						<text>{{list.guanzhuId.AuthorName}}\n</text>
 						<text>{{list.time}}</text>
@@ -70,6 +70,11 @@
 		methods: {
 			tabSelect(e) {
 				this.TabCur = e
+			},
+			getBire:function(e){
+				uni.navigateTo({
+					url: '../i/bieren?auid='+e
+				})
 			},
 			guanzhu:function(index,uid){
 				uni.request({

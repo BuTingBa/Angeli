@@ -278,6 +278,7 @@
 				systemConfig:'',
 				index:false,
 				userInfo:[],
+				postype:'new',
 				menuList:['分享给朋友', '生成海报', '举报']
 			}
 		},
@@ -293,6 +294,10 @@
 					'Cookie':server.cookie
 				},
 				success: (res) => {
+					// #ifdef  APP-PLUS
+						console.log('首次进入cookie：',res.header['Set-Cookie'])
+						server.cookie=res.header['Set-Cookie'];
+					// #endif
 					console.log(res)
 					if(res.data.code=="1"){
 						this.msgNumber=res.data.data.count
@@ -315,6 +320,7 @@
 			
 			// #ifdef  APP-PLUS
 			console.log("APP:",server.userinfo);
+					console.log(server.userinfo)
 					uni.getStorage({
 						key: 'userinfo',
 						success: function (res) {
@@ -325,11 +331,16 @@
 								key: 'cookie',
 								success: function (res) {
 									server.cookie=res.data;
-									console.log("cookie",server.cookie);
+									console.log("cookie：",server.cookie);
+									this.getPostData('new',0);
 								}
 							});
+						},
+						complete() {
+							this.getPostData('new',0);
 						}
 					});
+					this.getPostData('new',0);
 			// #endif
 			//上面只在APP，下面仅在微信小程序
 			// #ifdef MP-WEIXIN
@@ -350,7 +361,6 @@
 							},
 							success: (res) => {
 								console.log(res);
-								
 								if(res.data.code=="0"){
 									server.usersk=res.data.data.session_key
 									uni.showToast({
@@ -370,6 +380,7 @@
 									this.userInfo=res.data.data;
 									server.userinfo=res.data.data;
 									server.cookie=res.header['Set-Cookie'];
+									console.log("记录cookie：",server.cookie)
 									if(res.data.code=="2"){
 										uni.showToast({
 											title: res.data.msg,
@@ -434,7 +445,7 @@
 				}
 				this.getPostData('new',0);
 			}
-			
+		
 			// #endif
 			this.getSysConfig('home_txt');
 			//this.getPostData('new',0);
@@ -611,9 +622,13 @@
 				console.log(e)
 				if(e==0){ //最新
 					this.getPostData('new',0);
+					this.postype='new'
 				}else if(e==1){ //最热
+					this.postype='hot'
 					this.getPostData('hot',0);
+					
 				}else if(e==2){ //关注
+					this.postype='guanzhu'
 					this.getPostData('guanzhu',0);
 				}
 				
@@ -678,7 +693,6 @@
 									icon:'none'
 								});
 							}
-							
 							this.$forceUpdate()
 						}else{
 							
@@ -768,11 +782,12 @@
 			},
 			getPostData(type,classId){
 				console.log(type)
+				this.page=1
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/post.php?type=outPostList', //仅为示例，并非真实接口地址。
 					data: {
-						page: 0,
+						page: 1,
 						postType:type,
 						count:10,
 						classId:classId
@@ -851,7 +866,7 @@
 					url: 'https://api.angeli.top/post.php?type=outPostList', //仅为示例，并非真实接口地址。
 					data: {
 						page: this.page,
-						posttype:"1",
+						postType:this.postype,
 						sort:'PsotDate',
 						count:10
 					},

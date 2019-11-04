@@ -51,7 +51,7 @@
 			
 			<block v-if="TabCur==1">
 				<view class="duoList">
-					<view class="items" v-for="(post,index) in MyzcList" :key="index">
+					<view class="items" v-for="(post,index) in MyzcList" :key="index" @tap="getPost(post[0].PostsId)">
 						<view class="itemImage" style="background-color: #FFFFFF;" :style="{'background-image':'url('+post[0].PictureId[0]+')'}"></view>
 						<view class="itemText"><text class="text-A">{{post[0].Content}}</text></view>
 						<view class="dibudianzan">

@@ -59,8 +59,10 @@
                 "push" : {},
                 "share" : {},
                 "payment" : {
+                    "appleiap" : {},
                     "weixin" : {
-                        "appid" : "wxb20ffcea11df81b0"
+                        "appid" : "wxb20ffcea11df81b0",
+                        "UniversalLinks" : ""
                     }
                 }
             },
@@ -103,7 +105,8 @@
                     "xxhdpi" : "static/g.png"
                 }
             }
-        }
+        },
+        "nativePlugins" : {}
     },
     /* 快应用特有相关 */
     "quickapp" : {},

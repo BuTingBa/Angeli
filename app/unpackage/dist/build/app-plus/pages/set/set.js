@@ -1,2 +1,2 @@
-setCssToHead(["body{ background-color: #F7F8FA; }\n.",[1],"menuClass{ font-size: ",[0,32],"; margin: ",[0,15]," ",[0,37],"; }\n",],undefined,{path:"./pages/set/set.wxss"})();
+setCssToHead(["body{ background-color: #F7F8FA; }\n.",[1],"menuClass{ font-size: ",[0,32],"; margin: ",[0,15]," ",[0,37],"; }\n.",[1],"kefuanniu{ margin: ",[0,0],"; padding: ",[0,0],"; line-height: normal; background-color: transparent; outline: none; font-size: ",[0,28],"; left: ",[0,0],"; text-align: left; }\n.",[1],"kefuanniu::after{ border:none; }\nwx-input{ outline:none; border:none; list-style: none; }\n",],undefined,{path:"./pages/set/set.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/set/set.wxml') } }));
