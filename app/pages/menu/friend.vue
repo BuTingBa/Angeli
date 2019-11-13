@@ -2,11 +2,11 @@
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">我的好友</block>
+			<block slot="content">我的老铁</block>
 		</cu-custom>
 		<view class="body">
 			<view class="topTitle">
-				<text>我的好友</text>
+				<text>我的老铁</text>
 				<text>（互相关注）</text>
 			</view>
 			<view v-for="(list,index) in dataList" :key="index">

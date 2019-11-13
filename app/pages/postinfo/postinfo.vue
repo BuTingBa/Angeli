@@ -36,8 +36,8 @@
 				还没有人赞赏过，快来做第一个赞赏人吧！
 			</view>
 			<view class="dashangList" @click="getList" v-if="dslist.count>0">
-				<view class="jiaozheng">
-					<image v-for="(ds,id) in dslist.data" :key="id" :src="ds.fromAuid.AuthorAvatarUrl" mode="" class="dslist" >{{ds.fromAuid.AuthorAvatarUrl}}</image>
+				<view class="jiaozheng" >
+					<image v-for="(ds,id) in dslist.data" :key="id" :src="ds.fromAuid.AuthorAvatarUrl" mode="" class="dslist" v-if="id<10">{{ds.fromAuid.AuthorAvatarUrl}}</image>
 					
 				</view>
 				
@@ -165,7 +165,16 @@
 			console.log('ID:',option.id); //打印出上个页面传递的参数。
 			this.postid=option.id;
 			this.getdsList(this.postid);
-			
+			uni.getSystemInfo({
+			    success: function (res) {
+					var systemjson={
+						phonebrand:res.brand+res.model,
+						phonesystem:res.system
+					}
+					server.system=JSON.stringify(systemjson);
+					console.log(server.system)
+			    }
+			});
 			if(option.type=='fenxiang'){
 				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
 					uni.showLoading({
@@ -290,7 +299,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						console.log("————————————帖子详情——————————");
@@ -315,7 +325,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						console.log("————————————评论详情——————————");
@@ -452,7 +463,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -550,7 +562,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -673,7 +686,8 @@
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							'Cookie':server.cookie,
+							'system':server.system
 						},
 						success: (res) => {
 							if(res.data.code=='1'){
@@ -687,7 +701,8 @@
 									},
 									header: {
 										'content-type': 'application/x-www-form-urlencoded',
-										'Cookie':server.cookie
+										'Cookie':server.cookie,
+										'system':server.system
 									},
 									success: (res) => {
 										console.log("————————————评论详情——————————");
@@ -731,7 +746,8 @@
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							'Cookie':server.cookie,
+							'system':server.system
 						},
 						success: (res) => {
 							if(res.data.code=='1'){
@@ -882,6 +898,7 @@
 	}
 	.jiaozheng{
 		text-align: center;
+		white-space: nowrap;
 	}
 	
 	

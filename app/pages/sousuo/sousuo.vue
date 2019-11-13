@@ -206,7 +206,8 @@
 					url: 'https://api.angeli.top/user.php?type=getDayHot', //仅为示例，并非真实接口地址。
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						this.hotList=res.data.data.data;
@@ -230,7 +231,8 @@
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							'Cookie':server.cookie,
+							'system':server.system
 						},
 						success: (res) => {
 							this.postList=[]
@@ -267,7 +269,8 @@
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							'Cookie':server.cookie,
+							'system':server.system
 						},
 						success: (res) => {
 							this.userList=[]

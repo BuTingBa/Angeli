@@ -18,7 +18,6 @@ function xmlToArray($xml) {
 }
 
 $attr = xmlToArray($postXml);
-
 $total_fee = $attr['total_fee'];//支付的金额,单位为分
 $open_id = $attr['openid'];//支付的微信openID
 $out_trade_no = $attr['out_trade_no'];//自己定义的订单号
@@ -26,7 +25,8 @@ $time = $attr['time_end'];//完成支付时间
 $wxTeadeNo=$attr['transaction_id'];//微信订单号
 $status=$attr['result_code'];//支付结果，	SUCCESS/FAIL
 $time=strtotime($time);
-testLog( $paysta);
+
+testLog(json_encode($attr,JSON_UNESCAPED_UNICODE));
 if($status=="SUCCESS"){
     //支付成功
     $app=new angeli($config);

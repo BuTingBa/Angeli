@@ -350,6 +350,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 181));};var _default =
 
 
@@ -403,7 +422,10 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       index: false,
       userInfo: [],
       postype: 'new',
-      menuList: ['分享给朋友', '生成海报', '举报'] };
+      menuList: ['分享给朋友', '生成海报', '举报'],
+      openmenu: false,
+      shebei: '',
+      iosapy: 'no' };
 
   },
   onShow: function onShow() {var _this = this;
@@ -423,6 +445,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
         console.log(res);
+        _this.iosapy = res.data.data.pay;
         if (res.data.code == "1") {
           _this.msgNumber = res.data.data.count;
         } else {
@@ -436,6 +459,16 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   onLoad: function onLoad(e) {var _this2 = this;
+    this.shebei = uni.getSystemInfoSync().platform;
+    uni.getSystemInfo({
+      success: function success(res) {
+        var systemjson = {
+          phonebrand: res.brand + res.model,
+          phonesystem: res.system };
+
+        _server.default.system = JSON.stringify(systemjson);
+        console.log(_server.default.system);
+      } });
 
     this.tuijianren = e.tuijianid;
     _server.default.tgid = this.tuijianren;
@@ -481,7 +514,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
               tuijianId: _this2.tuijianren },
 
             header: {
-              'content-type': 'application/x-www-form-urlencoded' },
+              'content-type': 'application/x-www-form-urlencoded',
+              'system': _server.default.system },
 
             success: function success(res) {
               console.log(res);
@@ -574,6 +608,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     this.getSysConfig('home_txt');
     //this.getPostData('new',0);
 
+    this.shebei = uni.getSystemInfoSync().platform;
+    console.log(this.shebei);
   },
   onReady: function onReady() {
     this.getHei();
@@ -581,6 +617,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
   },
   methods: {
+    plusbutton: function plusbutton() {
+      this.openmenu = this.openmenu ? false : true;
+    },
     guanzhua: function guanzhua() {
       uni.navigateTo({
         url: '../menu/guanzhu' });
@@ -796,7 +835,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           if (res.data.code == "1") {

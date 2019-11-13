@@ -7,6 +7,7 @@ Vue.component('cu-custom',cuCustom)
 Vue.component('sunui-upoos',sunUiOos)
 Vue.config.productionTip = false
 
+//获取用户信息
 Vue.prototype.$getUserinfo=function(){
 	uni.request({
 		method:'GET',
@@ -16,7 +17,8 @@ Vue.prototype.$getUserinfo=function(){
 		},
 		header: {
 			'content-type': 'application/x-www-form-urlencoded',
-			'Cookie':cook.cookie
+			'Cookie':cook.cookie,
+			'system':cook.system
 		},
 		header: {
 			'content-type': 'application/x-www-form-urlencoded',
@@ -27,6 +29,10 @@ Vue.prototype.$getUserinfo=function(){
 		}
 	});
 }
+
+
+
+//举报信息
 Vue.prototype.$jubao=function (postId,auid,beijubao,liyou){
 	uni.request({
 		method:'GET',
@@ -39,6 +45,7 @@ Vue.prototype.$jubao=function (postId,auid,beijubao,liyou){
 		},
 		header: {
 			'content-type': 'application/x-www-form-urlencoded',
+			'system':cook.system
 		},
 		success: (res) => {
 			return res.data.msg;

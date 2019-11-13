@@ -241,9 +241,11 @@ var _default = { data: function data() {return { sex: '男', user: [] };}, onSho
               'Cookie': _server.default.cookie },
 
             success: function success(uploadFileRes) {
-              console.log(uploadFileRes.data);
-              if (uploadFileRes.data.code == 1) {
-                _this2.user.AvatarUrl = uploadFileRes.data;
+              console.log(uploadFileRes);
+              var json = JSON.parse(uploadFileRes.data);
+              if (json.code == 1) {
+                _this2.user.AvatarUrl = json.data;
+                _server.default.userinfo.AvatarUrl = json.data;
                 uni.showToast({
                   title: "修改成功！",
                   position: 'bottom',
@@ -251,7 +253,7 @@ var _default = { data: function data() {return { sex: '男', user: [] };}, onSho
 
               } else {
                 uni.showToast({
-                  title: uploadFileRes.data.msg,
+                  title: json.msg,
                   position: 'bottom',
                   icon: 'none' });
 

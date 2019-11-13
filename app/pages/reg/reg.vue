@@ -44,9 +44,7 @@
 					</view>
 					<view class="anniu">
 						<button class="Angeli" @tap="login">立即登录</button>
-						<view class="reg">
-							<!-- <text @tap="appreg">还没有账号？立即注册</text> -->
-						</view>
+						
 					</view>
 					<view class="lineBox">
 						<view class="line"></view>
@@ -57,7 +55,11 @@
 						<image class="loginImage" src="../../static/wechat.png" mode="aspectFit" @click="getWechatOauth"></image>
 						<image class="loginImage" src="../../static/qq.png" mode="aspectFit" @click="getQQOauth"></image>
 					</view>
+					</view>
+					
 				</view>
+				<view class="rega">
+					登录即视为同意<text @click="getpage(2)" style="color: #1CBBB4;">\n《安个利用户协议》</text>和<text @click="getpage(3)" style="color: #1CBBB4;">《安个利用户隐私协议》</text>
 			<!--  #endif -->
 		</view>
 	</view>
@@ -83,7 +85,37 @@
 				
 			}
 		},
+		onLoad() {
+			uni.getSystemInfo({
+			    success: function (res) {
+					var systemjson={
+						phonebrand:res.brand+res.model,
+						phonesystem:res.system
+					}
+					server.system=JSON.stringify(systemjson);
+					console.log(server.system)
+			    }
+			});
+		},
 		methods: {
+			getpage:function(id){
+				if(id==1){
+					uni.navigateTo({
+						url:"../edit/edit?type=4"
+					})
+				}
+				if(id==2){
+					uni.navigateTo({
+						url:"../edit/edit?type=6"
+					})
+				}
+				if(id==3){
+					uni.navigateTo({
+						url:"../edit/edit?type=5"
+					})
+				}
+				
+			},
 			getWechatOauth:function(){
 				uni.getProvider({
 					service: 'oauth',
@@ -588,7 +620,16 @@ page{
 	justify-content:space-between;
 }
 .reg{
-	margin: 30rpx;
+	margin: 30upx;
+}
+.rega{
+	position: absolute;
+	width: 100%;
+	
+	bottom: 30upx;
+	margin: 20rpx auto;
+	font-size: 26upx;
+	color: #C0C0C0;
 }
 .getCode{
 	width: 160rpx;

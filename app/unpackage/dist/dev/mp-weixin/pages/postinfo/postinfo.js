@@ -384,8 +384,17 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 var _default = { data: function data() {return { postInfo: [], pllist: [], dslist: [], showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1, shunxu: false };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);}return { title: this.postInfo.Content, path: '/pages/postinfo/postinfo?id=' + this.postid, desc: this.postInfo.Content, imageUrl: this.postInfo.PictureId[0] };}, onLoad: function onLoad(option) {var _this = this; //option为object类型，会序列化上个页面传递的参数
     console.log('ID:', option.id); //打印出上个页面传递的参数。
-    this.postid = option.id;this.getdsList(this.postid);if (option.type == 'fenxiang') {if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {uni.showLoading({ title: '加载中' });uni.login({ provider: 'weixin', success: function success(res) {console.log(res);uni.request({ method: 'POST', url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
-              data: { code: res.code, tuijianId: _this.tuijianren }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log(res);if (res.data.code == "0") {_server.default.usersk = res.data.data.session_key;uni.showToast({ title: "欢迎你，游客", position: 'bottom', icon: 'none' });_this.AvatarUrl = "https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png";} else if (res.data.code == "1" || res.data.code == "2") {_this.AvatarUrl = res.data.data.AvatarUrl;_this.username = res.data.data.UserName;_this.zhongcao = res.data.data.ZhongcaoCount;_this.guanzhu = res.data.data.FollowedCount;_this.fensi = res.data.data.FollowerCount;_this.dengji = res.data.data.Rank;_this.userid = res.data.data.Auid;_this.userInfo = res.data.data;_server.default.userinfo = res.data.data;_server.default.cookie = res.header['Set-Cookie'];console.log("记录cookie：", _server.default.cookie);if (res.data.code == "2") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none' });} else {if (_this.userInfo.VIPEndTime > 0) {uni.showToast({ title: '欢迎VIP：' + _this.username, position: 'bottom', icon: 'none' });} else {uni.showToast({ title: '欢迎你,' + _this.username, position: 'bottom', icon: 'none' });}}}}, complete: function complete() {_this.getpostinfo(option.id);uni.hideLoading();}, fail: function fail(src) {uni.showToast({ title: "未知原因，登录失败！", position: 'bottom', icon: 'none' });} });}, fail: function fail(err) {uni.showToast({ title: "登录失败", position: 'bottom' }), _this.getpostinfo(option.id);console.error('授权登录失败：' + JSON.stringify(err));} });} else {if (_server.default.userinfo.VIPEndTime > 0) {uni.showToast({ title: '欢迎VIP：' + _server.default.userinfo.username, position: 'bottom', icon: 'none' });} else {uni.showToast({
+    this.postid = option.id;this.getdsList(this.postid);uni.getSystemInfo({ success: function success(res) {var systemjson = { phonebrand: res.brand + res.model, phonesystem: res.system };_server.default.system = JSON.stringify(systemjson);console.log(_server.default.system);} });if (option.type == 'fenxiang') {if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {uni.showLoading({ title: '加载中' });uni.login({ provider: 'weixin', success: function success(res) {console.log(res);uni.request({ method: 'POST', url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
+              data: { code: res.code, tuijianId: _this.tuijianren }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log(res);if (res.data.code == "0") {_server.default.usersk = res.data.data.session_key;uni.showToast({ title: "欢迎你，游客", position: 'bottom', icon: 'none' });_this.AvatarUrl = "https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png";} else if (res.data.code == "1" || res.data.code == "2") {_this.AvatarUrl = res.data.data.AvatarUrl;_this.username = res.data.data.UserName;_this.zhongcao = res.data.data.ZhongcaoCount;_this.guanzhu = res.data.data.FollowedCount;_this.fensi = res.data.data.FollowerCount;_this.dengji = res.data.data.Rank;_this.userid = res.data.data.Auid;_this.userInfo = res.data.data;_server.default.userinfo = res.data.data;_server.default.cookie = res.header['Set-Cookie'];console.log("记录cookie：", _server.default.cookie);if (res.data.code == "2") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none' });} else {if (_this.userInfo.VIPEndTime > 0) {uni.showToast({ title: '欢迎VIP：' + _this.username, position: 'bottom', icon: 'none' });} else {uni.showToast({ title: '欢迎你,' + _this.username, position: 'bottom', icon: 'none' });}}}}, complete: function complete() {_this.getpostinfo(option.id);uni.hideLoading();}, fail: function fail(src) {uni.showToast({ title: "未知原因，登录失败！", position: 'bottom', icon: 'none' });} });}, fail: function fail(err) {uni.showToast({ title: "登录失败", position: 'bottom' }), _this.getpostinfo(option.id);console.error('授权登录失败：' + JSON.stringify(err));} });
+      } else {
+        if (_server.default.userinfo.VIPEndTime > 0) {
+          uni.showToast({
+            title: '欢迎VIP：' + _server.default.userinfo.username,
+            position: 'bottom',
+            icon: 'none' });
+
+        } else {
+          uni.showToast({
             title: '欢迎你,' + _server.default.userinfo.username,
             position: 'bottom',
             icon: 'none' });
@@ -414,7 +423,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           console.log("————————————帖子详情——————————");
@@ -439,7 +449,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           console.log("————————————评论详情——————————");
@@ -576,7 +587,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           if (res.data.code == "1") {
@@ -674,7 +686,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           if (res.data.code == "1") {
@@ -797,7 +810,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie },
+            'Cookie': _server.default.cookie,
+            'system': _server.default.system },
 
           success: function success(res) {
             if (res.data.code == '1') {
@@ -811,7 +825,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
-                  'Cookie': _server.default.cookie },
+                  'Cookie': _server.default.cookie,
+                  'system': _server.default.system },
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
@@ -855,7 +870,8 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie },
+            'Cookie': _server.default.cookie,
+            'system': _server.default.system },
 
           success: function success(res) {
             if (res.data.code == '1') {

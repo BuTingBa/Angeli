@@ -45,7 +45,7 @@
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "安个利",
+  "appname": "安个利社区",
   "compilerVersion": "2.3.7",
   "usingComponents": {
     "cu-custom": "/components/colorui/components/cu-custom",

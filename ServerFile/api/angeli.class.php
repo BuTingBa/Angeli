@@ -24,6 +24,31 @@ class angeli
     }
 
     /**
+     * @param $auid 用户ID
+     * @param $open_type    操作类型
+     * @param $record_id    操作的id
+     * @param $brand        手机型号
+     * @param $system       设备系统
+     * @param $note         备注
+     * @return int
+     */
+    public function addUserLog($auid=0,$open_type='未知',$record_id=0,$brand='未获取到',$system='未获取到',$note='')
+    {
+        $sql = $this->mysqli->prepare("INSERT INTO behavior (open_type,record_id,auid,brand,system,ip,opentime,note) 
+                        VALUES (?,?,?,?,?,?,?,?)");
+        $ip=$_SERVER["REMOTE_ADDR"];
+        $time=time();
+        $sql->bind_param("siisssss",$open_type,$record_id,$auid,$brand,$system,$ip,$time,$note);
+        $sql->execute();
+        if($sql->affected_rows<1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * 获取我关注的用户
      * @param $auid 欲查询的用户ID
      * @return array|bool
@@ -1106,9 +1131,7 @@ class angeli
             }
         }
 
-
         $count=$pinglun+$Give+$Msg+$Guanzhu+$systemmsg;
-
         $data=array(
             'pinglun'=>$pinglun,
             'Give'=>$Give,
@@ -1116,6 +1139,7 @@ class angeli
             'Guanzhu'=>$Guanzhu,
             'SystemMsg'=>$systemmsg,
             'count'=>$count,
+            'pay'=>'no'//该参数为是否打开苹果支付，yes为打开，no为关闭。主要是为了过审而做的一个动态接口
 
         );
 
@@ -1802,10 +1826,10 @@ class angeli
      * 更新订单
      */
     public function upOrder($wxOrderId,$endTime,$openId,$orderId){
-        $sql = $this->mysqli->prepare("UPDATE angeli_pay SET wxOrderId=?,timeEnd=?,payStatus=? WHERE wxOpenId=? AND orderId=?");
+        $sql = $this->mysqli->prepare("UPDATE angeli_pay SET wxOrderId=?,timeEnd=?,payStatus=? WHERE  orderId=?");
         $time=time();
         $status='已支付';
-        $sql->bind_param("sisss",$wxOrderId,$endTime,$status,$openId,$orderId);
+        $sql->bind_param("siss",$wxOrderId,$endTime,$status,$orderId);
         $sql->execute();
         if($sql->affected_rows<1)
         {
@@ -1867,7 +1891,7 @@ class angeli
     public function getOrder($openId,$order)
     {
 
-        $sql = "SELECT * FROM angeli_pay WHERE wxOpenId='$openId' AND orderId='$order'";
+        $sql = "SELECT * FROM angeli_pay WHERE orderId='$order'";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             return false;
@@ -2077,6 +2101,47 @@ class angeli
         }
     }
 
+    /*获取种草书*/
+    public function ZhongcaoCount($auid)
+    {
+        $sql="select count(*) as numbera FROM angeli_favorite where AuthorId=$auid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return 0;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $data=$row['numbera'];
+                }
+                return $data;
+            }else{
+                return 0;
+            }
+        }
+    }
+
+    /*获取种草书 类型一为获取粉丝数，类型二为获取已关注数*/
+    public function getFollowerCount($auid,$type=1)
+    {
+        if($type==1){
+            $sql="select count(*) as numbera FROM angeli_guanzhu where beiguanzhu=$auid";
+        }else{
+            $sql="select count(*) as numbera FROM angeli_guanzhu where guanzhu=$auid";
+        }
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return 0;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $data=$row['numbera'];
+                }
+                return $data;
+            }else{
+                return 0;
+            }
+        }
+    }
     /*
     *   获取用户信息
     *   参数：查询关键字类型，查询关键字
@@ -2136,9 +2201,9 @@ class angeli
                         'IPCreated' =>$row["IPCreated"],
                         'AvatarUrl' =>$row["AvatarUrl"],
                         'Synopsis' =>$row["Synopsis"],
-                        'FollowedCount' =>$row["FollowedCount"],
-                        'FollowerCount' =>$row["FollowerCount"],
-                        'ZhongcaoCount' =>$row["ZhongcaoCount"],
+                        'FollowedCount' =>$this->getFollowerCount($row["AuId"],2),
+                        'FollowerCount' =>$this->getFollowerCount($row["AuId"],1),
+                        'ZhongcaoCount' =>$this->ZhongcaoCount($auid),
                         'Points' =>$row["Points"],
                         'Aglc' =>$row["Aglc"],
                         'Rank' =>$row["Rank"],
@@ -2178,18 +2243,23 @@ class angeli
                 //return false;
             }
         }
-
-
     }
 
     /*
      * 获取本周排行榜
      */
     public function getWeekTop($auid){
-        $beginThisweek=mktime(0,0,0,date('m'),date('d')-date('w')+1,date('Y'));
-        $endThisweek=mktime(23,59,59,date('m'),date('d')-date('w')+7,date('Y'));
-        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek AND `show`=0 GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
-        //echo $sql;
+
+        $sdefaultDate = date("Y-m-d");
+        $first=1;
+        $w=date('w',strtotime($sdefaultDate));
+
+        $beginThisweek=strtotime("$sdefaultDate -".($w ? $w - $first : 6).' days');
+        $endtemp=date('Y-m-d',$beginThisweek);
+        $endThisweek=strtotime("$endtemp +7 days");
+
+        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>=$beginThisweek AND addTime<=$endThisweek AND `show`=0 GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
+        //echo $sql.'<br>';
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
@@ -2269,6 +2339,7 @@ class angeli
 
 
     }
+
     /*
     *   获取用户列表到数组里
     *
@@ -2679,6 +2750,9 @@ class angeli
      * 计算时间差
      */
     function getOverDay($vipTime){
+        if(!is_numeric($vipTime)){
+            $vipTime=0;
+        }
         $dtime=time();
         $time=$vipTime-$dtime;
         return $time/86400;

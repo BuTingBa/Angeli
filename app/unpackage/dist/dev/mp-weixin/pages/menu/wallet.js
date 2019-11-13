@@ -214,7 +214,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       ann: false,
       xz: 1,
       angelibi: "自定义",
-      billList: [] };
+      billList: [],
+      apptype: 'xcx' };
 
   },
   onShow: function onShow() {
@@ -266,6 +267,17 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
     },
     getVip: function getVip() {var _this2 = this;
+      var shebei = uni.getSystemInfoSync().platform;
+      if (shebei == 'ios') {
+        uni.showToast({
+          title: "ios系统暂不提供充值，详情请咨询客服",
+          position: 'bottom',
+          icon: 'none' });
+
+        return;
+      }
+
+
       if (this.monnumber >= 10) {
 
         this.money = this.monnumber / 10;
@@ -275,6 +287,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
             position: 'bottom',
             icon: 'none' });
 
+          return;
         }
         console.log('安个利币：' + this.monnumber, '金额：' + this.money);
         uni.showLoading({
@@ -288,7 +301,101 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
 
 
-        //如果是小程序支付
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         uni.request({
           method: 'POST',
@@ -298,7 +405,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
             fee: this.money,
             number: this.monnumber,
             key: wxkey,
-            auid: _server.default.userinfo.Auid },
+            auid: _server.default.userinfo.Auid,
+            payType: this.apptype },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
@@ -320,6 +428,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
                 signType: 'MD5',
                 paySign: sign,
                 success: function success(res) {
+                  console.log(res);
                   uni.showLoading({
                     title: '正在查询中...' });
 
@@ -335,6 +444,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
                       'Cookie': _server.default.cookie },
 
                     success: function success(res) {
+
+                      console.log(res);
                       if (res.data.code == 1) {
                         if (res.data.data.payStatus == '已支付' || res.data.data.payStatus == 'OK') {
                           console.log('已支付', _this2.endVipTime);
@@ -370,8 +481,9 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
                 },
                 fail: function fail(err) {
+                  console.log(err);
                   uni.showToast(_defineProperty({
-                    title: "支付失败！请联系客服",
+                    title: "唤起支付失败！请联系客服",
                     position: 'bottom',
                     icon: 'none' }, "position",
                   'center'));
@@ -398,6 +510,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
         'center'));
 
       }
+
     },
     showKaitong: function showKaitong() {
       this.showVip = true;

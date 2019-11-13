@@ -212,9 +212,18 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     console.log(_server.default.postClass);
     this.huati = _server.default.postClass.ClassId;
     this.huatiname = _server.default.postClass.ClassName;
-
+    console.log(_server.default.system);
   },
   onLoad: function onLoad(e) {
+    uni.getSystemInfo({
+      success: function success(res) {
+        var systemjson = {
+          phonebrand: res.brand + res.model,
+          phonesystem: res.system };
+
+        _server.default.system = JSON.stringify(systemjson);
+        console.log(_server.default.system);
+      } });
 
   },
   methods: {
@@ -295,6 +304,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         title: '发送帖子中..',
         mask: true });
 
+
+      console.log(_server.default.system);
+
       uni.request({
         method: 'POST',
         url: 'https://api.angeli.top/post.php?type=addPost',
@@ -305,7 +317,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           uni.showToast({

@@ -70,7 +70,6 @@
 						<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
 						<view>
 							<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
-							
 						</view>
 						<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image>
 						</view>
@@ -108,14 +107,32 @@
 						<text class="nullText">\n你还没有关注用户哦</text>
 					</view>
 				</template>
-				
-				
 			</block>
-			
+			<!-- 只有是iPhone，iOS系统才显示该按钮 -->
+			<template v-if="shebei=='ios'||shebei=='devtools'||shebei=='android'">
+			<!-- 超级菜单 -->
+			<view class="plusmenu" style="width: 100upx;height: 100upx;bottom:180upx;right: 30upx;z-index: 30;">
+				<button class="cu-btn cuIcon " style="width: 100upx;height: 100upx;background-color: #79C498;box-shadow:0 0 20upx 0 #555555;" @tap="plusbutton">
+					<text class="cuIcon-more" style="font-size: 60upx;color: #fff;"></text>
+				</button>
+				<image src="../../static/hongdain.png" v-if="msgNumber>0" mode="aspectFit" class="hongdiana2"></image>
+			</view>
+			<view class="plusmenubihe"  :class="openmenu?'plusmenuopen2':'plusmenubihe'">
+				<button class="cu-btn cuIcon " style="width: 100upx;height: 100upx;background-color: #79C498;" @tap="sousuo">
+					<text class="cuIcon-search" style="font-size: 50upx;color: #fff;"></text>
+				</button>
+			</view>
+			<view class="plusmenubihe"  :class="openmenu?'plusmenuopen':'plusmenubihe'">
+				<button class="cu-btn cuIcon " style="width: 100upx;height: 100upx;background-color: #79C498;" @tap="showModal" data-target="viewModal">
+					<text class="cuIcon-sort" style="font-size: 50upx;color: #fff;"></text>
+				</button>
+				<image src="../../static/hongdain.png" v-if="msgNumber>0" mode="aspectFit" class="hongdiana2"></image>
+			</view>
+			</template>
 			<!-- 发送帖子 -->
 			<view class="plus" style="width: 100upx;height: 100upx;">
 				<button class="cu-btn cuIcon " style="width: 100upx;height: 100upx;background-color: #79C498;box-shadow:0 0 20upx 0 #555555" @tap="pluspost">
-					<text class="cuIcon-add" style="font-size: 70upx;"></text>
+					<text class="cuIcon-add" style="font-size: 70upx;color: #fff;"></text>
 				</button>
 			</view>
 		</scroll-view>	
@@ -166,12 +183,12 @@
 						<view class="menuItem" @tap="getMessage">
 							<view class="menuIcon aicon-Msg" ></view>
 							<view class="menuTiele">消息通知</view>
-							<view class="menuRight">{{msgNumber<1?'':'+'+msgNumber}}</view>
+							<view class="menuRight">{{msgNumber<=0?'':'+'+msgNumber}}</view>
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="getFriend">
 							<view class="menuIcon aicon-friend" ></view>
-							<view class="menuTiele">我的好友</view>
+							<view class="menuTiele">我的老铁</view>
 							<view class="menuRight"></view>
 						</view>
 						<!-- <view class="menusolid"></view>
@@ -183,6 +200,7 @@
 					</view>
 					<view class="solidMax"></view>
 					<view class="menuListBox">
+						<template v-if="shebei=='devtools'||shebei=='android' ||iosapy=='yes'">
 						<view class="menuItem" @tap="wallet">
 							<view class="menuIcon aicon-qianbao"></view>
 							<view class="menuTiele">我的钱包</view>
@@ -195,6 +213,7 @@
 							<view class="menuRight"></view>
 						</view>
 						<view class="menusolid"></view>
+						</template>
 						<view class="menuItem" @click="getJifen">
 							<view class="menuIcon aicon-jifen"></view>
 							<view class="menuTiele">种草排行</view>
@@ -279,7 +298,10 @@
 				index:false,
 				userInfo:[],
 				postype:'new',
-				menuList:['分享给朋友', '生成海报', '举报']
+				menuList:['分享给朋友', '生成海报', '举报'],
+				openmenu:false,
+				shebei:'',
+				iosapy:'no'
 			}
 		},
 		onShow:function(){
@@ -299,6 +321,7 @@
 						server.cookie=res.header['Set-Cookie'];
 					// #endif
 					console.log(res)
+					this.iosapy=res.data.data.pay
 					if(res.data.code=="1"){
 						this.msgNumber=res.data.data.count
 					}else{
@@ -312,7 +335,17 @@
 			});
 		},
 		onLoad:function(e){
-			
+			this.shebei=uni.getSystemInfoSync().platform;
+			uni.getSystemInfo({
+			    success: function (res) {
+					var systemjson={
+						phonebrand:res.brand+res.model,
+						phonesystem:res.system
+					}
+					server.system=JSON.stringify(systemjson);
+					console.log(server.system)
+			    }
+			});
 			this.tuijianren=e.tuijianid;
 			server.tgid=this.tuijianren
 			this.postList=[];
@@ -357,7 +390,8 @@
 								tuijianId:this.tuijianren
 							},
 							header: {
-								'content-type': 'application/x-www-form-urlencoded'
+								'content-type': 'application/x-www-form-urlencoded',
+								'system':server.system
 							},
 							success: (res) => {
 								console.log(res);
@@ -450,6 +484,8 @@
 			this.getSysConfig('home_txt');
 			//this.getPostData('new',0);
 			
+			this.shebei=uni.getSystemInfoSync().platform;
+			console.log(this.shebei);
 		},
 		onReady: function() {
 			this.getHei()
@@ -457,6 +493,9 @@
 			
 		},
 		methods: {
+			plusbutton:function(){
+				this.openmenu=this.openmenu?false:true;
+			},
 			guanzhua:function(){
 				uni.navigateTo({
 					url: '../menu/guanzhu'
@@ -672,7 +711,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -951,11 +991,46 @@
 		border-radius:50%;
 		position: relative;
 	}
+	.hongdiana2{
+		width: 16upx;
+		height:16upx;
+		position: absolute;
+		right: 5upx;
+		top: 5upx;
+	}
+	.plusmenubihe{
+		position: fixed;
+		bottom:180upx;
+		right: 30upx;
+		width: 100upx;
+		height: 100upx;
+		bottom:180upx;
+	}
+	.plusmenuopen{
+		position: fixed;
+		bottom:180upx;
+		right: 140upx;
+		width: 100upx;
+		height: 100upx;
+		bottom:180upx;
+	}
+	.plusmenuopen2{
+		position: fixed;
+		bottom:180upx;
+		right: 250upx;
+		width: 100upx;
+		height: 100upx;
+		bottom:180upx;
+	}
 	.plus{
 		position: fixed;
 		bottom:60upx;
 		right: 30upx;
-		
+	}
+	.plusmenu{
+		position: fixed;
+		bottom:180upx;
+		right: 30upx;
 	}
 	
 	.listtype{

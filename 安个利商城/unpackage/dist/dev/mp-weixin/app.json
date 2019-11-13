@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/user",
+    "pages/cart/cart"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/shop.png",
+        "selectedIconPath": "static/shop1.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/card.png",
+        "selectedIconPath": "static/card1.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "static/my.png",
+        "selectedIconPath": "static/my1.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

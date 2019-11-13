@@ -188,6 +188,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
@@ -207,7 +209,37 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
   },
+  onLoad: function onLoad() {
+    uni.getSystemInfo({
+      success: function success(res) {
+        var systemjson = {
+          phonebrand: res.brand + res.model,
+          phonesystem: res.system };
+
+        _server.default.system = JSON.stringify(systemjson);
+        console.log(_server.default.system);
+      } });
+
+  },
   methods: {
+    getpage: function getpage(id) {
+      if (id == 1) {
+        uni.navigateTo({
+          url: "../edit/edit?type=4" });
+
+      }
+      if (id == 2) {
+        uni.navigateTo({
+          url: "../edit/edit?type=6" });
+
+      }
+      if (id == 3) {
+        uni.navigateTo({
+          url: "../edit/edit?type=5" });
+
+      }
+
+    },
     getWechatOauth: function getWechatOauth() {
       uni.getProvider({
         service: 'oauth',

@@ -81,6 +81,15 @@ page{
 .reg{
 	margin: 30rpx;
 }
+.rega{
+	position: absolute;
+	width: 100%;
+	
+	bottom: 30rpx;
+	margin: 20rpx auto;
+	font-size: 26rpx;
+	color: #C0C0C0;
+}
 .getCode{
 	width: 160rpx;
 	height: 50rpx;

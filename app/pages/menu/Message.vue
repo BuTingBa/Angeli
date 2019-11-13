@@ -22,7 +22,7 @@
 				<image src="../../static/systemMsg.png" mode="" class="touxiang"></image>
 				<text>安个利官方通知</text>
 				<text>{{systemCount[0].time}}</text>
-				<text>{{systemCount[0].msg}}</text>
+				<text style="overflow: hidden;white-space: nowrap;text-overflow:ellipsis; width: 100%;">{{systemCount[0].msg}}</text>
 				<text :class="systemCount[0].isRead==true?'hongdian':''"></text>
 			</view>
 			<view class="menusolid"></view>
@@ -31,7 +31,7 @@
 					<image :src="list.ToId.Auid==auid?list.FromId.AuthorAvatarUrl:list.ToId.AuthorAvatarUrl" mode="" class="touxiang"></image>
 					<text>{{list.ToId.Auid==auid?list.FromId.AuthorName:list.ToId.AuthorName}}</text>
 					<text>{{list.MsgSendTime}}</text>
-					<text>{{list.Msg}}</text>
+					<text >{{list.Msg}}</text>
 					<text :class="list.MsgStatus=='0'?'hongdian':''"></text>
 				</view>
 				<view class="menusolid"></view>

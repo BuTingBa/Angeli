@@ -257,6 +257,17 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
     },
     getVip: function getVip() {var _this2 = this;
+
+      var shebei = uni.getSystemInfoSync().platform;
+      if (shebei == 'ios') {
+        uni.showToast({
+          title: "ios系统暂不提供充值，详情请咨询客服",
+          position: 'bottom',
+          icon: 'none' });
+
+        return;
+      }
+
       if (this.monnumber >= 1) {
         if (this.monnumber == 1) {
           this.money = this.onemonn;
@@ -268,6 +279,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
           title: '加载中' });
 
         var wxkey = (0, _md.default)('不停' + String(Date.now()));
+
         uni.request({
           method: 'POST',
           url: "https://api.angeli.top/WeChat/pay.php?type=vip", //仅为示例，并非真实接口地址。
@@ -280,7 +292,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie },
+            'Cookie': _server.default.cookie,
+            'system': _server.default.system },
 
           success: function success(res) {
             console.log(res);
@@ -361,6 +374,111 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
           complete: function complete() {
             uni.hideLoading();
           } });
+
+
+
+        //如果是APP支付
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       } else {

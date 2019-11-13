@@ -7,7 +7,7 @@
 		<view  :style="[{top:CustomBar + 'px'}]">
 			
 			<view class="textedit">
-				<textarea maxlength="1000" :disabled="modalName!=null" @input="textareaAInput" placeholder="在这里输入你想分享的内容，如找不到相应话题可以直接发布在其他闲聊。\n 注意：发帖需要消耗两枚安个利币，每天登陆即可获得一枚，请确认后再编辑内容！（其他获取方式请关注安个利官方通知的信息）"  ></textarea>
+				<textarea maxlength="2000" :disabled="modalName!=null" @input="textareaAInput" placeholder="在这里输入你想分享的内容，如找不到相应话题可以直接发布在其他闲聊。\n 注意：发帖需要消耗两枚安个利币，每天登陆即可获得一枚，请确认后再编辑内容！（其他获取方式请关注安个利官方通知的信息）"  ></textarea>
 			</view>
 			
 			<sunui-upoos :upImgConfig="upImgOos" @onUpImg="upOosData" @onImgDel="delImgInfo" ref="uImage"></sunui-upoos>
@@ -88,10 +88,19 @@
 			console.log(server.postClass)
 			this.huati=server.postClass.ClassId;
 			this.huatiname=server.postClass.ClassName
-			
+			console.log(server.system)
 		},
 		onLoad: function(e) {
-
+			uni.getSystemInfo({
+			    success: function (res) {
+					var systemjson={
+						phonebrand:res.brand+res.model,
+						phonesystem:res.system
+					}
+					server.system=JSON.stringify(systemjson);
+					console.log(server.system)
+			    }
+			});
 		},
 		methods: {
 			getClassList:function(){
@@ -171,6 +180,9 @@
 					title: '发送帖子中..',
 					mask:true
 				});
+				
+				console.log(server.system)
+				
 				uni.request({
 					method:'POST',
 					url: 'https://api.angeli.top/post.php?type=addPost',
@@ -181,7 +193,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						uni.showToast({

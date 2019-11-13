@@ -24,7 +24,7 @@
 				 	<view class="cu-item self">
 				 		<view class="main">
 				 			<view class="content bg-green shadow">
-				 				<text>{{list.Msg}}</text>
+				 				<text selectable="true">{{list.Msg}}</text>
 				 			</view>
 				 		</view>
 				 		<view class="cu-avatar radius yuan" :style="{'background-image':'url('+list.mm.AuthorAvatarUrl+')'}" @click="getme"></view>
@@ -131,7 +131,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						console.log(res)
@@ -139,7 +140,6 @@
 							this.value="";
 							this.val=''
 							this.getMyMsg()
-							
 						}
 						if(res.data.code=="0" ||res.data.code==null||res.data.code==false ){
 							uni.showToast({
@@ -156,7 +156,6 @@
 				});
 			},
 			markmsg:function(){
-				
 				uni.request({
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=mark&class=msg", //请求标记已读消息

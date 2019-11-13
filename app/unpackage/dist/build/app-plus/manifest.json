@@ -5,7 +5,7 @@
     "iPad"
   ],
   "id": "__UNI__F71FC08",
-  "name": "安个利",
+  "name": "安个利社区",
   "version": {
     "name": "1.0.1",
     "code": 120
@@ -123,8 +123,10 @@
         "push": {},
         "share": {},
         "payment": {
+          "appleiap": {},
           "weixin": {
-            "appid": "wxb20ffcea11df81b0"
+            "appid": "wxb20ffcea11df81b0",
+            "UniversalLinks": ""
           }
         },
         "audio": {
@@ -134,6 +136,7 @@
         }
       }
     },
+    "nativePlugins": {},
     "allowsInlineMediaPlayback": true,
     "uni-app": {
       "compilerVersion": "2.3.7",

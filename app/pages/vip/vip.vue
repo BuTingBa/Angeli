@@ -133,6 +133,17 @@
 				});
 			},
 			getVip:function(){
+				
+				var shebei=uni.getSystemInfoSync().platform;
+				if(shebei=='ios'){
+					uni.showToast({
+						title: "ios系统暂不提供充值，详情请咨询客服",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
+				
 				if(this.monnumber>=1){
 					if(this.monnumber==1){
 						this.money=this.onemonn
@@ -144,6 +155,7 @@
 						title: '加载中'
 					});
 					let wxkey=md5('不停'+String(Date.now()));
+					//#ifdef MP-WEIXIN
 					uni.request({
 						method:'POST',
 						url: "https://api.angeli.top/WeChat/pay.php?type=vip", //仅为示例，并非真实接口地址。
@@ -156,7 +168,8 @@
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							'Cookie':server.cookie,
+							'system':server.system
 						},
 						success: (res) => {
 							console.log(res)
@@ -238,6 +251,111 @@
 							uni.hideLoading();
 						}
 					});
+					//#endif
+					
+					//如果是APP支付
+					//#ifdef APP-PLUS
+					uni.request({
+						method:'POST',
+						url: "https://api.angeli.top/WeChat/appchat/index.php?type=vip", //仅为示例，并非真实接口地址。
+						data: {
+							openid:server.userinfo.wxOpenId,
+							fee:this.money,
+							number:this.monnumber,
+							key:wxkey,
+							auid:server.userinfo.Auid,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded',
+							'Cookie':server.cookie,
+							'system':server.system
+						},
+						success: (res) => {
+							console.log(res)
+							if(res.data.code=="1"){
+								let dd=res.data.orderId;
+								uni.requestPayment({
+									provider: 'wxpay',
+									orderInfo:res.data.data,
+									success: (res) => {
+										console.log(res)
+										uni.showLoading({
+											title: '正在查询中...'
+										});
+										uni.request({
+											method:'GET',
+											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
+											data:{
+												auid:server.userinfo.Auid,
+												orderId:dd
+											},
+											header: {
+												'content-type': 'application/x-www-form-urlencoded',
+												'Cookie':server.cookie,
+												'system':server.system
+											},
+											success: (res) => {
+												
+												console.log(res)
+												if(res.data.code==1){
+													if(res.data.data.payStatus=='已支付' || res.data.data.payStatus=='OK'){
+														console.log('已支付',this.endVipTime)
+														uni.showToast({
+															title: "已充值",
+															position:'bottom',
+															icon:'none',
+															position:'center'
+														})
+														this.getjifen();
+														this.$getUserinfo();
+														this.$forceUpdate();
+													}else{
+														uni.showToast({
+															title: "支付失败！请联系客服",
+															position:'bottom',
+															icon:'none',
+															position:'center'
+														})
+													}
+												}else{
+													uni.showToast({
+														title: "支付失败！请联系客服",
+														position:'bottom',
+														icon:'none',
+														position:'center'
+													})
+												}
+											},
+											complete: () => {
+												uni.hideLoading();
+											}
+										});
+									},
+									fail: function (err) {
+										console.log(err)
+										uni.showToast({
+											title: "唤起支付失败！请联系客服",
+											position:'bottom',
+											icon:'none',
+											position:'center'
+										})
+									}
+								});
+								
+								
+							}else{
+					
+							}
+							
+						},
+						complete() {
+							uni.hideLoading();
+						}
+					});
+					
+					//#endif
+					
+					
 					
 				}else{
 					uni.showToast({

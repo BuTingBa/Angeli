@@ -90,7 +90,8 @@
 				ann:false,
 				xz:1,
 				angelibi:"自定义",
-				billList:[]
+				billList:[],
+				apptype:'xcx'
 			}
 		},
 		onShow:function(){
@@ -142,6 +143,17 @@
 				});
 			},
 			getVip:function(){
+				var shebei=uni.getSystemInfoSync().platform;
+				if(shebei=='ios'){
+					uni.showToast({
+						title: "ios系统暂不提供充值，详情请咨询客服",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
+					
+				
 				if(this.monnumber>=10){
 					
 					this.money=this.monnumber/10
@@ -151,6 +163,7 @@
 							position:'bottom',
 							icon:'none'
 						});
+						return;
 					}
 					console.log('安个利币：'+this.monnumber,'金额：'+this.money)
 					uni.showLoading({
@@ -158,44 +171,31 @@
 					});
 					let wxkey=md5('不停'+String(Date.now()));
 					//如果是APP支付
-					// #ifdef APP-PLUS
-					
-					
-					// #endif
-					
-					
-					//如果是小程序支付
-					// #ifdef MP-WEIXIN
+					//#ifdef APP-PLUS
 					uni.request({
 						method:'POST',
-						url: "https://api.angeli.top/WeChat/pay.php?type=angelibi", //仅为示例，并非真实接口地址。
+						url: "https://api.angeli.top/WeChat/appchat/index.php?type=angelibi", //仅为示例，并非真实接口地址。
 						data: {
 							openid:server.userinfo.wxOpenId,
 							fee:this.money,
 							number:this.monnumber,
 							key:wxkey,
-							auid:server.userinfo.Auid
+							auid:server.userinfo.Auid,
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							'Cookie':server.cookie,
+							'system':server.system
 						},
 						success: (res) => {
 							console.log(res)
-							let dd=res.data.orderId;
 							if(res.data.code=="1"){
-								let sjstr=md5(String(Date.now()));
-								let time=String(Date.now())
-								let signTemp="appId=wxb2418420ae2cf37c&nonceStr="+sjstr+"&package=prepay_id="+res.data.data.prepay_id+"&signType=MD5&timeStamp="+time+"&key=xinfenghuliankejiyouxiangongsi12"
-								let sign=md5(signTemp)
+								let dd=res.data.orderId;
 								uni.requestPayment({
 									provider: 'wxpay',
-									timeStamp: time,
-									nonceStr: sjstr,
-									package: 'prepay_id='+res.data.data.prepay_id,
-									signType: 'MD5',
-									paySign: sign,
+									orderInfo:res.data.data,
 									success: (res) => {
+										console.log(res)
 										uni.showLoading({
 											title: '正在查询中...'
 										});
@@ -208,9 +208,12 @@
 											},
 											header: {
 												'content-type': 'application/x-www-form-urlencoded',
-												'Cookie':server.cookie
+												'Cookie':server.cookie,
+												'system':server.system
 											},
 											success: (res) => {
+												
+												console.log(res)
 												if(res.data.code==1){
 													if(res.data.data.payStatus=='已支付' || res.data.data.payStatus=='OK'){
 														console.log('已支付',this.endVipTime)
@@ -246,8 +249,9 @@
 										});
 									},
 									fail: function (err) {
+										console.log(err)
 										uni.showToast({
-											title: "支付失败！请联系客服",
+											title: "唤起支付失败！请联系客服",
 											position:'bottom',
 											icon:'none',
 											position:'center'
@@ -265,7 +269,115 @@
 							uni.hideLoading();
 						}
 					});
-					// #endif
+					
+					//#endif
+					
+					//#ifdef MP-WEIXIN
+					uni.request({
+						method:'POST',
+						url: "https://api.angeli.top/WeChat/pay.php?type=angelibi", //仅为示例，并非真实接口地址。
+						data: {
+							openid:server.userinfo.wxOpenId,
+							fee:this.money,
+							number:this.monnumber,
+							key:wxkey,
+							auid:server.userinfo.Auid,
+							payType:this.apptype
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded',
+							'Cookie':server.cookie
+						},
+						success: (res) => {
+							console.log(res)
+							let dd=res.data.orderId;
+							if(res.data.code=="1"){
+								let sjstr=md5(String(Date.now()));
+								let time=String(Date.now())
+								let signTemp="appId=wxb2418420ae2cf37c&nonceStr="+sjstr+"&package=prepay_id="+res.data.data.prepay_id+"&signType=MD5&timeStamp="+time+"&key=xinfenghuliankejiyouxiangongsi12"
+								let sign=md5(signTemp)
+								uni.requestPayment({
+									provider: 'wxpay',
+									timeStamp: time,
+									nonceStr: sjstr,
+									package: 'prepay_id='+res.data.data.prepay_id,
+									signType: 'MD5',
+									paySign: sign,
+									success: (res) => {
+										console.log(res)
+										uni.showLoading({
+											title: '正在查询中...'
+										});
+										uni.request({
+											method:'GET',
+											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
+											data:{
+												auid:server.userinfo.Auid,
+												orderId:dd
+											},
+											header: {
+												'content-type': 'application/x-www-form-urlencoded',
+												'Cookie':server.cookie
+											},
+											success: (res) => {
+												
+												console.log(res)
+												if(res.data.code==1){
+													if(res.data.data.payStatus=='已支付' || res.data.data.payStatus=='OK'){
+														console.log('已支付',this.endVipTime)
+														uni.showToast({
+															title: "已充值",
+															position:'bottom',
+															icon:'none',
+															position:'center'
+														})
+														this.getjifen();
+														this.$getUserinfo();
+														this.$forceUpdate();
+													}else{
+														uni.showToast({
+															title: "支付失败！请联系客服",
+															position:'bottom',
+															icon:'none',
+															position:'center'
+														})
+													}
+												}else{
+													uni.showToast({
+														title: "支付失败！请联系客服",
+														position:'bottom',
+														icon:'none',
+														position:'center'
+													})
+												}
+											},
+											complete: () => {
+												uni.hideLoading();
+											}
+										});
+									},
+									fail: function (err) {
+										console.log(err)
+										uni.showToast({
+											title: "唤起支付失败！请联系客服",
+											position:'bottom',
+											icon:'none',
+											position:'center'
+										})
+									}
+								});
+								
+								
+							}else{
+					
+							}
+							
+						},
+						complete() {
+							uni.hideLoading();
+						}
+					});
+					//#endif
 				}else{
 					uni.showToast({
 						title: "必须选择充值数量",
@@ -274,6 +386,7 @@
 						position:'center'
 					})
 				}
+				
 			},
 			showKaitong:function(){
 				this.showVip=true

@@ -17,6 +17,7 @@ _vue.default.component('cu-custom', cuCustom);
 _vue.default.component('sunui-upoos', sunUiOos);
 _vue.default.config.productionTip = false;
 
+//获取用户信息
 _vue.default.prototype.$getUserinfo = function () {var _uni$request;
   uni.request((_uni$request = {
     method: 'GET',
@@ -26,7 +27,8 @@ _vue.default.prototype.$getUserinfo = function () {var _uni$request;
 
     header: {
       'content-type': 'application/x-www-form-urlencoded',
-      'Cookie': _server.default.cookie } }, _defineProperty(_uni$request, "header",
+      'Cookie': _server.default.cookie,
+      'system': _server.default.system } }, _defineProperty(_uni$request, "header",
 
   {
     'content-type': 'application/x-www-form-urlencoded' }), _defineProperty(_uni$request, "success",
@@ -37,6 +39,10 @@ _vue.default.prototype.$getUserinfo = function () {var _uni$request;
   }), _uni$request));
 
 };
+
+
+
+//举报信息
 _vue.default.prototype.$jubao = function (postId, auid, beijubao, liyou) {
   uni.request({
     method: 'GET',
@@ -48,7 +54,8 @@ _vue.default.prototype.$jubao = function (postId, auid, beijubao, liyou) {
       liyou: liyou },
 
     header: {
-      'content-type': 'application/x-www-form-urlencoded' },
+      'content-type': 'application/x-www-form-urlencoded',
+      'system': _server.default.system },
 
     success: function success(res) {
       return res.data.msg;

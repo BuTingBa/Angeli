@@ -8,7 +8,7 @@
 			
 			<view v-for="(list,index) in MsgList" :key="index">
 				<view class="cu-item">
-					<view class="cu-avatar radius yuan" style="background-image: url('../../static/systemMsg.png');" ></view>
+					<view class="cu-avatar radius yuan" style="background-image: url('https://sz.oss.data.angeli.top/angeli-image/157303749250764.png');" ></view>
 					<view class="main">
 						<view class="content shadow">
 							<view>{{list.msg}}\n<text v-if="list.type==2" @click="getLink(list.typeVal)" style="color: #0081FF;" >点击这里查看详情</text></view>

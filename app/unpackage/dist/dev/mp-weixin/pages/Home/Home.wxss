@@ -42,9 +42,45 @@ page {
 		border-radius:50%;
 		position: relative;
 }
+.hongdiana2{
+		width: 16rpx;
+		height:16rpx;
+		position: absolute;
+		right: 5rpx;
+		top: 5rpx;
+}
+.plusmenubihe{
+		position: fixed;
+		bottom:180rpx;
+		right: 30rpx;
+		width: 100rpx;
+		height: 100rpx;
+		bottom:180rpx;
+}
+.plusmenuopen{
+		position: fixed;
+		bottom:180rpx;
+		right: 140rpx;
+		width: 100rpx;
+		height: 100rpx;
+		bottom:180rpx;
+}
+.plusmenuopen2{
+		position: fixed;
+		bottom:180rpx;
+		right: 250rpx;
+		width: 100rpx;
+		height: 100rpx;
+		bottom:180rpx;
+}
 .plus{
 		position: fixed;
 		bottom:60rpx;
+		right: 30rpx;
+}
+.plusmenu{
+		position: fixed;
+		bottom:180rpx;
 		right: 30rpx;
 }
 .listtype{

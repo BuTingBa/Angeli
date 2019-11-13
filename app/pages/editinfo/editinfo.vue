@@ -117,9 +117,11 @@
 				        		'Cookie':server.cookie
 				        	},
 				        	success: (uploadFileRes) => {
-								console.log(uploadFileRes.data)
-								if(uploadFileRes.data.code==1){
-									this.user.AvatarUrl=uploadFileRes.data;
+								console.log(uploadFileRes);
+								var json=JSON.parse(uploadFileRes.data);
+								if(json.code==1){
+									this.user.AvatarUrl=json.data;
+									server.userinfo.AvatarUrl=json.data
 									uni.showToast({
 										title: "修改成功！",
 										position:'bottom',
@@ -127,7 +129,7 @@
 									});
 								}else{
 									uni.showToast({
-										title: uploadFileRes.data.msg,
+										title: json.msg,
 										position:'bottom',
 										icon:'none'
 									});

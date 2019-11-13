@@ -189,7 +189,8 @@ var _default = { data: function data() {return { alipay: false, aliuser: '', fee
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           console.log(res);

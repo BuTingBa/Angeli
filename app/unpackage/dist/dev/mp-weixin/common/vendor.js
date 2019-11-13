@@ -1933,9 +1933,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var userinfo = [];
 var usersk = '';
 var postClass = [];
-var tgid = '';var _default =
+var tgid = '';
+var system = '';var _default =
 {
   cookie: cookie,
+  system: system,
   userinfo: userinfo,
   usersk: usersk,
   postClass: postClass,
