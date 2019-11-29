@@ -61,11 +61,11 @@
 					url: "https://api.angeli.top/user.php?type=tixian", //请求标记已读消息
 					data: {
 						'openid':server.userinfo.wxOpenId,
-						'fee':this.fee
+						'fee':this.fee,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
 						'system':server.system
 					},
 					success: (res) => {

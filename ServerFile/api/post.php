@@ -1,7 +1,7 @@
 <?php
 require_once('../config.php');
 require_once('angeli.class.php');
-session_start();
+
 error_reporting(E_ALL^E_NOTICE);
 
 //跨域解决方案
@@ -9,7 +9,8 @@ error_reporting(E_ALL^E_NOTICE);
 $allow_origin = array(
     'https://api.angeli.top',
     'http://www.angeli.top',
-    'http://angeli.top'
+    'http://angeli.top',
+    'http://share.angeli.top'
 );
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';  //跨域访问的时候才会存在此字段
 if (in_array($origin, $allow_origin)) {
@@ -20,6 +21,12 @@ $post=new angeli($config);
 if(empty($_GET['type'])){
     die('缺少请求类型！');
 }
+
+if(isset($_REQUEST['token'])){
+    session_id($_REQUEST['token']);
+    session_start();
+}
+
 switch ($_GET['type']) {
     case 'addPost':
         if(!$_SESSION['Auid'])
@@ -88,6 +95,9 @@ switch ($_GET['type']) {
         }
         $outmsg = array('code' =>'1','msg'=>'获取成功！','data'=>$postinfo);
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        break;
+    case 'test':
+        $post->test();
         break;
     case 'pl':
         if(!$_SESSION['Auid'])
@@ -285,13 +295,32 @@ switch ($_GET['type']) {
 
         $auid=empty($_GET['auid'])?$_SESSION['Auid']:$_GET['auid'];
 
-        $out=$post->getMyFavorite($auid,empty($_GET['page'])?1:$_GET['page'],empty($_GET['count'])?20:$_GET['count']);
-        if(!$out){
-            $outmsg = array('code' =>'0','msg'=>'没有任何收藏！','data'=>$out);
-            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        if($auid==$_SESSION['Auid']){
+            //本人查看自己的种草记录
+            $out=$post->getMyFavorite($auid,empty($_GET['page'])?1:$_GET['page'],empty($_GET['count'])?20:$_GET['count']);
+            if(!$out){
+                $outmsg = array('code' =>'0','msg'=>'没有任何收藏！','data'=>$out);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$out);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
         }else{
-            $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$out);
-            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            //查看他人的种草记录
+            $data=$post->getConfig($auid,'showGive');
+            if($data=='off'){
+                $outmsg = array('code' =>'0','msg'=>'用户已经隐藏种草！','data'=>$out);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $out=$post->getMyFavorite($auid,empty($_GET['page'])?1:$_GET['page'],empty($_GET['count'])?20:$_GET['count']);
+                if(!$out){
+                    $outmsg = array('code' =>'0','msg'=>'没有任何收藏！','data'=>$out);
+                    die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+                }else{
+                    $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$out);
+                    die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+                }
+            }
         }
         break;
     case 'checkText':
@@ -393,11 +422,15 @@ switch ($_GET['type']) {
         }
         break;
     case 'jubao':
-        if(empty($_GET['postId'])||empty($_GET['auid'])||empty($_GET['beijubao'])||empty($_GET['liyou'])){
+        if(empty($_GET['postId'])||empty($_GET['auid'])||empty($_GET['beijubao'])){
             $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $postId=$_GET['postId'];
+
+
+
+
         $data=$post->addJuBao($postId,$_GET['auid'],$_GET['beijubao'],$_GET['liyou']);
         if(!$data){
             $outmsg = array('code' =>'0','msg'=>'举报失败','data'=>$data);
@@ -429,6 +462,30 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
 
+        break;
+    case 'getVersion':
+        $v=$post->getSystemConfig('version');
+        $url=$post->getSystemConfig('download_url');
+        $data=array(
+            'version'=>$v,
+            'downloadUrl'=>$url
+        );
+        $outmsg = array('code' =>'1','msg'=>'获取成功','data'=>$data);
+        die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+
+        break;
+    case 'getSharePost':
+        if(empty($_GET['postId'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>$out);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $postinfo=$post->getPostInfo($_GET['postId']);
+        if(!$postinfo){
+            $outmsg = array('code' =>'0','msg'=>'获取失败吖！','data'=>"0 data");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $outmsg = array('code' =>'1','msg'=>'获取成功！','data'=>$postinfo);
+        die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         break;
     default:
         # code...

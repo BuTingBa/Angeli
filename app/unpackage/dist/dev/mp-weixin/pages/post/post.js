@@ -172,6 +172,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       modalName: null,
       postcontent: "null",
       huati: "",
+      nr: '',
       huatiname: "选择话题",
       oosArr: [],
       // 阿里云oos相关配置
@@ -202,11 +203,24 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
   },
-  onBackPress: function onBackPress() {
-    uni.redirectTo({
-      url: '../Home/Home?type=plusPost' });
 
-  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   onShow: function onShow() {
     console.log(_server.default.postClass);
@@ -215,6 +229,13 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     console.log(_server.default.system);
   },
   onLoad: function onLoad(e) {
+
+
+
+
+
+
+
     uni.getSystemInfo({
       success: function success(res) {
         var systemjson = {
@@ -224,6 +245,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         _server.default.system = JSON.stringify(systemjson);
         console.log(_server.default.system);
       } });
+
+
 
   },
   methods: {
@@ -267,6 +290,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     textareaAInput: function textareaAInput(e) {
       this.postcontent = e.target.value;
+
     },
     sendpost: function sendpost(e) {
       console.log(this.postcontent);
@@ -313,11 +337,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         data: {
           imageList: this.oosArr.join().split(','),
           txt: this.postcontent,
-          huati: this.huati },
+          huati: this.huati,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
           'system': _server.default.system },
 
         success: function success(res) {

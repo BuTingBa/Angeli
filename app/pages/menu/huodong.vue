@@ -45,7 +45,8 @@
 						url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
 						data: {
 							code: res.code,
-							tuijianId:this.tuijianren
+							tuijianId:this.tuijianren,
+							
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded'
@@ -96,11 +97,12 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=mark&class=system", //请求标记已读消息
 					data: {
-						'msgId':this.msgid
+						'msgId':this.msgid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -127,11 +129,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getMyTG", 
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)

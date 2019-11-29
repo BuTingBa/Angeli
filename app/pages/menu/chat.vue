@@ -127,11 +127,11 @@
 					url: "https://api.angeli.top/user.php?type=upmsg", //仅为示例，并非真实接口地址。
 					data: {
 						'msg':this.val,
-						'toid':this.toid
+						'toid':this.toid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
 						'system':server.system
 					},
 					success: (res) => {
@@ -160,11 +160,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=mark&class=msg", //请求标记已读消息
 					data: {
-						'msgId':this.msgid
+						'msgId':this.msgid,
+						token:server.token 
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						console.log(res)
@@ -191,11 +191,12 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getMyMsg", //仅为示例，并非真实接口地址。
 					data: {
-						'msgid':this.msgid
+						'msgid':this.msgid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+					
 					},
 					success: (res) => {
 						console.log(res)

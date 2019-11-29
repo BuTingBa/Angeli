@@ -54,11 +54,12 @@
 					data: {
 						username:this.name,
 						gender:this.dataSex,
-						phone:this.phone
+						phone:this.phone,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -110,11 +111,11 @@
 					method:'GET',
 					url: 'https://api.angeli.top/reg.php?type=checkName&name='+this.name, //仅为示例，并非真实接口地址。
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="0"){

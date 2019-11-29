@@ -53,7 +53,7 @@
 					</view>
 					<view class="autologin">
 						<image class="loginImage" src="../../static/wechat.png" mode="aspectFit" @click="getWechatOauth"></image>
-						<image class="loginImage" src="../../static/qq.png" mode="aspectFit" @click="getQQOauth"></image>
+						<!-- <image class="loginImage" src="../../static/qq.png" mode="aspectFit" @click="getQQOauth"></image> -->
 					</view>
 					</view>
 					
@@ -116,18 +116,26 @@
 				}
 				
 			},
+			setVal:function(token,user){
+				try {
+				    uni.setStorageSync('token', token);
+				} catch (e) {
+				    console.log(e)
+				}
+				try {
+				   uni.setStorageSync('user', user);
+				} catch (e) {
+				    console.log(e)
+				}
+			},
 			getWechatOauth:function(){
 				uni.getProvider({
 					service: 'oauth',
 					success: function (res) {
-						console.log(res.provider)
 						if (~res.provider.indexOf('weixin')) {
 							uni.login({
 								provider: 'weixin',
 								success: function (loginRes) {
-									console.log(loginRes)
-									console.log(loginRes.authResult.unionid)
-									
 									uni.request({
 										method:'POST',
 										url: 'https://api.angeli.top/reg.php?type=appwxlogin', 
@@ -138,7 +146,6 @@
 											'content-type': 'application/x-www-form-urlencoded'
 										},
 										success: (res) => {
-											
 											console.log(res);
 											if(res.data.code=="0"){
 												server.usersk=res.data.data.session_key
@@ -151,8 +158,19 @@
 												
 											}else if(res.data.code=="1" ||res.data.code=="2"){
 												server.userinfo=res.data.data;
-												server.cookie=res.header['Set-Cookie'];
-												console.log("记录cookie：",server.cookie)
+												server.token=res.data.token;
+												console.log('得到的token：'+res.data.token)
+												try {
+												    uni.setStorageSync('token',res.data.token);
+												} catch (e) {
+												    console.log(e)
+												}
+												try {
+												   uni.setStorageSync('user',res.data.data);
+												} catch (e) {
+												    console.log(e)
+												}
+												
 												if(res.data.code=="2"){
 													uni.showToast({
 														title: res.data.msg,
@@ -173,6 +191,7 @@
 															icon:'none'
 														})
 													}
+													
 												}
 												
 												setTimeout(function () {
@@ -182,16 +201,12 @@
 												}, 2000);
 											}
 										},
-										complete: () => {
-											this.getPostData('new',0);
-										},
 										fail:(src) =>{
 											uni.showToast({
 												title: "未知原因，登录失败！",
 												position:'bottom',
 												icon:'none'
 											})
-											this.getPostData('new',0);
 										},
 									});
 								}
@@ -259,11 +274,10 @@
 						method:'POST',
 						url: 'https://api.angeli.top/reg.php?type=getCode',//获取验证码
 						data: {
-							phone:this.user
+							phone:this.user,
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
 						},
 						success: (res) => {
 							console.log(res);
@@ -276,7 +290,8 @@
 									icon:'none',
 									position:'center'
 								});
-								
+								server.token=res.data.token;
+								uni.setStorageSync('token', server.token);
 								console.log('获取验证码cookie',server.cookie);
 							}else{
 								uni.showToast({
@@ -327,45 +342,19 @@
 					url: 'https://api.angeli.top/reg.php?type=codeLogin', //仅为示例，并非真实接口地址。
 					data: {
 						phone: this.user,
-						code:this.password
+						code:this.password,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						console.log(res);
 						if(res.data.code=="1"){//登陆成功
 							server.userinfo=res.data.data;
-							server.cookie=res.header['Set-Cookie'];
-							uni.setStorage({
-								key: 'cookie',
-								data: res.header['Set-Cookie'],
-								success: function () {
-									console.log("储存cookie成功！")
-									uni.setStorage({
-										key: 'userinfo',
-										data: res.data.data,
-										success: function () {
-											uni.showToast({
-												title: res.data.msg,
-												position:'bottom',
-												icon:'none',
-												duration:2000,
-												mask:true
-											});
-											
-											if(res.data.code=="1"){
-												setTimeout(function () {
-													uni.redirectTo({
-														url: '../Home/Home'
-													})
-												}, 1500);
-											}
-										}
-									});
-								}
-							});
+							server.token=res.data.token;
+							uni.setStorageSync('token', server.token);
+							uni.setStorageSync('user', server.userinfo);
 						}
 						if(res.data.code=="2"){//新用户注册
 							uni.navigateTo({
@@ -573,7 +562,7 @@ page{
 .autologin{
 	margin: 0upx 240upx;
 	display: flex;
-	justify-content:space-between;
+	justify-content:center;
 	align-items:center;
 	
 }

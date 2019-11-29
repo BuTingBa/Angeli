@@ -334,8 +334,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 181));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { name: [], sex: '♀', gz: '+关注', TabCur: 0, CustomBar: this.CustomBar, page: 1, weikong: true, postList: [], MyzcList: [], auid: 0, status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' } };}, onLoad: function onLoad(e) {var _this = this;console.log(e.auid);this.auid = e.auid;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
-      data: { auid: e.auid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);_this.name = res.data.data;_this.getPostList(_this.name.Auid);if (res.data.data.guanzhu == true) {_this.gz = "取消关注";}} });if (this.name.Gender == "2") {this.sex = '♀';} else {this.sex = '♂';}}, methods: { getMyzc: function getMyzc() {var _this2 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
-        data: { page: 1, count: 20, auid: this.auid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code !== "1") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none', duration: 2000, mask: true });_this2.weikong = true;} else {_this2.MyzcList = res.data.data;_this2.weikong = false;}}, complete: function complete() {uni.hideLoading();} });}, getChat: function getChat(id) {var go = parseInt(id) + parseInt(_server.default.userinfo.Auid);uni.navigateTo({
+      data: { auid: e.auid, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log(res);_this.name = res.data.data;_this.getPostList(_this.name.Auid);if (res.data.data.guanzhu == true) {_this.gz = "取消关注";}} });if (this.name.Gender == "2") {this.sex = '♀';} else {this.sex = '♂';}}, methods: { getMyzc: function getMyzc() {var _this2 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
+        data: { page: 1, count: 20, auid: this.auid, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {if (res.data.code !== "1") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none', duration: 2000, mask: true });_this2.weikong = true;} else {_this2.MyzcList = res.data.data;_this2.weikong = false;}}, complete: function complete() {uni.hideLoading();} });}, getChat: function getChat(id) {var go = parseInt(id) + parseInt(_server.default.userinfo.Auid);uni.navigateTo({
         url: '../menu/chat?id=' + go + '&toid=' + this.auid });
 
     },
@@ -350,11 +350,12 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         method: 'GET',
         url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
         data: {
-          uid: uid },
+          uid: uid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           uni.showToast({
@@ -388,11 +389,11 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         data: {
           uid: auid,
           count: 10,
-          page: this.page },
+          page: this.page,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           if (res.data.data.length == undefined) {
@@ -418,11 +419,11 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
       data: {
         uid: this.name.Auid,
         count: 10,
-        page: this.page },
+        page: this.page,
+        token: _server.default.token },
 
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Cookie': _server.default.cookie },
+        'content-type': 'application/x-www-form-urlencoded' },
 
       success: function success(res) {
         if (res.data.data.length == undefined) {

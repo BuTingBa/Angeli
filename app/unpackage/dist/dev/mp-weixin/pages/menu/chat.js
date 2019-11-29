@@ -266,7 +266,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgList: [], auid: 0, val: '', toid: 0, value: "" };}, onLoad: function onLoad(e) {this.auid = _server.default.userinfo.Auid;console.log(e.id, e.toid);this.msgid = e.id;this.toid = e.toid;this.getMyMsg();}, onShow: function onShow() {this.markmsg();}, methods: { input: function input(e) {this.val = e.target.value;}, getbie: function getbie() {uni.navigateTo({ url: '../i/bieren?auid=' + this.toid });}, getme: function getme() {uni.navigateTo({ url: '../i/i' });}, upmsg: function upmsg() {var _this = this;uni.showLoading({ title: '发送中..', mask: true });if (this.val == '' || this.val == null) {uni.showToast({ title: "请输入发送内容！", position: 'bottom', icon: 'none' });return;}uni.request({ method: 'POST', url: "https://api.angeli.top/user.php?type=upmsg", //仅为示例，并非真实接口地址。
-        data: { 'msg': this.val, 'toid': this.toid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie, 'system': _server.default.system }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.value = "";_this.val = '';_this.getMyMsg();}if (res.data.code == "0" || res.data.code == null || res.data.code == false) {uni.showToast({ title: "发送失败，请稍后再试", position: 'bottom',
+        data: { 'msg': this.val, 'toid': this.toid, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded', 'system': _server.default.system }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.value = "";_this.val = '';_this.getMyMsg();}if (res.data.code == "0" || res.data.code == null || res.data.code == false) {uni.showToast({ title: "发送失败，请稍后再试", position: 'bottom',
               icon: 'none' });
 
           }
@@ -282,11 +282,11 @@ var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgLi
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=mark&class=msg", //请求标记已读消息
         data: {
-          'msgId': this.msgid },
+          'msgId': this.msgid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           console.log(res);
@@ -313,11 +313,12 @@ var _default = { data: function data() {return { InputBottom: 0, msgid: 0, MsgLi
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=getMyMsg", //仅为示例，并非真实接口地址。
         data: {
-          'msgid': this.msgid },
+          'msgid': this.msgid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);

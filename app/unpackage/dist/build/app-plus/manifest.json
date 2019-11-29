@@ -7,7 +7,7 @@
   "id": "__UNI__F71FC08",
   "name": "安个利社区",
   "version": {
-    "name": "1.0.1",
+    "name": "1.21",
     "code": 120
   },
   "description": "安个利",
@@ -84,32 +84,23 @@
       },
       "splashscreen": {
         "android": {
-          "hdpi": "static/g.png",
-          "xhdpi": "static/g.png",
-          "xxhdpi": "static/g.png"
+          "hdpi": "static/huawei.png",
+          "xhdpi": "static/huawei.png",
+          "xxhdpi": "static/huawei.png"
         }
       },
       "google": {
         "permissions": [
-          "<uses-feature android:name=\"android.hardware.camera\"/>",
-          "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-          "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
-          "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
-          "<uses-permission android:name=\"android.permission.CAMERA\"/>",
-          "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-          "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
           "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
-          "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-          "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
-          "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-          "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
-          "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
-          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+          "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>"
         ]
       },
-      "apple": {},
+      "apple": {
+        "privacyDescription": {
+          "NSPhotoLibraryUsageDescription": "从相册中选取图片，发送帖子",
+          "NSPhotoLibraryAddUsageDescription": "保存帖子中的图片"
+        }
+      },
       "plugins": {
         "oauth": {
           "weixin": {
@@ -121,7 +112,15 @@
           }
         },
         "push": {},
-        "share": {},
+        "share": {
+          "weixin": {
+            "appid": "wxb20ffcea11df81b0",
+            "UniversalLinks": ""
+          },
+          "qq": {
+            "appid": "101734904"
+          }
+        },
         "payment": {
           "appleiap": {},
           "weixin": {
@@ -129,6 +128,7 @@
             "UniversalLinks": ""
           }
         },
+        "statics": {},
         "audio": {
           "mp3": {
             "description": "Android平台录音支持MP3格式文件"
@@ -139,10 +139,13 @@
     "nativePlugins": {},
     "allowsInlineMediaPlayback": true,
     "uni-app": {
-      "compilerVersion": "2.3.7",
+      "compilerVersion": "2.4.2",
       "control": "v8",
-      "nvueCompiler": "weex",
-      "renderer": "auto"
+      "nvueCompiler": "uni-app",
+      "renderer": "auto",
+      "nvue": {
+        "flex-direction": "column"
+      }
     }
   }
 }

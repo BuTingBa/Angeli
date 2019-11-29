@@ -186,7 +186,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var _default = { data: function data() {return { sex: '男', user: [] };}, onShow: function onShow() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
-      data: { auid: _server.default.userinfo.Auid }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == '1') {_server.default.userinfo = res.data.data;_this.user = res.data.data;}} });}, methods: { toPage: function toPage(type) {uni.navigateTo({ url: '../edit/edit?type=' + type });},
+      data: { auid: _server.default.userinfo.Auid, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {if (res.data.code == '1') {_server.default.userinfo = res.data.data;_this.user = res.data.data;}} });}, methods: { toPage: function toPage(type) {uni.navigateTo({ url: '../edit/edit?type=' + type });},
     setsex: function setsex() {
       uni.showActionSheet({
         itemList: ['男', '女'],
@@ -196,11 +196,11 @@ var _default = { data: function data() {return { sex: '男', user: [] };}, onSho
             url: 'https://api.angeli.top/user.php?type=setSex', //仅为示例，并非真实接口地址。
             data: {
               auid: _server.default.userinfo.Auid,
-              sex: res.tapIndex + 1 },
+              sex: res.tapIndex + 1,
+              token: _server.default.token },
 
             header: {
-              'content-type': 'application/x-www-form-urlencoded',
-              'Cookie': _server.default.cookie },
+              'content-type': 'application/x-www-form-urlencoded' },
 
             success: function success(res) {
               if (res.data.code == '1') {
@@ -235,10 +235,11 @@ var _default = { data: function data() {return { sex: '男', user: [] };}, onSho
             filePath: tempFilePaths[0],
             name: 'file',
             formData: {
-              'type': 'test' },
+              'type': 'test',
+              token: _server.default.token },
 
-            header: {
-              'Cookie': _server.default.cookie },
+            header: {},
+
 
             success: function success(uploadFileRes) {
               console.log(uploadFileRes);

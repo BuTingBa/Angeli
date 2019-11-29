@@ -23,11 +23,11 @@ _vue.default.prototype.$getUserinfo = function () {var _uni$request;
     method: 'GET',
     url: "https://api.angeli.top/user.php?type=getUserInfo", //仅为示例，并非真实接口地址。
     data: {
-      auid: _server.default.userinfo.Auid },
+      auid: _server.default.userinfo.Auid,
+      token: _server.default.token },
 
     header: {
       'content-type': 'application/x-www-form-urlencoded',
-      'Cookie': _server.default.cookie,
       'system': _server.default.system } }, _defineProperty(_uni$request, "header",
 
   {
@@ -51,7 +51,8 @@ _vue.default.prototype.$jubao = function (postId, auid, beijubao, liyou) {
       postId: postId,
       auid: auid,
       beijubao: beijubao,
-      liyou: liyou },
+      liyou: liyou,
+      token: _server.default.token },
 
     header: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -67,11 +68,11 @@ _vue.default.prototype.$delPost = function (postid) {
     method: 'GET',
     url: "https://api.angeli.top/post.php?type=delPost", //仅为示例，并非真实接口地址。
     data: {
-      postId: postid },
+      postId: postid,
+      token: _server.default.token },
 
     header: {
-      'content-type': 'application/x-www-form-urlencoded',
-      'Cookie': _server.default.cookie },
+      'content-type': 'application/x-www-form-urlencoded' },
 
     success: function success(res) {
       return res.data.msg;

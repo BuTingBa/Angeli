@@ -13,11 +13,11 @@ Vue.prototype.$getUserinfo=function(){
 		method:'GET',
 		url: "https://api.angeli.top/user.php?type=getUserInfo", //仅为示例，并非真实接口地址。
 		data: {
-			auid:cook.userinfo.Auid
+			auid:cook.userinfo.Auid,
+			token:cook.token
 		},
 		header: {
 			'content-type': 'application/x-www-form-urlencoded',
-			'Cookie':cook.cookie,
 			'system':cook.system
 		},
 		header: {
@@ -41,7 +41,8 @@ Vue.prototype.$jubao=function (postId,auid,beijubao,liyou){
 			postId:postId,
 			auid:auid,
 			beijubao:beijubao,
-			liyou:liyou
+			liyou:liyou,
+			token:cook.token
 		},
 		header: {
 			'content-type': 'application/x-www-form-urlencoded',
@@ -57,11 +58,11 @@ Vue.prototype.$delPost=function(postid){
 		method:'GET',
 		url: "https://api.angeli.top/post.php?type=delPost", //仅为示例，并非真实接口地址。
 		data: {
-			postId:postid
+			postId:postid,
+			token:cook.token
 		},
 		header: {
 			'content-type': 'application/x-www-form-urlencoded',
-			'Cookie':cook.cookie
 		},
 		success: (res) => {
 			return res.data.msg;

@@ -43,11 +43,11 @@
 				method:'GET',
 				url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
 				data: {
-					auid: server.userinfo.Auid
+					auid: server.userinfo.Auid,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					if(res.data.code=='1'){
@@ -72,11 +72,11 @@
 							url: 'https://api.angeli.top/user.php?type=setSex', //仅为示例，并非真实接口地址。
 							data: {
 								auid: server.userinfo.Auid,
-								sex:res.tapIndex + 1
+								sex:res.tapIndex + 1,
+								token:server.token
 							},
 							header: {
 								'content-type': 'application/x-www-form-urlencoded',
-								'Cookie':server.cookie
 							},
 							success: (res) => {
 								if(res.data.code=='1'){
@@ -111,10 +111,11 @@
 				        	filePath: tempFilePaths[0],
 				        	name: 'file',
 				        	formData: {
-				        		'type': 'test'
+				        		'type': 'test',
+								token:server.token
 				        	},
 				        	header: {
-				        		'Cookie':server.cookie
+
 				        	},
 				        	success: (uploadFileRes) => {
 								console.log(uploadFileRes);

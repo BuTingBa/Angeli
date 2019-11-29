@@ -288,11 +288,11 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
             fee: this.money,
             number: this.monnumber,
             key: wxkey,
-            auid: _server.default.userinfo.Auid },
+            auid: _server.default.userinfo.Auid,
+            token: _server.default.token },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie,
             'system': _server.default.system },
 
           success: function success(res) {
@@ -319,11 +319,12 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
                     url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip',
                     data: {
                       auid: _server.default.userinfo.Auid,
-                      orderId: dd },
+                      orderId: dd,
+                      token: _server.default.token },
 
                     header: {
-                      'content-type': 'application/x-www-form-urlencoded',
-                      'Cookie': _server.default.cookie },
+                      'content-type': 'application/x-www-form-urlencoded' },
+
 
                     success: function success(res) {
                       if (res.data.data.payStatus == '已支付' || res.data.data.payStatus == 'OK') {
@@ -378,6 +379,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
 
         //如果是APP支付
+
+
 
 
 

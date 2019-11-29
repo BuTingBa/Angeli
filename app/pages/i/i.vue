@@ -121,11 +121,11 @@
 				data: {
 					uid: this.name.Auid,
 					count:10,
-					page:this.page
+					page:this.page,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					if(res.data.data.length==undefined){
@@ -140,16 +140,17 @@
 		},
 		methods: {
 			getMyzc:function(){
+				console.log(server.token)
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
 					data: {
 						page:1,
-						count:20
+						count:20,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						
@@ -203,11 +204,11 @@
 				data: {
 					uid: this.name.Auid,
 					count:10,
-					page:this.page
+					page:this.page,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					if(res.data.data.length==undefined){
@@ -315,7 +316,6 @@
 		padding: 5upx;
 		font-size: 28upx;
 		line-height: 28upx;
-		
 		overflow:hidden;
 		text-overflow:ellipsis;
 		display:-webkit-box;

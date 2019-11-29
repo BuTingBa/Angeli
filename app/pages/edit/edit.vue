@@ -7,7 +7,7 @@
 		<view class="body">
 			<view v-if="type=='1'" class="upname">
 				<text style="color: #888888;"> 更改昵称，普通用户一年只能修改两次，你还能修改{{upNameNumber}}次</text>
-				<input type="text" value="" maxlength="7" focus="true" @input="inputing" class="in" />
+				<input type="text" value="" maxlength="5" focus="true" @input="inputing" class="in" />
 				<view class="dibu">
 					<button class="Angeli" v-if="upNameNumber>0" @click="setName">确定修改</button>
 				</view>
@@ -30,7 +30,9 @@
 			<view class="upname" v-if="type=='6'" >
 				 <web-view src="https://api.angeli.top/html/user.html"></web-view>
 			</view>
-			
+			<view class="upname" v-if="type=='7'" >
+				 <web-view src="https://api.angeli.top/html/about.html"></web-view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -68,6 +70,9 @@
 			if(val.type=='6'){
 				this.title="安个利用户协议"
 			}
+			if(val.type=='7'){
+				this.title="关于安个利"
+			}
 		},
 		methods: {
 			inputing:function(e){
@@ -83,11 +88,11 @@
 					url: 'https://api.angeli.top/user.php?type=setName', //仅为示例，并非真实接口地址。
 					data: {
 						auid: server.userinfo.Auid,
-						newName:this.newName
+						newName:this.newName,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						uni.showToast({
@@ -116,11 +121,11 @@
 					method:'GET',
 					url: 'https://api.angeli.top/user.php?type=getNameCount', //仅为示例，并非真实接口地址。
 					data: {
-						auid: server.userinfo.Auid
+						auid: server.userinfo.Auid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						if(res.data.code=='1'){
@@ -139,11 +144,11 @@
 					url: 'https://api.angeli.top/user.php?type=setms', //仅为示例，并非真实接口地址。
 					data: {
 						auid: server.userinfo.Auid,
-						ms:this.newName
+						ms:this.newName,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						uni.showToast({

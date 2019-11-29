@@ -27,7 +27,6 @@
 				url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					this.classList=res.data.data;

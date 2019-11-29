@@ -233,11 +233,12 @@ var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0,
             txt: nr,
             postid: this.postid,
             uid: this.pluid,
-            auid: _server.default.userinfo.Auid },
+            auid: _server.default.userinfo.Auid,
+            token: _server.default.token },
 
           header: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie },
+            'content-type': 'application/x-www-form-urlencoded' },
+
 
           success: function success(res) {
             if (res.data.code == '1') {
@@ -247,11 +248,12 @@ var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0,
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this.postid },
+                  postid: _this.postid,
+                  token: _server.default.token },
 
                 header: {
-                  'content-type': 'application/x-www-form-urlencoded',
-                  'Cookie': _server.default.cookie },
+                  'content-type': 'application/x-www-form-urlencoded' },
+
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
@@ -290,11 +292,12 @@ var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0,
             auid: _server.default.userinfo.Auid,
             txt: this.plnr,
             postid: this.postid,
-            uid: this.postInfo.AuthorId },
+            uid: this.postInfo.AuthorId,
+            token: _server.default.token },
 
           header: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie },
+            'content-type': 'application/x-www-form-urlencoded' },
+
 
           success: function success(res) {
             if (res.data.code == '1') {
@@ -304,11 +307,12 @@ var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0,
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this.postid },
+                  postid: _this.postid,
+                  token: _server.default.token },
 
                 header: {
-                  'content-type': 'application/x-www-form-urlencoded',
-                  'Cookie': _server.default.cookie },
+                  'content-type': 'application/x-www-form-urlencoded' },
+
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
@@ -357,10 +361,13 @@ var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0,
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/post.php?type=getdupl&CommentsId=" + CommentsId,
-        data: {},
+        data: {
+          token: _server.default.token },
+
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
+
 
         success: function success(res) {
           if (res.data.code == "1") {
@@ -396,11 +403,12 @@ var _default = { data: function data() {return { list: [], plnr: '', huifuid: 0,
         method: 'GET',
         url: "https://api.angeli.top/post.php?type=gethflist&CommentsId=" + CommentsId + "&postid=" + postid,
         data: {
-          'pluid': pluid },
+          'pluid': pluid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           if (res.data.code == "1") {

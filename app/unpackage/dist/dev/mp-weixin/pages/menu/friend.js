@@ -181,11 +181,12 @@ var _default = { data: function data() {return { dataList: [] };}, onLoad: funct
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=getMyhaoyou", //请求标记已读消息
-        data: {},
+        data: {
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);

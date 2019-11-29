@@ -90,6 +90,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.showJubao = false
+    }
+  }
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -123,14 +128,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
 
 
 
@@ -373,19 +370,27 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { postInfo: [], pllist: [], dslist: [], showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1, shunxu: false };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
+var _default = { data: function data() {return { postInfo: [], pllist: [], dslist: [], showAppFenxiang: false, showVip: false, InputBottom: 0, plnr: "", xzId: 1, postid: "", setvar: "", Give: "0", huifu: false, gaodu: '-710px', yanse: 'rgba(0,0,0,0)', pluid: "", monnumber: 1, shunxu: false, jubao: { postid: 0, authorid: 0 }, jubaoliyou: '', showJubao: false };}, onShareAppMessage: function onShareAppMessage(res) {if (res.from === 'button') {// 来自页面内分享按钮
       console.log(res.target);}return { title: this.postInfo.Content, path: '/pages/postinfo/postinfo?id=' + this.postid, desc: this.postInfo.Content, imageUrl: this.postInfo.PictureId[0] };}, onLoad: function onLoad(option) {var _this = this; //option为object类型，会序列化上个页面传递的参数
     console.log('ID:', option.id); //打印出上个页面传递的参数。
     this.postid = option.id;this.getdsList(this.postid);uni.getSystemInfo({ success: function success(res) {var systemjson = { phonebrand: res.brand + res.model, phonesystem: res.system };_server.default.system = JSON.stringify(systemjson);console.log(_server.default.system);} });if (option.type == 'fenxiang') {if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {uni.showLoading({ title: '加载中' });uni.login({ provider: 'weixin', success: function success(res) {console.log(res);uni.request({ method: 'POST', url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
-              data: { code: res.code, tuijianId: _this.tuijianren }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log(res);if (res.data.code == "0") {_server.default.usersk = res.data.data.session_key;uni.showToast({ title: "欢迎你，游客", position: 'bottom', icon: 'none' });_this.AvatarUrl = "https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png";} else if (res.data.code == "1" || res.data.code == "2") {_this.AvatarUrl = res.data.data.AvatarUrl;_this.username = res.data.data.UserName;_this.zhongcao = res.data.data.ZhongcaoCount;_this.guanzhu = res.data.data.FollowedCount;_this.fensi = res.data.data.FollowerCount;_this.dengji = res.data.data.Rank;_this.userid = res.data.data.Auid;_this.userInfo = res.data.data;_server.default.userinfo = res.data.data;_server.default.cookie = res.header['Set-Cookie'];console.log("记录cookie：", _server.default.cookie);if (res.data.code == "2") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none' });} else {if (_this.userInfo.VIPEndTime > 0) {uni.showToast({ title: '欢迎VIP：' + _this.username, position: 'bottom', icon: 'none' });} else {uni.showToast({ title: '欢迎你,' + _this.username, position: 'bottom', icon: 'none' });}}}}, complete: function complete() {_this.getpostinfo(option.id);uni.hideLoading();}, fail: function fail(src) {uni.showToast({ title: "未知原因，登录失败！", position: 'bottom', icon: 'none' });} });}, fail: function fail(err) {uni.showToast({ title: "登录失败", position: 'bottom' }), _this.getpostinfo(option.id);console.error('授权登录失败：' + JSON.stringify(err));} });
+              data: { code: res.code, tuijianId: _this.tuijianren }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log(res);if (res.data.code == "0") {_server.default.usersk = res.data.data.session_key;uni.showToast({ title: "欢迎你，游客", position: 'bottom', icon: 'none' });_this.AvatarUrl = "https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png";} else if (res.data.code == "1" || res.data.code == "2") {_this.AvatarUrl = res.data.data.AvatarUrl;_this.username = res.data.data.UserName;_this.zhongcao = res.data.data.ZhongcaoCount;_this.guanzhu = res.data.data.FollowedCount;_this.fensi = res.data.data.FollowerCount;_this.dengji = res.data.data.Rank;_this.userid = res.data.data.Auid;_this.userInfo = res.data.data;_server.default.userinfo = res.data.data;_server.default.cookie = res.header['Set-Cookie'];console.log("记录cookie：", _server.default.cookie);if (res.data.code == "2") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none' });} else {if (_this.userInfo.VIPEndTime > 0) {uni.showToast({ title: '欢迎VIP：' + _this.username, position: 'bottom', icon: 'none' });} else {uni.showToast({ title: '欢迎你,' + _this.username, position: 'bottom', icon: 'none' });}}}}, complete: function complete() {_this.getpostinfo(option.id);uni.hideLoading();}, fail: function fail(src) {uni.showToast({
+                  title: "未知原因，登录失败！",
+                  position: 'bottom',
+                  icon: 'none' });
+
+              } });
+
+          },
+          fail: function fail(err) {
+            uni.showToast({
+              title: "登录失败",
+              position: 'bottom' }),
+
+            _this.getpostinfo(option.id);
+            console.error('授权登录失败：' + JSON.stringify(err));
+          } });
+
       } else {
         if (_server.default.userinfo.VIPEndTime > 0) {
           uni.showToast({
@@ -411,6 +416,94 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
   },
 
   methods: {
+    appFenxiang: function appFenxiang(id, type) {
+      switch (id) {
+        case 0:
+          this.showAppFenxiang = false;
+          break;
+        case 1:
+          uni.setClipboardData({
+            data: 'http://share.angeli.top/?postId=' + this.postid,
+            success: function success() {
+              console.log('success');
+            } });
+
+          console.log('复制链接');
+          break;
+        case 2:
+          console.log(this.postInfo.PictureId[0]);
+          console.log(this.postInfo.Content);
+          console.log('http://share.angeli.top/?postId=' + this.postid);
+          uni.share({
+            provider: 'weixin',
+            scene: "WXSceneSession",
+            type: 5,
+            imageUrl: this.postInfo.PictureId[0],
+            title: this.postInfo.Content,
+            miniProgram: {
+              id: 'gh_a38adc10b952',
+              path: 'pages/postinfo/postinfo?id=' + this.postid,
+              type: 0,
+              webUrl: 'http://share.angeli.top/?postId=' + this.postid },
+
+            success: function success(ret) {
+              console.log(JSON.stringify(ret));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        case 3:
+          uni.share({
+            provider: "weixin",
+            scene: "WXSenceTimeline",
+            type: 0,
+            href: 'http://share.angeli.top/?postId=' + this.postid,
+            title: this.postInfo.Content,
+            summary: this.postInfo.Content,
+            imageUrl: this.postInfo.PictureId[0],
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        case 4:
+          uni.share({
+            provider: "qq",
+            type: 1,
+            href: 'http://share.angeli.top/?postId=' + this.postid,
+            summary: this.postInfo.Content,
+            title: this.postInfo.Content,
+            imageUrl: this.postInfo.PictureId[0],
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        default:}
+
+
+    },
+    sendjubao: function sendjubao() {
+
+      this.$jubao(this.jubao.postid, _server.default.userinfo.Auid, this.jubao.authorid, this.jubaoliyou);
+      this.showJubao = false;
+      uni.showToast({
+        title: '举报成功',
+        position: 'bottom',
+        icon: 'none' });
+
+    },
+    jubaoliyouinput: function jubaoliyouinput(res) {
+      this.jubaoliyou = res.target.value;
+    },
     getpostinfo: function getpostinfo(postid) {var _this2 = this;
       uni.showLoading({
         title: '加载中' });
@@ -419,11 +512,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
         method: 'GET',
         url: 'https://api.angeli.top/post.php?type=outPostInfo',
         data: {
-          id: postid },
+          id: postid,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
+
           'system': _server.default.system },
 
         success: function success(res) {
@@ -445,11 +539,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
           postid: postid,
           xu: this.shunxu,
           count: 40,
-          page: 1 },
+          page: 1,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
+
           'system': _server.default.system },
 
         success: function success(res) {
@@ -485,28 +580,21 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
       console.log(resa);
       this.Dindex = resa;
       if (resa.AuthorId == _server.default.userinfo.Auid) {
-        this.menuList = ['生成海报', '举报', '删除帖子'];
+        this.menuList = ['分享', '举报', '删除帖子'];
       } else {
-        this.menuList = ['生成海报', '举报'];
+        this.menuList = ['分享', '举报'];
       }
       uni.showActionSheet({
         itemList: this.menuList,
         success: function success(res) {
           switch (res.tapIndex) {
             case 0:
-              uni.showToast({
-                title: "生成海报还在内测中",
-                position: 'bottom',
-                icon: 'none' });
-
+              _this4.showAppFenxiang = true;
               break;
             case 1:
-              uni.showToast({
-                title: '举报成功',
-                position: 'bottom',
-                icon: 'none' });
-
-              _this4.$jubao(resa.PostsId, _server.default.userinfo.Auid, resa.AuthorId, '没有理由');
+              _this4.showJubao = true;
+              _this4.jubao.postid = resa.PostsId;
+              _this4.jubao.authorid = resa.AuthorId;
               break;
             case 2:
               uni.showToast({
@@ -540,12 +628,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/post.php?type=getDashangList&postId=" + postid, //仅为示例，并非真实接口地址。
-        data: {},
-
+        data: {
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           if (res.data.code == "1") {
@@ -583,11 +671,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
         data: {
           toid: this.postInfo.AuthorId,
           postid: this.postid,
-          number: this.monnumber },
+          number: this.monnumber,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
+
           'system': _server.default.system },
 
         success: function success(res) {
@@ -682,11 +771,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
         data: {
           fuid: auid,
           postid: postid,
-          mode: modea },
+          mode: modea,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
+
           'system': _server.default.system },
 
         success: function success(res) {
@@ -806,11 +896,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
             txt: nr,
             postid: this.postid,
             uid: this.pluid,
-            auid: _server.default.userinfo.Auid },
+            auid: _server.default.userinfo.Auid,
+            token: _server.default.token },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie,
+
             'system': _server.default.system },
 
           success: function success(res) {
@@ -821,11 +912,11 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this8.postid },
+                  postid: _this8.postid,
+                  token: _server.default.token },
 
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
-                  'Cookie': _server.default.cookie,
                   'system': _server.default.system },
 
                 success: function success(res) {
@@ -866,11 +957,11 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
             auid: _server.default.userinfo.Auid,
             txt: this.plnr,
             postid: this.postid,
-            uid: this.postInfo.AuthorId },
+            uid: this.postInfo.AuthorId,
+            token: _server.default.token },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie,
             'system': _server.default.system },
 
           success: function success(res) {
@@ -881,11 +972,11 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
                 method: 'GET',
                 url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
                 data: {
-                  postid: _this8.postid },
+                  postid: _this8.postid,
+                  token: _server.default.token },
 
                 header: {
-                  'content-type': 'application/x-www-form-urlencoded',
-                  'Cookie': _server.default.cookie },
+                  'content-type': 'application/x-www-form-urlencoded' },
 
                 success: function success(res) {
                   console.log("————————————评论详情——————————");
@@ -919,11 +1010,12 @@ var _default = { data: function data() {return { postInfo: [], pllist: [], dslis
         method: 'GET',
         url: 'https://api.angeli.top/post.php?type=dianzan', //仅为示例，并非真实接口地址。
         data: {
-          postid: plid },
+          postid: plid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           if (res.data.code == "1") {

@@ -264,16 +264,17 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 181));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { name: [], sex: '♀', TabCur: 0, CustomBar: this.CustomBar, page: 1, MyzcList: [], postList: [], status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' } };}, onLoad: function onLoad() {var _this = this;this.name = _server.default.userinfo;console.log(this.name);if (this.name.Gender == "2") {this.sex = '♀';} else {this.sex = '♂';}console.log(this.name);uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=myPostList', //仅为示例，并非真实接口地址。
-      data: { uid: this.name.Auid, count: 10, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.data.length == undefined) {_this.status = "noMore";} else {_this.postList = res.data.data;_this.status = "more";console.log(_this.postList);}} });}, methods: { getMyzc: function getMyzc() {var _this2 = this;uni.request({
+      data: { uid: this.name.Auid, count: 10, page: this.page, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {if (res.data.data.length == undefined) {_this.status = "noMore";} else {_this.postList = res.data.data;_this.status = "more";console.log(_this.postList);}} });}, methods: { getMyzc: function getMyzc() {var _this2 = this;console.log(_server.default.token);
+      uni.request({
         method: 'GET',
         url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
         data: {
           page: 1,
-          count: 20 },
+          count: 20,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
 
@@ -327,11 +328,11 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
       data: {
         uid: this.name.Auid,
         count: 10,
-        page: this.page },
+        page: this.page,
+        token: _server.default.token },
 
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Cookie': _server.default.cookie },
+        'content-type': 'application/x-www-form-urlencoded' },
 
       success: function success(res) {
         if (res.data.data.length == undefined) {

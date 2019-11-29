@@ -36,11 +36,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/post.php?type=getDashangList&postId="+postid, //仅为示例，并非真实接口地址。
 					data: {
-					
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){

@@ -39,14 +39,14 @@
     "backgroundColor": "#FFF",
     "navigationStyle": "custom"
   },
-  "nvueCompiler": "weex",
+  "nvueCompiler": "uni-app",
   "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "安个利",
-  "compilerVersion": "2.3.7",
+  "appname": "安个利社区",
+  "compilerVersion": "2.4.2",
   "usingComponents": {
     "cu-custom": "/components/colorui/components/cu-custom",
     "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"

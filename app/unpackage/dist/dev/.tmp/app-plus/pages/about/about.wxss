@@ -1,4 +1,23 @@
 
+.mail{
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: rgba(66, 66, 66, 0.26);
+	text-align: center;
+}
+.show{
+	width: 70%;
+	margin: 40% auto;
+	height: 300rpx;
+	font-size:32rpx;
+	color: #000000;
+	border-radius:20px ;
+	background-color: #fff;
+	padding-top:140rpx;
+}
 .banquan{
 	position: absolute;
 	bottom: 32rpx;

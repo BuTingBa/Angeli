@@ -178,11 +178,12 @@ var _default = { data: function data() {return { imgurl: { man: "../../static/11
         data: {
           username: this.name,
           gender: this.dataSex,
-          phone: this.phone },
+          phone: this.phone,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);
@@ -233,12 +234,12 @@ var _default = { data: function data() {return { imgurl: { man: "../../static/11
       uni.request({
         method: 'GET',
         url: 'https://api.angeli.top/reg.php?type=checkName&name=' + this.name, //仅为示例，并非真实接口地址。
-        data: {},
-
+        data: {
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           if (res.data.code == "0") {

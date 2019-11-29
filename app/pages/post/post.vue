@@ -7,7 +7,7 @@
 		<view  :style="[{top:CustomBar + 'px'}]">
 			
 			<view class="textedit">
-				<textarea maxlength="2000" :disabled="modalName!=null" @input="textareaAInput" placeholder="在这里输入你想分享的内容，如找不到相应话题可以直接发布在其他闲聊。\n 注意：发帖需要消耗两枚安个利币，每天登陆即可获得一枚，请确认后再编辑内容！（其他获取方式请关注安个利官方通知的信息）"  ></textarea>
+				<textarea maxlength="2000" :disabled="modalName!=null" @input="textareaAInput" placeholder="在这里输入你想分享的内容，如找不到相应话题可以直接发布在其他闲聊。\n 注意：发帖需要消耗两枚安个利币，每天登陆即可获得一枚，请确认后再编辑内容！（其他获取方式请关注安个利官方通知的信息）" v-model="nr" ></textarea>
 			</view>
 			
 			<sunui-upoos :upImgConfig="upImgOos" @onUpImg="upOosData" @onImgDel="delImgInfo" ref="uImage"></sunui-upoos>
@@ -48,6 +48,7 @@
 				modalName: null,
 				postcontent:"null",
 				huati:"",
+				nr:'',
 				huatiname:"选择话题",
 				oosArr: [],
 					// 阿里云oos相关配置
@@ -78,12 +79,25 @@
 				
 			}
 		},
+		//#ifdef APP-PLUS
 		onBackPress:function(){
-			uni.redirectTo({
-				url: '../Home/Home?type=plusPost'
-			})
-		}
-		,
+			if(this.postcontent!==''){
+				uni.showModal({
+				    title: '提示',
+				    content: '检测到输入框内还有帖子内容，是否保存草稿箱?',
+				    success: (res) => {
+				        if (res.confirm) {
+				            uni.setStorageSync('post',this.postcontent);
+				            console.log('储存草稿箱');
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+							uni.removeStorageSync('post');
+				        }
+				    }
+				});
+			}
+		},
+		//#endif
 		onShow:function(){
 			console.log(server.postClass)
 			this.huati=server.postClass.ClassId;
@@ -91,6 +105,13 @@
 			console.log(server.system)
 		},
 		onLoad: function(e) {
+			//#ifdef APP-PLUS
+			var postc= uni.getStorageSync('post');
+			if(postc){
+				this.postcontent=postc
+				this.nr=postc
+			}
+			//#endif
 			uni.getSystemInfo({
 			    success: function (res) {
 					var systemjson={
@@ -101,6 +122,8 @@
 					console.log(server.system)
 			    }
 			});
+			
+			
 		},
 		methods: {
 			getClassList:function(){
@@ -143,6 +166,7 @@
 			
 			textareaAInput:function(e){
 				this.postcontent = e.target.value 
+				
 			},
 			sendpost:function(e){
 				console.log(this.postcontent);
@@ -189,11 +213,11 @@
 					data: {
 						imageList: this.oosArr.join().split(','),
 						txt:this.postcontent,
-						huati:this.huati
+						huati:this.huati,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
 						'system':server.system
 					},
 					success: (res) => {

@@ -34,10 +34,10 @@ if($_SESSION['id']!=$_COOKIE["adminid"]){
 
 if(isset($_GET['status'])){
 	if($_GET['status']=='0'){
-		$app->setPostInfo($_GET['postid'],'IsLock','0');
+		$app->postEnable($_GET['postid']);
 	}
 	if($_GET['status']=='2'){
-		$app->setPostInfo($_GET['postid'],'IsLock','2');
+		$app->postDisable($_GET['postid']);
 	}
 }
 

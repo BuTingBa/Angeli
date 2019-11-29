@@ -223,8 +223,21 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { topList: [], userinfo: [] };}, onLoad: function onLoad() {this.getTop();this.userinfo = _server.default.userinfo;}, methods: { getBire: function getBire(e) {uni.navigateTo({ url: '../i/bieren?auid=' + e });}, getTop: function getTop() {var _this = this;uni.showLoading({ title: '获取数据中' });uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=weekTop", //仅为示例，并非真实接口地址。
-        header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code == "1") {_this.topList = res.data.data;} else {uni.showToast({ title: "获取失败！", position: 'bottom', icon: 'none' });}}, complete: function complete() {uni.hideLoading();} });} } };exports.default = _default;
+var _default = { data: function data() {return { topList: [], userinfo: [] };}, onLoad: function onLoad() {this.getTop();this.userinfo = _server.default.userinfo;}, methods: { getBire: function getBire(e) {uni.navigateTo({ url: '../i/bieren?auid=' + e });}, showtishi: function showtishi() {uni.showModal({ title: '关于排行榜', content: '1、每周排行第一的用户可以获得3个月会员以及受邀加入专属微信群。\r\n2、每周排行第二名获得2个月会员。\r\n3、每周排行第三名获得1个月会员。\r\n4、每周记录时间为周日晚上23点59分。\r\n5、每周奖励发放时间为周一。', showCancel: false, success: function success(res) {if (res.confirm) {console.log('用户点击确定');} else if (res.cancel) {console.log('用户点击取消');}} });}, getTop: function getTop() {var _this = this;uni.showLoading({ title: '获取数据中' });uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=weekTop", //仅为示例，并非真实接口地址。
+        data: { token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {if (res.data.code == "1") {_this.topList = res.data.data;
+          } else {
+            uni.showToast({
+              title: "获取失败！",
+              position: 'bottom',
+              icon: 'none' });
+
+          }
+        },
+        complete: function complete() {
+          uni.hideLoading();
+        } });
+
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

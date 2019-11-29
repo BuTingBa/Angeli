@@ -164,7 +164,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var _default = { data: function data() {return { list: [] };}, onLoad: function onLoad(e) {console.log(e.id);this.getList(e.id);}, methods: { getList: function getList(postid) {var _this = this;uni.request({ method: 'GET', url: "https://api.angeli.top/post.php?type=getDashangList&postId=" + postid, //仅为示例，并非真实接口地址。
-        data: {}, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie },
+        data: { token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           if (res.data.code == "1") {

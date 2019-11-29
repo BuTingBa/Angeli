@@ -7,9 +7,9 @@
 		"urlCheck": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
+	"libVersion": "2.9.2",
 	"appid": "wxb2418420ae2cf37c",
-	"projectname": "安个利",
+	"projectname": "安个利社区",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

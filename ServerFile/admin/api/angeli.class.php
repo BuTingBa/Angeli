@@ -23,6 +23,37 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+	public function getJubaoList()
+	{
+		$sql="SELECT * FROM angeli_jubao ORDER BY addtime DESC";
+		$result=$this->mysqli->query($sql) or die($this->mysqli->error);
+		if(!$result){
+		    //表示操作失败
+		    $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+		    return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+		}else{
+		    if($this->mysqli->affected_rows>0){
+		        while ($row = $result->fetch_assoc())
+		        {
+		            $d = array(
+		                'id' =>$row['id'],
+		                'postid' =>$row['postid'],
+		                'jubaoid' =>$this->getInfo($row['jubaoid']),
+		                'beijubaoid' =>$this->getInfo($row['beijubaoid']),
+		                'reason' =>$row['reason'],
+		                'addtime' =>$this->uc_time_ago($row["addtime"]),
+                        'stastu'=> $this->getPostInfo($row['postid'])['IsLock']
+		            );
+		            $data[]=$d;
+		        }
+		        return $data;
+		    }else{
+		        return FALSE;
+		    }
+		}
+	}
+
+
 	//搜索用户
 	public function autoSearchUser($keyword)
 	{
@@ -358,7 +389,45 @@ class angeli
 
 
     }
-	
+
+
+    public function postDisable($postid)
+    {
+        $postData=$this->getPostInfo($postid);
+        $postjj=substr($postData['Content'],12);
+        $sql = "UPDATE angeli_posts SET IsLock='2' WHERE PostsId=$postid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                $this->addSystemMsg('您好，由于您的文章《'.$postjj.'》可能涉嫌违规，现已屏蔽,等待人工复审.如有疑问，请询问客服。',$postData['AuthorId']);
+                return TRUE;
+            }
+        }
+    }
+    public function postEnable($postid)
+    {
+        $postData=$this->getPostInfo($postid);
+        $postjj=substr($postData['Content'],12);
+        $sql = "UPDATE angeli_posts SET IsLock='0' WHERE PostsId=$postid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                $this->addSystemMsg('您好，您的文章《'.$postjj.'》帖子已恢复访问。',$postData['AuthorId']);
+                return TRUE;
+            }
+        }
+    }
+
 	/**
 	 * 修改帖子信息
 	 * @param $auid
@@ -2376,9 +2445,17 @@ class angeli
     /*
      * 获取本周排行榜
      */
-    public function getWeekTop($auid){
-        $beginThisweek=mktime(0,0,0,date('m'),date('d')-date('w')+1,date('Y'));
-        $endThisweek=mktime(23,59,59,date('m'),date('d')-date('w')+7,date('Y'));
+    public function getWeekTop($stime='0',$etime='0'){
+        $sdefaultDate = date("Y-m-d");
+		$first=1;
+		$w=date('w',strtotime($sdefaultDate));
+		$beginThisweek=strtotime("$sdefaultDate -".($w ? $w - $first : 6).' days');
+		$endtemp=date('Y-m-d',$beginThisweek);
+		$endThisweek=strtotime("$endtemp +7 days");
+		if($stime!='0' && $etime!='0'){
+			$beginThisweek=$stime;
+			$endThisweek=$etime;
+		}
         $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
         //echo $sql;
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
@@ -2390,22 +2467,13 @@ class angeli
 
             if($this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()) {
-
-                    $index=$index+1;
-                    if($row['AuthorId']==$auid){
-                       $ddd=$index;
-                       $dd=$row['lll'];
-                    }
-
                     $d = array(
                         'index' =>$row["lll"],
                         'AuId' =>$this->getInfo($row['AuthorId']),
                         'isMe'=>$row['AuthorId']==$auid?'true':'false'
                     );
-                    $data['data'][]=$d;
+                    $data[]=$d;
                 }
-                $data['index']=$ddd;
-                $data['count']=$dd;
                 return $data;
             }else{
                 return FALSE;

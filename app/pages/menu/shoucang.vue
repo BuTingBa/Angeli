@@ -55,11 +55,12 @@
 				url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
 				data: {
 					page:1,
-					count:20
+					count:20,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
+					
 				},
 				success: (res) => {
 					
@@ -97,11 +98,12 @@
 					data: {
 						fuid: auid,
 						postid:postid,
-						mode:modea
+						mode:modea,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){

@@ -87,7 +87,6 @@
 	padding: 5rpx;
 	font-size: 28rpx;
 	line-height: 28rpx;
-	
 	overflow:hidden;
 	-o-text-overflow:ellipsis;
 	   text-overflow:ellipsis;

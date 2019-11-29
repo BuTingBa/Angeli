@@ -231,6 +231,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -339,11 +341,89 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 181));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { gaodu: 0, classList: [], home: true, TabCur: 0, inputVal: "", postList: [], userList: [], page: 1, status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, weikong: true, hotList: [] };}, onReady: function onReady() {this.getHei();}, onLoad: function onLoad() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
-      header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this.classList = res.data.data;console.log(_this.classList);} });this.getDayHot();}, onReachBottom: function onReachBottom() {var _this2 = this;this.page++;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
-      data: { keyword: this.inputVal, count: 20, page: this.page }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log("————————————帖子列表——————————" + _this2.page);if (res.data.data.length == undefined) {_this2.page--;_this2.status = "noMore";} else {_this2.postList = _this2.postList.concat(res.data.data);_this2.status = "loading";_this2.$forceUpdate();console.log(_this2.postList);}} });}, methods: { sososo: function sososo(event) {//this.inputVal=event.detail.value;
-      this.home = false;this.requestSousuo(0);}, getDayHot: function getDayHot() {var _this3 = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/user.php?type=getDayHot', //仅为示例，并非真实接口地址。
-        header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie, 'system': _server.default.system }, success: function success(res) {_this3.hotList = res.data.data.data;console.log(_this3.hotList);} });}, requestSousuo: function requestSousuo(type) {var _this4 = this;if (type == 0) {uni.showLoading({ title: '搜索中..', mask: true });
+//
+//
+var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 181));};var _default = { components: { uniLoadMore: uniLoadMore }, data: function data() {return { gaodu: 0, classList: [], home: true, TabCur: 0, inputVal: "", postList: [], userList: [], Dindex: [], showAppFenxiang: false, page: 1, status: 'loading', statusTypes: [{ value: 'more', text: '加载前', checked: true }, { value: 'loading', text: '加载中', checked: false }, { value: 'noMore', text: '我是有底线的', checked: false }], contentText: { contentdown: '查看更多', contentrefresh: '加载中', contentnomore: '我是有底线的' }, weikong: true, hotList: [] };}, onReady: function onReady() {this.getHei();}, onLoad: function onLoad() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
+      header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {_this.classList = res.data.data;console.log(_this.classList);} });this.getDayHot();}, onReachBottom: function onReachBottom() {var _this2 = this;this.page++;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=searchPosts', //仅为示例，并非真实接口地址。
+      data: { keyword: this.inputVal, count: 20, page: this.page, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log("————————————帖子列表——————————" + _this2.page);if (res.data.data.length == undefined) {_this2.page--;_this2.status = "noMore";} else {_this2.postList = _this2.postList.concat(res.data.data);_this2.status = "loading";_this2.$forceUpdate();console.log(_this2.postList);}} });}, methods: { appFenxiang: function appFenxiang(id, type) {switch (id) {case 0:this.showAppFenxiang = false;break;case 1:uni.setClipboardData({ data: 'http://share.angeli.top/?postId=' + this.postid, success: function success() {console.log('success');} });console.log('复制链接');break;case 2:console.log(this.Dindex.PictureId[0]);console.log(this.Dindex.Content);console.log('http://share.angeli.top/?postId=' + this.Dindex.PostsId);uni.share({ provider: 'weixin', scene: "WXSceneSession", type: 5, imageUrl: this.Dindex.PictureId[0], title: this.Dindex.Content,
+            miniProgram: {
+              id: 'gh_a38adc10b952',
+              path: 'pages/postinfo/postinfo?id=' + this.Dindex.PostsId,
+              type: 0,
+              webUrl: 'http://share.angeli.top/?postId=' + this.Dindex.PostsId },
+
+            success: function success(ret) {
+              console.log(JSON.stringify(ret));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        case 3:
+          uni.share({
+            provider: "weixin",
+            scene: "WXSenceTimeline",
+            type: 0,
+            href: 'http://share.angeli.top/?postId=' + this.Dindex.PostsId,
+            title: this.Dindex.Content,
+            summary: this.Dindex.Content,
+            imageUrl: this.Dindex.PictureId[0],
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        case 4:
+          uni.share({
+            provider: "qq",
+            type: 1,
+            href: 'http://share.angeli.top/?postId=' + this.Dindex.PostsId,
+            summary: this.Dindex.Content,
+            title: this.Dindex.Content,
+            imageUrl: this.Dindex.PictureId[0],
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        default:}
+
+
+    },
+    sososo: function sososo(event) {
+      //this.inputVal=event.detail.value;
+      this.home = false;
+      this.requestSousuo(0);
+    },
+    getDayHot: function getDayHot() {var _this3 = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=getDayHot', //仅为示例，并非真实接口地址。
+        data: {
+          token: _server.default.token },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'system': _server.default.system },
+
+        success: function success(res) {
+          _this3.hotList = res.data.data.data;
+          console.log(_this3.hotList);
+        } });
+
+    },
+    requestSousuo: function requestSousuo(type) {var _this4 = this;
+      if (type == 0) {
+        uni.showLoading({
+          title: '搜索中..',
+          mask: true });
 
         uni.request({
           method: 'GET',
@@ -351,11 +431,11 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
           data: {
             keyword: this.inputVal,
             count: 20,
-            page: this.page },
+            page: this.page,
+            token: _server.default.token },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie,
             'system': _server.default.system },
 
           success: function success(res) {
@@ -389,11 +469,11 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
           method: 'GET',
           url: 'https://api.angeli.top/user.php?type=search', //仅为示例，并非真实接口地址。
           data: {
-            keyword: this.inputVal },
+            keyword: this.inputVal,
+            token: _server.default.token },
 
           header: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie,
             'system': _server.default.system },
 
           success: function success(res) {
@@ -457,11 +537,12 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         data: {
           fuid: auid,
           postid: postid,
-          mode: modea },
+          mode: modea,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           if (res.data.code == "1") {
@@ -507,20 +588,16 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
     },
     caidan: function caidan(resa) {var _this6 = this;
       if (resa.AuthorId == _server.default.userinfo.Auid) {
-        this.menuList = ['生成海报', '举报', '删除帖子'];
+        this.menuList = ['分享', '举报', '删除帖子'];
       } else {
-        this.menuList = ['生成海报', '举报'];
+        this.menuList = ['分享', '举报'];
       }
       uni.showActionSheet({
         itemList: this.menuList,
         success: function success(res) {
           switch (res.tapIndex) {
             case 0:
-              uni.showToast({
-                title: "分享" + resa.Content,
-                position: 'bottom',
-                icon: 'none' });
-
+              _this6.showAppFenxiang = true;
               break;
             case 1:
               uni.showToast({
@@ -596,11 +673,12 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
         method: 'GET',
         url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
         data: {
-          uid: uid },
+          uid: uid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           uni.showToast({

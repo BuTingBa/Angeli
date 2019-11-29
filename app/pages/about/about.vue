@@ -6,7 +6,7 @@
 		</cu-custom>
 		<view class="logo">
 			<view><image src="../../static/angeli.png" mode="" style="width: 200rpx;height: 132rpx;" ></image></view>
-			<view style="margin-top: 27rpx;"><text style="font-size: 28rpx;color: #363636;">Version 1.0.1</text></view>
+			<view style="margin-top: 27rpx;"><text style="font-size: 28rpx;color: #363636;">Version {{Version}}</text></view>
 		</view>
 		<view class="menuList">
 			
@@ -15,12 +15,12 @@
 				<view class="jiantou"></view>
 			</view>
 			<view class="menusolid nei"></view>
-			<view class="menuList-2c">
+			<view class="menuList-2c" @click="showmail">
 				<view class="menuTiele">投诉维权</view>
 				<view class="jiantou"></view>
 			</view>
 			<view class="menusolid nei"></view>
-			<view class="menuList-2c">
+			<view class="menuList-2c" @click="getpage(4)">
 				<view class="menuTiele">公司信息</view>
 				<view class="jiantou"></view>
 			</view>
@@ -31,17 +31,31 @@
 			<text style="color: #999999;">Copyright © 2019 Xinfeng.All Rights Reserved.</text>
 		</view>
 		
+		<view class="mail shadow-blur" v-if="mail"  @click="hiw">
+			<view class="show">请发送邮件至：<text selectable="true">angeli-h@qq.com</text></view>
+		</view>
 	</view>
 </template>
 
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
-				
+				Version:'1.0.1',
+				mail:false
 			}
 		},
+		onLoad() {
+			this.Version=server.Version;
+		},
 		methods: {
+			hiw:function(){
+				this.mail=false
+			},
+			showmail:function(){
+				this.mail=true
+			},
 			getpage:function(id){
 				if(id==1){
 					uni.navigateTo({
@@ -58,6 +72,11 @@
 						url:"../edit/edit?type=5"
 					})
 				}
+				if(id==4){
+					uni.navigateTo({
+						url:"../edit/edit?type=7"
+					})
+				}
 				
 			}
 		}
@@ -65,6 +84,28 @@
 </script>
 
 <style>
+	
+.mail{
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: rgba(66, 66, 66, 0.26);;
+	text-align: center;
+}
+.show{
+	width: 70%;
+	margin: 40% auto;
+	height: 300upx;
+	font-size:32upx ;
+	color: #000000;
+	border-radius:20px ;
+	background-color: #fff;
+	padding-top:140upx ;
+}
+
+
 .banquan{
 	position: absolute;
 	bottom: 32rpx;

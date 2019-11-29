@@ -97,6 +97,18 @@ if($_SESSION['id']!=$_COOKIE["adminid"]){
               <p>帖子管理</p>
             </a>
           </li>
+		  <li <?php echo $_SESSION['menu']==10?'class="active"':'';?>>
+		    <a href="paihangbang.php">
+		      <i class="tim-icons icon-chart-bar-32"></i>
+		      <p>种草排行</p>
+		    </a>
+		  </li>
+		  <li <?php echo $_SESSION['menu']==9?'class="active"':'';?>>
+		    <a href="jubao.php">
+		      <i class="tim-icons icon-alert-circle-exc"></i>
+		      <p>举报管理</p>
+		    </a>
+		  </li>
           <li <?php echo $_SESSION['menu']==5?'class="active"':'';?>>
             <a href="user.php">
               <i class="tim-icons icon-single-02"></i>

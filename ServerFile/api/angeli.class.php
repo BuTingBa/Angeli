@@ -4,24 +4,92 @@
  * 安个利数据读写类
  * 作者：不停(张原粽)
  * 版权：深圳市鑫峰互联有限公司
- * 最后更新时间：2019年9月2日18:51:01
+ * 最后更新时间：2019年11月13日16:29:43
  */
 class angeli
 {
     private $mysqli;
     private $wxAppid;
     private $wxSessionKey;
+    public $systeminfo;
     /*
      * 构造函数，初始化数据库信息
      */
     public function __construct($config)
     {
+        $this->systeminfo=json_decode($_SERVER['HTTP_SYSTEM'],true);
         $this->mysqli=new mysqli($config['dbHost'],$config['dbUsername'],$config['dbPassword'],$config['dbName'])
         or die('数据库链接出错:'.$this->mysqli->connect_error);
         $this->mysqli->query('set names utf8mb4');
         $this->wxAppid=$config['wxAppid'];
         $this->wxSessionKey=$config['wxSessionKey'];
     }
+
+    /**
+     * 测试函数
+     */
+    public function test(){
+        echo $this->getCommentId(7354,'看起来不错',1395);
+        var_dump($this->systeminfo);
+
+    }
+
+
+    public function setConfig($keyword,$value,$auid)
+    {
+        //$sql="INSERT angeli_config (keyword, `value`,auid) values ('$keyword','$value',$auid) ON DUPLICATE KEY UPDATE `value`='$value'";
+        $sql = "SELECT * FROM angeli_config WHERE keyword='$keyword' AND auid='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $configId=$row['id'];
+                }
+                $sql = "UPDATE angeli_config SET `value`='$value' WHERE id=$configId";
+
+            }else{
+                //没有该配置项则新建一个
+                $sql = "INSERT INTO angeli_config (keyword, `value`,auid) values ('$keyword', '$value',$auid)";
+            }
+            $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+            if(!$result){
+                //表示操作失败
+                return false;
+            }else{
+                if($this->mysqli->affected_rows<1){
+                    return false;
+                }else{
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+
+    public function getConfig($auid,$keyword)
+    {
+        $sql = "SELECT * FROM angeli_config WHERE keyword='$keyword' AND auid='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $data=$row['value'];
+                }
+                return $data;
+            }else{
+                return false;
+            }
+        }
+    }
+
+
+
 
     /**
      * @param $auid 用户ID
@@ -32,6 +100,7 @@ class angeli
      * @param $note         备注
      * @return int
      */
+
     public function addUserLog($auid=0,$open_type='未知',$record_id=0,$brand='未获取到',$system='未获取到',$note='')
     {
         $sql = $this->mysqli->prepare("INSERT INTO behavior (open_type,record_id,auid,brand,system,ip,opentime,note) 
@@ -293,12 +362,76 @@ class angeli
         {
             return false;
         }else{
-
+            if($this->vipIs($auid)){
+                if($this->jubaoNum($auid)){ //如果当天举报超过三条
+                    if($this->postDisable($postid)){
+                        $this->addSystemMsg('你的举报信息我们已经收到,感谢你做出的净化社区贡献。',$auid);
+                    }
+                }else{
+                    $this->addSystemMsg('你的举报信息我们已经收到,感谢你做出的净化社区贡献。',$auid);
+                }
+            }else{
+                $this->addSystemMsg('你的举报信息我们已经收到,感谢你做出的净化社区贡献。',$auid);
+            }
             return TRUE;
         }
     }
 
+    public function jubaoNum($auid)
+    {
+        $starTime=strtotime(date("Y-m-d"));
+        $endTime=$starTime+24*60*60;
+        $sql = "SELECT * FROM angeli_jubao WHERE jubaoid ='$auid' AND addtime>'$starTime' AND addtime<'$endTime'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return FALSE;
+        }else{
+            if($this->mysqli->affected_rows>=3){
+                return FALSE;
+            }else{
+                return true;
+            }
+        }
+    }
 
+
+    public function postDisable($postid)
+    {
+        $postData=$this->getPostInfo($postid);
+        $postjj=substr($postData['Content'],0,12);
+        $sql = "UPDATE angeli_posts SET IsLock='2' WHERE PostsId=$postid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                $this->addSystemMsg('您好，由于您的文章《'.$postjj.'...》可能涉嫌违规，现已屏蔽,等待人工复审.如有疑问，请询问客服。',$postData['AuthorId']);
+                return TRUE;
+            }
+        }
+    }
+    public function postEnable($postid)
+    {
+        $postData=$this->getPostInfo($postid);
+        $postjj=substr($postData['Content'],12);
+        $sql = "UPDATE angeli_posts SET IsLock='0' WHERE PostsId=$postid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return false;
+            }else{
+                $this->addSystemMsg('您好，由于您的文章《'.$postjj.'》经人工审查，并无违规行为，已将帖子恢复访问。',$postData['AuthorId']);
+                return TRUE;
+            }
+        }
+    }
 
     /**
      * 获取微信token
@@ -601,7 +734,7 @@ class angeli
                     'guanzhuId'=>$this->getInfo($row['guanzhu']),
                     'myId'=>$this->getInfo($row['beiguanzhu']),
                     'time'=>$this->uc_time_ago($row['opentime']),
-                    'isGZ'=>$this->isGuanzhu($row['guanzhu'],$auid),
+                    'isGZ'=>$this->isGuanzhu($auid,$row['guanzhu']),
                     'mark'=>$row['mark']
 
                 );
@@ -827,11 +960,29 @@ class angeli
         {
             return false;
         }else{
-
+            $openid=$this->getmsgid($FromId,$ToId,$Msg);
+            $this->addUserLog($FromId,'发送私信信息',$openid,$this->systeminfo['phonebrand'],$this->systeminfo['phonesystem']);
             return TRUE;
         }
     }
 
+    public function getmsgid($FromId,$toid,$msg)
+    {
+        $sql="SELECT * FROM angeli_msg WHERE FromId=$FromId AND ToId=$toid AND Msg='$msg'";
+        $result=$this->mysqli->query($sql);
+        if(!$result){
+            return 0;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $id=$row['MsgId'];
+                }
+                return $id;
+            }else{
+                return 0;
+            }
+        }
+    }
 
     /**获取我的账单信息
      * @return array
@@ -937,13 +1088,27 @@ class angeli
                 break;
             case 'system':
                 $sql="INSERT INTO angeli_system_msg_read (system_msg_id,auid)VALUES(0,$auid)";
+                $this->mysqli->query($sql) or die($this->mysqli->error);
+                return true;
+                /*$sql="SELECT * FROM angeli_system_msg WHERE toid LIKE '%$auid%'";
                 $result=$this->mysqli->query($sql) or die($this->mysqli->error);
-                if($this->mysqli->affected_rows<1){
+                if(!$result){
                     //表示操作失败
                     return false;
                 }else{
-                    return true;
-                }
+                    if($this->mysqli->affected_rows>0){
+                        while($row = $result->fetch_assoc()){
+                            $msgid=$row['id'];
+                            $sql="INSERT INTO angeli_system_msg_read (system_msg_id,auid)VALUES($msgid,$auid)";
+                            $this->mysqli->query($sql) or die($this->mysqli->error);
+                        }
+                        return  true;
+                    }else{
+                        return FALSE;
+                    }
+                }*/
+
+
                 break;
             default:
 
@@ -1126,8 +1291,10 @@ class angeli
         }else{
             while($row = $result->fetch_assoc()){
                 if($this->chekSystemNotRead($row['id'],$auid)){
-                    $systemmsg++;
+                    //$systemmsg++;
+                    $systemmsg=1;
                 }
+
             }
         }
 
@@ -1230,6 +1397,9 @@ class angeli
             }
         }
     }
+
+
+
 
     /**获取我的收藏
      * @return array
@@ -1435,8 +1605,33 @@ class angeli
             $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
-
+            $openid=$this->getReplyId($uid,$Content,$commentsId);
+            $this->addUserLog($uid,'发布回复',$openid,$this->systeminfo['phonebrand'],$this->systeminfo['phonesystem']);
             return TRUE;
+        }
+    }
+
+    /**
+     * @param $auid 用户id
+     * @param $txt  评论内容
+     * @param $postid   帖子id
+     * @return bool
+     */
+    public function getReplyId($auid,$txt,$CommentId)
+    {
+        $sql="SELECT * FROM angeli_reply WHERE ReplyUid=$auid AND ReplyContent='$txt' AND CommentId=$CommentId";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $id=$row['ReplyId'];
+                }
+                return $id;
+            }else{
+                return FALSE;
+            }
         }
     }
 
@@ -1579,11 +1774,36 @@ class angeli
             $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
-
+            $openid=$this->getCommentId($auid,$Content,$PostId);
+            $this->addUserLog($auid,'发布评论',$openid,$this->systeminfo['phonebrand'],$this->systeminfo['phonesystem']);
             return TRUE;
         }
     }
 
+    /**
+     * @param $auid 用户id
+     * @param $txt  评论内容
+     * @param $postid   帖子id
+     * @return bool
+     */
+    public function getCommentId($auid,$txt,$postid)
+    {
+        $sql="SELECT * FROM angeli_comments WHERE CommentsFromUid=$auid AND CommentsContent='$txt' AND PostId=$postid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                $data= [];
+                while($row = $result->fetch_assoc()) {
+                    $id=$row['CommentsId'];
+                }
+                return $id;
+            }else{
+                return FALSE;
+            }
+        }
+    }
 
 
 
@@ -2203,7 +2423,7 @@ class angeli
                         'Synopsis' =>$row["Synopsis"],
                         'FollowedCount' =>$this->getFollowerCount($row["AuId"],2),
                         'FollowerCount' =>$this->getFollowerCount($row["AuId"],1),
-                        'ZhongcaoCount' =>$this->ZhongcaoCount($auid),
+                        'ZhongcaoCount' =>$this->ZhongcaoCount($row["AuId"]),
                         'Points' =>$row["Points"],
                         'Aglc' =>$row["Aglc"],
                         'Rank' =>$row["Rank"],
@@ -2257,7 +2477,6 @@ class angeli
         $beginThisweek=strtotime("$sdefaultDate -".($w ? $w - $first : 6).' days');
         $endtemp=date('Y-m-d',$beginThisweek);
         $endThisweek=strtotime("$endtemp +7 days");
-
         $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>=$beginThisweek AND addTime<=$endThisweek AND `show`=0 GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
         //echo $sql.'<br>';
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
@@ -2596,10 +2815,35 @@ class angeli
             $outmsg = array('code' =>'0','msg'=>'操作失败！'.$this->mysqli->error,'data'=>'');
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }else{
+            $openid=$this->getpostpostid($uid,$content,$tag);
+            $this->addUserLog($uid,'发布帖子',$openid,$this->systeminfo['phonebrand'],$this->systeminfo['phonesystem']);
             return TRUE;
         }
     }
 
+    /**
+     * @param $auid 用户id
+     * @param $txt  帖子内容
+     * @param $tag   标签
+     * @return bool
+     */
+    public function getpostpostid($auid,$txt,$tag)
+    {
+        $sql="SELECT * FROM angeli_posts WHERE AuthorId=$auid AND Content='$txt' AND Tag=$tag";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()) {
+                    $id=$row['PostsId'];
+                }
+                return $id;
+            }else{
+                return FALSE;
+            }
+        }
+    }
 
     /*
     *   获取帖子列表
@@ -2613,7 +2857,35 @@ class angeli
                 $sql = "SELECT * FROM angeli_posts WHERE PostType='1' AND IsLock<>'2'   ORDER BY PsotDate  DESC  LIMIT $pageNum, $count";
                 break;
             case 'hot':
-                $sql = "SELECT * FROM angeli_posts WHERE PostType='1' AND IsLock<>'2'   ORDER BY ZhongcaoCount  DESC  LIMIT $pageNum, $count";
+                $sdefaultDate = date("Y-m-d");
+                $first=1;
+                $w=date('w',strtotime($sdefaultDate));
+                $beginThisweek=strtotime("$sdefaultDate -".($w ? $w - $first : 6).' days');
+                $endtemp=date('Y-m-d',$beginThisweek);
+                $endThisweek=strtotime("$endtemp +7 days");
+                $sql="SELECT PostsId,count(*) as lll FROM angeli_favorite WHERE addTime>=$beginThisweek AND addTime<=$endThisweek AND `show`=0 GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
+                $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+                if(!$result){
+                    //表示操作失败
+                    return FALSE;
+                }else{
+
+                    if($this->mysqli->affected_rows>0){
+                        $data=[];
+                        while($row = $result->fetch_assoc()) {
+                            $postData=$this->getPostInfo($row['PostsId'],$auid);
+                            if($postData['IsLock']!='2'){
+                                array_push($data,$postData);
+                            }
+
+                        }
+                        return $data;
+                    }else{
+                        return FALSE;
+                    }
+                }
+
+                //$sql = "SELECT * FROM angeli_posts WHERE PostType='1' AND IsLock<>'2' AND   ORDER BY ZhongcaoCount  DESC  LIMIT $pageNum, $count";
                 break;
             case 'classPost':
                 $sql = "SELECT * FROM angeli_posts WHERE PostType='1' AND IsLock<>'2' AND Tag='$tag'  PsotDate  DESC  LIMIT $pageNum, $count";
@@ -2695,8 +2967,7 @@ class angeli
     }
 
     //获取帖子详情
-    public function getPostInfo($postID,$uid='6666
-    '){
+    public function getPostInfo($postID,$uid='6666'){
         if(!is_numeric($postID)){
             $outmsg = array('code' =>'0','msg'=>'系统错误，帖子ID必须为数字','data'=>'');
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
@@ -2725,7 +2996,8 @@ class angeli
                         'RewardEndTime' =>$row["RewardEndTime"],
                         'PictureId' =>explode(',',$row["PictureId"]),
                         'AuthorInfo'=>$this->getInfo($row["AuthorId"]),
-                        'Give'=>$this->checkGive($uid,$row["PostsId"])
+                        'Give'=>$this->checkGive($uid,$row["PostsId"]),
+                        'IsLock'=>$row['IsLock']
                     );
                 }
                 $sql="UPDATE angeli_posts SET ViewCount=ViewCount+1 WHERE PostsId='$postID'";

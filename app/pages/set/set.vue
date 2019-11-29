@@ -129,12 +129,12 @@
 					position:'center'
 				})
 				server.userinfo=[];
-				server.cookie="";
+				server.token=null;
 				setTimeout(function () {
 					uni.redirectTo({
 						url: '../Home/Home'
 					})
-				}, 2000);
+				}, 1500);
 			},
 			SetShadow(e) {
 				this.shadow = e.detail.value

@@ -15,7 +15,10 @@ $app=new angeli($config);
 if(empty($_GET['type'])){
     die('缺少请求类型！');
 }
-session_start();
+if(isset($_REQUEST['token'])){
+    session_id($_REQUEST['token']);
+    session_start();
+}
 switch ($_GET['type']){
     case 'queryOrderIdAndVip':
         if(empty($_GET['auid'])){

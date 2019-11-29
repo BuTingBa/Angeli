@@ -143,6 +143,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -180,7 +182,10 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { type: 1, title: "安个利", upNameNumber: 0, newName: '' };}, onLoad: function onLoad(val) {console.log(val.type);this.type = val.type;if (val.type == '1') {this.title = "修改名字";this.getNumber();}if (val.type == '2') {this.title = "个性签名";}if (val.type == '3') {this.title = "等级特权";}if (val.type == '4') {this.title = "关于安个利";}if (val.type == '5') {this.title = "安个利隐私政策";}if (val.type == '6') {this.title = "安个利用户协议";}}, methods: { inputing: function inputing(e) {this.newName = e.detail.value;console.log(e.detail);},
+//
+//
+var _default = { data: function data() {return { type: 1, title: "安个利", upNameNumber: 0, newName: '' };}, onLoad: function onLoad(val) {console.log(val.type);this.type = val.type;if (val.type == '1') {this.title = "修改名字";this.getNumber();}if (val.type == '2') {this.title = "个性签名";}if (val.type == '3') {this.title = "等级特权";}if (val.type == '4') {this.title = "关于安个利";}if (val.type == '5') {this.title = "安个利隐私政策";}if (val.type == '6') {this.title = "安个利用户协议";}if (val.type == '7') {this.title = "关于安个利";}}, methods: { inputing: function inputing(e) {this.newName = e.detail.value;console.log(e.detail);
+    },
     setName: function setName() {
       uni.showLoading({
         title: '正在提交数据' });
@@ -190,11 +195,11 @@ var _default = { data: function data() {return { type: 1, title: "安个利", up
         url: 'https://api.angeli.top/user.php?type=setName', //仅为示例，并非真实接口地址。
         data: {
           auid: _server.default.userinfo.Auid,
-          newName: this.newName },
+          newName: this.newName,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           uni.showToast({
@@ -223,11 +228,11 @@ var _default = { data: function data() {return { type: 1, title: "安个利", up
         method: 'GET',
         url: 'https://api.angeli.top/user.php?type=getNameCount', //仅为示例，并非真实接口地址。
         data: {
-          auid: _server.default.userinfo.Auid },
+          auid: _server.default.userinfo.Auid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           if (res.data.code == '1') {
@@ -246,11 +251,11 @@ var _default = { data: function data() {return { type: 1, title: "安个利", up
         url: 'https://api.angeli.top/user.php?type=setms', //仅为示例，并非真实接口地址。
         data: {
           auid: _server.default.userinfo.Auid,
-          ms: this.newName },
+          ms: this.newName,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           uni.showToast({

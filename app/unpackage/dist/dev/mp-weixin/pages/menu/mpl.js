@@ -180,7 +180,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onLoad: function onLoad() {var _this = this;uni.showLoading({ title: '加载中' });uni.request({ method: 'GET', url: "https://api.angeli.top/user.php?type=getMypl", //仅为示例，并非真实接口地址。
-      data: {}, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.msgList = res.data.data;_this.markMsg();} else {}
+      data: { token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {console.log(res);if (res.data.code == "1") {_this.msgList = res.data.data;_this.markMsg();} else {}
 
       },
       complete: function complete() {
@@ -207,12 +207,12 @@ var _default = { data: function data() {return { TabCur: 0, msgList: [] };}, onL
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=mark&class=pl", //请求标记已读消息
-        data: {},
-
+        data: {
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);

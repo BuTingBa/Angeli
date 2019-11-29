@@ -23,7 +23,7 @@
 			</view>
 		</view>
 		<view class="jifenTiele">
-			本周排行榜
+			本周排行榜  <text class="cuIcon-question" style="font-size: 38upx;margin-left: 8upx;" @click="showtishi"> </text>
 		</view>
 		<!-- <view class="myJifen">
 			<text class="lpaihang">1254</text>
@@ -68,6 +68,22 @@
 					url: '../i/bieren?auid='+e
 				})
 			},
+			showtishi:function(){
+				
+				uni.showModal({
+				    title: '关于排行榜',
+				    content: '1、每周排行第一的用户可以获得3个月会员以及受邀加入专属微信群。\r\n2、每周排行第二名获得2个月会员。\r\n3、每周排行第三名获得1个月会员。\r\n4、每周记录时间为周日晚上23点59分。\r\n5、每周奖励发放时间为周一。',
+					showCancel:false,
+				    success: function (res) {
+				        if (res.confirm) {
+				            console.log('用户点击确定');
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});
+				
+			},
 			getTop:function(){
 				uni.showLoading({
 					title: '获取数据中'
@@ -75,9 +91,12 @@
 				uni.request({
 					method:'GET',
 					url: "https://api.angeli.top/post.php?type=weekTop", //仅为示例，并非真实接口地址。
+					data:{
+						token:server.token
+					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){

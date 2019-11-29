@@ -122,67 +122,86 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
-  },
-  methods: {
-    getpage: function getpage(id) {
-      if (id == 1) {
-        uni.navigateTo({
-          url: "../edit/edit?type=4" });
 
-      }
-      if (id == 2) {
-        uni.navigateTo({
-          url: "../edit/edit?type=6" });
 
-      }
-      if (id == 3) {
-        uni.navigateTo({
-          url: "../edit/edit?type=5" });
 
-      }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { Version: '1.0.1', mail: false };}, onLoad: function onLoad() {this.Version = _server.default.Version;}, methods: { hiw: function hiw() {this.mail = false;}, showmail: function showmail() {this.mail = true;}, getpage: function getpage(id) {if (id == 1) {uni.navigateTo({ url: "../edit/edit?type=4" });}if (id == 2) {uni.navigateTo({ url: "../edit/edit?type=6" });}if (id == 3) {uni.navigateTo({ url: "../edit/edit?type=5" });}if (id == 4) {uni.navigateTo({ url: "../edit/edit?type=7" });}
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

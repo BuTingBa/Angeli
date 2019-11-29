@@ -185,11 +185,11 @@ var _default = { data: function data() {return { alipay: false, aliuser: '', fee
         url: "https://api.angeli.top/user.php?type=tixian", //请求标记已读消息
         data: {
           'openid': _server.default.userinfo.wxOpenId,
-          'fee': this.fee },
+          'fee': this.fee,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
           'system': _server.default.system },
 
         success: function success(res) {

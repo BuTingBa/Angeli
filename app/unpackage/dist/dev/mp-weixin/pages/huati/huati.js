@@ -154,8 +154,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 var _default = { data: function data() {return { classList: [] };}, onLoad: function onLoad() {var _this = this;uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
-      header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {_this.classList = res.data.data;
-        console.log(_this.classList);
+      header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {_this.classList = res.data.data;console.log(_this.classList);
       } });
 
   },

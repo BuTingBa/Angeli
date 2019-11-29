@@ -3,7 +3,7 @@ require_once '../angeli.class.php';
 require_once('../../config.php');
 $postXml = file_get_contents("php://input"); //接收微信参数
 // 接受不到参数可以使用 file_get_contents("php://input"); PHP 高版本中$GLOBALS 好像已经被废弃了
-var_dump($postXml);
+//var_dump($postXml);
 if (empty($postXml)) {
     return false;
 }

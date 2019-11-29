@@ -86,7 +86,7 @@
 				userInfo:[],
 				monnumber:100,
 				money:0,
-				endVipTime:'1,234.32',
+				endVipTime:'0',
 				ann:false,
 				xz:1,
 				angelibi:"自定义",
@@ -122,11 +122,12 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=cxjf", //仅为示例，并非真实接口地址。
 					data: {
-						auid:server.userinfo.Auid
+						auid:server.userinfo.Auid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -181,10 +182,10 @@
 							number:this.monnumber,
 							key:wxkey,
 							auid:server.userinfo.Auid,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
 							'system':server.system
 						},
 						success: (res) => {
@@ -204,11 +205,12 @@
 											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
 											data:{
 												auid:server.userinfo.Auid,
-												orderId:dd
+												orderId:dd,
+												token:server.token
 											},
 											header: {
 												'content-type': 'application/x-www-form-urlencoded',
-												'Cookie':server.cookie,
+												
 												'system':server.system
 											},
 											success: (res) => {
@@ -282,11 +284,12 @@
 							number:this.monnumber,
 							key:wxkey,
 							auid:server.userinfo.Auid,
-							payType:this.apptype
+							payType:this.apptype,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							
 						},
 						success: (res) => {
 							console.log(res)
@@ -313,11 +316,12 @@
 											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
 											data:{
 												auid:server.userinfo.Auid,
-												orderId:dd
+												orderId:dd,
+												token:server.token
 											},
 											header: {
 												'content-type': 'application/x-www-form-urlencoded',
-												'Cookie':server.cookie
+												
 											},
 											success: (res) => {
 												

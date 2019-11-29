@@ -109,11 +109,12 @@
 							txt:nr,
 							postid:this.postid,
 							uid:this.pluid,
-							auid:server.userinfo.Auid
+							auid:server.userinfo.Auid,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							
 						},
 						success: (res) => {
 							if(res.data.code=='1'){
@@ -123,11 +124,12 @@
 									method:'GET',
 									url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
 									data: {
-										postid: this.postid
+										postid: this.postid,
+										token:server.token
 									},
 									header: {
 										'content-type': 'application/x-www-form-urlencoded',
-										'Cookie':server.cookie
+										
 									},
 									success: (res) => {
 										console.log("————————————评论详情——————————");
@@ -166,11 +168,12 @@
 							auid: server.userinfo.Auid,
 							txt:this.plnr,
 							postid:this.postid,
-							uid:this.postInfo.AuthorId
+							uid:this.postInfo.AuthorId,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie
+							
 						},
 						success: (res) => {
 							if(res.data.code=='1'){
@@ -180,11 +183,12 @@
 									method:'GET',
 									url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
 									data: {
-										postid: this.postid
+										postid: this.postid,
+										token:server.token
 									},
 									header: {
 										'content-type': 'application/x-www-form-urlencoded',
-										'Cookie':server.cookie
+										
 									},
 									success: (res) => {
 										console.log("————————————评论详情——————————");
@@ -233,10 +237,13 @@
 				uni.request({
 					method:'GET',
 					url: "https://api.angeli.top/post.php?type=getdupl&CommentsId="+CommentsId,
-					data: {},
+					data: {
+						token:server.token
+					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -272,11 +279,12 @@
 					method:'GET',
 					url: "https://api.angeli.top/post.php?type=gethflist&CommentsId="+CommentsId+"&postid="+postid,
 					data: {
-						'pluid':pluid
+						'pluid':pluid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){

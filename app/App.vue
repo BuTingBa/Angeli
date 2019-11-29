@@ -40,9 +40,74 @@
 	/*每个页面公共css */
 	@import "components/colorui/main.css";
 	@import "components/colorui/icon.css";
+	.bt-fenxiang{
+		position: fixed;
+		bottom: 0rpx;
+		height: 300upx;
+		width: 100%;
+		background: #fff;
+		z-index: 1300;
+		text-align: center;
+		box-shadow: 0px -2px 7px 1px rgb(121,196,152);
+	
+		
+	}
+	.bt-fenxiang image{
+		height: 75upx;
+		width: 75upx;
+		margin: 50upx;
+	}
+	.fx-title{
+		font-size: 28upx;
+		margin: 10upx;
+		margin-top: 20upx;
+		top: 20upx;
+	}
+	.fx-guanbi{
+		position: fixed;
+		left: 0upx;
+		bottom: 0upx;
+		background: rgb(121,196,152);
+		color: #fff;
+		width: 100%;
+		height: 75upx;
+		line-height: 75upx;
+	}
 	.mianbg{
 		width: 100%;
 		height: 100vh;
+	}
+	.show-jubao{
+		width: 80%;
+		height: 350upx;
+		background-color: #fff;
+		position: absolute;
+		top: 30%;
+		left: 10%;
+		color: #000000;
+		padding: 40upx;
+		
+		
+	}
+	.jubao-input{
+		width: 100%;
+		height: 200upx;
+	}
+	.jubao-anniu{
+		position: absolute;
+		font-size:35upx;
+		bottom: 40upx;
+		margin: 20upx;
+		margin-bottom: 0upx;
+		right: 40upx;
+	}
+	.jubao-anniu2{
+		position: absolute;
+		font-size:35upx;
+		margin: 20upx;
+		margin-bottom: 0upx;
+		bottom: 40upx;
+		right: 160upx;
 	}
 	.menuList-2c{
 		display: flex;
@@ -287,6 +352,9 @@
 	
 	.aicon-userinfo{
 		background-image: url("static/set (2).png")
+	}
+	.aicon-userList{
+		background-image: url("static/userList.png")
 	}
 	.aicon-anquan{
 		background-image: url("static/set (7).png")

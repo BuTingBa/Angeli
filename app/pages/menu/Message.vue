@@ -119,11 +119,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getSystemMsg", //仅为示例，并非真实接口地址。
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -144,11 +144,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -170,11 +170,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getMyMsgList", //仅为示例，并非真实接口地址。
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)

@@ -58,10 +58,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getMyhaoyou", //请求标记已读消息
 					data: {
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)

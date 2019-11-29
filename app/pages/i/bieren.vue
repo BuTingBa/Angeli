@@ -73,7 +73,7 @@
 				<template v-else>
 					<view class="nullBox">
 						<image src="../../static/null.png" mode="" class="nullImg"></image>
-						<text class="nullText">\nTA还没有发过帖子</text>
+						<text class="nullText">\nTA还没有发过帖子或已隐藏显示</text>
 					</view>
 				</template>
 			</block>
@@ -150,11 +150,11 @@
 				method:'GET',
 				url: 'https://api.angeli.top/user.php?type=getUserInfo', //仅为示例，并非真实接口地址。
 				data: {
-					auid: e.auid
+					auid: e.auid,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					console.log(res)
@@ -180,11 +180,11 @@
 					data: {
 						page:1,
 						count:20,
-						auid:this.auid
+						auid:this.auid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						
@@ -227,10 +227,11 @@
 					url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
 					data: {
 						uid: uid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+
 					},
 					success: (res) => {
 						uni.showToast({
@@ -264,11 +265,11 @@
 					data: {
 						uid: auid,
 						count:10,
-						page:this.page
+						page:this.page,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						if(res.data.data.length==undefined){
@@ -294,11 +295,11 @@
 				data: {
 					uid: this.name.Auid,
 					count:10,
-					page:this.page
+					page:this.page,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					if(res.data.data.length==undefined){

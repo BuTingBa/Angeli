@@ -210,7 +210,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       userInfo: [],
       monnumber: 100,
       money: 0,
-      endVipTime: '1,234.32',
+      endVipTime: '0',
       ann: false,
       xz: 1,
       angelibi: "自定义",
@@ -246,11 +246,12 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=cxjf", //仅为示例，并非真实接口地址。
         data: {
-          auid: _server.default.userinfo.Auid },
+          auid: _server.default.userinfo.Auid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);
@@ -397,6 +398,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
 
 
+
         uni.request({
           method: 'POST',
           url: "https://api.angeli.top/WeChat/pay.php?type=angelibi", //仅为示例，并非真实接口地址。
@@ -406,11 +408,12 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
             number: this.monnumber,
             key: wxkey,
             auid: _server.default.userinfo.Auid,
-            payType: this.apptype },
+            payType: this.apptype,
+            token: _server.default.token },
 
           header: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Cookie': _server.default.cookie },
+            'content-type': 'application/x-www-form-urlencoded' },
+
 
           success: function success(res) {
             console.log(res);
@@ -437,11 +440,12 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
                     url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
                     data: {
                       auid: _server.default.userinfo.Auid,
-                      orderId: dd },
+                      orderId: dd,
+                      token: _server.default.token },
 
                     header: {
-                      'content-type': 'application/x-www-form-urlencoded',
-                      'Cookie': _server.default.cookie },
+                      'content-type': 'application/x-www-form-urlencoded' },
+
 
                     success: function success(res) {
 

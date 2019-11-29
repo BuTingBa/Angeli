@@ -7,9 +7,9 @@
 		"urlCheck": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
+	"libVersion": "2.9.2",
 	"appid": "wxb2418420ae2cf37c",
-	"projectname": "%E5%AE%89%E4%B8%AA%E5%88%A9%E7%A4%BE%E5%8C%BA",
+	"projectname": "安个利社区",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -53,10 +53,10 @@
 					"pathName": "pages/menu/Message"
 				},
 				{
-					"name": "olun",
+					"name": "帖子详情",
 					"query": "",
 					"id": 4,
-					"pathName": "pages/postinfo/plinfo"
+					"pathName": "pages/postinfo/postinfo"
 				},
 				{
 					"name": "钱包",

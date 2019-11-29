@@ -171,6 +171,7 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
             code: res.code,
             tuijianId: _this.tuijianren },
 
+
           header: {
             'content-type': 'application/x-www-form-urlencoded' },
 
@@ -220,11 +221,12 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=mark&class=system", //请求标记已读消息
         data: {
-          'msgId': this.msgid },
+          'msgId': this.msgid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);
@@ -250,12 +252,12 @@ var _default = { data: function data() {return { MsgList: [], auid: 0, val: '', 
       uni.request({
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=getMyTG",
-        data: {},
-
+        data: {
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           console.log(res);

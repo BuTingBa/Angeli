@@ -164,11 +164,11 @@
 							fee:this.money,
 							number:this.monnumber,
 							key:wxkey,
-							auid:server.userinfo.Auid
+							auid:server.userinfo.Auid,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
 							'system':server.system
 						},
 						success: (res) => {
@@ -195,11 +195,12 @@
 											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', 
 											data:{
 												auid:server.userinfo.Auid,
-												orderId:dd
+												orderId:dd,
+												token:server.token
 											},
 											header: {
 												'content-type': 'application/x-www-form-urlencoded',
-												'Cookie':server.cookie
+											
 											},
 											success: (res) => {
 												if(res.data.data.payStatus=='已支付' || res.data.data.payStatus=='OK'){
@@ -264,10 +265,11 @@
 							number:this.monnumber,
 							key:wxkey,
 							auid:server.userinfo.Auid,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
+							
 							'system':server.system
 						},
 						success: (res) => {
@@ -287,11 +289,12 @@
 											url: 'https://api.angeli.top/account.php?type=queryOrderIdAndVip', //仅为示例，并非真实接口地址。
 											data:{
 												auid:server.userinfo.Auid,
-												orderId:dd
+												orderId:dd,
+												token:server.token
 											},
 											header: {
 												'content-type': 'application/x-www-form-urlencoded',
-												'Cookie':server.cookie,
+											
 												'system':server.system
 											},
 											success: (res) => {

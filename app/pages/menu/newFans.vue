@@ -42,11 +42,11 @@
 				method:'GET',
 				url: "https://api.angeli.top/user.php?type=getMynotReadGZ",
 				data: {
-					
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
+					
 				},
 				success: (res) => {
 					console.log(res)
@@ -54,11 +54,7 @@
 						this.msgList=res.data.data
 						this.markMsg()
 					}else{
-						uni.showToast({
-							title: "暂无新粉丝通知",
-							position:'bottom',
-							icon:'none'
-						})
+						
 					}
 					
 				},
@@ -82,10 +78,11 @@
 					url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
 					data: {
 						uid: uid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						uni.showToast({
@@ -94,13 +91,38 @@
 							icon:'none'
 						});
 						if(res.data.msg=='关注成功'){
-							
 							this.msgList.isGZ=true;
 						}else{
 							this.msgList.isGZ=false;
 						}
+						uni.request({
+							method:'GET',
+							url: "https://api.angeli.top/user.php?type=getMynotReadGZ",
+							data: {
+								token:server.token
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded',
+								
+							},
+							success: (res) => {
+								console.log(res)
+								if(res.data.code=="1"){
+									this.msgList=res.data.data
+									this.markMsg()
+								}else{
+									
+								}
+								
+							},
+							complete() {
+								uni.hideLoading();
+							}
+						});
 					}
 				}); 
+				
+				
 			},
 			getbieren:function(e){
 				uni.navigateTo({
@@ -117,11 +139,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=mark&class=fans", //请求标记已读消息
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -144,11 +166,11 @@
 				method:'GET',
 				url: "https://api.angeli.top/user.php?type=mark&class=fans", //请求标记已读消息
 				data: {
-					
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
+					
 				},
 				success: (res) => {
 					console.log(res)

@@ -31,15 +31,49 @@
 		    	
 		    	<view class="postBottom">
 		    		<view class="postClass" >#{{list.Tag.ClassName}}</view>
-		    		<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index)"></view>
+		    		<view>
+		    			<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
+		    		</view>
 		    		<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 		    	</view>
 		    </view>
 		</template>
 		<template v-if="TabCur==1">
-		
+			<view class="postList" v-for="(list,index) in hotpost" :key="index">
+				<view class="user">
+					<view class="touxiang" :style="{'background-image':'url('+list.AuthorInfo.AuthorAvatarUrl+')'}" @click="getbieren(list.AuthorId)"><view class="vipLogo" v-if="list.AuthorInfo.VIPEndTime>0" ></view></view>
+					<view :class="list.AuthorInfo.VIPEndTime>0?'vipUserName':'userName'">{{list.AuthorInfo.AuthorName}}</view>
+					<view class="postDate">{{list.PsotDate}}</view>
+				</view>
+				<view class="postText" @tap="getpostinfo(list.PostsId)">
+					<text decode="false" selectable="true" space="nbsp" class="text-c">{{list.Content}}</text>
+				</view>
+				<block v-if="list.PictureId[0].length>5">
+					<view class="postImage" >
+						<image v-for="(img,id) in list.PictureId" :key="id" class="postImageItem" :src="img"  @tap="showImage(list.PictureId,id)" mode="aspectFill"></image>
+					</view>
+				</block>
+				
+				<view class="postBottom">
+					<view class="postClass" >#{{list.Tag.ClassName}}</view>
+					<view>
+						<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
+					</view>
+					<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
+				</view>
+			</view>
 		</template>	
 		<uni-load-more :status="status" />
+		
+		<!-- 分享弹出框 -->
+		<view class="bt-fenxiang" v-if="showAppFenxiang">
+			<text class="fx-title">选择分享到\n</text>
+			<image src="../../static/WeChatpayicon.png" mode="aspectFit" @click="appFenxiang(2,0)"></image>
+			<image src="../../static/pyq.png" mode="aspectFit" @click="appFenxiang(3,0)"></image>
+			<image src="../../static/qq.png" mode="aspectFit" @click="appFenxiang(4,0)"></image>
+			<image src="../../static/link.png" mode="aspectFit" @click="appFenxiang(1,0)"></image>
+			<text class="fx-guanbi" @click="appFenxiang(0,0)">关闭</text>
+		</view>
 	</view>
 </template>
 
@@ -54,8 +88,12 @@
 			return {
 				TabCur:0,
 				postList:[],
+				hotpost:[],
 				status: 'loading',
+				Dindex:[],
+				showAppFenxiang:false,
 				type:"new",
+				page:1,
 				classinfo:[],
 				statusTypes: [{
 					value: 'more',
@@ -83,6 +121,81 @@
 			this.getPostList(this.classId);
 		},
 		methods: {
+			appFenxiang:function(id,type){
+				switch (id){
+					case 0:
+						this.showAppFenxiang=false
+						break;
+					case 1:
+						uni.setClipboardData({
+							data: 'http://share.angeli.top/?postId='+this.postid,
+							success: function () {
+								console.log('success');
+							}
+						});
+						console.log('复制链接')
+						break;
+					case 2:
+						console.log(this.Dindex.PictureId[0])
+						console.log(this.Dindex.Content)
+						console.log('http://share.angeli.top/?postId='+this.Dindex.PostsId)
+						uni.share({
+						    provider: 'weixin',
+						    scene: "WXSceneSession",
+						    type: 5,
+						    imageUrl: this.Dindex.PictureId[0],
+						    title: this.Dindex.Content,
+						    miniProgram: {
+						        id: 'gh_a38adc10b952',
+						        path: 'pages/postinfo/postinfo?id='+this.Dindex.PostsId,
+						        type: 0,
+						        webUrl: 'http://share.angeli.top/?postId='+this.Dindex.PostsId
+						    },
+						    success: ret => {
+						        console.log(JSON.stringify(ret));
+						    },
+							fail: function (err) {
+							    console.log("fail:" + JSON.stringify(err));
+							}
+						});
+						break;
+					case 3:
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSenceTimeline",
+						    type: 0,
+						    href: 'http://share.angeli.top/?postId='+this.Dindex.PostsId,
+						    title: this.Dindex.Content,
+						    summary: this.Dindex.Content,
+						    imageUrl: this.Dindex.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					case 4:
+						uni.share({
+						    provider: "qq",
+						    type: 1,
+							href:'http://share.angeli.top/?postId='+this.Dindex.PostsId,
+						    summary: this.Dindex.Content,
+							title:this.Dindex.Content,
+							imageUrl: this.Dindex.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    }, 
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					default:
+						
+				}
+			},
 			getPushPost:function(){
 				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
 					uni.showToast({
@@ -108,10 +221,10 @@
 					url: 'https://api.angeli.top/post.php?type=getClassInfo', //仅为示例，并非真实接口地址。
 					data: {
 						classId:e,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						uni.hideLoading();
@@ -152,22 +265,26 @@
 				});
 				uni.request({
 					method:'GET',
-					url: 'https://api.angeli.top/post.php?type=getClassPostList', //仅为示例，并非真实接口地址。
+					url: 'https://api.angeli.top/post.php?type=getClassPostList',
 					data: {
 						page: 1,
 						count:20,
 						classId:classId,
-						postType:this.type
+						postType:this.type,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						uni.hideLoading();
 						this.postList=[]
 						console.log("————————————帖子列表——————————");
-						this.postList=res.data.data;
+						if(this.type=="new"){
+							this.postList=res.data.data;
+						}else{
+							this.hotpost=res.data.data;
+						}
 						console.log(this.postList);
 						this.weikong=false
 						if(res.data.code!=="1"){
@@ -214,21 +331,18 @@
 				console.log(res)
 				this.Dindex=res;
 				if(res.AuthorId==server.userinfo.Auid){
-					this.menuList=['分享给朋友', '生成海报', '举报','删除帖子']
+					this.menuList=['分享给朋友', '举报','删除帖子']
 				}else{
-					this.menuList=['分享给朋友', '生成海报', '举报']
+					this.menuList=['分享给朋友', '举报']
 				}
 				uni.showActionSheet({
 					itemList:this.menuList,
 					success: function (res) {
 						switch(res.tapIndex){
 							case 0:
-								uni.showToast({
-									title: "分享"+res.Content,
-									position:'bottom',
-									icon:'none'
-								});
+								this.showAppFenxiang=true
 								break;
+								
 							case 1:
 								
 								break;
@@ -247,29 +361,75 @@
 					}
 				});
 			},
-			showImage(res,c){
-				uni.previewImage({
-					current:c,
-					urls: res,
-					longPressActions: {
-					itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function (res) {
-							
+			EndLoding:function(e){
+				this.page++;
+				console.log(this.page)
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/post.php?type=getClassPostList',
+					data: {
+						page: 1,
+						count:20,
+						classId:classId,
+						postType:this.type,
+						token:server.token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						uni.hideLoading();
+						this.postList=[]
+						console.log("————————————帖子列表——————————");
+						if(this.type=="new"){
+							this.postList=res.data.data;
+						}else{
+							this.hotpost=res.data.data;
+						}
+						console.log(this.postList);
+						this.weikong=false
+						if(res.data.code!=="1"){
 							uni.showToast({
-								title: '选中了第' + (res.tapIndex + 1) + '个按钮',
+								title: '获取帖子失败，建议重启',
 								position:'bottom',
 								icon:'none'
 							});
-							console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
-							
-						},
-						fail: function (res) {
-							console.log(res.errMsg);
-						}    
-					}
-				})
+						}
+						if(res.data.data==false){
+							this.weikong=true
+						}
+						//this.$forceUpdate();
+					},
+					complete:function(){
+						uni.hideLoading();
+					},
+					
+				});
 			},
-			Like:function(postid,auid,give,index){
+			Like:function(postid,auid,give,index,zc){
+				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+					uni.showToast({
+						title: "你还没有登录，请登录后再来吧",
+						position:'bottom',
+						icon:'none'
+					});
+					setTimeout(function () {
+						uni.navigateTo({
+							url: '../reg/reg'
+						})
+					}, 1200);
+					return;
+				}
+				
+				if(auid==server.userinfo.Auid){
+					uni.showToast({
+						title: "不能给自己种草",
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+				}
+				
 				if(give===true){
 					var modea='del'
 				}else{
@@ -281,30 +441,45 @@
 					data: {
 						fuid: auid,
 						postid:postid,
-						mode:modea
+						mode:modea,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'system':server.system
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
 							if(modea=='add'){
-								this.postList[index].Give=true;
+								if(this.type=="new"){
+									this.postList[index].ZhongcaoCount=Number(zc)+1;
+									this.postList[index].Give=true;
+								}else{
+									this.hotpost[index].ZhongcaoCount=Number(zc)+1;
+									this.hotpost[index].Give=true;
+								}
+								
+								
 								uni.showToast({
 									title: "种草成功！",
 									position:'bottom',
 									icon:'none'
 								});
 							}else{
-								this.postList[index].Give=false;
+								if(this.type=="new"){
+									this.postList[index].ZhongcaoCount=Number(zc)-1;
+									this.postList[index].Give=false;
+								}else{
+									this.hotpost[index].ZhongcaoCount=Number(zc)-1;
+									this.hotpost[index].Give=false;
+								}
+								
 								uni.showToast({
 									title: "取消种草成功！",
 									position:'bottom',
 									icon:'none'
 								});
 							}
-							
 							this.$forceUpdate()
 						}else{
 							
@@ -327,6 +502,7 @@
 				}else{
 					this.type="hot";
 				}
+				this.getPostList(this.classId);
 				
 			}
 		}

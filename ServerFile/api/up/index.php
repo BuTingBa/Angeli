@@ -5,7 +5,10 @@ require_once '../../config.php';
 
 use OSS\OssClient;
 use OSS\Core\OssException;
-session_start();
+if(isset($_REQUEST['token'])){
+    session_id($_REQUEST['token']);
+    session_start();
+}
 error_reporting(E_ALL^E_NOTICE);
 // 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
 $accessKeyId = "LTAI4FxmXhgN5esyQL9yV9A1";

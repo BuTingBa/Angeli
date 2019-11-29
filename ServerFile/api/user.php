@@ -2,7 +2,6 @@
 require_once('../config.php');
 require_once('angeli.class.php');
 //require_once('sendsms.class.php');
-session_start();
 error_reporting(E_ALL^E_NOTICE);
 $allow_origin = array(
     'https://api.angeli.top',
@@ -18,7 +17,10 @@ if(empty($_GET['type']))
 {
     die("请输出请求类型参数！");
 }
-
+if(isset($_REQUEST['token'])){
+    session_id($_REQUEST['token']);
+    session_start();
+}
 switch ($_GET['type']){
     case 'getUserInfo':
         $auid=$_SESSION['Auid'];
@@ -31,6 +33,16 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'getMyinfo':
+        $auid=$_SESSION['Auid'];
+        $info=$user->getUserInfo('auid',$auid);
+        if($info['Auid']=='-1'){
+            $outmsg = array('code' =>'0','msg'=>'没有找到该用户','data'=>$info);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>$info);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
     case 'search':
         if(empty($_GET['keyword'])){
             $outmsg = array('code' =>'0','msg'=>'请输入搜索关键词！','data'=>$outdata);

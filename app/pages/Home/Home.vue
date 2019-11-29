@@ -45,7 +45,6 @@
 						<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
 						<view>
 							<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
-							
 						</view>
 						<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image></view>
 					</view>
@@ -108,6 +107,9 @@
 					</view>
 				</template>
 			</block>
+			<template >
+				<view></view>
+			</template>
 			<!-- 只有是iPhone，iOS系统才显示该按钮 -->
 			<template v-if="shebei=='ios'||shebei=='devtools'||shebei=='android'">
 			<!-- 超级菜单 -->
@@ -175,11 +177,16 @@
 						<text @click="fensia">粉丝</text>
 						<text >种草</text>
 				</view>
-				
 			</view>
 			<view style="background-color: #FFFFFF;width: 100%;top: 65%;height: 100%;" >
 				<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg" >
 					<view class="menuListBox">
+						<view class="menuItem" @tap="reguser">
+							<view class="menuIcon aicon-userList" ></view>
+							<view class="menuTiele">个人中心</view>
+							<view class="menuRight"></view>
+						</view>
+						<view class="menusolid"></view>
 						<view class="menuItem" @tap="getMessage">
 							<view class="menuIcon aicon-Msg" ></view>
 							<view class="menuTiele">消息通知</view>
@@ -219,12 +226,12 @@
 							<view class="menuTiele">种草排行</view>
 							<view class="menuRight"></view>
 						</view>
-						<view class="menusolid"></view>
+						<!-- <view class="menusolid"></view>
 						<view class="menuItem" @tap="getshop">
 							<view class="menuIcon aicon-shop"></view>
 							<view class="menuTiele">Angeli Shop</view>
 							<view class="menuRight"></view>
-						</view>
+						</view> -->
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="set">
 							<view class="menuIcon aicon-set"></view>
@@ -241,6 +248,23 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- 举报理由框框 -->
+		<view class="show-jubao shadow shadow-lg bg-blue" v-if="showJubao">
+			<textarea maxlength="300"  @input="jubaoliyouinput" placeholder="请输入举报理由" class="jubao-input"></textarea>
+			<text class="jubao-anniu2" @click="showJubao=false"> 取消</text>
+			<text class="jubao-anniu" @click="sendjubao"> 提交</text>
+		</view>
+		
+		<!-- 分享弹出框 -->
+		<view class="bt-fenxiang" v-if="showAppFenxiang">
+			<text class="fx-title">选择分享到\n</text>
+			<image src="../../static/WeChatpayicon.png" mode="aspectFit" @click="appFenxiang(2,0)"></image>
+			<image src="../../static/pyq.png" mode="aspectFit" @click="appFenxiang(3,0)"></image>
+			<image src="../../static/qq.png" mode="aspectFit" @click="appFenxiang(4,0)"></image>
+			<image src="../../static/link.png" mode="aspectFit" @click="appFenxiang(1,0)"></image>
+			<text class="fx-guanbi" @click="appFenxiang(0,0)">关闭</text>
+		</view>
 	</view>
 </template>
 
@@ -255,10 +279,12 @@
 		data() {
 			return {
 				Dindex:[],
+				
 				CustomBar: this.CustomBar,
 				modalName: null,
 				AvatarUrl:"",
 				TabCur: 0,
+				showAppFenxiang:false,
 				gaodu:0,
 				msgNumber:0,
 				weikong:true,
@@ -301,40 +327,147 @@
 				menuList:['分享给朋友', '生成海报', '举报'],
 				openmenu:false,
 				shebei:'',
-				iosapy:'no'
+				iosapy:'no',
+				jubao:{
+					postid:0,
+					authorid:0
+				},
+				jubaoliyou:'',
+				showJubao:false
 			}
 		},
 		onShow:function(){
+			// #ifdef APP-PLUS
+
+			try {
+			    server.token = uni.getStorageSync('token');
+/* 				console.log('赋值后的Token：'+server.token,server.token)
+				console.log('直接输出token：'+ uni.getStorageSync('token'), uni.getStorageSync('token')) */
+			    if (server.token) {
+			       console.log('赋值后的Token：'+server.token,server.token)
+			    }
+			} catch (e) {
+			    uni.showToast({
+			    	title: '身份已失效，请重新登录',
+			    	position:'bottom',
+			    	icon:'none'
+			    })
+				console.log(e)
+			}
+			try {
+			    server.userinfo = uni.getStorageSync('user');
+				/* console.log('赋值后的Token：'+server.token,server.token) */
+			    if ( server.userinfo) {
+			       console.log('赋值后的userinfo：'+server.userinfo,server.userinfo)
+			    }
+			} catch (e) {
+			    uni.showToast({
+			    	title: '身份已失效，请重新登录',
+			    	position:'bottom',
+			    	icon:'none'
+			    })
+				console.log(e)
+			}
+
+			// #endif
 			uni.request({
 				method:'GET',
-				url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
+				url: "https://api.angeli.top/user.php?type=getMyNoRead",
 				data: {
-					auid:this.userid
+					auid:this.userid,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
-					// #ifdef  APP-PLUS
-						console.log('首次进入cookie：',res.header['Set-Cookie'])
-						server.cookie=res.header['Set-Cookie'];
-					// #endif
-					console.log(res)
 					this.iosapy=res.data.data.pay
 					if(res.data.code=="1"){
 						this.msgNumber=res.data.data.count
 					}else{
 			
 					}
-					console.log(this.msgNumber)
-				},
-				complete() {
-					
 				}
 			});
+			// #ifdef APP-PLUS
+			//获取个人信息
+			uni.request({
+				method:'GET',
+				url: "https://api.angeli.top/user.php?type=getMyinfo",
+				data: {
+					auid:this.userid,
+					token:server.token
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					if(res.data.code=='1'){
+						this.AvatarUrl=res.data.data.AvatarUrl;
+						this.username=res.data.data.UserName;
+						this.zhongcao=res.data.data.ZhongcaoCount;
+						this.guanzhu=res.data.data.FollowedCount;
+						this.fensi=res.data.data.FollowerCount;
+						this.dengji=res.data.data.Rank;
+						this.userid=res.data.data.Auid;
+						this.userInfo=res.data.data;
+						server.userinfo=res.data.data;
+					}else{
+						this.AvatarUrl='https://c-ssl.duitang.com/uploads/item/201807/01/20180701122340_uxlwc.thumb.700_0.jpeg';
+						this.username='未登录';
+						this.zhongcao=0;
+						this.guanzhu=0;
+						this.fensi=0;
+						this.dengji=0;
+						this.userid=0;
+						this.userInfo=null;
+					}
+				}
+			});
+			// #endif
 		},
 		onLoad:function(e){
+			// #ifdef APP-PLUS
+			
+			try {
+				server.token = uni.getStorageSync('token');
+				/* 	console.log('赋值后的Token：'+server.token,server.token)
+				console.log('直接输出token：'+ uni.getStorageSync('token'), uni.getStorageSync('token')) */
+				if (server.token) {
+				   console.log('赋值后的Token：'+server.token,server.token)
+				}
+			} catch (e) {
+				uni.showToast({
+					title: '身份已失效，请重新登录',
+					position:'bottom',
+					icon:'none'
+				})
+				console.log(e)
+			}
+			try {
+				server.userinfo = uni.getStorageSync('user');
+				/* console.log('赋值后的Token：'+server.token,server.token) */
+				if ( server.userinfo) {
+				   console.log('赋值后的userinfo：'+server.userinfo,server.userinfo)
+				}
+			} catch (e) {
+				uni.showToast({
+					title: '身份已失效，请重新登录',
+					position:'bottom',
+					icon:'none'
+				})
+				console.log(e)
+			}
+			
+			//获取最新的版本号
+			
+			if(!server.update){
+				setTimeout(this.getVersion,4000)
+			}
+
+			// #endif
+			
+			//setTimeout(this.getVersion(), 3000)
 			this.shebei=uni.getSystemInfoSync().platform;
 			uni.getSystemInfo({
 			    success: function (res) {
@@ -352,32 +485,11 @@
 			console.log("推荐人ID",this.tuijianren)
 			
 			// #ifdef  APP-PLUS
-			console.log("APP:",server.userinfo);
-					console.log(server.userinfo)
-					uni.getStorage({
-						key: 'userinfo',
-						success: function (res) {
-							server.userinfo=res.data;
-							console.log("appgeiuser",server.userinfo);
-							console.log("检测服务：：：",server.userinfo.AvatarUrl)
-							uni.getStorage({
-								key: 'cookie',
-								success: function (res) {
-									server.cookie=res.data;
-									console.log("cookie：",server.cookie);
-									this.getPostData('new',0);
-								}
-							});
-						},
-						complete() {
-							this.getPostData('new',0);
-						}
-					});
-					this.getPostData('new',0);
+			this.getPostData('new',0);
 			// #endif
 			//上面只在APP，下面仅在微信小程序
 			// #ifdef MP-WEIXIN
-			if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+			if(server.token==""||server.token==null){
 				uni.login({
 				    provider: 'weixin',
 				    success: (res) => {
@@ -412,9 +524,9 @@
 									this.dengji=res.data.data.Rank;
 									this.userid=res.data.data.Auid;
 									this.userInfo=res.data.data;
+									server.token=res.data.token;
 									server.userinfo=res.data.data;
-									server.cookie=res.header['Set-Cookie'];
-									console.log("记录cookie：",server.cookie)
+									
 									if(res.data.code=="2"){
 										uni.showToast({
 											title: res.data.msg,
@@ -489,10 +601,123 @@
 		},
 		onReady: function() {
 			this.getHei()
-			//setTimeout(this.aotuloding,1500)
+			
 			
 		},
 		methods: {
+			appFenxiang:function(id,type){
+				switch (id){
+					case 0:
+						this.showAppFenxiang=false
+						break;
+					case 1:
+						uni.setClipboardData({
+							data: 'http://share.angeli.top/?postId='+this.postid,
+							success: function () {
+								console.log('success');
+							}
+						});
+						console.log('复制链接')
+						break;
+					case 2:
+						console.log(this.Dindex.PictureId[0])
+						console.log(this.Dindex.Content)
+						console.log('http://share.angeli.top/?postId='+this.Dindex.PostsId)
+						uni.share({
+						    provider: 'weixin',
+						    scene: "WXSceneSession",
+						    type: 5,
+						    imageUrl: this.Dindex.PictureId[0],
+						    title: this.Dindex.Content,
+						    miniProgram: {
+						        id: 'gh_a38adc10b952',
+						        path: 'pages/postinfo/postinfo?id='+this.Dindex.PostsId,
+						        type: 0,
+						        webUrl: 'http://share.angeli.top/?postId='+this.Dindex.PostsId
+						    },
+						    success: ret => {
+						        console.log(JSON.stringify(ret));
+						    },
+							fail: function (err) {
+							    console.log("fail:" + JSON.stringify(err));
+							}
+						});
+						break;
+					case 3:
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSenceTimeline",
+						    type: 0,
+						    href: 'http://share.angeli.top/?postId='+this.Dindex.PostsId,
+						    title: this.Dindex.Content,
+						    summary: this.Dindex.Content,
+						    imageUrl: this.Dindex.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					case 4:
+						uni.share({
+						    provider: "qq",
+						    type: 1,
+							href:'http://share.angeli.top/?postId='+this.Dindex.PostsId,
+						    summary: this.Dindex.Content,
+							title:this.Dindex.Content,
+							imageUrl: this.Dindex.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    }, 
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					default:
+						
+				}
+			},
+			getVersion:function(){
+				uni.request({
+					method:'GET',
+					url: "https://api.angeli.top/post.php?type=getVersion", 
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code=="1"){
+							if(server.Version<res.data.data.version){
+								console.log(res.data.data)
+								uni.showModal({
+								    title: '应用更新',
+								    content: '发现安个利新版本，是否安装升级？',
+								    success: (ok) => {
+								        if (ok.confirm) {
+											console.log(res.data.data.downloadUrl)
+								            plus.runtime.openURL(res.data.data.downloadUrl)
+											server.update=true
+								        }
+								    }
+								});
+							}
+						}
+					},
+				});
+			},
+			sendjubao:function(){
+				
+				this.$jubao(this.jubao.postid,server.userinfo.Auid,this.jubao.authorid,this.jubaoliyou);
+				this.showJubao=false;
+				uni.showToast({
+					title:'举报成功',
+					position:'bottom',
+					icon:'none'
+				});
+			},
 			plusbutton:function(){
 				this.openmenu=this.openmenu?false:true;
 			},
@@ -500,6 +725,9 @@
 				uni.navigateTo({
 					url: '../menu/guanzhu'
 				})
+			},
+			jubaoliyouinput:function(res){
+				this.jubaoliyou=res.target.value 
 			},
 			fensia:function(){
 				uni.navigateTo({
@@ -524,11 +752,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getSysConfig", //仅为示例，并非真实接口地址。
 					data: {
-						configName:name
+						configName:name,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						console.log(res)
@@ -629,11 +857,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=getMyNoRead", 
 					data: {
-						auid:this.userid
+						auid:this.userid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						console.log(res)
@@ -673,7 +901,7 @@
 				
 			},
 			Like:function(postid,auid,give,index,zc){
-				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+				if(server.token==""||server.token==null){
 					uni.showToast({
 						title: "你还没有登录，请登录后再来吧",
 						position:'bottom',
@@ -703,15 +931,15 @@
 				}
 				uni.request({
 					method:'GET',
-					url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+					url: "https://api.angeli.top/post.php?type=Like", 
 					data: {
 						fuid: auid,
 						postid:postid,
-						mode:modea
+						mode:modea,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
 						'system':server.system
 					},
 					success: (res) => {
@@ -752,28 +980,23 @@
 				console.log(resa)
 				this.Dindex=resa;
 				if(resa.AuthorId==server.userinfo.Auid){
-					this.menuList=['生成海报', '举报','删除帖子']
+					this.menuList=['分享', '举报','删除帖子']
 				}else{
-					this.menuList=['生成海报', '举报']
+					this.menuList=['分享', '举报']
 				}
 				uni.showActionSheet({
 					itemList:this.menuList,
 					success: (res) =>{
 						switch(res.tapIndex){
 							case 0:
-								uni.showToast({
-									title: "分享"+resa.Content,
-									position:'bottom',
-									icon:'none'
-								});
+								this.showAppFenxiang=true
 								break;
 							case 1:
-								uni.showToast({
-									title:'举报成功',
-									position:'bottom',
-									icon:'none'
-								});
-								this.$jubao(resa.PostsId,server.userinfo.Auid,resa.AuthorId,'没有理由');
+								this.showJubao=true;
+								this.jubao.postid=resa.PostsId;
+								this.jubao.authorid=resa.AuthorId
+								
+								
 								break;
 							case 2:
 								this.$delPost(resa.PostsId);
@@ -825,16 +1048,16 @@
 				this.page=1
 				uni.request({
 					method:'GET',
-					url: 'https://api.angeli.top/post.php?type=outPostList', //仅为示例，并非真实接口地址。
+					url: 'https://api.angeli.top/post.php?type=outPostList',
 					data: {
 						page: 1,
 						postType:type,
 						count:10,
-						classId:classId
+						classId:classId,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						
@@ -863,7 +1086,7 @@
 				
 			},
 			reguser:function(){
-				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+				if(server.token==""||server.token==null){
 					uni.navigateTo({
 						url: '../reg/reg'
 					})
@@ -880,7 +1103,7 @@
 			},
 			pluspost:function(){
 				console.log("发帖：",server.userinfo.Auid)
-				if(server.userinfo.Auid==""||server.userinfo.Auid==null){
+				if(server.token==""||server.token==null){
 					uni.showToast({
 						title: "你还没有登录，请登录后再来吧",
 						position:'bottom',
@@ -908,11 +1131,11 @@
 						page: this.page,
 						postType:this.postype,
 						sort:'PsotDate',
-						count:10
+						count:10,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
 					},
 					success: (res) => {
 						console.log("————————————帖子列表——————————"+this.page);

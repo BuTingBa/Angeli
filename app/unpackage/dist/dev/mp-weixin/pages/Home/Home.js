@@ -90,6 +90,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.showJubao = false
+    }
+  }
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -369,6 +374,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more */ "components/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more.vue */ 181));};var _default =
 
 
@@ -379,10 +408,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
   data: function data() {
     return {
       Dindex: [],
+
       CustomBar: this.CustomBar,
       modalName: null,
       AvatarUrl: "",
       TabCur: 0,
+      showAppFenxiang: false,
       gaodu: 0,
       msgNumber: 0,
       weikong: true,
@@ -425,40 +456,147 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       menuList: ['分享给朋友', '生成海报', '举报'],
       openmenu: false,
       shebei: '',
-      iosapy: 'no' };
+      iosapy: 'no',
+      jubao: {
+        postid: 0,
+        authorid: 0 },
+
+      jubaoliyou: '',
+      showJubao: false };
 
   },
   onShow: function onShow() {var _this = this;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     uni.request({
       method: 'GET',
-      url: "https://api.angeli.top/user.php?type=getMyNoRead", //仅为示例，并非真实接口地址。
+      url: "https://api.angeli.top/user.php?type=getMyNoRead",
       data: {
-        auid: this.userid },
+        auid: this.userid,
+        token: _server.default.token },
 
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Cookie': _server.default.cookie },
+        'content-type': 'application/x-www-form-urlencoded' },
 
       success: function success(res) {
-
-
-
-
-        console.log(res);
         _this.iosapy = res.data.data.pay;
         if (res.data.code == "1") {
           _this.msgNumber = res.data.data.count;
         } else {
 
         }
-        console.log(_this.msgNumber);
-      },
-      complete: function complete() {
-
       } });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   },
   onLoad: function onLoad(e) {var _this2 = this;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //setTimeout(this.getVersion(), 3000)
     this.shebei = uni.getSystemInfoSync().platform;
     uni.getSystemInfo({
       success: function success(res) {
@@ -478,30 +616,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //上面只在APP，下面仅在微信小程序
 
-    if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+    if (_server.default.token == "" || _server.default.token == null) {
       uni.login({
         provider: 'weixin',
         success: function success(res) {
@@ -536,9 +653,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                 _this2.dengji = res.data.data.Rank;
                 _this2.userid = res.data.data.Auid;
                 _this2.userInfo = res.data.data;
+                _server.default.token = res.data.token;
                 _server.default.userinfo = res.data.data;
-                _server.default.cookie = res.header['Set-Cookie'];
-                console.log("记录cookie：", _server.default.cookie);
+
                 if (res.data.code == "2") {
                   uni.showToast({
                     title: res.data.msg,
@@ -613,10 +730,123 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
   },
   onReady: function onReady() {
     this.getHei();
-    //setTimeout(this.aotuloding,1500)
+
 
   },
   methods: {
+    appFenxiang: function appFenxiang(id, type) {
+      switch (id) {
+        case 0:
+          this.showAppFenxiang = false;
+          break;
+        case 1:
+          uni.setClipboardData({
+            data: 'http://share.angeli.top/?postId=' + this.postid,
+            success: function success() {
+              console.log('success');
+            } });
+
+          console.log('复制链接');
+          break;
+        case 2:
+          console.log(this.Dindex.PictureId[0]);
+          console.log(this.Dindex.Content);
+          console.log('http://share.angeli.top/?postId=' + this.Dindex.PostsId);
+          uni.share({
+            provider: 'weixin',
+            scene: "WXSceneSession",
+            type: 5,
+            imageUrl: this.Dindex.PictureId[0],
+            title: this.Dindex.Content,
+            miniProgram: {
+              id: 'gh_a38adc10b952',
+              path: 'pages/postinfo/postinfo?id=' + this.Dindex.PostsId,
+              type: 0,
+              webUrl: 'http://share.angeli.top/?postId=' + this.Dindex.PostsId },
+
+            success: function success(ret) {
+              console.log(JSON.stringify(ret));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        case 3:
+          uni.share({
+            provider: "weixin",
+            scene: "WXSenceTimeline",
+            type: 0,
+            href: 'http://share.angeli.top/?postId=' + this.Dindex.PostsId,
+            title: this.Dindex.Content,
+            summary: this.Dindex.Content,
+            imageUrl: this.Dindex.PictureId[0],
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        case 4:
+          uni.share({
+            provider: "qq",
+            type: 1,
+            href: 'http://share.angeli.top/?postId=' + this.Dindex.PostsId,
+            summary: this.Dindex.Content,
+            title: this.Dindex.Content,
+            imageUrl: this.Dindex.PictureId[0],
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+          break;
+        default:}
+
+
+    },
+    getVersion: function getVersion() {
+      uni.request({
+        method: 'GET',
+        url: "https://api.angeli.top/post.php?type=getVersion",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == "1") {
+            if (_server.default.Version < res.data.data.version) {
+              console.log(res.data.data);
+              uni.showModal({
+                title: '应用更新',
+                content: '发现安个利新版本，是否安装升级？',
+                success: function success(ok) {
+                  if (ok.confirm) {
+                    console.log(res.data.data.downloadUrl);
+                    plus.runtime.openURL(res.data.data.downloadUrl);
+                    _server.default.update = true;
+                  }
+                } });
+
+            }
+          }
+        } });
+
+    },
+    sendjubao: function sendjubao() {
+
+      this.$jubao(this.jubao.postid, _server.default.userinfo.Auid, this.jubao.authorid, this.jubaoliyou);
+      this.showJubao = false;
+      uni.showToast({
+        title: '举报成功',
+        position: 'bottom',
+        icon: 'none' });
+
+    },
     plusbutton: function plusbutton() {
       this.openmenu = this.openmenu ? false : true;
     },
@@ -624,6 +854,9 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       uni.navigateTo({
         url: '../menu/guanzhu' });
 
+    },
+    jubaoliyouinput: function jubaoliyouinput(res) {
+      this.jubaoliyou = res.target.value;
     },
     fensia: function fensia() {
       uni.navigateTo({
@@ -648,11 +881,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=getSysConfig", //仅为示例，并非真实接口地址。
         data: {
-          configName: name },
+          configName: name,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           console.log(res);
@@ -753,11 +986,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         method: 'GET',
         url: "https://api.angeli.top/user.php?type=getMyNoRead",
         data: {
-          auid: this.userid },
+          auid: this.userid,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           console.log(res);
@@ -797,7 +1030,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     Like: function Like(postid, auid, give, index, zc) {var _this5 = this;
-      if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+      if (_server.default.token == "" || _server.default.token == null) {
         uni.showToast({
           title: "你还没有登录，请登录后再来吧",
           position: 'bottom',
@@ -827,15 +1060,15 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       }
       uni.request({
         method: 'GET',
-        url: "https://api.angeli.top/post.php?type=Like", //仅为示例，并非真实接口地址。
+        url: "https://api.angeli.top/post.php?type=Like",
         data: {
           fuid: auid,
           postid: postid,
-          mode: modea },
+          mode: modea,
+          token: _server.default.token },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie,
           'system': _server.default.system },
 
         success: function success(res) {
@@ -876,28 +1109,23 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       console.log(resa);
       this.Dindex = resa;
       if (resa.AuthorId == _server.default.userinfo.Auid) {
-        this.menuList = ['生成海报', '举报', '删除帖子'];
+        this.menuList = ['分享', '举报', '删除帖子'];
       } else {
-        this.menuList = ['生成海报', '举报'];
+        this.menuList = ['分享', '举报'];
       }
       uni.showActionSheet({
         itemList: this.menuList,
         success: function success(res) {
           switch (res.tapIndex) {
             case 0:
-              uni.showToast({
-                title: "分享" + resa.Content,
-                position: 'bottom',
-                icon: 'none' });
-
+              _this6.showAppFenxiang = true;
               break;
             case 1:
-              uni.showToast({
-                title: '举报成功',
-                position: 'bottom',
-                icon: 'none' });
+              _this6.showJubao = true;
+              _this6.jubao.postid = resa.PostsId;
+              _this6.jubao.authorid = resa.AuthorId;
 
-              _this6.$jubao(resa.PostsId, _server.default.userinfo.Auid, resa.AuthorId, '没有理由');
+
               break;
             case 2:
               _this6.$delPost(resa.PostsId);
@@ -949,16 +1177,16 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       this.page = 1;
       uni.request({
         method: 'GET',
-        url: 'https://api.angeli.top/post.php?type=outPostList', //仅为示例，并非真实接口地址。
+        url: 'https://api.angeli.top/post.php?type=outPostList',
         data: {
           page: 1,
           postType: type,
           count: 10,
-          classId: classId },
+          classId: classId,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
 
@@ -987,7 +1215,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     reguser: function reguser() {
-      if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+      if (_server.default.token == "" || _server.default.token == null) {
         uni.navigateTo({
           url: '../reg/reg' });
 
@@ -1004,7 +1232,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     },
     pluspost: function pluspost() {
       console.log("发帖：", _server.default.userinfo.Auid);
-      if (_server.default.userinfo.Auid == "" || _server.default.userinfo.Auid == null) {
+      if (_server.default.token == "" || _server.default.token == null) {
         uni.showToast({
           title: "你还没有登录，请登录后再来吧",
           position: 'bottom',
@@ -1032,11 +1260,11 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           page: this.page,
           postType: this.postype,
           sort: 'PsotDate',
-          count: 10 },
+          count: 10,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
           console.log("————————————帖子列表——————————" + _this9.page);

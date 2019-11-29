@@ -58,7 +58,7 @@
 							<view class="postDate">{{list.PsotDate}}</view>
 						</view>
 						<view class="postText" @tap="getpostinfo(list.PostsId)">
-							<text>{{list.Content}}</text>
+							<text >{{list.Content}}</text>
 						</view>
 						<block v-if="list.PictureId[0].length>5">
 							<view class="postImage" >
@@ -67,7 +67,9 @@
 						</block>
 						<view class="postBottom">
 							<view class="postClass" @tap="getClass(list.Tag.ClassId)">#{{list.Tag.ClassName}}</view>
-							<view class="like"  @click="Like(list.PostsId,list.AuthorId,list.Give,list.ZhongcaoCount)"></view>
+							<view>
+								<view :class="[list.Give?'likeing':'like']"  @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)"></view><view class="postviewcount" v-if="list.ZhongcaoCount>0" @click="Like(list.PostsId,list.AuthorId,list.Give,index,list.ZhongcaoCount)">{{list.ZhongcaoCount}}</view>
+							</view>
 							<view class="postMenu" @click="caidan(list)"><image src="../../static/caidan.png" mode="aspectFit" style="height: 40upx;"></image>
 							</view>
 						</view>
@@ -122,6 +124,8 @@
 				inputVal:"",
 				postList:[],
 				userList:[],
+				Dindex:[],
+				showAppFenxiang:false,
 				page:1,
 				status: 'loading',
 				statusTypes: [{
@@ -155,7 +159,6 @@
 				url: 'https://api.angeli.top/post.php?type=getClassList', //仅为示例，并非真实接口地址。
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					this.classList=res.data.data;
@@ -172,11 +175,11 @@
 				data: {
 					keyword: this.inputVal,
 					count:20,
-					page:this.page
+					page:this.page,
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
 				},
 				success: (res) => {
 					console.log("————————————帖子列表——————————"+this.page);
@@ -195,6 +198,81 @@
 			
 		},
 		methods: {
+			appFenxiang:function(id,type){
+				switch (id){
+					case 0:
+						this.showAppFenxiang=false
+						break;
+					case 1:
+						uni.setClipboardData({
+							data: 'http://share.angeli.top/?postId='+this.postid,
+							success: function () {
+								console.log('success');
+							}
+						});
+						console.log('复制链接')
+						break;
+					case 2:
+						console.log(this.Dindex.PictureId[0])
+						console.log(this.Dindex.Content)
+						console.log('http://share.angeli.top/?postId='+this.Dindex.PostsId)
+						uni.share({
+						    provider: 'weixin',
+						    scene: "WXSceneSession",
+						    type: 5,
+						    imageUrl: this.Dindex.PictureId[0],
+						    title: this.Dindex.Content,
+						    miniProgram: {
+						        id: 'gh_a38adc10b952',
+						        path: 'pages/postinfo/postinfo?id='+this.Dindex.PostsId,
+						        type: 0,
+						        webUrl: 'http://share.angeli.top/?postId='+this.Dindex.PostsId
+						    },
+						    success: ret => {
+						        console.log(JSON.stringify(ret));
+						    },
+							fail: function (err) {
+							    console.log("fail:" + JSON.stringify(err));
+							}
+						});
+						break;
+					case 3:
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSenceTimeline",
+						    type: 0,
+						    href: 'http://share.angeli.top/?postId='+this.Dindex.PostsId,
+						    title: this.Dindex.Content,
+						    summary: this.Dindex.Content,
+						    imageUrl: this.Dindex.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					case 4:
+						uni.share({
+						    provider: "qq",
+						    type: 1,
+							href:'http://share.angeli.top/?postId='+this.Dindex.PostsId,
+						    summary: this.Dindex.Content,
+							title:this.Dindex.Content,
+							imageUrl: this.Dindex.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    }, 
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					default:
+						
+				}
+			},
 			sososo:function(event){
 				//this.inputVal=event.detail.value;
 				this.home=false;
@@ -204,9 +282,11 @@
 				uni.request({
 					method:'GET',
 					url: 'https://api.angeli.top/user.php?type=getDayHot', //仅为示例，并非真实接口地址。
+					data:{
+						token:server.token
+					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
 						'system':server.system
 					},
 					success: (res) => {
@@ -227,11 +307,11 @@
 						data: {
 							keyword: this.inputVal,
 							count:20,
-							page:this.page
+							page:this.page,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
 							'system':server.system
 						},
 						success: (res) => {
@@ -265,11 +345,11 @@
 						method:'GET',
 						url: 'https://api.angeli.top/user.php?type=search', //仅为示例，并非真实接口地址。
 						data: {
-							keyword: this.inputVal
+							keyword: this.inputVal,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
 							'system':server.system
 						},
 						success: (res) => {
@@ -333,11 +413,12 @@
 					data: {
 						fuid: auid,
 						postid:postid,
-						mode:modea
+						mode:modea,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+			
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -383,20 +464,16 @@
 			},
 			caidan:function(resa){
 				if(resa.AuthorId==server.userinfo.Auid){
-					this.menuList=['生成海报', '举报','删除帖子']
+					this.menuList=['分享', '举报','删除帖子']
 				}else{
-					this.menuList=['生成海报', '举报']
+					this.menuList=['分享', '举报']
 				}
 				uni.showActionSheet({
 					itemList:this.menuList,
 					success: (res) =>{
 						switch(res.tapIndex){
 							case 0:
-								uni.showToast({
-									title: "分享"+resa.Content,
-									position:'bottom',
-									icon:'none'
-								});
+								this.showAppFenxiang=true
 								break;
 							case 1:
 								uni.showToast({
@@ -473,10 +550,11 @@
 					url: 'https://api.angeli.top/user.php?type=gzORungz', //仅为示例，并非真实接口地址。
 					data: {
 						uid: uid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+					
 					},
 					success: (res) => {
 						uni.showToast({

@@ -48,11 +48,11 @@
 				method:'GET',
 				url: "https://api.angeli.top/user.php?type=getMyZan", //仅为示例，并非真实接口地址。
 				data: {
-					
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
+					
 				},
 				success: (res) => {
 					console.log(res)
@@ -94,11 +94,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/user.php?type=mark&class=zan", //请求标记已读消息
 					data: {
-						
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						console.log(res)
@@ -121,11 +121,11 @@
 				method:'GET',
 				url: "https://api.angeli.top/user.php?type=mark", //请求标记已读消息
 				data: {
-					
+					token:server.token
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
-					'Cookie':server.cookie
+					
 				},
 				success: (res) => {
 					console.log(res)

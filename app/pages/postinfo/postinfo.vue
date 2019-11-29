@@ -98,31 +98,23 @@
 			
 		
 		
-		<!-- 之前的评论<view class="cu-list menu-avatar comment solids-top" >
-			<view class="cu-item" v-for="(pl,index) in pllist" :key="index"  style="margin-top: -4upx;">
-				<view class="cu-avatar round" :style="{'background-image':'url('+pl.userinfo.AuthorAvatarUrl+')'}" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
-				<view class="content">
-					<view class="text-grey">{{pl.userinfo.AuthorName}}</view>
-					<view class=" text-content text-df">
-						{{pl.Content}}
-					</view>
-					<view class="bg-grey padding-sm radius margin-top-sm  text-sm" v-for="(hf,xuhao) in pl.replyList" :key="xuhao">
-						<view class="flex">
-							<view>{{hf.ReplyUid.AuthorName}}: </view>
-							<view class="flex-sub">{{hf.ReplyContent}}</view>
-						</view>
-					</view>
-					<view class="margin-top-sm flex justify-between">
-						<view class="text-gray text-df">{{pl.Time}}</view>
-						<view>
-							<text class="cuIcon-appreciatefill  text-red" @tap="dianzan(pl.CommentsId,index)" v-model="Give">{{pl.Give}}</text>
-							<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="huifua(pl.CommentsId,pl.userinfo.AuthorName,pl.CommentsId,pl.FromUid)"></text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view> -->
 		
+		<!-- 举报理由框框 -->
+		<view class="show-jubao shadow shadow-lg bg-blue" v-if="showJubao">
+			<textarea maxlength="300"  @input="jubaoliyouinput" placeholder="请输入举报理由" class="jubao-input"></textarea>
+			<text class="jubao-anniu2" @click="showJubao=false"> 取消</text>
+			<text class="jubao-anniu" @click="sendjubao"> 提交</text>
+		</view>
+		
+		<!-- 分享弹出框 -->
+		<view class="bt-fenxiang" v-if="showAppFenxiang">
+			<text class="fx-title">选择分享到\n</text>
+			<image src="../../static/WeChatpayicon.png" mode="aspectFit" @click="appFenxiang(2,0)"></image>
+			<image src="../../static/pyq.png" mode="aspectFit" @click="appFenxiang(3,0)"></image>
+			<image src="../../static/qq.png" mode="aspectFit" @click="appFenxiang(4,0)"></image>
+			<image src="../../static/link.png" mode="aspectFit" @click="appFenxiang(1,0)"></image>
+			<text class="fx-guanbi" @click="appFenxiang(0,0)">关闭</text>
+		</view>
 		
 	</view>
 </template>
@@ -135,6 +127,7 @@
 				postInfo:[],
 				pllist:[],
 				dslist:[],
+				showAppFenxiang:false,
 				showVip:false,
 				InputBottom: 0,
 				plnr:"",
@@ -147,7 +140,13 @@
 				yanse:'rgba(0,0,0,0)',
 				pluid:"",
 				monnumber:1,
-				shunxu:false
+				shunxu:false,
+				jubao:{
+					postid:0,
+					authorid:0
+				},
+				jubaoliyou:'',
+				showJubao:false
 			}
 		},
 		onShareAppMessage(res) {
@@ -189,7 +188,8 @@
 								url: 'https://api.angeli.top/reg.php?type=wxlogin', //仅为示例，并非真实接口地址。
 								data: {
 									code: res.code,
-									tuijianId:this.tuijianren
+									tuijianId:this.tuijianren,
+									
 								},
 								header: {
 									'content-type': 'application/x-www-form-urlencoded'
@@ -287,6 +287,94 @@
 		},
 		
 		methods: {
+			appFenxiang:function(id,type){
+				switch (id){
+					case 0:
+						this.showAppFenxiang=false
+						break;
+					case 1:
+						uni.setClipboardData({
+							data: 'http://share.angeli.top/?postId='+this.postid,
+							success: function () {
+								console.log('success');
+							}
+						});
+						console.log('复制链接')
+						break;
+					case 2:
+						console.log(this.postInfo.PictureId[0])
+						console.log(this.postInfo.Content)
+						console.log('http://share.angeli.top/?postId='+this.postid)
+						uni.share({
+						    provider: 'weixin',
+						    scene: "WXSceneSession",
+						    type: 5,
+						    imageUrl: this.postInfo.PictureId[0],
+						    title: this.postInfo.Content,
+						    miniProgram: {
+						        id: 'gh_a38adc10b952',
+						        path: 'pages/postinfo/postinfo?id='+this.postid,
+						        type: 0,
+						        webUrl: 'http://share.angeli.top/?postId='+this.postid
+						    },
+						    success: ret => {
+						        console.log(JSON.stringify(ret));
+						    },
+							fail: function (err) {
+							    console.log("fail:" + JSON.stringify(err));
+							}
+						});
+						break;
+					case 3:
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSenceTimeline",
+						    type: 0,
+						    href: 'http://share.angeli.top/?postId='+this.postid,
+						    title: this.postInfo.Content,
+						    summary: this.postInfo.Content,
+						    imageUrl: this.postInfo.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					case 4:
+						uni.share({
+						    provider: "qq",
+						    type: 1,
+							href:'http://share.angeli.top/?postId='+this.postid,
+						    summary: this.postInfo.Content,
+							title:this.postInfo.Content,
+							imageUrl: this.postInfo.PictureId[0],
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+						break;
+					default:
+						
+				}
+			},
+			sendjubao:function(){
+				
+				this.$jubao(this.jubao.postid,server.userinfo.Auid,this.jubao.authorid,this.jubaoliyou);
+				this.showJubao=false;
+				uni.showToast({
+					title:'举报成功',
+					position:'bottom',
+					icon:'none'
+				});
+			},
+			jubaoliyouinput:function(res){
+				this.jubaoliyou=res.target.value 
+			},
 			getpostinfo:function(postid){
 				uni.showLoading({
 					title: '加载中'
@@ -295,11 +383,12 @@
 					method:'GET',
 					url: 'https://api.angeli.top/post.php?type=outPostInfo', 
 					data: {
-						id: postid
+						id: postid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
+						
 						'system':server.system
 					},
 					success: (res) => {
@@ -321,11 +410,12 @@
 						postid: postid,
 						xu:this.shunxu,
 						count:40,
-						page:1
+						page:1,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
+						
 						'system':server.system
 					},
 					success: (res) => {
@@ -361,28 +451,21 @@
 				console.log(resa)
 				this.Dindex=resa;
 				if(resa.AuthorId==server.userinfo.Auid){
-					this.menuList=['生成海报', '举报','删除帖子']
+					this.menuList=['分享', '举报','删除帖子']
 				}else{
-					this.menuList=['生成海报', '举报']
+					this.menuList=['分享', '举报']
 				}
 				uni.showActionSheet({
 					itemList:this.menuList,
 					success: (res) =>{
 						switch(res.tapIndex){
 							case 0:
-								uni.showToast({
-									title: "生成海报还在内测中",
-									position:'bottom',
-									icon:'none'
-								});
+								this.showAppFenxiang=true
 								break;
 							case 1:
-								uni.showToast({
-									title:'举报成功',
-									position:'bottom',
-									icon:'none'
-								});
-								this.$jubao(resa.PostsId,server.userinfo.Auid,resa.AuthorId,'没有理由');
+								this.showJubao=true;
+								this.jubao.postid=resa.PostsId;
+								this.jubao.authorid=resa.AuthorId
 								break;
 							case 2:
 							uni.showToast({
@@ -417,11 +500,11 @@
 					method:'GET',
 					url: "https://api.angeli.top/post.php?type=getDashangList&postId="+postid, //仅为示例，并非真实接口地址。
 					data: {
-					
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -459,11 +542,12 @@
 					data: {
 						toid: this.postInfo.AuthorId,
 						postid:this.postid,
-						number:this.monnumber
+						number:this.monnumber,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
+						
 						'system':server.system
 					},
 					success: (res) => {
@@ -558,11 +642,12 @@
 					data: {
 						fuid: auid,
 						postid:postid,
-						mode:modea
+						mode:modea,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie,
+						
 						'system':server.system
 					},
 					success: (res) => {
@@ -682,11 +767,12 @@
 							txt:nr,
 							postid:this.postid,
 							uid:this.pluid,
-							auid:server.userinfo.Auid
+							auid:server.userinfo.Auid,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
+							
 							'system':server.system
 						},
 						success: (res) => {
@@ -697,11 +783,11 @@
 									method:'GET',
 									url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
 									data: {
-										postid: this.postid
+										postid: this.postid,
+										token:server.token
 									},
 									header: {
 										'content-type': 'application/x-www-form-urlencoded',
-										'Cookie':server.cookie,
 										'system':server.system
 									},
 									success: (res) => {
@@ -742,11 +828,11 @@
 							auid: server.userinfo.Auid,
 							txt:this.plnr,
 							postid:this.postid,
-							uid:this.postInfo.AuthorId
+							uid:this.postInfo.AuthorId,
+							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							'Cookie':server.cookie,
 							'system':server.system
 						},
 						success: (res) => {
@@ -757,11 +843,11 @@
 									method:'GET',
 									url: 'https://api.angeli.top/post.php?type=getpl', //仅为示例，并非真实接口地址。
 									data: {
-										postid: this.postid
+										postid: this.postid,
+										token:server.token
 									},
 									header: {
 										'content-type': 'application/x-www-form-urlencoded',
-										'Cookie':server.cookie
 									},
 									success: (res) => {
 										console.log("————————————评论详情——————————");
@@ -795,11 +881,12 @@
 					method:'GET',
 					url: 'https://api.angeli.top/post.php?type=dianzan', //仅为示例，并非真实接口地址。
 					data: {
-						postid: plid
+						postid: plid,
+						token:server.token
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						
 					},
 					success: (res) => {
 						if(res.data.code=="1"){
@@ -830,6 +917,7 @@
 </script>
 
 <style>
+	
 	.yanseee{
 		color: #79C498;
 	}

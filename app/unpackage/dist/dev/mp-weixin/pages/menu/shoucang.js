@@ -199,7 +199,8 @@ var _uniLoadMore = _interopRequireDefault(__webpack_require__(/*! @/components/u
 //
 //import uniFab from '@/components/uni-fab.vue';
 var _default = { data: function data() {return { TabCur: 0, postList: [], weikong: true };}, onLoad: function onLoad(e) {var _this = this;uni.showLoading({ title: '获取数据中' });uni.request({ method: 'GET', url: 'https://api.angeli.top/post.php?type=getMyGive', //仅为示例，并非真实接口地址。
-      data: { page: 1, count: 20 }, header: { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': _server.default.cookie }, success: function success(res) {if (res.data.code !== "1") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none', duration: 2000, mask: true });_this.weikong = true;} else {_this.postList = res.data.data;_this.weikong = false;
+      data: { page: 1, count: 20, token: _server.default.token }, header: { 'content-type': 'application/x-www-form-urlencoded' }, success: function success(res) {if (res.data.code !== "1") {uni.showToast({ title: res.data.msg, position: 'bottom', icon: 'none', duration: 2000, mask: true });_this.weikong = true;} else {_this.postList = res.data.data;
+          _this.weikong = false;
         }
 
       },
@@ -221,11 +222,12 @@ var _default = { data: function data() {return { TabCur: 0, postList: [], weikon
         data: {
           fuid: auid,
           postid: postid,
-          mode: modea },
+          mode: modea,
+          token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'content-type': 'application/x-www-form-urlencoded' },
+
 
         success: function success(res) {
           if (res.data.code == "1") {

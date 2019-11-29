@@ -258,12 +258,12 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       'center'));
 
       _server.default.userinfo = [];
-      _server.default.cookie = "";
+      _server.default.token = null;
       setTimeout(function () {
         uni.redirectTo({
           url: '../Home/Home' });
 
-      }, 2000);
+      }, 1500);
     },
     SetShadow: function SetShadow(e) {
       this.shadow = e.detail.value;

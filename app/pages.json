@@ -169,8 +169,8 @@
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
-				"name": "olun", //模式名称
-				"path": "pages/postinfo/plinfo", //启动页面，必选
+				"name": "帖子详情", //模式名称
+				"path": "pages/postinfo/postinfo", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
