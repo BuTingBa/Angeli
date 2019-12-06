@@ -195,11 +195,14 @@ var _default =
     },
     //用户点击订单类型
     toOrderType: function toOrderType(index) {
-      uni.showToast({ title: this.orderTypeLise[index].name });
+      uni.setStorageSync('tbIndex', index);
+      uni.navigateTo({
+        url: "order_list?tbIndex=" + index });
+
     },
     //用户点击列表项
     toPage: function toPage(list_i, li_i) {
-      uni.showToast({ title: this.severList[list_i][li_i].name });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

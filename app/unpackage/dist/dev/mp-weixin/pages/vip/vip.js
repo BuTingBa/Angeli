@@ -240,7 +240,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
     },
     getxieyi: function getxieyi() {
       uni.navigateTo({
-        url: "../edit/edit?type=6" });
+        url: "../edit/edit?type=9" });
 
     },
     cxjg: function cxjg() {var _this = this;
@@ -270,7 +270,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
       if (this.monnumber >= 1) {
         if (this.monnumber == 1) {
-          this.money = this.onemonn;
+          this.money = 20;
         } else {
           this.money = this.monnumber * 20 - this.monnumber * 4;
         }
@@ -505,7 +505,6 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
       this.showVip = false;
       this.gaodu = '-710px';
       this.yanse = 'rgba(0,0,0,0)';
-
     },
     xuanze: function xuanze(e) {
       switch (e) {

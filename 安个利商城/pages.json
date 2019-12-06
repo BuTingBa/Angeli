@@ -3,19 +3,57 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "安个利商城"
+				"navigationBarTitleText": "安个利商城",
+				"navigationBarBackgroundColor":"#fff"
+				/* "navigationStyle":"custom" */
 			}
 		}
 	    ,{
-            "path" : "pages/user/user",
-            "style" : {
-				"navigationBarTitleText": "个人中心"
-			}
-        },
+	        "path" : "pages/user/user",
+	        "style" : {
+	    		"navigationBarTitleText": "个人中心"
+	    	}
+	    },
 		{
 		    "path" : "pages/cart/cart",
 		    "style" : {
 				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+		    "path" : "pages/index/goods",
+		    "style" : {
+				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+		    "path" : "pages/user/order_list",
+		    "style" : {
+				"navigationBarTitleText": "全部订单"
+			}
+		},
+		{
+		    "path" : "pages/user/address",
+		    "style" : {
+				"navigationBarTitleText": "收货地址"
+			}
+		},
+		{
+		    "path" : "pages/user/edit",
+		    "style" : {
+				"navigationBarTitleText": "编辑地址"
+			}
+		},
+		{
+		    "path" : "pages/msg/chat",
+		    "style" : {
+				"navigationBarTitleText": "聊天"
+			}
+		},
+		{
+		    "path" : "pages/msg/msg",
+		    "style" : {
+				"navigationBarTitleText": "消息列表"
 			}
 		}
     ],

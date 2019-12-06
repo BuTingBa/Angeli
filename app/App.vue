@@ -374,4 +374,7 @@
 	.aicon-logout{
 		background-image: url("static/set (6).png")
 	}
+	.aicon-ys{
+		background-image: url("static/ys.png")
+	}
 </style>

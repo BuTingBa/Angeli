@@ -3,6 +3,14 @@ page{
 	background-color: #FFFFFF;
 	text-align: center;
 }
+.upphone{
+	position: fixed;
+	background-color: #fff;
+	top: 30%;
+	height: 500rpx;
+	width: 100%;
+	z-index: 999;
+}
 .loginImage{
 	height: 87rpx;
 	width: 87rpx;

@@ -135,6 +135,10 @@
 		{
 			"path" : "pages/postinfo/plinfo",
 			"style" : {}
+		},
+		{
+			"path" : "pages/menu/help",
+			"style" : {}
 		}
     ],
 	"globalStyle": {
@@ -175,7 +179,7 @@
 			},
 			{
 				"name": "钱包", //模式名称
-				"path": "pages/menu/huodong", //启动页面，必选
+				"path": "pages/menu/help", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

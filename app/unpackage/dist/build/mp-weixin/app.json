@@ -31,7 +31,8 @@
     "pages/menu/systemMsg",
     "pages/menu/huodong",
     "pages/menu/guanzhu",
-    "pages/postinfo/plinfo"
+    "pages/postinfo/plinfo",
+    "pages/menu/help"
   ],
   "subPackages": [],
   "window": {

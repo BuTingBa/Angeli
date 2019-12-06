@@ -145,6 +145,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -184,7 +190,13 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 //
 //
 //
-var _default = { data: function data() {return { type: 1, title: "安个利", upNameNumber: 0, newName: '' };}, onLoad: function onLoad(val) {console.log(val.type);this.type = val.type;if (val.type == '1') {this.title = "修改名字";this.getNumber();}if (val.type == '2') {this.title = "个性签名";}if (val.type == '3') {this.title = "等级特权";}if (val.type == '4') {this.title = "关于安个利";}if (val.type == '5') {this.title = "安个利隐私政策";}if (val.type == '6') {this.title = "安个利用户协议";}if (val.type == '7') {this.title = "关于安个利";}}, methods: { inputing: function inputing(e) {this.newName = e.detail.value;console.log(e.detail);
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { type: 1, title: "安个利", upNameNumber: 0, newName: '' };}, onLoad: function onLoad(val) {console.log(val.type);this.type = val.type;if (val.type == '1') {this.title = "修改名字";this.getNumber();}if (val.type == '2') {this.title = "个性签名";}if (val.type == '3') {this.title = "等级特权";}if (val.type == '4') {this.title = "关于安个利";}if (val.type == '5') {this.title = "安个利隐私政策";}if (val.type == '6') {this.title = "安个利用户协议";}if (val.type == '7') {this.title = "关于安个利";}if (val.type == '8') {this.title = "安个利充值协议";}if (val.type == '9') {this.title = "会员协议";}}, methods: { inputing: function inputing(e) {this.newName = e.detail.value;console.log(e.detail);
     },
     setName: function setName() {
       uni.showLoading({

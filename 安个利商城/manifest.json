@@ -70,5 +70,9 @@
     },
     "mp-toutiao" : {
         "usingComponents" : true
+    },
+    "h5" : {
+        "title" : "安个利商城",
+        "domain" : "shop.angeli.top"
     }
 }

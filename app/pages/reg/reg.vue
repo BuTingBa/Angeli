@@ -11,7 +11,7 @@
 				</viee>
 				<view class="padding flex flex-direction" style="margin-top: 60upx;">
 					<button open-type="getUserInfo" @getuserinfo="mpGetUserInfo" class="cu-btn bg-red margin-tb-sm lg">微信登录</button>
-					<button open-type="getPhoneNumber"  @getphonenumber="phone" class="cu-btn bg-grey lg">已有账号，账号密码登录</button>
+					<!-- <button open-type="getPhoneNumber"  @getphonenumber="phone" class="cu-btn bg-grey lg">已有账号，绑定手机号</button> -->
 				</view>
 				<!-- 弹出层- -->
 				<view class="cu-modal" :class="modalName=='Image'?'show':''" >
@@ -44,7 +44,6 @@
 					</view>
 					<view class="anniu">
 						<button class="Angeli" @tap="login">立即登录</button>
-						
 					</view>
 					<view class="lineBox">
 						<view class="line"></view>
@@ -62,6 +61,21 @@
 					登录即视为同意<text @click="getpage(2)" style="color: #1CBBB4;">\n《安个利用户协议》</text>和<text @click="getpage(3)" style="color: #1CBBB4;">《安个利用户隐私协议》</text>
 			<!--  #endif -->
 		</view>
+		
+		<view class="upphone" v-if="showPhoneUp">
+			<view class="inputbox" >
+				<view class="from"><input type="number" value="" v-model="phoneNum" placeholder="手机号" disabled="disabled" @input="inputphone"/></view>
+				<view class="fromA">
+					<input class="yzm" type="number" value="" placeholder="验证码" @input="inputpassword" />
+					<view class="getCode" @tap="getTokenCode(1)">{{codeTitle}}</view>
+				</view>
+			</view>
+			<view class="anniu">
+				<button class="Angeli" @tap="upPhone">绑定手机号</button>
+			</view>
+		</view>
+		
+		
 	</view>
 </template>
 
@@ -74,6 +88,7 @@
 				userInfo:[],
 				phoneifo:"",
 				disabled:true,
+				showPhoneUp:false,
 				reg:false,
 				modalName: null,
 				user:"",
@@ -81,7 +96,8 @@
 				timer:"",
 				num:58,
 				codeTitle:"获取验证码",
-				code:true
+				code:true,
+				phoneNum:''
 				
 			}
 		},
@@ -96,6 +112,7 @@
 					console.log(server.system)
 			    }
 			});
+			
 		},
 		methods: {
 			getpage:function(id){
@@ -143,19 +160,19 @@
 											unionid: loginRes.authResult.unionid,
 										},
 										header: {
-											'content-type': 'application/x-www-form-urlencoded'
+											'content-type': 'application/x-www-form-urlencoded',
+											'system':server.system
 										},
 										success: (res) => {
 											console.log(res);
 											if(res.data.code=="0"){
 												server.usersk=res.data.data.session_key
 												uni.showToast({
-													title: "你的微信还没有注册，请注册先",
+													title: "请绑定手机号",
 													position:'bottom',
 													icon:'none'
 												});
 												return;
-												
 											}else if(res.data.code=="1" ||res.data.code=="2"){
 												server.userinfo=res.data.data;
 												server.token=res.data.token;
@@ -223,104 +240,160 @@
 					position:'center'
 				});
 				
-				
-				
-				/* uni.getProvider({
-					service: 'oauth',
-					success: function (res) {
-						console.log(res.provider)
-						if (~res.provider.indexOf('qq')) {
-							uni.login({
-								provider: 'qq',
-								success: function (loginRes) {
-									console.log(JSON.stringify(loginRes));
-								}
-							});
-						}
-					}
-				}) */
 			},
-			getTokenCode:function(){
+			getTokenCode:function(type){
 				uni.showLoading({
 					title: '获取中'
 				});
+				
 				if(this.code==true){
-					if(!this.user){
-						uni.showToast({
-							title: '请输入手机号',
-							position:'bottom',
-							icon:'none',
-							position:'center'
-						});
-						return;
-					}
-					this.codeTitle="59s"
-					this.code=false
-					this.timer = setInterval(() => {
-					  //当num等于100时清除定时器
-						this.num--;
-						if (this.num == 0) {
-							this.code=true
-						    clearInterval(this.timer);
-							this.num=58;
-							this.codeTitle="获取验证码"
-							
-						}else{
-							this.codeTitle=this.num+"s"
-							this.code=false
-						}
-					}, 1000);
-					uni.request({
-						method:'POST',
-						url: 'https://api.angeli.top/reg.php?type=getCode',//获取验证码
-						data: {
-							phone:this.user,
-						},
-						header: {
-							'content-type': 'application/x-www-form-urlencoded',
-						},
-						success: (res) => {
-							console.log(res);
-							if(res.data.code=="1"){
-								//server.cookie=res.header['Set-Cookie'];
-								console.log("获取验证码")
-								uni.showToast({
-									title: '验证码发送成功！',
-									position:'bottom',
-									icon:'none',
-									position:'center'
-								});
-								server.token=res.data.token;
-								uni.setStorageSync('token', server.token);
-								console.log('获取验证码cookie',server.cookie);
+					
+					if(type==1){
+						this.codeTitle="59s"
+						this.code=false
+						this.timer = setInterval(() => {
+						  //当num等于100时清除定时器
+							this.num--;
+							if (this.num == 0) {
+								this.code=true
+							    clearInterval(this.timer);
+								this.num=58;
+								this.codeTitle="获取验证码"
+								
 							}else{
-								uni.showToast({
-									title: '验证码发送失败！',
-									position:'bottom',
-									icon:'none',
-									position:'center'
-								});
-								clearInterval(this.timer);
+								this.codeTitle=this.num+"s"
+								this.code=false
+							}
+						}, 1000);
+						uni.request({
+							method:'POST',
+							url: 'https://api.angeli.top/reg.php?type=getCodeUp',//获取验证码
+							data: {
+								token:server.token,
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded',
+								'system':server.system
+							},
+							success: (res) => {
+								console.log(res);
+								if(res.data.code=="1"){
+									//server.cookie=res.header['Set-Cookie'];
+									console.log("获取验证码")
+									uni.showToast({
+										title: '验证码发送成功！',
+										position:'bottom',
+										icon:'none',
+										position:'center'
+									});
+								}else{
+									uni.showToast({
+										title: '验证码发送失败！',
+										position:'bottom',
+										icon:'none',
+										position:'center'
+									});
+									clearInterval(this.timer);
+									this.code=true
+									clearInterval(this.timer);
+									this.num=58;
+									this.codeTitle="获取验证码"
+								}
+								
+							},
+							fail:function(){
 								this.code=true
 								clearInterval(this.timer);
 								this.num=58;
 								this.codeTitle="获取验证码"
+								uni.showToast({
+									title: '验证码获取失败！请尝试其他方式登录',
+									position:'bottom',
+									icon:'none',
+									position:'center'
+								});
 							}
-							
-						},
-						fail:function(){
-							this.code=true
-							clearInterval(this.timer);
-							this.num=58;
-							this.codeTitle="获取验证码"
+						});
+					}else{
+						if(!this.user){
 							uni.showToast({
-								title: '验证码获取失败！请尝试其他方式登录',
+								title: '请输入手机号',
 								position:'bottom',
 								icon:'none',
 								position:'center'
 							});
+							return;
 						}
-					});
+						
+						this.codeTitle="59s"
+						this.code=false
+						this.timer = setInterval(() => {
+						  //当num等于100时清除定时器
+							this.num--;
+							if (this.num == 0) {
+								this.code=true
+							    clearInterval(this.timer);
+								this.num=58;
+								this.codeTitle="获取验证码"
+								
+							}else{
+								this.codeTitle=this.num+"s"
+								this.code=false
+							}
+						}, 1000);
+						uni.request({
+							method:'POST',
+							url: 'https://api.angeli.top/reg.php?type=getCode',//获取验证码
+							data: {
+								phone:this.user,
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded',
+								'system':server.system
+							},
+							success: (res) => {
+								console.log(res);
+								if(res.data.code=="1"){
+									//server.cookie=res.header['Set-Cookie'];
+									console.log("获取验证码")
+									uni.showToast({
+										title: '验证码发送成功！',
+										position:'bottom',
+										icon:'none',
+										position:'center'
+									});
+									server.token=res.data.token;
+									uni.setStorageSync('token', server.token);
+									console.log('获取验证码cookie',server.cookie);
+								}else{
+									uni.showToast({
+										title: '验证码发送失败！',
+										position:'bottom',
+										icon:'none',
+										position:'center'
+									});
+									clearInterval(this.timer);
+									this.code=true
+									clearInterval(this.timer);
+									this.num=58;
+									this.codeTitle="获取验证码"
+								}
+								
+							},
+							fail:function(){
+								this.code=true
+								clearInterval(this.timer);
+								this.num=58;
+								this.codeTitle="获取验证码"
+								uni.showToast({
+									title: '验证码获取失败！请尝试其他方式登录',
+									position:'bottom',
+									icon:'none',
+									position:'center'
+								});
+							}
+						});
+					}
 				}else{
 					console.log("非法获取验证码")
 				}
@@ -347,14 +420,21 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
+						'system':server.system
 					},
 					success: (res) => {
 						console.log(res);
 						if(res.data.code=="1"){//登陆成功
 							server.userinfo=res.data.data;
+							console.log(server.userinfo)
 							server.token=res.data.token;
 							uni.setStorageSync('token', server.token);
 							uni.setStorageSync('user', server.userinfo);
+							setTimeout(function () {
+								uni.redirectTo({
+									url: '../Home/Home'
+								})
+							}, 2000);
 						}
 						if(res.data.code=="2"){//新用户注册
 							uni.navigateTo({
@@ -371,63 +451,6 @@
 					}
 				});
 				
-				
-				/* uni.request({
-					method:'POST',
-					url: 'https://api.angeli.top/reg.php?type=login', //仅为示例，并非真实接口地址。
-					data: {
-						phone: this.user,
-						password:this.password
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
-					},
-					success: (res) => {
-						console.log(res.data)
-						if(res.data.code=="1"){//登陆成功
-							server.userinfo=res.data.data;
-							server.cookie=res.header['Set-Cookie'];
-							uni.setStorage({
-								key: 'cookie',
-								data: res.header['Set-Cookie'],
-								success: function () {
-									console.log("储存cookie成功！")
-									uni.setStorage({
-										key: 'userinfo',
-										data: res.data.data,
-										success: function () {
-											uni.showToast({
-												title: res.data.msg,
-												position:'bottom',
-												icon:'none',
-												duration:2000,
-												mask:true
-											});
-											
-											if(res.data.code=="1"){
-												setTimeout(function () {
-													uni.redirectTo({
-														url: '../Home/Home'
-													})
-												}, 1500);
-											}
-										}
-									});
-								}
-							});
-							
-							
-						}else{
-							uni.showToast({
-								title: res.data.msg,
-								position:'bottom',
-								icon:'none',
-								position:'center'
-							});
-						}
-					}
-				}); */
 			},
 			appreg:function(){
 				uni.showToast({
@@ -449,6 +472,7 @@
 				
 			},
 			phone:function(e){
+				this.modalName=''
 				uni.request({
 					method:'POST',
 					url: 'https://api.angeli.top/WeChat/demo.php', //仅为示例，并非真实接口地址。
@@ -459,7 +483,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						this.phoneifo = res.data.phoneNumber;
@@ -477,7 +502,8 @@
 							},
 							header: {
 								'content-type': 'application/x-www-form-urlencoded',
-								'Cookie':server.cookie
+								'Cookie':server.cookie,
+								'system':server.system
 							},
 							success: (res) => {
 								console.log(res);
@@ -491,16 +517,67 @@
 											url: '../Home/Home'
 										})
 									}, 2000);
+								}
+								if(res.data.code=="5"){
+									//手机号已经注册
+									this.phoneNum=res.data.data.Phone
+									server.token=res.data.token
+									uni.setStorageSync('token', server.token);
+									uni.showModal({
+									    title: '绑定设置',
+									    content: '手机号已经被注册，是否绑定至该微信？绑定后APP与小程序端数据互通，并且APP可以用微信快速登录。',
+									    success: (ok) => {
+									        this.showPhoneUp=true
+											this.getTokenCode(1);
+									    }
+									});
+									
 								}else{
 									uni.showModal({
 										title: '注册失败！',
-										content: '错误原因' + res.data,
+										content: '错误原因' + res.data.msg,
 										showCancel: false
 									})
 								}
 							}
 						});
 						
+					}
+				});
+			},
+			upPhone:function(){
+				uni.request({
+					method:'POST',
+					url: 'https://api.angeli.top/user.php?type=xcxtophone', //仅为示例，并非真实接口地址。
+					data: {
+						code:this.password,
+						token:server.token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+						'system':server.system
+					},
+					success: (res) => {
+						if(res.data.code=="1"){
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom'
+							});
+							uni.clearStorage();
+							server.userinfo=[];
+							server.token=null;
+							setTimeout(function () {
+								uni.redirectTo({
+									url: '../Home/Home'
+								})
+							}, 2000);
+						}else{
+							uni.showToast({
+								title: '错误：'+res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
 					}
 				});
 			},
@@ -524,7 +601,8 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						'Cookie':server.cookie
+						'Cookie':server.cookie,
+						'system':server.system
 					},
 					success: (res) => {
 						if(res.data.openId){
@@ -554,6 +632,14 @@
 page{
 	background-color: #FFFFFF;
 	text-align: center;
+}
+.upphone{
+	position: fixed;
+	background-color: #fff;
+	top: 30%;
+	height: 500upx;
+	width: 100%;
+	z-index: 999;
 }
 .loginImage{
 	height: 87upx;

@@ -344,6 +344,7 @@ switch ($_GET['type']) {
         }
         break;
     case 'dashang':
+
         if(!$_SESSION['Auid'])
         {
             $outmsg = array('code' =>'0','msg'=>'没有登录就想看我的收藏？','data'=>"");
@@ -354,8 +355,7 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $auid=$_SESSION['Auid'];
-
-        $code=$post->setDashang($auid,$_GET['postid'],$_GET['toid'],$_GET['number']);
+        $code=$post->setDashang($auid,$_GET['postid'],$_GET['toid'],abs($_GET['number']));
         if($code==0){
             $outmsg = array('code' =>'0','msg'=>'操作失败！','data'=>$out);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
@@ -492,12 +492,15 @@ switch ($_GET['type']) {
 
         break;
 }
-
+/**
+ * 检查是否含有违规的字符。
+ * @param $txt
+ * @return mixed
+ */
 function checkText($txt){
     $html = file_get_contents('https://api.angeli.top/contentCensor.php?type=text&text='.$txt);
     $html=json_decode($html,true);
     $data=$html['result']['spam'];
-    // array_push($data,$html['result']['review']);
     return $data;
 }
 

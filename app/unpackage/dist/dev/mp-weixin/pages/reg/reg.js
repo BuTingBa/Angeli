@@ -190,6 +190,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
@@ -198,6 +212,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       userInfo: [],
       phoneifo: "",
       disabled: true,
+      showPhoneUp: false,
       reg: false,
       modalName: null,
       user: "",
@@ -205,7 +220,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       timer: "",
       num: 58,
       codeTitle: "获取验证码",
-      code: true };
+      code: true,
+      phoneNum: '' };
 
 
   },
@@ -219,6 +235,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         _server.default.system = JSON.stringify(systemjson);
         console.log(_server.default.system);
       } });
+
 
   },
   methods: {
@@ -267,19 +284,19 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                     unionid: loginRes.authResult.unionid },
 
                   header: {
-                    'content-type': 'application/x-www-form-urlencoded' },
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'system': _server.default.system },
 
                   success: function success(res) {
                     console.log(res);
                     if (res.data.code == "0") {
                       _server.default.usersk = res.data.data.session_key;
                       uni.showToast({
-                        title: "你的微信还没有注册，请注册先",
+                        title: "请绑定手机号",
                         position: 'bottom',
                         icon: 'none' });
 
                       return;
-
                     } else if (res.data.code == "1" || res.data.code == "2") {
                       _server.default.userinfo = res.data.data;
                       _server.default.token = res.data.token;
@@ -347,104 +364,160 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
       'center'));
 
 
-
-
-      /* uni.getProvider({
-                  	service: 'oauth',
-                  	success: function (res) {
-                  		console.log(res.provider)
-                  		if (~res.provider.indexOf('qq')) {
-                  			uni.login({
-                  				provider: 'qq',
-                  				success: function (loginRes) {
-                  					console.log(JSON.stringify(loginRes));
-                  				}
-                  			});
-                  		}
-                  	}
-                  }) */
     },
-    getTokenCode: function getTokenCode() {var _this = this;
+    getTokenCode: function getTokenCode(type) {var _this = this;
       uni.showLoading({
         title: '获取中' });
 
+
       if (this.code == true) {
-        if (!this.user) {
-          uni.showToast(_defineProperty({
-            title: '请输入手机号',
-            position: 'bottom',
-            icon: 'none' }, "position",
-          'center'));
 
-          return;
-        }
-        this.codeTitle = "59s";
-        this.code = false;
-        this.timer = setInterval(function () {
-          //当num等于100时清除定时器
-          _this.num--;
-          if (_this.num == 0) {
-            _this.code = true;
-            clearInterval(_this.timer);
-            _this.num = 58;
-            _this.codeTitle = "获取验证码";
-
-          } else {
-            _this.codeTitle = _this.num + "s";
-            _this.code = false;
-          }
-        }, 1000);
-        uni.request({
-          method: 'POST',
-          url: 'https://api.angeli.top/reg.php?type=getCode', //获取验证码
-          data: {
-            phone: this.user },
-
-          header: {
-            'content-type': 'application/x-www-form-urlencoded' },
-
-          success: function success(res) {
-            console.log(res);
-            if (res.data.code == "1") {
-              //server.cookie=res.header['Set-Cookie'];
-              console.log("获取验证码");
-              uni.showToast(_defineProperty({
-                title: '验证码发送成功！',
-                position: 'bottom',
-                icon: 'none' }, "position",
-              'center'));
-
-              _server.default.token = res.data.token;
-              uni.setStorageSync('token', _server.default.token);
-              console.log('获取验证码cookie', _server.default.cookie);
-            } else {
-              uni.showToast(_defineProperty({
-                title: '验证码发送失败！',
-                position: 'bottom',
-                icon: 'none' }, "position",
-              'center'));
-
-              clearInterval(_this.timer);
+        if (type == 1) {
+          this.codeTitle = "59s";
+          this.code = false;
+          this.timer = setInterval(function () {
+            //当num等于100时清除定时器
+            _this.num--;
+            if (_this.num == 0) {
               _this.code = true;
               clearInterval(_this.timer);
               _this.num = 58;
               _this.codeTitle = "获取验证码";
-            }
 
-          },
-          fail: function fail() {
-            this.code = true;
-            clearInterval(this.timer);
-            this.num = 58;
-            this.codeTitle = "获取验证码";
+            } else {
+              _this.codeTitle = _this.num + "s";
+              _this.code = false;
+            }
+          }, 1000);
+          uni.request({
+            method: 'POST',
+            url: 'https://api.angeli.top/reg.php?type=getCodeUp', //获取验证码
+            data: {
+              token: _server.default.token },
+
+            header: {
+              'content-type': 'application/x-www-form-urlencoded',
+              'system': _server.default.system },
+
+            success: function success(res) {
+              console.log(res);
+              if (res.data.code == "1") {
+                //server.cookie=res.header['Set-Cookie'];
+                console.log("获取验证码");
+                uni.showToast(_defineProperty({
+                  title: '验证码发送成功！',
+                  position: 'bottom',
+                  icon: 'none' }, "position",
+                'center'));
+
+              } else {
+                uni.showToast(_defineProperty({
+                  title: '验证码发送失败！',
+                  position: 'bottom',
+                  icon: 'none' }, "position",
+                'center'));
+
+                clearInterval(_this.timer);
+                _this.code = true;
+                clearInterval(_this.timer);
+                _this.num = 58;
+                _this.codeTitle = "获取验证码";
+              }
+
+            },
+            fail: function fail() {
+              this.code = true;
+              clearInterval(this.timer);
+              this.num = 58;
+              this.codeTitle = "获取验证码";
+              uni.showToast(_defineProperty({
+                title: '验证码获取失败！请尝试其他方式登录',
+                position: 'bottom',
+                icon: 'none' }, "position",
+              'center'));
+
+            } });
+
+        } else {
+          if (!this.user) {
             uni.showToast(_defineProperty({
-              title: '验证码获取失败！请尝试其他方式登录',
+              title: '请输入手机号',
               position: 'bottom',
               icon: 'none' }, "position",
             'center'));
 
-          } });
+            return;
+          }
 
+          this.codeTitle = "59s";
+          this.code = false;
+          this.timer = setInterval(function () {
+            //当num等于100时清除定时器
+            _this.num--;
+            if (_this.num == 0) {
+              _this.code = true;
+              clearInterval(_this.timer);
+              _this.num = 58;
+              _this.codeTitle = "获取验证码";
+
+            } else {
+              _this.codeTitle = _this.num + "s";
+              _this.code = false;
+            }
+          }, 1000);
+          uni.request({
+            method: 'POST',
+            url: 'https://api.angeli.top/reg.php?type=getCode', //获取验证码
+            data: {
+              phone: this.user },
+
+            header: {
+              'content-type': 'application/x-www-form-urlencoded',
+              'system': _server.default.system },
+
+            success: function success(res) {
+              console.log(res);
+              if (res.data.code == "1") {
+                //server.cookie=res.header['Set-Cookie'];
+                console.log("获取验证码");
+                uni.showToast(_defineProperty({
+                  title: '验证码发送成功！',
+                  position: 'bottom',
+                  icon: 'none' }, "position",
+                'center'));
+
+                _server.default.token = res.data.token;
+                uni.setStorageSync('token', _server.default.token);
+                console.log('获取验证码cookie', _server.default.cookie);
+              } else {
+                uni.showToast(_defineProperty({
+                  title: '验证码发送失败！',
+                  position: 'bottom',
+                  icon: 'none' }, "position",
+                'center'));
+
+                clearInterval(_this.timer);
+                _this.code = true;
+                clearInterval(_this.timer);
+                _this.num = 58;
+                _this.codeTitle = "获取验证码";
+              }
+
+            },
+            fail: function fail() {
+              this.code = true;
+              clearInterval(this.timer);
+              this.num = 58;
+              this.codeTitle = "获取验证码";
+              uni.showToast(_defineProperty({
+                title: '验证码获取失败！请尝试其他方式登录',
+                position: 'bottom',
+                icon: 'none' }, "position",
+              'center'));
+
+            } });
+
+        }
       } else {
         console.log("非法获取验证码");
       }
@@ -470,15 +543,22 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
           token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded' },
+          'content-type': 'application/x-www-form-urlencoded',
+          'system': _server.default.system },
 
         success: function success(res) {
           console.log(res);
           if (res.data.code == "1") {//登陆成功
             _server.default.userinfo = res.data.data;
+            console.log(_server.default.userinfo);
             _server.default.token = res.data.token;
             uni.setStorageSync('token', _server.default.token);
             uni.setStorageSync('user', _server.default.userinfo);
+            setTimeout(function () {
+              uni.redirectTo({
+                url: '../Home/Home' });
+
+            }, 2000);
           }
           if (res.data.code == "2") {//新用户注册
             uni.navigateTo({
@@ -495,63 +575,6 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
         } });
 
 
-
-      /* uni.request({
-              	method:'POST',
-              	url: 'https://api.angeli.top/reg.php?type=login', //仅为示例，并非真实接口地址。
-              	data: {
-              		phone: this.user,
-              		password:this.password
-              	},
-              	header: {
-              		'content-type': 'application/x-www-form-urlencoded',
-              		'Cookie':server.cookie
-              	},
-              	success: (res) => {
-              		console.log(res.data)
-              		if(res.data.code=="1"){//登陆成功
-              			server.userinfo=res.data.data;
-              			server.cookie=res.header['Set-Cookie'];
-              			uni.setStorage({
-              				key: 'cookie',
-              				data: res.header['Set-Cookie'],
-              				success: function () {
-              					console.log("储存cookie成功！")
-              					uni.setStorage({
-              						key: 'userinfo',
-              						data: res.data.data,
-              						success: function () {
-              							uni.showToast({
-              								title: res.data.msg,
-              								position:'bottom',
-              								icon:'none',
-              								duration:2000,
-              								mask:true
-              							});
-              							
-              							if(res.data.code=="1"){
-              								setTimeout(function () {
-              									uni.redirectTo({
-              										url: '../Home/Home'
-              									})
-              								}, 1500);
-              							}
-              						}
-              					});
-              				}
-              			});
-              			
-              			
-              		}else{
-              			uni.showToast({
-              				title: res.data.msg,
-              				position:'bottom',
-              				icon:'none',
-              				position:'center'
-              			});
-              		}
-              	}
-              }); */
     },
     appreg: function appreg() {
       uni.showToast({
@@ -573,6 +596,7 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
     },
     phone: function phone(e) {var _this2 = this;
+      this.modalName = '';
       uni.request({
         method: 'POST',
         url: 'https://api.angeli.top/WeChat/demo.php', //仅为示例，并非真实接口地址。
@@ -583,7 +607,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           _this2.phoneifo = res.data.phoneNumber;
@@ -601,7 +626,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
             header: {
               'content-type': 'application/x-www-form-urlencoded',
-              'Cookie': _server.default.cookie },
+              'Cookie': _server.default.cookie,
+              'system': _server.default.system },
 
             success: function success(res) {
               console.log(res);
@@ -615,16 +641,67 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
                     url: '../Home/Home' });
 
                 }, 2000);
+              }
+              if (res.data.code == "5") {
+                //手机号已经注册
+                _this2.phoneNum = res.data.data.Phone;
+                _server.default.token = res.data.token;
+                uni.setStorageSync('token', _server.default.token);
+                uni.showModal({
+                  title: '绑定设置',
+                  content: '手机号已经被注册，是否绑定至该微信？绑定后APP与小程序端数据互通，并且APP可以用微信快速登录。',
+                  success: function success(ok) {
+                    _this2.showPhoneUp = true;
+                    _this2.getTokenCode(1);
+                  } });
+
+
               } else {
                 uni.showModal({
                   title: '注册失败！',
-                  content: '错误原因' + res.data,
+                  content: '错误原因' + res.data.msg,
                   showCancel: false });
 
               }
             } });
 
 
+        } });
+
+    },
+    upPhone: function upPhone() {
+      uni.request({
+        method: 'POST',
+        url: 'https://api.angeli.top/user.php?type=xcxtophone', //仅为示例，并非真实接口地址。
+        data: {
+          code: this.password,
+          token: _server.default.token },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'system': _server.default.system },
+
+        success: function success(res) {
+          if (res.data.code == "1") {
+            uni.showToast({
+              title: res.data.msg,
+              position: 'bottom' });
+
+            uni.clearStorage();
+            _server.default.userinfo = [];
+            _server.default.token = null;
+            setTimeout(function () {
+              uni.redirectTo({
+                url: '../Home/Home' });
+
+            }, 2000);
+          } else {
+            uni.showToast({
+              title: '错误：' + res.data.msg,
+              position: 'bottom',
+              icon: 'none' });
+
+          }
         } });
 
     },
@@ -648,7 +725,8 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
 
         header: {
           'content-type': 'application/x-www-form-urlencoded',
-          'Cookie': _server.default.cookie },
+          'Cookie': _server.default.cookie,
+          'system': _server.default.system },
 
         success: function success(res) {
           if (res.data.openId) {

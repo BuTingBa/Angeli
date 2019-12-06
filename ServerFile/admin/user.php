@@ -65,6 +65,9 @@ switch ($type)
 				    安个利币↕</a>
 				  </th>
 				  <th class="text-center">
+				    等级
+				  </th>
+				  <th class="text-center">
 				    状态
 				  </th>
 				  <th><a class="morenfont" href="user.php?p=<?php echo $page-1; ?>&sort=<?php echo $sort==1?2:1; ?>">
@@ -90,6 +93,7 @@ switch ($type)
 							echo '<td class="text-center">'.$value['UserType'].'</td>';
 							echo '<td class="text-center">'.$value['ZhongcaoCount'].'</td>';
 							echo '<td class="text-center">'.$value['Points'].'</td>';
+							echo '<td class="text-center">'.$value['Rank'].'</td>';
 							echo '<td class="text-center">'.$value['Status'].'</td>';
 							echo '<td>'.$value['DateCreated'].'</td>';
 							echo '<td><a href="javascript:edit('.$value['AuId'].');">编辑</a></td>';

@@ -3,9 +3,8 @@
 class WeChatPay
 {
     protected $appid='wxb2418420ae2cf37c';
-    protected $appappid='wxb20ffcea11df81b0';
     protected $mch_id='1526775681';
-    protected $key='xinfenghuliankejiyouxiangongsi12';
+    protected $key='JzlIYBF0tz5Dow0iw4wSDfwah67t0hWI';
     protected $out_trade_no;
     protected $total_fee;
     protected $body;
@@ -38,33 +37,13 @@ class WeChatPay
         //统一下单签名
         $parameters['sign'] = $this->getSign($parameters);
         $xmlData = $this->arrayToXml($parameters);
+        /*$data['cs']=$parameters;
+        $data['xml']=$xmlData;
+        die(json_encode($data));*/
         $return = $this->xmlToArray($this->postXmlCurl($xmlData, $url, 60));
         return $return;
     }
 
-    //统一下单接口,app
-    public function orderApp() {
-        $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-        $parameters = array(
-            'appid' => $this->appappid, //appid
-            'mch_id' => $this->mch_id, //商户号
-            'nonce_str' => $this->createNoncestr(), //随机字符串
-            'body' => $this->body, //商品描述
-            'out_trade_no' => $this->out_trade_no, //商户订单号
-            'total_fee' => floatval($this->total_fee), //总金额 单位 分,上线需要乘以100
-            'spbill_create_ip' => $_SERVER['REMOTE_ADDR'], //终端 IP
-            'notify_url' => 'https://api.angeli.top/WeChat/notify.php', //通知地址  确保外网能正常访问
-            'openid' => $this->openid, //用户id
-            'trade_type' => 'APP',//交易类型
-            'time_start'=>date("YmdHis",time()),
-            'time_expire'=>date("YmdHis",time()+3600)
-        );
-        //统一下单签名
-        $parameters['sign'] = $this->getSign($parameters);
-        $xmlData = $this->arrayToXml($parameters);
-        $return = $this->xmlToArray($this->postXmlCurl($xmlData, $url, 60));
-        return $return;
-    }
 
     //发送订单请求
     private static function postXmlCurl($xml, $url, $second = 30)

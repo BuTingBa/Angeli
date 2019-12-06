@@ -227,6 +227,11 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
     this.getjifen();
   },
   methods: {
+    getxieyi: function getxieyi() {
+      uni.navigateTo({
+        url: "../edit/edit?type=8" });
+
+    },
     get: function get(e) {
       if (e == 1) {
         //微信
@@ -250,8 +255,8 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
           token: _server.default.token },
 
         header: {
-          'content-type': 'application/x-www-form-urlencoded' },
-
+          'content-type': 'application/x-www-form-urlencoded',
+          'system': _server.default.system },
 
         success: function success(res) {
           console.log(res);
@@ -296,7 +301,7 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
 
         var wxkey = (0, _md.default)('不停' + String(Date.now()));
         //如果是APP支付
-
+        console.log(this.money, this.monnumber, _server.default.userinfo.Auid);
 
 
 
@@ -406,14 +411,14 @@ var _md = _interopRequireDefault(__webpack_require__(/*! ../../static/md5.js */ 
             openid: _server.default.userinfo.wxOpenId,
             fee: this.money,
             number: this.monnumber,
-            key: wxkey,
+            key: 'xinfenghuliankejiyouxiangongsi12',
             auid: _server.default.userinfo.Auid,
             payType: this.apptype,
             token: _server.default.token },
 
           header: {
-            'content-type': 'application/x-www-form-urlencoded' },
-
+            'content-type': 'application/x-www-form-urlencoded',
+            'system': _server.default.system },
 
           success: function success(res) {
             console.log(res);

@@ -49,10 +49,6 @@ if($_GET['type']=='vip'){
 }
 
 //$fee=$_POST['fee']*100; //上线需要乘以100
-
-
-
-
 $app=new angeli($config);
 $order=$app->createOrder($_POST['auid'],$name,$fee,$_POST['number'],$_POST['openid'],$dd);
 if($order){

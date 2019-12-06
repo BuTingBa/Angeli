@@ -140,17 +140,52 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      title: '欢迎使用安个利商城' };
+      thisIndex: 0,
+      timeList: [
+      { time: '12-06', title: '正在发售' },
+      { time: '12-07', title: '正在发售' },
+      { time: '12-08', title: '正在发售' },
+      { time: '12-09', title: '正在发售' },
+      { time: '12-10', title: '正在发售' },
+      { time: '12-11', title: '正在发售' }],
+
+      goodsList: [
+      { title: '小米曲面显示器 34英寸', price: '2500.00', vipPrice: '2100.00', stock: 98, picUrl: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fc5d98ae09ae3d05635dfc0ae66d0950.jpg?thumb=1&w=1226&h=460&f=webp&q=90' },
+      { title: '小米游戏笔记本 2019款 15寸', price: '7299.00', vipPrice: '7099.00', stock: 5, picUrl: 'https://i1.mifile.cn/f/i/2019/milaptop/gaming-2019/section01_bg.jpg' },
+      { title: '小米小爱同学音响', price: '299.00', vipPrice: '279.00', stock: 15, picUrl: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/617c06a2530d44e96d8013dcedaf7f1d.jpg' }] };
+
 
   },
   onLoad: function onLoad() {
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    tabXZ: function tabXZ(index) {
+      console.log(index);
+      this.thisIndex = index;
+    } } };exports.default = _default;
 
 /***/ }),
 /* 21 */

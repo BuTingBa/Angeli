@@ -2,7 +2,13 @@
   "pages": [
     "pages/index/index",
     "pages/user/user",
-    "pages/cart/cart"
+    "pages/cart/cart",
+    "pages/index/goods",
+    "pages/user/order_list",
+    "pages/user/address",
+    "pages/user/edit",
+    "pages/msg/chat",
+    "pages/msg/msg"
   ],
   "subPackages": [],
   "window": {
@@ -34,5 +40,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap36.json"
 }

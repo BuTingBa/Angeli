@@ -71,11 +71,14 @@
 			},
 			//用户点击订单类型
 			toOrderType(index){
-				uni.showToast({title: this.orderTypeLise[index].name});
+				uni.setStorageSync('tbIndex',index);
+				uni.navigateTo({
+					url:"order_list?tbIndex="+index
+				})
 			},
 			//用户点击列表项
 			toPage(list_i,li_i){
-				uni.showToast({title: this.severList[list_i][li_i].name});
+				
 			}
 		}
 	}

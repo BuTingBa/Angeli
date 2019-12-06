@@ -17,7 +17,9 @@ class angeli
      */
     public function __construct($config)
     {
-        $this->systeminfo=json_decode($_SERVER['HTTP_SYSTEM'],true);
+        if(isset($_SERVER['HTTP_SYSTEM'])){
+            $this->systeminfo=json_decode($_SERVER['HTTP_SYSTEM'],true);
+        }
         $this->mysqli=new mysqli($config['dbHost'],$config['dbUsername'],$config['dbPassword'],$config['dbName'])
         or die('数据库链接出错:'.$this->mysqli->connect_error);
         $this->mysqli->query('set names utf8mb4');
@@ -34,14 +36,69 @@ class angeli
 
     }
 
-
-    public function setConfig($keyword,$value,$auid)
+    /**
+     * 添加反馈
+     * @param $auid
+     * @param $text
+     * @param $name
+     * @param $phone
+     * @return bool|string
+     */
+    public function addFankui($auid,$text,$name,$phone)
     {
-        //$sql="INSERT angeli_config (keyword, `value`,auid) values ('$keyword','$value',$auid) ON DUPLICATE KEY UPDATE `value`='$value'";
-        $sql = "SELECT * FROM angeli_config WHERE keyword='$keyword' AND auid='$auid'";
+        $time=time();
+        $sql = "INSERT INTO angeli_fankui (auid, `text`,phone,`name`,addtime) values ('$auid', '$text','$phone','$name',$time)";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             //表示操作失败
+            return $this->mysqli->error;
+        }else{
+            if($this->mysqli->affected_rows<1){
+                return $this->mysqli->error;
+            }else{
+                return TRUE;
+            }
+        }
+    }
+
+    /**
+     * 获取反馈列表
+     * @return array|bool
+     */
+    public function getFankuiList()
+    {
+        $sql = "select * from angeli_fankui";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            //表示操作失败
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                while($row = $result->fetch_assoc()){
+                    $aa=array(
+                        'id'=>$row['id'],
+                        'auid'=>$this->getInfo($row['auid']),
+                        'text'=>$row['text'],
+                        'phone'=>$row['phone'],
+                        'name'=>$row['name'],
+                        'addtime'=>$this->uc_time_ago($row['addtime'])
+                    );
+                    $data[]=$aa;
+                }
+                return $data;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+
+    public function setConfig($keyword,$value,$auid)
+    {
+
+        $sql = "SELECT * FROM angeli_config WHERE keyword='$keyword' AND auid='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
             return FALSE;
         }else{
             if($this->mysqli->affected_rows>0){
@@ -57,10 +114,10 @@ class angeli
             $result=$this->mysqli->query($sql) or die($this->mysqli->error);
             if(!$result){
                 //表示操作失败
-                return false;
+                return $this->mysqli->error;
             }else{
                 if($this->mysqli->affected_rows<1){
-                    return false;
+                    return $this->mysqli->error;
                 }else{
                     return TRUE;
                 }
@@ -2023,6 +2080,52 @@ class angeli
     }
 
 
+    /**
+     * 修改手机号
+     * @param $auid  欲修改的用户ID
+     * @param $newPhone 新的手机号
+     * @return bool
+     */
+    public function setUserPhone($auid,$newPhone)
+    {
+       $sql="UPDATE angeli_user SET Phone=$newPhone WHERE AuId=$auid";
+       //echo $sql;
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                return true;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    /**
+     * 绑定openID以及unionid
+     * @param $auid  欲修改的用户ID
+     * @param $openID 新的手机号
+     * @param $unionid
+     * @return bool
+     */
+    public function setUserWX($auid,$openID,$unionid)
+    {
+        $sql="UPDATE angeli_user SET wxopenid='$openID',WxUid='$unionid' WHERE AuId=$auid";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+        if(!$result){
+            echo $this->mysqli->error;
+            return false;
+        }else{
+            if($this->mysqli->affected_rows>0){
+                return true;
+            }else{
+                echo $this->mysqli->error;
+                return FALSE;
+            }
+        }
+    }
+
     /*
      * 创建订单
      */
@@ -2108,7 +2211,7 @@ class angeli
     /*
      * 查询订单
      */
-    public function getOrder($openId,$order)
+    public function getOrder($order)
     {
 
         $sql = "SELECT * FROM angeli_pay WHERE orderId='$order'";
@@ -2295,7 +2398,7 @@ class angeli
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
         }
         if($AvatarUrl=="1"){
-            if($AvatarUrl=="1" || $AvatarUrl=="" || $AvatarUrl==null || $AvatarUrl==" "){
+            if($AvatarUrl=="1"){
                 $AvatarUrl="https://sz.oss.data.angeli.top/system/11.png";
             }else{
                 $AvatarUrl="https://sz.oss.data.angeli.top/system/21.png";
@@ -2628,8 +2731,6 @@ class angeli
         $sql->bind_result($AuId,$WxUid,$Phone,$Status,$UserName,$BanEndTime,$BanDeadline,$AvatarUrl,$isVip);
         $sql->execute();
         $sql->store_result();
-        $time=time();
-        $loginIp=$_SERVER['REMOTE_ADDR'];
         if($sql->num_rows<1)
         {
             return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
@@ -2648,10 +2749,20 @@ class angeli
                     'VIPEndTime' =>date("Y-d-m H:i:s",$isVip)
                 );
             }
-            $sql="UPDATE angeli_user SET LastLogonTime='$time',LastLogonIP='$loginIp' WHERE AuId='$AuId'";
-            $result=$this->mysqli->query($sql) or die($this->mysqli->error);
+            $this->setUserLogin($AuId);
             return $d;
         }
+    }
+
+    /**设置用户登录更新IP以及时间
+     * @param $auid
+     */
+    public function setUserLogin($auid)
+    {
+        $loginIp=$_SERVER['REMOTE_ADDR'];
+        $time=time();
+        $sql="UPDATE angeli_user SET LastLogonTime='$time',LastLogonIP='$loginIp' WHERE AuId='$auid'";
+        $result=$this->mysqli->query($sql) or die($this->mysqli->error);
     }
 
     //查询VIP时间戳

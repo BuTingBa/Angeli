@@ -43,14 +43,14 @@ switch ($_GET['type']) {
         }
         $email=time()."@angeli.top";
         $nickname = preg_replace('/[\x{10000}-\x{10FFFF}]/u', '', $_GET['username']);
-        $fankui=$user -> addUser($nickname,"angeli",$_GET['gender'],$_GET['phone'],"","",$email,"1",$_SERVER['REMOTE_ADDR'],"");
+        $fankui=$user -> addUser($nickname,"angeli",$_GET['gender'],$_GET['phone'],"","",$email,"1",$_SERVER['REMOTE_ADDR']);
         $data=json_decode($fankui,true);
         if($data['code']=="1"){
             $userinfo=$user->getUserInfo("phone",$_GET['phone']);
             if($userinfo){
                 $outmsg = array('code' =>'1','msg'=>'登录成功！','data'=>$userinfo);
                 $_SESSION['Auid']=$userinfo['Auid'];
-                $user->addUserLog($_SESSION['Auid'],'注册',$_SESSION['Auid'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
+                $user->addUserLog($_SESSION['Auid'],'APP注册',$userinfo['Auid'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
                 $_SESSION['UserName']=$userinfo['UserName'];
                 unset($_SESSION['code']);
                 setcookie("Auid",$userinfo['Auid'],time()+3600*24*30,'/');
@@ -100,6 +100,7 @@ switch ($_GET['type']) {
         $userinfo=$user->getUserInfo("openid",$wxuserinfo['openid']);
         if($userinfo['Auid']!='-1')
         {
+
             $jifen=false;
             $_SESSION['Auid']=$userinfo['Auid'];
             $_SESSION['UserName']=$userinfo['UserName'];
@@ -116,6 +117,7 @@ switch ($_GET['type']) {
                     $j=1;
                 }
             }
+            $user->setUserLogin($userinfo['Auid']);
             if($jifen){
                 $outmsg = array('code' =>'2','msg'=>'签到成功，赠送'.$j.'个安个利币','data'=>$userinfo,'token'=>session_id());
             }else{
@@ -138,6 +140,22 @@ switch ($_GET['type']) {
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         $phone=$_POST['phone'];
+        if(!$user->checkPhone($phone)){
+            if(isset($_REQUEST['token'])){
+                session_id($_REQUEST['token']);
+                session_start();
+            }else{
+                session_start();
+            }
+
+            $_SESSION['phone']=$phone;
+            $userinfo=$user->getUserInfo('phone',$phone);
+            $_SESSION['auid']=$userinfo['Auid'];
+            $_SESSION['openid']=$_POST['openid'];
+            $_SESSION['unionid']=$_POST['unionid'];
+            $outmsg = array('code' =>'5','msg'=>'手机号已注册，是否绑定到该微信号？','data'=>$userinfo,'token'=>session_id());
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         $email=time()."@angeli.top";
         $fankui=$user -> addUser($_POST['username'],"angeli",$_POST['gender'],$_POST['phone'],$_POST['openid'],$_POST['unionid'],$email,"1",$_SERVER['REMOTE_ADDR'],$_POST['avatarUrl']);
         $data=json_decode($fankui,true);
@@ -146,13 +164,32 @@ switch ($_GET['type']) {
             if($_POST['tuijianId'] && is_numeric($_POST['tuijianId'])){
                 $user->setTuiGuang($_POST['tuijianId'],$userinfo['Auid']);
             }
-
+            $user->addUserLog($userinfo['Auid'],'小程序注册用户',$_POST['phone'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
             $outmsg = array('code' =>'1','msg'=>'注册成功吖！','data'=>$userinfo,'TG'=>$_POST['tuijianId']);
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else {
             die($fankui);
         }
         # code...
+        break;
+    case 'getCodeUp':
+        if(empty($_SESSION['phone']) || empty($_SESSION['auid'])){
+            $outmsg = array('code' =>'0','msg'=>'服务器未查询到相关信息！');
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $phone=$_SESSION['phone'];
+        $code=mt_rand(1000,9999);
+        $data=sendSms("reg",$phone,$code);
+        $user->addUserLog(0,'小程序绑定获取验证码',$phone,$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
+        if($data['Code']=="OK"){
+            $_SESSION['code']=$code;
+            $_SESSION['codeTime']=time();
+            $outmsg = array('code' =>'1','msg'=>'发送验证码成功！','data'=>'1234');
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'发送短信验证码失败！','data'=>$data);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         break;
     case 'getCode':
 
@@ -166,11 +203,13 @@ switch ($_GET['type']) {
         $phone=$_POST['phone'];
         $code=mt_rand(1000,9999);
         $data=sendSms("reg",$phone,$code);
+
+        $user->addUserLog(0,'APP获取验证码',$phone,$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
         if($data['Code']=="OK"){
             $_SESSION['code']=$code;
             $_SESSION['phone']=$phone;
             $_SESSION['codeTime']=time();
-            $outmsg = array('code' =>'1','msg'=>'发送验证码成功！','data'=>$code,'token'=>session_id());
+            $outmsg = array('code' =>'1','msg'=>'发送验证码成功！','data'=>'111','token'=>session_id());
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }else{
             $outmsg = array('code' =>'0','msg'=>'发送短信验证码失败！','data'=>$data);
@@ -195,11 +234,13 @@ switch ($_GET['type']) {
                 die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
             }else{
                 $userinfo=$user->getUserInfo("phone",$_POST['phone']);
-                if($userinfo){
+                if($userinfo['Auid']!='-1'){
+                    $user->addUserLog($userinfo['Auid'],'APP手机号登录',$_POST['phone'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
                     $outmsg = array('code' =>'1','msg'=>'登录成功！','data'=>$userinfo,'token'=>session_id());
                     $_SESSION['Auid']=$userinfo['Auid'];
                     $_SESSION['UserName']=$userinfo['UserName'];
                     unset($_SESSION['code']);
+                    $user->setUserLogin($userinfo['Auid']);
                     setcookie("Auid",$userinfo['Auid'],time()+3600*24*30,'/');
                     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
                 }else{
@@ -271,6 +312,8 @@ switch ($_GET['type']) {
                     $j=1;
                 }
             }
+            $user->addUserLog($userinfo['Auid'],'APP微信授权登录',$userinfo['wxOpenId'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
+            $user->setUserLogin($userinfo['Auid']);
             if($jifen){
                 $outmsg = array('code' =>'2','msg'=>'签到成功，赠送'.$j.'个安个利币','data'=>$userinfo,'token'=>session_id());
             }else{

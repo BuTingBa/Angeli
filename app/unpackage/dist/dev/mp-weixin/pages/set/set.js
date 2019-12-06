@@ -202,16 +202,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
       shadow: true,
       isShowAD: true,
-      modalName: '' };
+      modalName: '',
+      showSC: false };
 
   },
   onLoad: function onLoad() {var _this = this;
+    this.getShowSc();
     uni.getStorage({
       key: 'showAD',
       success: function success(res) {
@@ -233,6 +241,56 @@ var _server = _interopRequireDefault(__webpack_require__(/*! ../../server.js */ 
     }
   },
   methods: {
+    SETSC: function SETSC() {var _this2 = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=setShowSC', //仅为示例，并非真实接口地址。
+        data: {
+          token: _server.default.token },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.data == 'off') {
+            _this2.showSC = true;
+          } else {
+            _this2.showSC = false;
+          }
+          uni.showToast(_defineProperty({
+            title: res.data.msg,
+            position: 'bottom',
+            icon: 'none' }, "position",
+          'center'));
+
+        } });
+
+    },
+    getShowSc: function getShowSc() {var _this3 = this;
+      uni.request({
+        method: 'GET',
+        url: 'https://api.angeli.top/user.php?type=getShowSC',
+        data: {
+          token: _server.default.token },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.data == 'off') {
+            _this3.showSC = true;
+          } else {
+            _this3.showSC = false;
+          }
+
+        } });
+
+    },
+    kefu: function kefu() {
+      uni.navigateTo({
+        url: '../menu/help' });
+
+    },
     getyinsi: function getyinsi() {
       uni.navigateTo({
         url: '../edit/edit?type=5' });

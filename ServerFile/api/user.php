@@ -33,6 +33,79 @@ switch ($_GET['type']){
             die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
         }
         break;
+    case 'getShowSC':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        $info=$user->getConfig($auid,'showGive');
+        if($info){
+            $outmsg = array('code' =>'1','msg'=>'OK','data'=>$info);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'ERROR','data'=>$info);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        break;
+    case 'xcxtophone':
+        if(!$_SESSION['phone'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'服务器未查询到相关信息？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        if($_SESSION['code']==$_POST['code']){
+            $codeTime=$_SESSION['codeTime'];
+            if(time()-$codeTime>300){
+                $outmsg = array('code' =>'0','msg'=>'验证码已经过期','data'=>'');
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $data=$user->setUserWX($_SESSION['auid'],$_SESSION['openid'],$_SESSION['unionid']);
+                if(!$data){
+                    $outmsg = array('code' =>'0','msg'=>'绑定错误','data'=>'');
+                    die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+                }else{
+                    $outmsg = array('code' =>'1','msg'=>'绑定成功','data'=>'');
+                    die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+                }
+            }
+        }else{
+            $outmsg = array('code' =>'0','msg'=>'验证码不正确，登录失败','data'=>$_POST['code'].'|'.$_SESSION['code']);
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
+        break;
+    case 'setShowSC':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+
+        $auid=$_SESSION['Auid'];
+        $info=$user->getConfig($auid,'showGive');
+
+        if($info=='off'){
+            $d=$user->setConfig('showGive','on',$auid);
+            if($d){
+                $outmsg = array('code' =>'1','msg'=>'已开启显示','data'=>$user->getConfig($auid,'showGive'));
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $outmsg = array('code' =>'0','msg'=>'错误','data'=>$d);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+        }else{
+            $d=$user->setConfig('showGive','off',$auid);
+            if($d){
+                $outmsg = array('code' =>'1','msg'=>'已隐藏种草(收藏)','data'=>$user->getConfig($auid,'showGive'));
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $outmsg = array('code' =>'0','msg'=>'错误','data'=>$d);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+        }
+
     case 'getMyinfo':
         $auid=$_SESSION['Auid'];
         $info=$user->getUserInfo('auid',$auid);
@@ -512,6 +585,26 @@ switch ($_GET['type']){
             $outmsg = array('code' =>'1','msg'=>'OK','data'=>$data);
         }
         die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        break;
+    case 'upHelp':
+        if(!$_SESSION['Auid'])
+        {
+            $outmsg = array('code' =>'0','msg'=>'没有登录就操作？','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $auid=$_SESSION['Auid'];
+        if(empty($_POST['text'])){
+            $outmsg = array('code' =>'0','msg'=>'缺少参数，请注意必填项目','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
+        $data=$user->addFankui($auid,$_POST['text'],$_POST['name'],$_POST['phone']);
+        if(!$data){
+            $outmsg = array('code' =>'0','msg'=>'提交失败！','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }else{
+            $outmsg = array('code' =>'1','msg'=>'已成功！等待客服联系你。','data'=>"");
+            die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+        }
         break;
     case 'test':
         var_dump($user->setUserConfig(6666,'First_vip','1'));

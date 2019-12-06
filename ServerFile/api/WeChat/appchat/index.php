@@ -7,24 +7,24 @@ require_once "WxPay.Data.php";
 require_once '../../angeli.class.php';
 require_once('../../../config.php');
 
-if(empty($_POST['openid'])){
+/*if(empty($_POST['openid'])){
     $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>'');
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
-}
+}*/
 if(empty($_POST['fee'])){
-    $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>'');
+    $outmsg = array('code' =>'0','msg'=>'缺少金额参数','data'=>'');
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 if(empty($_POST['number'])){
-    $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>'');
+    $outmsg = array('code' =>'0','msg'=>'缺少数量参数','data'=>'');
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 if(empty($_GET['type'])){
-    $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>'');
+    $outmsg = array('code' =>'0','msg'=>'缺少type参数','data'=>'');
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 if(empty($_POST['auid'])){
-    $outmsg = array('code' =>'0','msg'=>'缺少参数','data'=>'');
+    $outmsg = array('code' =>'0','msg'=>'缺少用户ID参数','data'=>'');
     die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
 }
 
@@ -44,7 +44,7 @@ if($_GET['type']=='vip'){
 
 }
 $app=new angeli($config);
-$order=$app->createOrder($_POST['auid'],$name,$fee,$_POST['number'],$_POST['openid'],$dd);
+$order=$app->createOrder($_POST['auid'],$name,$fee,$_POST['number'],'oiIia5QlS30j5K7Zd5X6woZ29ObI',$dd);
 
 if($order){
     $unifiedOrder = new WxPayUnifiedOrder();

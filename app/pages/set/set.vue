@@ -24,6 +24,12 @@
 				<view class="menuRight" @tap="guanbi"><switch @change="SetShadow" :checked="true" :disabled="isShowAD?true:false" :class="shadow?'checked':''" color="#39B54A"></switch></view>
 			</view>
 			<view class="menusolid"></view>
+			<view class="menuItem" @click="SETSC">
+				<view class="menuIcon aicon-ys"></view>
+				<view class="menuTiele">隐藏收藏</view>
+				<view class="menuRight" ><switch @change="SETSC" :checked="showSC" :disabled="isShowAD?true:false" :class="shadow?'checked':''" color="#39B54A"></switch></view>
+			</view>
+			<view class="menusolid"></view>
 		</view>
 		<view class="menuClass"><text>通用设置</text></view>
 		<view class="menuListBox">
@@ -34,9 +40,9 @@
 				<view class="menuRight"></view>
 			</view>
 			<view class="menusolid"></view>
-			<view class="menuItem">
+			<view class="menuItem" @click="kefu">
 				<view class="menuIcon aicon-help"></view>
-				<view class="menuTiele"><button class="kefuanniu" open-type="contact">帮助与客服</button></view>
+				<view class="menuTiele" >帮助与客服</view>
 				<view class="menuRight"></view>
 			</view>
 			<view class="menusolid"></view>
@@ -79,10 +85,12 @@
 			return {
 				shadow:true,
 				isShowAD:true,
-				modalName:''
+				modalName:'',
+				showSC:false
 			}
 		},
 		onLoad:function(){
+			this.getShowSc()
 			uni.getStorage({
 			    key: 'showAD',
 			    success: (res) => {
@@ -104,6 +112,56 @@
 			}	
 		},
 		methods: {
+			SETSC:function(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=setShowSC', //仅为示例，并非真实接口地址。
+					data: {
+						token:server.token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.data=='off'){
+							this.showSC=true
+						}else{
+							this.showSC=false
+						}
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none',
+							position:'center'
+						});
+					}
+				});
+			},
+			getShowSc(){
+				uni.request({
+					method:'GET',
+					url: 'https://api.angeli.top/user.php?type=getShowSC', 
+					data: {
+						token:server.token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.data=='off'){
+							this.showSC=true
+						}else{
+							this.showSC=false
+						}
+						
+					}
+				});
+			},
+			kefu:function(){
+				uni.navigateTo({
+					url: '../menu/help'
+				})
+			},
 			getyinsi:function(){
 				uni.navigateTo({
 					url: '../edit/edit?type=5'

@@ -66,7 +66,7 @@
 				</view>
 			</view>
 			<button class="Angeli" style="margin-top: 72upx;margin-bottom: 16upx;" @click="getVip">立即支付</button>
-			<view style="width: 100%;text-align: center;margin-bottom: 82upx;"><text style="font-size: 22upx;">购买即视为同意《安个利用户充值协议》</text></view>
+			<view style="width: 100%;text-align: center;margin-bottom: 82upx;" @click="getxieyi"><text style="font-size: 22upx;">购买即视为同意《安个利用户充值协议》</text></view>
 		</view> 
 		
 		
@@ -103,6 +103,11 @@
 			this.getjifen();
 		},
 		methods: {
+			getxieyi:function(){
+				uni.navigateTo({
+					url:"../edit/edit?type=8"
+				})
+			},
 			get:function(e){
 				if(e==1){
 					//微信
@@ -127,7 +132,7 @@
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
-						
+						'system':server.system
 					},
 					success: (res) => {
 						console.log(res)
@@ -172,17 +177,18 @@
 					});
 					let wxkey=md5('不停'+String(Date.now()));
 					//如果是APP支付
+					console.log(this.money,this.monnumber,server.userinfo.Auid)
 					//#ifdef APP-PLUS
+					console.log(server.userinfo)
 					uni.request({
 						method:'POST',
 						url: "https://api.angeli.top/WeChat/appchat/index.php?type=angelibi", //仅为示例，并非真实接口地址。
 						data: {
-							openid:server.userinfo.wxOpenId,
 							fee:this.money,
 							number:this.monnumber,
 							key:wxkey,
 							auid:server.userinfo.Auid,
-							token:server.token
+							token:server.token,
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
@@ -210,7 +216,6 @@
 											},
 											header: {
 												'content-type': 'application/x-www-form-urlencoded',
-												
 												'system':server.system
 											},
 											success: (res) => {
@@ -282,14 +287,14 @@
 							openid:server.userinfo.wxOpenId,
 							fee:this.money,
 							number:this.monnumber,
-							key:wxkey,
+							key:'xinfenghuliankejiyouxiangongsi12',
 							auid:server.userinfo.Auid,
 							payType:this.apptype,
 							token:server.token
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded',
-							
+							'system':server.system
 						},
 						success: (res) => {
 							console.log(res)

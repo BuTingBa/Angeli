@@ -33,6 +33,12 @@
 			<view class="upname" v-if="type=='7'" >
 				 <web-view src="https://api.angeli.top/html/about.html"></web-view>
 			</view>
+			<view class="upname" v-if="type=='8'" >
+				 <web-view src="https://api.angeli.top/html/pay.html"></web-view>
+			</view>
+			<view class="upname" v-if="type=='9'" >
+				 <web-view src="https://api.angeli.top/html/vip.html"></web-view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -72,6 +78,12 @@
 			}
 			if(val.type=='7'){
 				this.title="关于安个利"
+			}
+			if(val.type=='8'){
+				this.title="安个利充值协议"
+			}
+			if(val.type=='9'){
+				this.title="会员协议"
 			}
 		},
 		methods: {
