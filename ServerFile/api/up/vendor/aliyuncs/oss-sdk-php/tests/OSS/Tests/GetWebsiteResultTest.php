@@ -13,7 +13,7 @@ class GetWebsiteResultTest extends \PHPUnit_Framework_TestCase
 <?xml version="1.0" encoding="utf-8"?>
 <WebsiteConfiguration>
 <IndexDocument>
-<Suffix>index.html</Suffix>
+<Suffix>api.html</Suffix>
 </IndexDocument>
 <ErrorDocument>
 <Key>errorDocument.html</Key>

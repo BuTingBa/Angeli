@@ -158,7 +158,7 @@
 				<view class="arrow"><view class="icon xiangyou"></view></view>
 			</view>
 		</view>
-		<!-- 评价 -->
+		<!-- 评价 
 		<view class="info-box comments" id="comments">
 			<view class="row">
 				<view class="text">商品评价({{goodsData.comment.number}})</view>
@@ -178,7 +178,7 @@
 					{{goodsData.comment.content}}
 				</view>
 			</view>
-		</view>
+		</view>-->
 		<!-- 详情 -->
 		<view class="description">
 			<view class="title">———— 商品详情 ————</view>

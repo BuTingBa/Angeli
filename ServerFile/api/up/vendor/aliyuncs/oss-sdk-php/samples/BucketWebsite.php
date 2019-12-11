@@ -12,7 +12,7 @@ if (is_null($ossClient)) exit(1);
 //*******************************简单使用***************************************************************
 
 // 设置Bucket的静态网站托管模式
-$websiteConfig = new WebsiteConfig("index.html", "error.html");
+$websiteConfig = new WebsiteConfig("api.html", "error.html");
 $ossClient->putBucketWebsite($bucket, $websiteConfig);
 Common::println("bucket $bucket websiteConfig created:" . $websiteConfig->serializeToXml());
 
@@ -40,7 +40,7 @@ getBucketWebsite($ossClient, $bucket);
  */
 function putBucketWebsite($ossClient, $bucket)
 {
-    $websiteConfig = new WebsiteConfig("index.html", "error.html");
+    $websiteConfig = new WebsiteConfig("api.html", "error.html");
     try {
         $ossClient->putBucketWebsite($bucket, $websiteConfig);
     } catch (OssException $e) {

@@ -1938,7 +1938,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Version = '1.23';
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Version = '1.24';
 var cookie = '';
 var userinfo = [];
 var usersk = '';
@@ -7923,7 +7923,38 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 292:
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 300:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/config.js ***!
   \******************************************************************/
@@ -7949,7 +7980,7 @@ module.exports = config;
 
 /***/ }),
 
-/***/ 293:
+/***/ 301:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/base64.js ***!
   \******************************************************************/
@@ -8102,7 +8133,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 294:
+/***/ 302:
 /*!****************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/hmac.js ***!
   \****************************************************************/
@@ -8110,7 +8141,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var Crypto = __webpack_require__(/*! ./crypto.js */ 295);
+var Crypto = __webpack_require__(/*! ./crypto.js */ 303);
 
 (function () {
 
@@ -8147,7 +8178,7 @@ module.exports = Crypto;
 
 /***/ }),
 
-/***/ 295:
+/***/ 303:
 /*!******************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/crypto.js ***!
   \******************************************************************/
@@ -8336,7 +8367,7 @@ module.exports = Crypto;
 
 /***/ }),
 
-/***/ 296:
+/***/ 304:
 /*!****************************************************************!*\
   !*** D:/Web/angeli/app/components/sunui-upimg/ali-oos/sha1.js ***!
   \****************************************************************/
@@ -8344,7 +8375,7 @@ module.exports = Crypto;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var Crypto = __webpack_require__(/*! ./crypto.js */ 295);
+var Crypto = __webpack_require__(/*! ./crypto.js */ 303);
 
 (function () {
 
@@ -8423,37 +8454,6 @@ var Crypto = __webpack_require__(/*! ./crypto.js */ 295);
 })();
 
 module.exports = Crypto;
-
-/***/ }),
-
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
 
 /***/ }),
 
@@ -10167,7 +10167,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom", "usingComponents": {} }, "pages/Home/Home": { "navigationBarTitleText": "安个利", "usingComponents": { "uni-load-more": "/components/uni-load-more" } }, "pages/post/post": { "usingComponents": {} }, "pages/reg/reg": { "usingComponents": {} }, "pages/i/i": { "usingComponents": { "uni-load-more": "/components/uni-load-more" } }, "pages/postinfo/postinfo": { "usingComponents": {} }, "pages/editinfo/editinfo": { "usingComponents": {} }, "pages/huati/huati": { "usingComponents": {} }, "pages/sousuo/sousuo": { "usingComponents": { "uni-load-more": "/components/uni-load-more" } }, "pages/classPost/classPost": { "usingComponents": { "uni-load-more": "/components/uni-load-more" } }, "pages/edit/edit": { "usingComponents": {} }, "pages/set/set": { "usingComponents": {} }, "pages/about/about": { "usingComponents": {} }, "pages/vip/vip": { "usingComponents": {} }, "pages/newUser/newUser": { "usingComponents": {} }, "pages/anquan/anquan": { "usingComponents": {} }, "pages/menu/Message": { "usingComponents": { "uni-load-more": "/components/uni-load-more" } }, "pages/menu/friend": { "usingComponents": {} }, "pages/menu/jifen": { "usingComponents": {} }, "pages/menu/shoucang": { "usingComponents": {} }, "pages/menu/mpl": { "usingComponents": {} }, "pages/menu/zan": { "usingComponents": {} }, "pages/menu/newFans": { "usingComponents": {} }, "pages/i/bieren": { "usingComponents": { "uni-load-more": "/components/uni-load-more" } }, "pages/menu/wallet": { "usingComponents": {} }, "pages/menu/tixian": { "usingComponents": {} }, "pages/menu/chat": { "usingComponents": {} }, "pages/postinfo/dashang": { "usingComponents": {} }, "pages/menu/systemMsg": { "usingComponents": {} }, "pages/menu/huodong": { "usingComponents": {} }, "pages/menu/guanzhu": { "usingComponents": {} }, "pages/postinfo/plinfo": { "usingComponents": {} }, "pages/menu/help": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "安个利", "navigationBarBackgroundColor": "#FFF", "backgroundColor": "#FFF", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/Home/Home": { "navigationBarTitleText": "安个利" }, "pages/post/post": {}, "pages/reg/reg": {}, "pages/i/i": {}, "pages/postinfo/postinfo": {}, "pages/editinfo/editinfo": {}, "pages/huati/huati": {}, "pages/sousuo/sousuo": {}, "pages/classPost/classPost": {}, "pages/edit/edit": {}, "pages/set/set": {}, "pages/about/about": {}, "pages/vip/vip": {}, "pages/newUser/newUser": {}, "pages/anquan/anquan": {}, "pages/menu/Message": {}, "pages/menu/friend": {}, "pages/menu/jifen": {}, "pages/menu/shoucang": {}, "pages/menu/mpl": {}, "pages/menu/zan": {}, "pages/menu/newFans": {}, "pages/i/bieren": {}, "pages/menu/wallet": {}, "pages/menu/tixian": {}, "pages/menu/chat": {}, "pages/postinfo/dashang": {}, "pages/menu/systemMsg": {}, "pages/menu/huodong": {}, "pages/menu/guanzhu": {}, "pages/postinfo/plinfo": {}, "pages/menu/help": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "安个利", "navigationBarBackgroundColor": "#FFF", "backgroundColor": "#FFF", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 

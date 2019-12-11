@@ -13,7 +13,7 @@ class OssClientBucketWebsiteTest extends TestOssClientBase
     public function testBucket()
     {
 
-        $websiteConfig = new WebsiteConfig("index.html", "error.html");
+        $websiteConfig = new WebsiteConfig("api.html", "error.html");
 
         try {
             $this->ossClient->putBucketWebsite($this->bucket, $websiteConfig);

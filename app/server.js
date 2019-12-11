@@ -1,4 +1,4 @@
-const Version='1.23';
+const Version='1.24';
 const cookie = '';
 const userinfo = [];
 const usersk='';

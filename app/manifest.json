@@ -2,8 +2,8 @@
     "name" : "安个利社区",
     "appid" : "__UNI__F71FC08",
     "description" : "安个利",
-    "versionName" : "1.23",
-    "versionCode" : 120,
+    "versionName" : "1.25",
+    "versionCode" : 125,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {

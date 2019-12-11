@@ -101,7 +101,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemnormline = $('#LAY-index-normline').children('div')
+    ,elemnormline = $('#LAY-api-normline').children('div')
     ,rendernormline = function(index){
       echnormline[index] = echarts.init(elemnormline[index], layui.echartsTheme);
       echnormline[index].setOption(normline[index]);
@@ -164,7 +164,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemheapline = $('#LAY-index-heapline').children('div')
+    ,elemheapline = $('#LAY-api-heapline').children('div')
     ,renderheapline = function(index){
       echheapline[index] = echarts.init(elemheapline[index], layui.echartsTheme);
       echheapline[index].setOption(heapline[index]);
@@ -251,7 +251,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemdiffline = $('#LAY-index-diffline').children('div')
+    ,elemdiffline = $('#LAY-api-diffline').children('div')
     ,renderdiffline = function(index){
       echdiffline[index] = echarts.init(elemdiffline[index], layui.echartsTheme);
       echdiffline[index].setOption(diffline[index]);
@@ -321,7 +321,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemheaparea = $('#LAY-index-heaparea').children('div')
+    ,elemheaparea = $('#LAY-api-heaparea').children('div')
     ,renderheaparea = function(index){
       echheaparea[index] = echarts.init(elemheaparea[index], layui.echartsTheme);
       echheaparea[index].setOption(heaparea[index]);
@@ -460,7 +460,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemarea = $('#LAY-index-area').children('div')
+    ,elemarea = $('#LAY-api-area').children('div')
     ,renderarea = function(index){
       echarea[index] = echarts.init(elemarea[index], layui.echartsTheme);
       echarea[index].setOption(area[index]);
@@ -513,7 +513,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemlogline = $('#LAY-index-logline').children('div')
+    ,elemlogline = $('#LAY-api-logline').children('div')
     ,renderlogline = function(index){
       echlogline[index] = echarts.init(elemlogline[index], layui.echartsTheme);
       echlogline[index].setOption(logline[index]);
@@ -591,7 +591,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemNormcol = $('#LAY-index-normcol').children('div')
+    ,elemNormcol = $('#LAY-api-normcol').children('div')
     ,renderNormcol = function(index){
       echnormcol[index] = echarts.init(elemNormcol[index], layui.echartsTheme);
       echnormcol[index].setOption(normcol[index]);
@@ -693,7 +693,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemHeapcol = $('#LAY-index-heapcol').children('div')
+    ,elemHeapcol = $('#LAY-api-heapcol').children('div')
     ,renderHeapcol = function(index){
       echheapcol[index] = echarts.init(elemHeapcol[index], layui.echartsTheme);
       echheapcol[index].setOption(heapcol[index]);
@@ -783,7 +783,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemDiffcol = $('#LAY-index-diffcol').children('div')
+    ,elemDiffcol = $('#LAY-api-diffcol').children('div')
     ,renderDiffcol = function(index){
       echdiffcol[index] = echarts.init(elemDiffcol[index], layui.echartsTheme);
       echdiffcol[index].setOption(diffcol[index]);
@@ -872,7 +872,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemColorline = $('#LAY-index-colorline').children('div')
+    ,elemColorline = $('#LAY-api-colorline').children('div')
     ,renderColorline = function(index){
       echcolorline[index] = echarts.init(elemColorline[index], layui.echartsTheme);
       echcolorline[index].setOption(colorline[index]);
@@ -921,7 +921,7 @@ layui.define(function(exports){
         ] 
       }
     ]
-    ,elemNormbar = $('#LAY-index-normbar').children('div')
+    ,elemNormbar = $('#LAY-api-normbar').children('div')
     ,renderNormbar = function(index){
       echnormbar[index] = echarts.init(elemNormbar[index], layui.echartsTheme);
       echnormbar[index].setOption(normbar[index]);
@@ -993,7 +993,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemheapbar = $('#LAY-index-heapbar').children('div')
+    ,elemheapbar = $('#LAY-api-heapbar').children('div')
     ,renderheapbar = function(index){
       echheapbar[index] = echarts.init(elemheapbar[index], layui.echartsTheme);
       echheapbar[index].setOption(heapbar[index]);
@@ -1066,7 +1066,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemwindline = $('#LAY-index-windline').children('div')
+    ,elemwindline = $('#LAY-api-windline').children('div')
     ,renderwindline = function(index){
       echwindline[index] = echarts.init(elemwindline[index], layui.echartsTheme);
       echwindline[index].setOption(windline[index]);
@@ -1151,7 +1151,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemplat = $('#LAY-index-plat').children('div')
+    ,elemplat = $('#LAY-api-plat').children('div')
     ,renderplat = function(index){
       echplat[index] = echarts.init(elemplat[index], layui.echartsTheme);
       echplat[index].setOption(plat[index]);

@@ -11,7 +11,7 @@ class WebsiteConfigTest extends \PHPUnit_Framework_TestCase
 <?xml version="1.0" encoding="utf-8"?>
 <WebsiteConfiguration>
 <IndexDocument>
-<Suffix>index.html</Suffix>
+<Suffix>api.html</Suffix>
 </IndexDocument>
 <ErrorDocument>
 <Key>errorDocument.html</Key>
@@ -28,7 +28,7 @@ BBBB;
 
     public function testParseValidXml()
     {
-        $websiteConfig = new WebsiteConfig("index");
+        $websiteConfig = new WebsiteConfig("api");
         $websiteConfig->parseFromXml($this->validXml);
         $this->assertEquals($this->cleanXml($this->validXml), $this->cleanXml($websiteConfig->serializeToXml()));
     }
@@ -43,8 +43,8 @@ BBBB;
 
     public function testWebsiteConstruct()
     {
-        $websiteConfig = new WebsiteConfig("index.html", "errorDocument.html");
-        $this->assertEquals('index.html', $websiteConfig->getIndexDocument());
+        $websiteConfig = new WebsiteConfig("api.html", "errorDocument.html");
+        $this->assertEquals('api.html', $websiteConfig->getIndexDocument());
         $this->assertEquals('errorDocument.html', $websiteConfig->getErrorDocument());
         $this->assertEquals($this->cleanXml($this->validXml), $this->cleanXml($websiteConfig->serializeToXml()));
     }

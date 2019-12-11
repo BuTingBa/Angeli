@@ -170,7 +170,7 @@ layui.define('view', function(exports){
     
     //右侧面板
     ,popupRight: function(options){
-      //layer.close(admin.popup.index);
+      //layer.close(admin.popup.api);
       return admin.popup.index = layer.open($.extend({
         type: 1
         ,id: 'LAY_adminPopupR'
@@ -649,7 +649,7 @@ layui.define('view', function(exports){
   
   //admin.prevRouter = {}; //上一个路由
   
-  //监听 tab 组件切换，同步 index
+  //监听 tab 组件切换，同步 api
   element.on('tab('+ FILTER_TAB_TBAS +')', function(data){
     admin.tabsPage.index = data.index;
   });
@@ -817,7 +817,7 @@ layui.define('view', function(exports){
   
   //窗口resize事件
   var resizeSystem = layui.data.resizeSystem = function(){
-    //layer.close(events.note.index);
+    //layer.close(events.note.api);
     layer.closeAll('tips');
     
     if(!resizeSystem.lock){

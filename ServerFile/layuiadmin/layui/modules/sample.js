@@ -90,7 +90,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemDataView = $('#LAY-index-pageone').children('div')
+    ,elemDataView = $('#LAY-api-pageone').children('div')
     ,renderDataView = function(index){
       echartsApp[index] = echarts.init(elemDataView[index], layui.echartsTheme);
       echartsApp[index].setOption(options[index]);
@@ -160,7 +160,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemDataView = $('#LAY-index-pagetwo').children('div')
+    ,elemDataView = $('#LAY-api-pagetwo').children('div')
     ,renderDataView = function(index){
       echartsApp[index] = echarts.init(elemDataView[index], layui.echartsTheme);
       echartsApp[index].setOption(options[index]);
@@ -241,7 +241,7 @@ layui.define(function(exports){
         ]
       }
     ]
-    ,elemDataView = $('#LAY-index-pagethree').children('div')
+    ,elemDataView = $('#LAY-api-pagethree').children('div')
     ,renderDataView = function(index){
       echartsApp[index] = echarts.init(elemDataView[index], layui.echartsTheme);
       echartsApp[index].setOption(options[index]);
@@ -259,7 +259,7 @@ layui.define(function(exports){
     ,table = layui.table;
     
     table.render({
-      elem: '#LAY-index-prograss'
+      elem: '#LAY-api-prograss'
       ,url: layui.setter.base + 'json/console/prograss.js' //模拟接口
       ,cols: [[
         {type: 'checkbox', fixed: 'left'}

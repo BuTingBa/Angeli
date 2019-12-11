@@ -18,19 +18,22 @@ switch ($type){
 		$wxinfo=getWxAccessToken($code);
 		$data=$app->getAdminInfo($wxinfo['openid']);
 		if(!$data){
-			header("Refresh:3;url=../index.php");
+			header("Refresh:3;url=../api.php");
 			die('你没有权限登录安个利的后台！！');
 		}else{
 			//var_dump($data);
-			session_start();
+
+            session_name('token');
+
 			$_SESSION['id']=$data['id'];
 			$_SESSION['name']=$data['name'];
 			$_SESSION['wxopenid']=$data['wxopenid'];
 			$_SESSION['phone']=$data['phone'];
 			$_SESSION['note']=$data['note'];
-			setcookie("adminid",$data['id'],time()+3600*24*30,'/');
+			setcookie("adminid",$data['id'],time()+3600*24*30,'/',"angeli.top");
+            setcookie("token",session_id(),time()+3600*24*30,'/',"angeli.top");
 			echo "<script language = 'javascript' type = 'text/javascript'>
-					top.location.href ='../index.php'; 
+					top.location.href ='../api.php'; 
 			</script>"; 
 			
 			die('欢迎你，'.$_SESSION['name']);

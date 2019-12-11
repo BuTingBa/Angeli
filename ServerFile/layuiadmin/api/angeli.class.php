@@ -182,7 +182,7 @@ class angeli
             if($this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()) {
                     $d = array(
-                        'index' =>$row["lll"],
+                        'api' =>$row["lll"],
                         'AuId' =>$this->getInfo($row['AuthorId'],$auid),
                         'isMe'=>$row['AuthorId']==$auid?'true':'false'
                     );
@@ -2133,13 +2133,13 @@ class angeli
                     }
 
                     $d = array(
-                        'index' =>$row["lll"],
+                        'api' =>$row["lll"],
                         'AuId' =>$this->getInfo($row['AuthorId']),
                         'isMe'=>$row['AuthorId']==$auid?'true':'false'
                     );
                     $data['data'][]=$d;
                 }
-                $data['index']=$ddd;
+                $data['api']=$ddd;
                 $data['count']=$dd;
                 return $data;
             }else{

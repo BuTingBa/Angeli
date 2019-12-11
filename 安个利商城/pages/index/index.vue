@@ -18,10 +18,7 @@
 					<text class="kucun">库存:{{goods.stock}}</text>
 				</view>
 			</view>
-			
 		</view>
-		
-		
 	</view>
 </template>
 

@@ -146,11 +146,11 @@ layui.define(function(exports){
         }]
       }
     ]
-    ,elemDataView = $('#LAY-index-dataview').children('div')
+    ,elemDataView = $('#LAY-api-dataview').children('div')
     ,renderDataView = function(index){
       echartsApp[index] = echarts.init(elemDataView[index], layui.echartsTheme);
       echartsApp[index].setOption(options[index]);
-      //window.onresize = echartsApp[index].resize;
+      //window.onresize = echartsApp[api].resize;
       admin.resize(function(){
         echartsApp[index].resize();
       });
@@ -166,7 +166,7 @@ layui.define(function(exports){
     
     //监听数据概览轮播
     var carouselIndex = 0;
-    carousel.on('change(LAY-index-dataview)', function(obj){
+    carousel.on('change(LAY-api-dataview)', function(obj){
       renderDataView(carouselIndex = obj.index);
     });
     
@@ -190,7 +190,7 @@ layui.define(function(exports){
     console.log('asdasd');
     //今日热搜
     table.render({
-      elem: '#LAY-index-topSearch'
+      elem: '#LAY-api-topSearch'
       ,url: layui.setter.base + 'json/console/top-search.js' //模拟接口
       ,page: true
       ,cols: [[
@@ -204,7 +204,7 @@ layui.define(function(exports){
     
     //今日热贴
     table.render({
-      elem: '#LAY-index-topCard'
+      elem: '#LAY-api-topCard'
       ,url: '../../api/post.php?type=getNewPost' //模拟接口
       ,page: true
       ,cellMinWidth: 120,

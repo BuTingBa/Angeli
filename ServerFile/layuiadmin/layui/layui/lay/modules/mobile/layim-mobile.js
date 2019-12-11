@@ -175,7 +175,7 @@ layui.define(['laytpl', 'upload-mobile', 'layer-mobile', 'zepto'], function(expo
     }
     
     return ['{{# var length = 0; layui.each('+ options.item +', function(i, data){ length++; }}'
-      ,'<li layim-event="chat" data-type="'+ options.type +'" data-index="'+ (options.index ? '{{'+ options.index +'}}' : (options.type === 'history' ? '{{data.type}}' : options.type) +'{{data.id}}') +'" class="layim-'+ (options.type === 'history' ? '{{data.type}}' : options.type) +'{{data.id}} {{ data.status === "offline" ? "layim-list-gray" : "" }}"><div><img src="{{data.avatar}}"></div><span>{{ data.username||data.groupname||data.name||"佚名" }}</span><p>{{ data.remark||data.sign||"" }}</p><span class="layim-msg-status">new</span></li>'
+      ,'<li layim-event="chat" data-type="'+ options.type +'" data-api="'+ (options.index ? '{{'+ options.index +'}}' : (options.type === 'history' ? '{{data.type}}' : options.type) +'{{data.id}}') +'" class="layim-'+ (options.type === 'history' ? '{{data.type}}' : options.type) +'{{data.id}} {{ data.status === "offline" ? "layim-list-gray" : "" }}"><div><img src="{{data.avatar}}"></div><span>{{ data.username||data.groupname||data.name||"佚名" }}</span><p>{{ data.remark||data.sign||"" }}</p><span class="layim-msg-status">new</span></li>'
     ,'{{# }); if(length === 0){ }}'
       ,'<li class="layim-null">'+ (nodata[options.type] || "暂无数据") +'</li>'
     ,'{{# } }}'].join('');
@@ -221,9 +221,9 @@ layui.define(['laytpl', 'upload-mobile', 'layer-mobile', 'zepto'], function(expo
         ,'{{# } }}'
       ,'</ul>'
       ,'<ul class="layim-list-friend">'
-        ,'{{# layui.each(d.friend, function(index, item){ var spread = d.local["spread"+index]; }}'
+        ,'{{# layui.each(d.friend, function(api, item){ var spread = d.local["spread"+api]; }}'
         ,'<li>'
-          ,'<h5 layim-event="spread" lay-type="{{ spread }}"><i class="layui-icon">{{# if(spread === "true"){ }}&#xe61a;{{# } else {  }}&#xe602;{{# } }}</i><span>{{ item.groupname||"未命名分组"+index }}</span><em>(<cite class="layim-count"> {{ (item.list||[]).length }}</cite>)</em></h5>'
+          ,'<h5 layim-event="spread" lay-type="{{ spread }}"><i class="layui-icon">{{# if(spread === "true"){ }}&#xe61a;{{# } else {  }}&#xe602;{{# } }}</i><span>{{ item.groupname||"未命名分组"+api }}</span><em>(<cite class="layim-count"> {{ (item.list||[]).length }}</cite>)</em></h5>'
           ,'<ul class="layui-layim-list {{# if(spread === "true"){ }}'
           ,' layui-show'
           ,'{{# } }}">'
@@ -241,7 +241,7 @@ layui.define(['laytpl', 'upload-mobile', 'layer-mobile', 'zepto'], function(expo
     ,'</div>'
     ,'<div class="layim-tab-content">'
       ,'<ul class="layim-list-top">'
-        ,'{{# layui.each(d.base.moreList, function(index, item){ }}'
+        ,'{{# layui.each(d.base.moreList, function(api, item){ }}'
         ,'<li layim-event="moreList" lay-filter="{{ item.alias }}">'
           ,'<i class="layui-icon {{item.iconClass||\"\"}}">{{item.iconUnicode||""}}</i>{{item.title}}<i class="layim-new" id="LAY_layimNew{{ item.alias }}"></i>'
         ,'</li>'
@@ -272,7 +272,7 @@ layui.define(['laytpl', 'upload-mobile', 'layer-mobile', 'zepto'], function(expo
         ,'{{# if(d.base && d.base.uploadFile){ }}'
         ,'<span class="layui-icon layim-tool-image" title="发送文件" layim-event="image" data-type="file">&#xe61d;<input type="file" name="file"></span>'
          ,'{{# }; }}'
-         ,'{{# layui.each(d.base.tool, function(index, item){ }}'
+         ,'{{# layui.each(d.base.tool, function(api, item){ }}'
         ,'<span class="layui-icon  {{item.iconClass||\"\"}} layim-tool-{{item.alias}}" title="{{item.title}}" layim-event="extend" lay-filter="{{ item.alias }}">{{item.iconUnicode||""}}</span>'
          ,'{{# }); }}'
       ,'</div>'

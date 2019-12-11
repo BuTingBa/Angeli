@@ -647,19 +647,38 @@ var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! impor
       console.log(e);
     },
     showImage: function showImage(res, c) {
+      var imageurl = res[c];
       uni.previewImage({
         current: c,
         urls: res,
         longPressActions: {
-          itemList: ['发送给朋友', '保存图片', '收藏'],
-          success: function success(res) {
+          itemList: ['保存图片'],
+          success: function success(resa) {
 
-            uni.showToast({
-              title: '选中了第' + (res.tapIndex + 1) + '个按钮',
-              position: 'bottom',
-              icon: 'none' });
+            uni.downloadFile({
+              url: imageurl,
+              success: function success(res) {
+                console.log(res);
+                if (res.statusCode === 200) {
+                  uni.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: function success() {
+                      uni.showToast({
+                        title: '已保存',
+                        position: 'bottom',
+                        icon: 'none' });
 
-            console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+                    } });
+
+                } else {
+                  uni.showToast({
+                    title: '保存失败',
+                    position: 'bottom',
+                    icon: 'none' });
+
+                }
+              } });
+
 
           },
           fail: function fail(res) {
