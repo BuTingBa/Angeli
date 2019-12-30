@@ -139,6 +139,30 @@
 			</view>
 		</scroll-view>	
 		
+		<view class="cu-modal" :class="showYs?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">使用须知</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="text-align: left;">
+					<text>
+					1、为更好的提供浏览推荐、发布信息、购买商品、交流沟通、注册认证等相关服务,我们会根据您使用服务的具体功能需要,收集必要的用户信息(可能涉及账户、交易、设备等相关信息);
+					2、未经您同意,我们不会从第三方获取、共享或对外提供您的信息;
+					3、您可以访问、更正、删除您的个人信息,我们也将提供注销、投诉方式。\n\n\n
+					</text>
+					<view style="text-align: center;">您可以阅读完整版<text style="color: #007AFF;" @click="goys">《用户协议与隐私协议》</text></view>
+				</view>
+				<view class="cu-bar bg-white">
+					<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">取消</view>
+					<view class="action margin-0 flex-sub  solid-left text-green" @tap="hideModal">确定</view>
+				</view>
+			</view>
+		</view>
+		
+		
 		<view class="cu-modal" :class="modalName=='DialogModal2'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
@@ -217,7 +241,7 @@
 						<view class="menuItem" @click="getVip">
 							<view class="menuIcon aicon-vip"></view>
 							<view class="menuTiele">会员中心</view>
-							<view class="menuRight"></view>
+							<view class="menuRight" @click="gethuodong"><text class="huo">免费会员</text></view>
 						</view>
 						<view class="menusolid"></view>
 						</template>
@@ -292,6 +316,7 @@
 				page:1,
 				postList:[],
 				scrollTop: 0,
+				showYs:false,
 				old: {
 					scrollTop: 0
 				},
@@ -335,6 +360,10 @@
 				jubaoliyou:'',
 				showJubao:false
 			}
+		},
+		onPullDownRefresh:function(){
+			console.log('下拉刷新')
+			
 		},
 		onShow:function(){
 			// #ifdef APP-PLUS
@@ -428,7 +457,6 @@
 		},
 		onLoad:function(e){
 			// #ifdef APP-PLUS
-			
 			try {
 				server.token = uni.getStorageSync('token');
 				/* 	console.log('赋值后的Token：'+server.token,server.token)
@@ -442,7 +470,7 @@
 					position:'bottom',
 					icon:'none'
 				})
-				console.log(e)
+				
 			}
 			try {
 				server.userinfo = uni.getStorageSync('user');
@@ -451,20 +479,30 @@
 				   console.log('赋值后的userinfo：'+server.userinfo,server.userinfo)
 				}
 			} catch (e) {
-				uni.showToast({
-					title: '身份已失效，请重新登录',
-					position:'bottom',
-					icon:'none'
-				})
 				console.log(e)
 			}
 			
+			//弹出隐私协议
+			var isys= uni.getStorageSync('showYs');
+			if(isys!='1'){
+				this.showYs=true;
+			}
+
 			//获取最新的版本号
 			
 			if(!server.update){
 				setTimeout(this.getVersion,4000)
 			}
-
+			
+			//检测是否登录状态
+			
+			if(!server.token){
+				uni.redirectTo({
+					url:'../reg/reg'
+				})
+			}
+			
+			
 			// #endif
 			
 			//setTimeout(this.getVersion(), 3000)
@@ -598,13 +636,23 @@
 			
 			this.shebei=uni.getSystemInfoSync().platform;
 			console.log(this.shebei);
+			
+			console.log(server.token)
 		},
 		onReady: function() {
 			this.getHei()
-			
-			
 		},
 		methods: {
+			gethuodong:function(){
+				uni.navigateTo({
+					url: '../menu/huodong'
+				})
+			},
+			goys:function(){
+				uni.navigateTo({
+					url:"../edit/edit?type=5"
+				})
+			},
 			appFenxiang:function(id,type){
 				switch (id){
 					case 0:
@@ -868,7 +916,17 @@
 						if(res.data.code=="1"){
 							this.msgNumber=res.data.data.count
 						}else{
-
+							uni.navigateTo({
+								url: '../reg/reg'
+							})
+							this.AvatarUrl='https://c-ssl.duitang.com/uploads/item/201807/01/20180701122340_uxlwc.thumb.700_0.jpeg';
+							this.username='未登录';
+							this.zhongcao=0;
+							this.guanzhu=0;
+							this.fensi=0;
+							this.dengji=0;
+							this.userid=0;
+							this.userInfo=null;
 						}
 						console.log(this.msgNumber)
 					},
@@ -879,6 +937,8 @@
 			},
 			hideModal(e) {
 				this.modalName = null
+				this.showYs=false
+				uni.setStorageSync('showYs', '1');
 			},
 			tabSelect(e) {
 				this.TabCur = e
@@ -1105,7 +1165,7 @@
 				
 			},
 			reguser:function(){
-				if(server.token==""||server.token==null){
+				if(this.username=='未登录'){
 					uni.navigateTo({
 						url: '../reg/reg'
 					})
@@ -1184,7 +1244,7 @@
 			return {
 			  title: "超级无敌安个利",
 			  path:'/pages/Home/Home',
-			  desc:"超级无敌安个利！"
+			  desc:"超级无敌安个利"
 			}
 		}
 	}
@@ -1196,6 +1256,10 @@
 		background-image: url("https://sz.oss.data.angeli.top/angeli-image/156231483329545.png");
 		width: 100vw;
 		overflow: hidden;
+	}
+	.huo{
+		font-size: 22upx;
+		border-bottom:1upx solid #1CBBB4 ;
 	}
 	.Maxnum{
 		font-size: 28upx;

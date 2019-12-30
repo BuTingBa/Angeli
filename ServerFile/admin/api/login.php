@@ -3,7 +3,6 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once '../../config.php';
 require_once 'angeli.class.php';
 $app=new angeli($config);
-
 $type=$_GET['type'];
 if(isset($_GET['code'])){
 	$type='weixin';
@@ -18,13 +17,10 @@ switch ($type){
 		$wxinfo=getWxAccessToken($code);
 		$data=$app->getAdminInfo($wxinfo['openid']);
 		if(!$data){
-			header("Refresh:3;url=../api.php");
 			die('你没有权限登录安个利的后台！！');
 		}else{
 			//var_dump($data);
-
-            session_name('token');
-
+			session_start();
 			$_SESSION['id']=$data['id'];
 			$_SESSION['name']=$data['name'];
 			$_SESSION['wxopenid']=$data['wxopenid'];
@@ -33,7 +29,7 @@ switch ($type){
 			setcookie("adminid",$data['id'],time()+3600*24*30,'/',"angeli.top");
             setcookie("token",session_id(),time()+3600*24*30,'/',"angeli.top");
 			echo "<script language = 'javascript' type = 'text/javascript'>
-					top.location.href ='../api.php'; 
+					top.location.href ='../index.php'; 
 			</script>"; 
 			
 			die('欢迎你，'.$_SESSION['name']);

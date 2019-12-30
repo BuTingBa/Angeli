@@ -103,7 +103,7 @@
 				<view class="content">
 					<view class="title">选择规格：</view>
 					<view class="sp">
-						<view v-for="(item,index) in goodsData.spec" :class="[index==selectSpec?'on':'']" @tap="setSelectSpec(index)" :key="index">{{item}}</view>
+						<view v-for="(item,index) in goodsData.specs" :class="[item.id==selectSpec?'on':'']" @tap="setSelectSpec(item.id)" :key="index">{{item.name}}</view>
 					</view>
 					<view class="length" v-if="selectSpec!=null">
 						<view class="text">数量</view>
@@ -112,7 +112,7 @@
 								<view class="icon jian"></view>
 							</view>
 							<view class="input" @tap.stop="discard">
-								<input type="number" v-model="goodsData.number" />
+								<input type="number" v-model="shopCart.number" />
 							</view>
 							<view class="add"  @tap.stop="add">
 								<view class="icon jia"></view>
@@ -126,36 +126,33 @@
 		<!-- 商品主图轮播 -->
 		<view class="swiper-box">
 			<swiper circular="true" autoplay="true" @change="swiperChange">
-				<swiper-item v-for="swiper in swiperList" :key="swiper.id">
-					<image :src="swiper.img"></image>
+				<swiper-item v-for="(swiper,id) in lunboList" :key="id">
+					<image :src="swiper"></image>
 				</swiper-item>
 			</swiper>
-			<view class="indicator">{{currentSwiper+1}}/{{swiperList.length}}</view>
+			<view class="indicator">{{currentSwiper+1}}/{{lunboList.length}}</view>
 		</view>
 		<!-- 标题 价格 -->
 		<view class="info-box goods-info">
 			<view class="price">￥{{goodsData.price}}</view>
 			<view class="title">
-				{{goodsData.name}}
+				{{goodsData.title}}
 			</view>
 		</view>
 		<!-- 服务-规则选择 -->
 		<view class="info-box spec">
-			<view class="row" @tap="showService">
-				<view class="text">服务</view>
-				<view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view>
-				<view class="arrow"><view class="icon xiangyou"></view></view>
-			</view>
+			
 			<view class="row" @tap="showSpec(false)">
 				<view class="text">选择</view>
 				<view class="content">
 					<view>选择规格：</view>
 					<view class="sp">
-						<view v-for="(item,index) in goodsData.spec" :key="index" :class="[index==selectSpec?'on':'']">{{item}}</view>
+						<view v-for="(item,index) in goodsData.specs" :key="index" :class="[item.id==selectSpec?'on':'']">{{item.name}}</view>
 					</view>
 					
 				</view>
 				<view class="arrow"><view class="icon xiangyou"></view></view>
+				
 			</view>
 		</view>
 		<!-- 评价 
@@ -182,12 +179,16 @@
 		<!-- 详情 -->
 		<view class="description">
 			<view class="title">———— 商品详情 ————</view>
-			<view class="content"><rich-text :nodes="descriptionStr"></rich-text></view>
+			<!-- <view class="content"><rich-text :nodes="descriptionStr"></rich-text></view> -->
+			
+			<image v-for="(img,index) in info" :key="index" :src="img" mode="widthFix" class="msinfo"></image>
+			
 		</view>
 	</view>
 </template>
 
 <script>
+import server from '../../server.js';
 export default {
 	data() {
 		return {
@@ -200,43 +201,27 @@ export default {
 			// #ifndef MP
 			showBack:true,
 			// #endif
-			//轮播主图数据
-			swiperList: [
-				{ id: 1, img: 'https://ae01.alicdn.com/kf/HTB1Mj7iTmzqK1RjSZFjq6zlCFXaP.jpg' },
-				{ id: 2, img: 'https://ae01.alicdn.com/kf/HTB1fbseTmzqK1RjSZFLq6An2XXaL.jpg' },
-				{ id: 3, img: 'https://ae01.alicdn.com/kf/HTB1dPUMThnaK1RjSZFtq6zC2VXa0.jpg' },
-				{ id: 4, img: 'https://ae01.alicdn.com/kf/HTB1OHZrTXzqK1RjSZFvq6AB7VXaw.jpg' }
-			],
+			shopCart:{
+				goodsTitle:'',
+				goodsId:4,
+				specs:'',
+				price:0,
+				number:1
+			},
+			
 			//轮播图下标
 			currentSwiper: 0,
 			anchorlist:[],//导航条锚点
+			lunboList:[],
+			info:[],
 			selectAnchor:0,//选中锚点
 			serviceClass: '',//服务弹窗css类，控制开关动画
 			specClass: '',//规格弹窗css类，控制开关动画
 			shareClass:'',//分享弹窗css类，控制开关动画
 			// 商品信息
-			goodsData:{
-				id:1,
-				name:"商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
-				price:"127.00",
-				number:1,
-				service:[
-					{name:"正品保证",description:"此商品官方保证为正品"},
-					{name:"极速退款",description:"此商品享受退货极速退款服务"},
-					{name:"7天退换",description:"此商品享受7天无理由退换服务"}
-				],
-				spec:["XS","S","M","L","XL","XXL"],
-				comment:{
-					number:102,
-					userface:'../../static/img/face.jpg',
-					username:'大黑哥',
-					content:'很不错，之前买了很多次了，很好看，能放很久，和图片色差不大，值得购买！'
-				}
-			},
+			goodsData:[],
 			selectSpec:null,//选中规格
 			isKeep:false,//收藏
-			//商品描述html
-			descriptionStr:'<div style="text-align:center;"><img width="100%" src="https://ae01.alicdn.com/kf/HTB1t0fUl_Zmx1VjSZFGq6yx2XXa5.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB1LzkjThTpK1RjSZFKq6y2wXXaT.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB18dkiTbvpK1RjSZPiq6zmwXXa8.jpg"/></div>'
 		};
 	},
 	onLoad(option) {
@@ -246,6 +231,13 @@ export default {
 		// #endif
 		//option为object类型，会序列化上个页面传递的参数
 		console.log(option.cid); //打印出上个页面传递的参数。
+		
+		if(!option.goodsId){
+			this.getGoodsInfo(4)
+		}else{
+			this.getGoodsInfo(option.goodsId)
+		}
+		
 	},
 	onReady(){
 		this.calcAnchor();//计算锚点高度，页面数据是ajax加载时，请把此行放在数据渲染完成事件中执行以保证高度计算正确
@@ -266,10 +258,37 @@ export default {
 	onReachBottom() {
 		uni.showToast({ title: '触发上拉加载' });
 	},
-	mounted () {
-		
-	},
+	
 	methods: {
+		getGoodsInfo:function(goodsid){
+			uni.request({
+				method:'GET',
+				url: server.requestUrl+'getGoodsInfo/'+goodsid, 
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					if(res.data.code=='1'){
+						this.goodsData=res.data.data;
+						this.lunboList=res.data.data.lunbo.split(",");
+						this.info=res.data.data.info.split(",");
+						this.shopCart.price=res.data.data.price
+						this.shopCart.goodsId=res.data.data.goodsid
+						this.shopCart.goodsTitle=res.data.data.title
+						
+						console.log(this.lunboList)
+					}else{
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						});
+					}
+					console.log(res);
+				}
+			});
+		},
+		
 		//轮播图指示器
 		swiperChange(event) {
 			this.currentSwiper = event.detail.current;
@@ -326,17 +345,8 @@ export default {
 		},
 		//跳转确认订单页面
 		toConfirmation(){
-			let tmpList=[];
-			let goods = {id:this.goodsData.id,img:'../../static/img/goods/p1.jpg',name:this.goodsData.name,spec:'规格:'+this.goodsData.spec[this.selectSpec],price:this.goodsData.price,number:this.goodsData.number};
-			tmpList.push(goods);
-			uni.setStorage({
-				key:'buylist',
-				data:tmpList,
-				success: () => {
-					uni.navigateTo({
-						url:'../order/confirmation'
-					})
-				}
+			uni.navigateTo({
+				url:'confirmation?id='+this.goodsData.goodsid+'&spec='+this.selectSpec+'&number='+this.shopCart.number
 			})
 		},
 		//跳转评论列表
@@ -345,18 +355,19 @@ export default {
 		},
 		//选择规格
 		setSelectSpec(index){
+			this.shopCart.specs=index
 			this.selectSpec = index;
 		},
 		//减少数量
 		sub(){
-			if(this.goodsData.number<=1){
+			if(this.shopCart.number<=1){
 				return;
 			}
-			this.goodsData.number--;
+			this.shopCart.number--;
 		},
 		//增加数量
 		add(){
-			this.goodsData.number++;
+			this.shopCart.number++;
 		},
 		//跳转锚点
 		toAnchor(index){
@@ -402,6 +413,7 @@ export default {
 		//规格弹窗
 		showSpec(fun) {
 			console.log('show');
+			console.log(fun);
 			this.specClass = 'show';
 			this.specCallback = fun;
 		},
@@ -426,7 +438,18 @@ export default {
 };
 </script>
 
+
+
+
+
 <style lang="scss">
+.msinfo{
+	width: 100%;
+	height: 100%;
+	
+	margin:-8upx 0;
+}
+	
 page {
 	background-color: #f8f8f8;
 }
@@ -742,6 +765,7 @@ page {
 		font-size: 26upx;
 		color: #999;
 	}
+	padding-bottom: 120upx;
 }
 .footer {
 	position: fixed;

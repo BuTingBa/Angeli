@@ -44,7 +44,6 @@
 		right: 20rpx;
 		border-color: #E5E4EA;
 		-webkit-transform: rotate(45deg);
-		    -ms-transform: rotate(45deg);
 		        transform: rotate(45deg);
 		margin-top:31rpx;
 		justify-self:end;

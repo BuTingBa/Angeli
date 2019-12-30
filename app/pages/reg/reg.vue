@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-white" :isBack="true">
+		<cu-custom bgColor="bg-white" :isBack="false">
 			<block slot="backText">返回</block>
 			<block slot="content">用户登录</block>
 		</cu-custom>
@@ -76,6 +76,29 @@
 		</view>
 		
 		
+		<view class="cu-modal" :class="showYs?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">使用须知</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl" style="text-align: left;">
+					<text>
+					1、为更好的提供浏览推荐、发布信息、购买商品、交流沟通、注册认证等相关服务,我们会根据您使用服务的具体功能需要,收集必要的用户信息(可能涉及账户、交易、设备等相关信息);
+					2、未经您同意,我们不会从第三方获取、共享或对外提供您的信息;
+					3、您可以访问、更正、删除您的个人信息,我们也将提供注销、投诉方式。\n\n\n
+					</text>
+					<view style="text-align: center;">您可以阅读完整版<text style="color: #007AFF;" @click="goys">《用户协议与隐私协议》</text></view>
+				</view>
+				<view class="cu-bar bg-white">
+					<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">取消</view>
+					<view class="action margin-0 flex-sub  solid-left text-green" @tap="hideModal">确定</view>
+				</view>
+			</view>
+		</view>
+		
 	</view>
 </template>
 
@@ -97,7 +120,8 @@
 				num:58,
 				codeTitle:"获取验证码",
 				code:true,
-				phoneNum:''
+				phoneNum:'',
+				showYs:false
 				
 			}
 		},
@@ -113,8 +137,17 @@
 			    }
 			});
 			
+			var isys= uni.getStorageSync('showYs');
+			if(isys!='1'){
+				this.showYs=true;
+			}
+			
 		},
 		methods: {
+			hideModal:function(){
+				this.showYs=false
+				uni.setStorageSync('showYs', '1');
+			},
 			getpage:function(id){
 				if(id==1){
 					uni.navigateTo({

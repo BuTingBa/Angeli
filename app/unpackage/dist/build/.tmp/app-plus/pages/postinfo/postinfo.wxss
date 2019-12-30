@@ -45,7 +45,6 @@
 	margin: 14rpx 0;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 .pltitle{
@@ -86,7 +85,6 @@
 	background: rgba(0,0,0,0.4);
 	opacity:1;
 	-webkit-transition: all 0.5s 0.2s;
-	-o-transition: all 0.5s 0.2s;
 	transition: all 0.5s 0.2s;
 	z-index: 999;
 }
@@ -125,14 +123,11 @@
 .vipBox{
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack:justify;
 	-webkit-justify-content:space-between;
-	    -ms-flex-pack:justify;
 	        justify-content:space-between;
 	-webkit-flex-wrap:wrap;
-	    -ms-flex-wrap:wrap;
 	        flex-wrap:wrap;
 	padding-top: 20rpx;
 }
@@ -149,7 +144,6 @@
 	bottom: -710rpx;
 	background-color: #FFFFFF;
 	-webkit-transition: all 0.4s;
-	-o-transition: all 0.4s;
 	transition: all 0.4s;
 	z-index: 1000;
 }
@@ -169,7 +163,6 @@
 	grid-template-rows: 50% 50%;
 	-webkit-box-align:center;
 	-webkit-align-items:center;
-	    -ms-flex-align:center;
 	        align-items:center;
 }
 .pinglun{

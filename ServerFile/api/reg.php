@@ -23,6 +23,9 @@ if(empty($_GET['type']))
 if(isset($_REQUEST['token'])){
     session_id($_REQUEST['token']);
     session_start();
+}else{
+    $str=md5(time().rand(100,999).$_SERVER["REMOTE_ADDR"]).mt_rand(1000,99999);
+    session_id($str);
 }
 switch ($_GET['type']) {
     case 'reg':

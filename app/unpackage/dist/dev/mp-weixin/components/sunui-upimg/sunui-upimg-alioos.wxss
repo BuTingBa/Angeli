@@ -317,10 +317,8 @@
 	padding-left: 30rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-wrap: wrap;
-	    -ms-flex-wrap: wrap;
 	        flex-wrap: wrap;
 	text-align: center;
 }
@@ -341,18 +339,14 @@
 	border-radius: 8rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
-	    -ms-flex-align: center;
 	        align-items: center;
 	-webkit-flex-wrap: wrap;
-	    -ms-flex-wrap: wrap;
 	        flex-wrap: wrap;
 }
 /* 预览图片 */
@@ -414,8 +408,7 @@
 }
 /* 自定义添加图片样式 */
 .sunsin_picture_item image.data-v-36f91ed5 {
-	-webkit-box-shadow: 6rpx 6rpx 12rpx rgba(112, 128, 144, 0.7);
-	        box-shadow: 6rpx 6rpx 12rpx rgba(112, 128, 144, 0.7);
+	box-shadow: 6rpx 6rpx 12rpx rgba(112, 128, 144, 0.7);
 	border-radius: 15rpx;
 }
 

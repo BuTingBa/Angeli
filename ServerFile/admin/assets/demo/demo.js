@@ -1,5 +1,8 @@
 type = ['primary', 'info', 'success', 'warning', 'danger'];
 
+
+
+
 demo = {
   initPickColor: function() {
     $('.pick-class-label').click(function() {
@@ -751,3 +754,6 @@ demo = {
   }
 
 };
+
+
+

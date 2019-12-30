@@ -30,7 +30,7 @@
             <div class="card">
                 <!-- Tab panes -->
                 <div class="card-body">
-                    <form class="form-horizontal form-material" method="post" action="upgoods">
+                    <form class="form-horizontal form-material" enctype="multipart/form-data" method="post" action="upgoods">
                         <div class="form-group">
                             <label class="col-md-12">商品名称</label>
                             <div class="col-md-12">
@@ -50,6 +50,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+
+                            <div class="col-md-12">
+                                <input type="number" placeholder="输入库存" class="form-control form-control-line" name="kucun" >
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-12">商品主图</label>
                             <div class="col-md-12">
                                 <input type="file" value="" class="form-control form-control-line" name="mImage">
@@ -58,7 +64,7 @@
                         <div class="form-group">
                             <label class="col-md-12">商品轮播图</label>
                             <div class="col-md-12">
-                                <input type="file" multiple="multiple" class="form-control form-control-line" name="imagelist">
+                                <input type="file" multiple="multiple" class="form-control form-control-line" name="imagelist[]">
                             </div>
                         </div>
                         <div class="form-group">
@@ -70,7 +76,7 @@
                         <div class="form-group">
                             <label class="col-md-12">商品详情图</label>
                             <div class="col-md-12">
-                                <input type="file" multiple="multiple" class="form-control form-control-line" name="goodsinfo">
+                                <input type="file" multiple="multiple" class="form-control form-control-line" name="goodsinfo[]">
                             </div>
                         </div>
 

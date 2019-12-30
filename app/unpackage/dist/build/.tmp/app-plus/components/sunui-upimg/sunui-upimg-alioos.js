@@ -7,4 +7,4 @@
         })
     },
     [['components/sunui-upimg/sunui-upimg-alioos-create-component']]
-]);                
+]);

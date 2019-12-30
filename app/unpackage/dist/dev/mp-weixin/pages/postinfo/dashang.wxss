@@ -29,8 +29,7 @@ page{
 .friendList view:nth-child(3){
 	float:right;
 	background:rgba(121,196,152,1);
-	-webkit-box-shadow:0px 1px 1px rgba(121,196,152,0.3);
-	        box-shadow:0px 1px 1px rgba(121,196,152,0.3);
+	box-shadow:0px 1px 1px rgba(121,196,152,0.3);
 	border-radius: 25rpx;
 	text-align: center;
 	width: 116rpx;

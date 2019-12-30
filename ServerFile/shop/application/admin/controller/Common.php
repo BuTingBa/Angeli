@@ -9,7 +9,10 @@
 
 namespace app\admin\controller;
 use think\Controller;
-
+use OSS\Core\OssException;
+use OSS\OssClient;
+use think\facade\Config;
+use think\Image;
 class Common extends Controller
 {
     public function initialize()
@@ -29,8 +32,30 @@ class Common extends Controller
                 $this->error('你还没有登录呢！','http://admin.angeli.top/');
             }
         }
-
-
-
     }
+
+    /** 上传图片
+     * @param $imageUrl 图片路径
+     * @return array|string
+     */
+    public function upImage($imageUrl)
+    {
+
+        // 尝试执行
+        try {
+            $config = Config::pull('ali'); //获取Oss的配置
+            //实例化对象 将配置传入
+            $ossClient = new OssClient($config['accessKeyId'], $config['accessKeySecret'], $config['endpoint']);
+            //这里是有sha1加密 生成文件名 之后连接上后缀
+            $fileName = 'angeli-shop/' . date('YmdHis'.mt_rand(1,99999), time()) . '.jpg' ;
+            //执行阿里云上传
+            $result = $ossClient->uploadFile($config['bucket'], $fileName,$imageUrl);
+            $url=$result['info']['url'];
+        } catch (OssException $e) {
+            return $e->getMessage();
+        }
+        //将结果输出
+        return $url;
+    }
+
 }

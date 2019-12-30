@@ -72,7 +72,7 @@
 		</view>
 		<view class="plList" v-for="(pl,index) in pllist" :key="index" >
 			<view class="pluserinfo">
-				<view class="pltouxiang" :style="{'background-image':'url('+pl.userinfo.AuthorAvatarUrl+')'}" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+				<view class="pltouxiang" :style="{'background-image':'url('+pl.userinfo.AuthorAvatarUrl+')'}" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);" @click="getbieren(pl.FromUid)"></view>
 				<view class="plinfo">
 					<text >{{pl.userinfo.AuthorName}}\n</text>
 					<text style="font-size: 22upx;">{{pl.Time}}</text>

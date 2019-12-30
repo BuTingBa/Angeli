@@ -46,8 +46,8 @@
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "安个利社区",
-  "compilerVersion": "2.4.2",
+  "appname": "安个利",
+  "compilerVersion": "2.4.6",
   "usingComponents": {
     "cu-custom": "/components/colorui/components/cu-custom",
     "sunui-upoos": "/components/sunui-upimg/sunui-upimg-alioos"

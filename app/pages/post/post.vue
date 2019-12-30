@@ -46,7 +46,7 @@
 			return {
 				CustomBar: this.CustomBar,
 				modalName: null,
-				postcontent:"null",
+				postcontent:'',
 				huati:"",
 				nr:'',
 				huatiname:"选择话题",
@@ -81,7 +81,8 @@
 		},
 		//#ifdef APP-PLUS
 		onBackPress:function(){
-			if(this.postcontent!==''){
+			console.log(this.postcontent.length)
+			if(this.postcontent.length!=0){
 				uni.showModal({
 				    title: '提示',
 				    content: '检测到输入框内还有帖子内容，是否保存草稿箱?',
@@ -166,7 +167,6 @@
 			
 			textareaAInput:function(e){
 				this.postcontent = e.target.value 
-				
 			},
 			sendpost:function(e){
 				console.log(this.postcontent);

@@ -23,6 +23,100 @@ class angeli
         $this->wxSessionKey=$config['wxSessionKey'];
     }
 
+	public function delCommentsAndReply($type,$id)
+	{
+		if($type=='1'){
+			$sql = "DELETE FROM angeli_reply WHERE ReplyId=$id";
+		}else{
+			$sql = "DELETE FROM angeli_comments WHERE CommentsId=$id";
+		}
+		$result=$this->mysqli->query($sql) or die($this->mysqli->error);
+		if(!$result){
+		    //表示操作失败
+		    return false;
+		}else{
+		    return true;
+		}
+		
+	}
+	/**
+	 * 获取评论、回复列表
+	 */
+	public function getAllPlList()
+	{
+		$sql="SELECT * FROM angeli_comments";
+		$result=$this->mysqli->query($sql) or die($this->mysqli->error);
+		if(!$result){
+		    //表示操作失败
+		    $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+		    return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+		}else{
+		    if($this->mysqli->affected_rows>0){
+		        while ($row = $result->fetch_assoc())
+		        {
+		            $pl = array(
+		                'id' =>$row['CommentsId'],
+		                'user' =>$this->getInfo($row['AuthorId']),
+		                'content' =>$row['CommentsContent'],
+		                'postId' =>$row['PostId'],
+	                    'time'=> $this->uc_time_ago($row['AddTime']),
+						'commentsType'=>'0'
+		            );
+		            $data[]=$pl;
+		        }
+				
+				$sql="SELECT * FROM angeli_reply";
+				$result=$this->mysqli->query($sql) or die($this->mysqli->error);
+				if(!$result){
+				    //表示操作失败
+				    $outmsg = array('code' =>'0','msg'=>'系统错误，Error：'.$this->mysqli->error,'data'=>'');
+				    return json_encode($outmsg,JSON_UNESCAPED_UNICODE);
+				}else{
+				    if($this->mysqli->affected_rows>0){
+				        while ($row = $result->fetch_assoc())
+				        {
+				            $pl = array(
+				                'id' =>$row['ReplyId'],
+				                'user' =>$this->getInfo($row['ReplyUid']),
+				                'content' =>$row['ReplyContent'],
+				                'postId' =>$row['PostId'],
+				                'time'=> $this->uc_time_ago($row['AddTime']),
+								'commentsType'=>'1'
+				            );
+				            $data[]=$pl;
+				        }
+				        return $this->arraySort($data,'time','des');
+				    }else{
+				        return FALSE;
+				    }
+				}
+		    }else{
+		        return FALSE;
+		    }
+		}
+	}
+
+	/*
+	$array:需要排序的数组
+	$keys:需要根据某个key排序
+	$sort:倒叙还是顺序
+	*/
+	function arraySort($array,$keys,$sort='asc') {
+		$newArr = $valArr = array();
+		foreach ($array as $key=>$value) {
+			$valArr[$key] = $value[$keys]; 
+		}
+		($sort == 'asc') ?  asort($valArr) : arsort($valArr);//先利用keys对数组排序，目的是把目标数组的key排好序
+		reset($valArr); //指针指向数组第一个值 
+		foreach($valArr as $key=>$value) {
+			$newArr[$key] = $array[$key];
+		}
+		return $newArr;
+	}
+
+	/**
+	 * 获取举报列表
+	 */
 	public function getJubaoList()
 	{
 		$sql="SELECT * FROM angeli_jubao ORDER BY addtime DESC";
@@ -52,8 +146,6 @@ class angeli
 		    }
 		}
 	}
-
-
 	//搜索用户
 	public function autoSearchUser($keyword)
 	{
@@ -2456,7 +2548,7 @@ class angeli
 			$beginThisweek=$stime;
 			$endThisweek=$etime;
 		}
-        $sql="SELECT *,count(*) as lll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek GROUP BY AuthorId ORDER BY lll desc LIMIT 100 ";
+        $sql="SELECT *,count(*) as sll FROM angeli_favorite WHERE addTime>$beginThisweek AND addTime<$endThisweek GROUP BY AuthorId ORDER BY sll desc LIMIT 100 ";
         //echo $sql;
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
@@ -2468,9 +2560,8 @@ class angeli
             if($this->mysqli->affected_rows>0){
                 while($row = $result->fetch_assoc()) {
                     $d = array(
-                        'api' =>$row["lll"],
+                        'index' =>$row["sll"],
                         'AuId' =>$this->getInfo($row['AuthorId']),
-                        'isMe'=>$row['AuthorId']==$auid?'true':'false'
                     );
                     $data[]=$d;
                 }

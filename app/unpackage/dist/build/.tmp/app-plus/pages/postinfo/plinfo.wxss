@@ -40,7 +40,6 @@
 	height: 70rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 .pltitle{

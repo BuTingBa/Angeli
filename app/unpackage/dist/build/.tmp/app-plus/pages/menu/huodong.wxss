@@ -2,13 +2,11 @@
 .tou{
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	position: absolute;
 	bottom: 712rpx;
 	-webkit-box-pack:center;
 	-webkit-justify-content:center;
-	    -ms-flex-pack:center;
 	        justify-content:center;
 	width: 750rpx;
 }
@@ -29,8 +27,7 @@
 	height:81rpx;
 	background:rgba(238,92,75,1);
 	border:2rpx solid rgba(251,166,13,1);
-	-webkit-box-shadow:0rpx 3rpx 6rpx rgba(92,171,129,1);
-	        box-shadow:0rpx 3rpx 6rpx rgba(92,171,129,1);
+	box-shadow:0rpx 3rpx 6rpx rgba(92,171,129,1);
 	opacity:1;
 	border-radius:41rpx;
 	color: #FFFFFF;

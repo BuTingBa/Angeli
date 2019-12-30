@@ -12,11 +12,9 @@
 	margin-left: 100rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack:justify;
 	-webkit-justify-content:space-between;
-	    -ms-flex-pack:justify;
 	        justify-content:space-between;
 	color:#FFFFFF;
 	margin-right: 38rpx;

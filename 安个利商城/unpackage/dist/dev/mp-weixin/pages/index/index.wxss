@@ -13,7 +13,6 @@
 .jiage{
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	margin: 5rpx 20rpx;
 	position: absolute;
@@ -21,17 +20,14 @@
 	width: 95%;
 	-webkit-box-pack:justify;
 	-webkit-justify-content:space-between;
-	    -ms-flex-pack:justify;
 	        justify-content:space-between;
 	-webkit-box-align:center;
 	-webkit-align-items:center;
-	    -ms-flex-align:center;
 	        align-items:center;
 }
 .goodinfo{
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	margin: 10rpx;
 }
@@ -39,8 +35,7 @@
 	margin: 10rpx 20rpx;
 	font-size:36rpx;
 	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 	/*设置成弹性盒子 */
 	display: -webkit-box;
 	/*显示的个数 */
@@ -52,8 +47,7 @@
 	height: 450rpx;
 	background-color: #fff;
 	border-radius: 20rpx;
-	-webkit-box-shadow:#555555 0px 0px 5px;
-	        box-shadow:#555555 0px 0px 5px;
+	box-shadow:#555555 0px 0px 5px;
 	margin: 40rpx 0;
 	overflow: hidden;
 	position: relative;

@@ -7,14 +7,14 @@
 			</view>
 		</scroll-view>
 		<view class="ad">
-			<image src="" mode="aspectFill"></image>
+			<image src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b8bdd93c2aad57ede093b09d40000a48.jpg?thumb=1&w=1226&h=120&f=webp&q=90" mode="aspectFill"></image>
 		</view>
 		<view class="body">
-			<view class="iteamList" v-for="(goods,id) in goodsList" :key="id">
+			<view class="iteamList" v-for="(goods,id) in goodsList" :key="id" @click="go(goods.goodsid)">
 				<image :src="goods.picUrl" mode="aspectFill"></image>
 				<view class="goodTitle">{{goods.title}}</view>
 				<view class="jiage">
-					<text class="an-price">￥ {{goods.price}} <text class="min-price">会员: {{goods.vipPrice}}</text> </text>
+					<text class="an-price">￥ {{goods.price}} <text class="min-price">会员: {{Math.round(goods.price*0.9)}}</text> </text>
 					<text class="kucun">库存:{{goods.stock}}</text>
 				</view>
 			</view>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
@@ -35,20 +36,64 @@
 					{time:'12-10',title:'正在发售'},
 					{time:'12-11',title:'正在发售'}
 				],
-				goodsList:[
-					{title:'小米曲面显示器 34英寸',price:'2500.00',vipPrice:'2100.00',stock:98,picUrl:'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fc5d98ae09ae3d05635dfc0ae66d0950.jpg?thumb=1&w=1226&h=460&f=webp&q=90'},
-					{title:'小米游戏笔记本 2019款 15寸',price:'7299.00',vipPrice:'7099.00',stock:5,picUrl:'https://i1.mifile.cn/f/i/2019/milaptop/gaming-2019/section01_bg.jpg'},
-					{title:'小米小爱同学音响',price:'299.00',vipPrice:'279.00',stock:15,picUrl:'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/617c06a2530d44e96d8013dcedaf7f1d.jpg'}
-				]
+				goodsList:[]
 			}
 		},
 		onLoad() {
-
+			this.getGoods('')
 		},
 		methods: {
+			go:function(id){
+				uni.navigateTo({
+					url:'goods?goodsId='+id
+				})
+				console.log(id)
+			},
 			tabXZ:function(index){
 				console.log(index)
 				this.thisIndex=index;
+			},
+			getGoods:function(date){
+				uni.request({
+					method:'GET',
+					url: server.requestUrl+'getGoodsConcise/'+date, 
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.goodsList=res.data.data;
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+						console.log(res);
+					}
+				});
+			},
+			getUserInfo:function(token){
+				uni.request({
+					method:'GET',
+					url: server.requestUrl+'/'+token, 
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.goodsList=res.data.data;
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+						console.log(res);
+					}
+				});
 			}
 		}
 	}

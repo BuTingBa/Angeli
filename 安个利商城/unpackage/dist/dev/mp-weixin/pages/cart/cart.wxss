@@ -31,11 +31,9 @@ page {
 .checkbox-box {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
 }
 .checkbox-box .checkbox {
@@ -45,15 +43,12 @@ page {
     border: solid 2rpx #f06c7a;
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
-        -ms-flex-pack: center;
             justify-content: center;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
 }
 .checkbox-box .checkbox .on {
@@ -80,11 +75,9 @@ page {
   height: 100rpx;
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
   position: fixed;
   top: 0;
@@ -107,15 +100,12 @@ page {
     height: 60rpx;
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
-        -ms-flex-pack: center;
             justify-content: center;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
     font-size: 32rpx;
 }
@@ -124,15 +114,12 @@ page {
     height: calc(22vw + 40rpx);
     margin: 20rpx auto;
     border-radius: 15rpx;
-    -webkit-box-shadow: 0rpx 5rpx 20rpx rgba(0, 0, 0, 0.1);
-            box-shadow: 0rpx 5rpx 20rpx rgba(0, 0, 0, 0.1);
+    box-shadow: 0rpx 5rpx 20rpx rgba(0, 0, 0, 0.1);
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
     position: relative;
     overflow: hidden;
@@ -146,15 +133,12 @@ page {
       right: 0;
       display: -webkit-box;
       display: -webkit-flex;
-      display: -ms-flexbox;
       display: flex;
       -webkit-box-pack: center;
       -webkit-justify-content: center;
-          -ms-flex-pack: center;
               justify-content: center;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
       background-color: red;
       color: #fff;
@@ -172,11 +156,9 @@ page {
       z-index: 3;
       display: -webkit-box;
       display: -webkit-flex;
-      display: -ms-flexbox;
       display: flex;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
 }
 @-webkit-keyframes showMenu {
@@ -230,7 +212,6 @@ page {
 .goods-list .row .carrier .checkbox-box {
         padding-left: 20rpx;
         -webkit-flex-shrink: 0;
-            -ms-flex-negative: 0;
                 flex-shrink: 0;
         height: 22vw;
         margin-right: 20rpx;
@@ -239,7 +220,6 @@ page {
         width: 100%;
         display: -webkit-box;
         display: -webkit-flex;
-        display: -ms-flexbox;
         display: flex;
         padding-right: 20rpx;
 }
@@ -249,7 +229,6 @@ page {
           border-radius: 10rpx;
           overflow: hidden;
           -webkit-flex-shrink: 0;
-              -ms-flex-negative: 0;
                   flex-shrink: 0;
           margin-right: 10rpx;
 }
@@ -263,10 +242,8 @@ page {
           overflow: hidden;
           display: -webkit-box;
           display: -webkit-flex;
-          display: -ms-flexbox;
           display: flex;
           -webkit-flex-wrap: wrap;
-              -ms-flex-wrap: wrap;
                   flex-wrap: wrap;
           position: relative;
 }
@@ -285,11 +262,9 @@ page {
             height: 30rpx;
             display: -webkit-box;
             display: -webkit-flex;
-            display: -ms-flexbox;
             display: flex;
             -webkit-box-align: center;
             -webkit-align-items: center;
-                -ms-flex-align: center;
                     align-items: center;
             padding: 0 10rpx;
             border-radius: 15rpx;
@@ -301,15 +276,12 @@ page {
             bottom: 0rpx;
             display: -webkit-box;
             display: -webkit-flex;
-            display: -ms-flexbox;
             display: flex;
             -webkit-box-pack: justify;
             -webkit-justify-content: space-between;
-                -ms-flex-pack: justify;
                     justify-content: space-between;
             -webkit-box-align: end;
             -webkit-align-items: flex-end;
-                -ms-flex-align: end;
                     align-items: flex-end;
             font-size: 28rpx;
             height: 60rpx;
@@ -317,15 +289,12 @@ page {
 .goods-list .row .carrier .goods-info .info .price-number .number {
               display: -webkit-box;
               display: -webkit-flex;
-              display: -ms-flexbox;
               display: flex;
               -webkit-box-pack: center;
               -webkit-justify-content: center;
-                  -ms-flex-pack: center;
                       justify-content: center;
               -webkit-box-align: end;
               -webkit-align-items: flex-end;
-                  -ms-flex-align: end;
                       align-items: flex-end;
 }
 .goods-list .row .carrier .goods-info .info .price-number .number .input {
@@ -339,15 +308,12 @@ page {
                   height: 60rpx;
                   display: -webkit-box;
                   display: -webkit-flex;
-                  display: -ms-flexbox;
                   display: flex;
                   -webkit-box-pack: center;
                   -webkit-justify-content: center;
-                      -ms-flex-pack: center;
                           justify-content: center;
                   -webkit-box-align: center;
                   -webkit-align-items: center;
-                      -ms-flex-align: center;
                           align-items: center;
                   text-align: center;
                   font-size: 26rpx;
@@ -364,15 +330,12 @@ page {
                   height: 45rpx;
                   display: -webkit-box;
                   display: -webkit-flex;
-                  display: -ms-flexbox;
                   display: flex;
                   -webkit-box-pack: center;
                   -webkit-justify-content: center;
-                      -ms-flex-pack: center;
                           justify-content: center;
                   -webkit-box-align: center;
                   -webkit-align-items: center;
-                      -ms-flex-align: center;
                           align-items: center;
 }
 .footer {
@@ -382,15 +345,12 @@ page {
   height: 100rpx;
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
           justify-content: space-between;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
   font-size: 28rpx;
   position: fixed;
@@ -405,30 +365,24 @@ page {
     border-radius: 30rpx;
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
-        -ms-flex-pack: center;
             justify-content: center;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
 }
 .footer .settlement {
     width: 60%;
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
-        -ms-flex-pack: end;
             justify-content: flex-end;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
 }
 .footer .settlement .sum {
@@ -437,11 +391,9 @@ page {
       margin-right: 10rpx;
       display: -webkit-box;
       display: -webkit-flex;
-      display: -ms-flexbox;
       display: flex;
       -webkit-box-pack: end;
       -webkit-justify-content: flex-end;
-          -ms-flex-pack: end;
               justify-content: flex-end;
 }
 .footer .settlement .sum .money {
@@ -454,15 +406,12 @@ page {
       color: #fff;
       display: -webkit-box;
       display: -webkit-flex;
-      display: -ms-flexbox;
       display: flex;
       -webkit-box-pack: center;
       -webkit-justify-content: center;
-          -ms-flex-pack: center;
               justify-content: center;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
       border-radius: 30rpx;
 }

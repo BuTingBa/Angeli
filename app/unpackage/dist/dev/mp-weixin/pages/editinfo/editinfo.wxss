@@ -15,7 +15,6 @@
 	justify-items: start;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
 	margin-bottom: 9rpx;
 }
@@ -29,7 +28,6 @@
 	justify-items: start;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
 }
 .menuName{

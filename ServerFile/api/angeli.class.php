@@ -1266,7 +1266,7 @@ class angeli
      */
     public function getMyNoreadNumber($auid)
     {
-        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid' AND AuthorId<>$auid AND mark=0";
+        $sql = "SELECT * FROM angeli_comments WHERE AuthorId='$auid' AND CommentsFromUid<>$auid AND mark=0";
         $result=$this->mysqli->query($sql) or die($this->mysqli->error);
         if(!$result){
             $pinglun=0;
@@ -2597,13 +2597,13 @@ class angeli
                        $dd=$row['lll'];
                     }
                     $d = array(
-                        'api' =>$row["lll"],
+                        'index' =>$row["lll"],
                         'AuId' =>$this->getInfo($row['AuthorId']),
                         'isMe'=>$row['AuthorId']==$auid?'true':'false'
                     );
                     $data['data'][]=$d;
                 }
-                $data['api']=isset($ddd)?$ddd:'0';
+                $data['index']=isset($ddd)?$ddd:'0';
                 $data['count']=isset($dd)?$dd:'0';
                 return $data;
             }else{

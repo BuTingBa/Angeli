@@ -22,7 +22,6 @@
 	justify-items:center;
 	-webkit-box-align: start;
 	-webkit-align-items: start;
-	    -ms-flex-align: start;
 	        align-items: start;
 }
 .iamgea{

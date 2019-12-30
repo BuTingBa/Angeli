@@ -11,8 +11,7 @@ page{
 	font-weight:400;
 	color:rgba(54,54,54,1);
 	overflow:hidden;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 .mynr text{
 	width: 588rpx;
@@ -52,7 +51,6 @@ page{
 .userBox{
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 .listBox{

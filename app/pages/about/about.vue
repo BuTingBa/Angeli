@@ -5,7 +5,7 @@
 			<block slot="content">关于</block>
 		</cu-custom>
 		<view class="logo">
-			<view><image src="../../static/angeli.png" mode="" style="width: 200rpx;height: 132rpx;" ></image></view>
+			<view @tap="num++"><image src="../../static/angeli.png" mode="" style="width: 200rpx;height: 132rpx;" ></image></view>
 			<view style="margin-top: 27rpx;"><text style="font-size: 28rpx;color: #363636;">Version {{Version}}</text></view>
 		</view>
 		<view class="menuList">
@@ -34,6 +34,16 @@
 		<view class="mail shadow-blur" v-if="mail"  @click="hiw">
 			<view class="show">请发送邮件至：<text selectable="true">angeli-h@qq.com</text></view>
 		</view>
+		
+		<view class="mail shadow-blur" v-if="num>=3"  @click="hiw">
+			<view class="show">
+				<text selectable="true">
+					Token:{{token}}\n
+					openId:{{user.wxOpenId}}
+				
+				</text>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -43,15 +53,21 @@
 		data() {
 			return {
 				Version:'1.0.1',
-				mail:false
+				mail:false,
+				num:0,
+				user:[],
+				token:'asfdasfasrdgrgset3254sdf23werfa'
 			}
 		},
 		onLoad() {
 			this.Version=server.Version;
+			this.user=server.userinfo;
+			this.token=server.token;
 		},
 		methods: {
 			hiw:function(){
 				this.mail=false
+				this.num=0
 			},
 			showmail:function(){
 				this.mail=true
@@ -96,13 +112,17 @@
 }
 .show{
 	width: 70%;
-	margin: 40% auto;
+	margin: 0 auto;
+	margin-top: 70%;
 	height: 300upx;
+	padding: 20upx;
 	font-size:32upx ;
 	color: #000000;
-	border-radius:20px ;
+	border-radius:5px ;
 	background-color: #fff;
-	padding-top:140upx ;
+	padding-top:80upx;
+	box-shadow: 0 0 15px #5989B9;
+	word-wrap:break-word;
 }
 
 

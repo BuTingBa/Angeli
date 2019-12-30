@@ -1,0 +1,60 @@
+{extend name="html" /}
+{block name="body"}
+<div class="container-fluid">
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h3 class="text-themecolor">商品管理</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">首页</a></li>
+                <li class="breadcrumb-item active">商品管理</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <!-- column -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="goods" class="form-horizontal form-material">
+                        <div class="col-md-4 form-group">
+                            <a href="addgoods.html"><button class="btn btn-success" type="button">添加商品</button></a>
+                            <input type="text " class="form-control-line" placeholder="搜索商品名称/ID" name="keyword">
+                            <button class="btn btn-success" type="submit">搜索</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>商品名称</th>
+                                <th>商品价格</th>
+                                <th>发售时间</th>
+                                <th>库存</th>
+                                <th>状态</th>
+                                <th>添加时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name='data' id='list'}
+                            <tr>
+                                <td>{$list.id}</td>
+                                <td>{$list.name}</td>
+                                <td>{$list.current_price}</td>
+                                <td>{$list.sale_date}</td>
+                                <td>{$list.goods_number}</td>
+                                <td>{$list.status=='1'?'正在销售':'停止销售'}</td>
+                                <td>{$list.addtime|date='Y-m-d H:i'}</td>
+                                <td>编辑 | 删除</td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

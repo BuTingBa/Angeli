@@ -10,13 +10,17 @@
 }
 .show{
 	width: 70%;
-	margin: 40% auto;
+	margin: 0 auto;
+	margin-top: 70%;
 	height: 300rpx;
+	padding: 20rpx;
 	font-size:32rpx;
 	color: #000000;
-	border-radius:20px ;
+	border-radius:5px ;
 	background-color: #fff;
-	padding-top:140rpx;
+	padding-top:80rpx;
+	box-shadow: 0 0 15px #5989B9;
+	word-wrap:break-word;
 }
 .banquan{
 	position: absolute;
@@ -44,7 +48,6 @@
 		right: 20rpx;
 		border-color: #E5E4EA;
 		-webkit-transform: rotate(45deg);
-		    -ms-transform: rotate(45deg);
 		        transform: rotate(45deg);
 		margin-top:31rpx;
 		justify-self:end;

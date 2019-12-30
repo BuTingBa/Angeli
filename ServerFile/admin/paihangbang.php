@@ -61,7 +61,7 @@ if(empty($_GET['stime']) || empty($_GET['etime'])){
 				  		echo '<td>'.$index.'</td>';
 				  		echo '<td>'.$value['AuId']['AuthorName'].'</td>';
 						echo '<td>'.$value['AuId']['Auid'].'</td>';
-				  		echo '<td class="text-center">'.$value['api'].'</td>';
+				  		echo '<td class="text-center">'.$value['index'].'</td>';
 				  		echo '</tr>';
 				  	}
 				  ?> 

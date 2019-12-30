@@ -190,7 +190,7 @@
 				server.token=null;
 				setTimeout(function () {
 					uni.redirectTo({
-						url: '../Home/Home'
+						url:'../reg/reg'
 					})
 				}, 1500);
 			},

@@ -68,9 +68,9 @@ if($_SESSION['id']!=$_COOKIE["adminid"]){
         </div>
         <ul class="nav">
           <li <?php echo $_SESSION['menu']==0?'class="active"':'';?>>
-            <a href="index.php">
+            <a href="http://shop-api.angeli.top/admin/index/index">
               <i class="tim-icons icon-chart-pie-36"></i>
-              <p>首页仪表盘</p>
+              <p>安个利商城后台</p>
             </a>
           </li>
           <li <?php echo $_SESSION['menu']==1?'class="active"':'';?>>
@@ -107,6 +107,12 @@ if($_SESSION['id']!=$_COOKIE["adminid"]){
 		    <a href="jubao.php">
 		      <i class="tim-icons icon-alert-circle-exc"></i>
 		      <p>举报管理</p>
+		    </a>
+		  </li>
+		  <li <?php echo $_SESSION['menu']==11?'class="active"':'';?>>
+		    <a href="pl.php">
+		      <i class="tim-icons icon-alert-circle-exc"></i>
+		      <p>评论管理</p>
 		    </a>
 		  </li>
           <li <?php echo $_SESSION['menu']==5?'class="active"':'';?>>

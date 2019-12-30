@@ -19,15 +19,12 @@ page{
 	margin: 0rpx 240rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack:center;
 	-webkit-justify-content:center;
-	    -ms-flex-pack:center;
 	        justify-content:center;
 	-webkit-box-align:center;
 	-webkit-align-items:center;
-	    -ms-flex-align:center;
 	        align-items:center;
 }
 .line{
@@ -42,15 +39,12 @@ page{
 	margin-bottom: 56rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack:justify;
 	-webkit-justify-content:space-between;
-	    -ms-flex-pack:justify;
 	        justify-content:space-between;
 	-webkit-box-align:center;
 	-webkit-align-items:center;
-	    -ms-flex-align:center;
 	        align-items:center;
 }
 .yzm{
@@ -79,11 +73,9 @@ page{
 	border-bottom: 1px solid #EFEFF4;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack:justify;
 	-webkit-justify-content:space-between;
-	    -ms-flex-pack:justify;
 	        justify-content:space-between;
 }
 .reg{
@@ -108,7 +100,6 @@ page{
 	border-radius: 25rpx;
 	-webkit-box-align:center;
 	-webkit-align-items:center;
-	    -ms-flex-align:center;
 	        align-items:center;
 	margin-top: 20rpx;
 }

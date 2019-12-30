@@ -55,6 +55,12 @@
 		    "style" : {
 				"navigationBarTitleText": "消息列表"
 			}
+		},
+		{
+		    "path" : "pages/index/confirmation",
+		    "style" : {
+				"navigationBarTitleText": "订单详情"
+			}
 		}
     ],
 	"globalStyle": {

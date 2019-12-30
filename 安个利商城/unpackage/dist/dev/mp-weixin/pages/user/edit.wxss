@@ -31,26 +31,21 @@
   height: 120rpx;
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
 }
 .save view {
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
 }
 .save .btn {
-    -webkit-box-shadow: 0rpx 5rpx 10rpx rgba(0, 0, 0, 0.4);
-            box-shadow: 0rpx 5rpx 10rpx rgba(0, 0, 0, 0.4);
+    box-shadow: 0rpx 5rpx 10rpx rgba(0, 0, 0, 0.4);
     width: 70%;
     height: 80rpx;
     border-radius: 80rpx;
@@ -58,11 +53,9 @@
     color: #fff;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
-        -ms-flex-pack: center;
             justify-content: center;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
     font-size: 30rpx;
 }
@@ -72,26 +65,21 @@
       font-size: 30rpx;
       -webkit-box-pack: center;
       -webkit-justify-content: center;
-          -ms-flex-pack: center;
               justify-content: center;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
 }
 .content {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
           flex-wrap: wrap;
 }
 .content view {
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
 }
 .content .row {
@@ -106,7 +94,6 @@
       font-size: 30rpx;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
 }
 .content .row .input {
@@ -114,14 +101,12 @@
       padding: 20rpx 0;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
       font-size: 30rpx;
 }
 .content .row .input.switch {
         -webkit-box-pack: end;
         -webkit-justify-content: flex-end;
-            -ms-flex-pack: end;
                 justify-content: flex-end;
 }
 .content .row .input .textarea {
@@ -133,11 +118,9 @@
       height: 100rpx;
       -webkit-box-pack: center;
       -webkit-justify-content: center;
-          -ms-flex-pack: center;
               justify-content: center;
       -webkit-box-align: center;
       -webkit-align-items: center;
-          -ms-flex-align: center;
               align-items: center;
       font-size: 36rpx;
       color: #f06c7a;
