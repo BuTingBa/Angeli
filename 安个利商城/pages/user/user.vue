@@ -28,6 +28,7 @@
 	</view>
 </template>
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {

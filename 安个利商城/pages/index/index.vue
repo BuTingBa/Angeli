@@ -39,7 +39,13 @@
 				goodsList:[]
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			
+			if(option.token){
+				this.login();
+			}else{
+				this.login(server.Token);
+			}
 			this.getGoods('')
 		},
 		methods: {
@@ -52,6 +58,32 @@
 			tabXZ:function(index){
 				console.log(index)
 				this.thisIndex=index;
+			},
+			login:function(token){
+				uni.request({
+					method:'GET',
+					url: server.requestUrl+token, 
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							server.UserInfo=res.data.data;
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+						console.log(res);
+					}
+				});
 			},
 			getGoods:function(date){
 				uni.request({

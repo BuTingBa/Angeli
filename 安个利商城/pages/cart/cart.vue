@@ -23,21 +23,21 @@
 						</view>
 					</view>
 					<!-- 商品信息 -->
-					<view class="goods-info" @tap="toGoods(row)">
+					<view class="goods-info" @tap="toGoods(row.goodsId)">
 						<view class="img">
-							<image :src="row.img"></image>
+							<image :src="row.goodsInfo.picUrl"></image>
 						</view>
 						<view class="info">
-							<view class="title">{{row.name}}</view>
-							<view class="spec">{{row.spec}}</view>
+							<view class="title">{{row.goodsInfo.title}}</view>
+							<view class="spec">{{row.goodsSpecs.name}}</view>
 							<view class="price-number">
-								<view class="price">￥{{row.price}}</view>
+								<view class="price">￥{{row.goodsSpecs.price}}</view>
 								<view class="number">
 									<view class="sub" @tap.stop="sub(index)">
 										<view class="icon jian"></view>
 									</view>
 									<view class="input" @tap.stop="discard">
-										<input type="number" v-model="row.number" @input="sum($event,index)" />
+										<input type="number" v-model="row.count" @input="sum($event,index)" />
 									</view>
 									<view class="add"  @tap.stop="add(index)">
 										<view class="icon jia"></view>
@@ -57,7 +57,7 @@
 				</view>
 				<view class="text">全选</view>
 			</view>
-			<view class="delBtn" @tap="deleteList" v-if="selectedList.length>0">删除</view>
+			<view class="delBtn" @tap="deleteGoods('list')" v-if="selectedList.length>0">删除</view>
 			<view class="settlement">
 				<view class="sum">合计:<view class="money">￥{{sumPrice}}</view></view>
 				<view class="btn" @tap="toConfirmation">结算({{selectedList.length}})</view>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
@@ -78,13 +78,7 @@
 				showHeader:true,
 				selectedList:[],
 				isAllselected:false,
-				goodsList:[
-					{id:1,img:'/static/img/goods/p1.jpg',name:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-					{id:2,img:'/static/img/goods/p2.jpg',name:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-					{id:3,img:'/static/img/goods/p3.jpg',name:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-					{id:4,img:'/static/img/goods/p4.jpg',name:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-					{id:5,img:'/static/img/goods/p5.jpg',name:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false}
-				],
+				goodsList:[],
 				//控制滑动效果
 				theIndex:null,
 				oldIndex:null,
@@ -112,31 +106,43 @@
 			this.showHeader = false;
 			this.statusHeight = plus.navigator.getStatusbarHeight();
 			// #endif
+
+		},
+		onShow() {
+			this.getShopCartList();
 		},
 		methods: {
-			//加入商品 参数 goods:商品数据
-			joinGoods(goods){
-				/*
-				* 这里只是展示一种添加逻辑，模板并没有做从其他页面加入商品到购物车的具体动作，
-				* 在实际应用上，前端并不会直接插入记录到goodsList这一个动作，一般是更新列表和本地列表缓存。
-				* 一般商城购物车的增删改动作是由后端来完成的,
-				* 后端记录后返回前端更新前端缓存
-				*/
-				let len = this.goodsList.length;
-				let isFind = false;//是否找到ID一样的商品
-				for(let i=0;i<len;i++){
-					let row = this.goodsList[i];
-					if(row.id==goods.id )
-					{	//找到商品一样的商品
-						this.goodsList[i].number++;//数量自增
-						isFind = true;//找到一样的商品
-						break;//跳出循环
+			//获取购物车列表
+			getShopCartList(){
+				uni.request({
+					method:'POST',
+					url: server.requestUrl+'getShopCart',
+					data:{
+						token:server.Token,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.goodsList=res.data.data;
+							console.log(this.goodsList);
+						}else{
+							uni.showToast({
+								title: '失败：'+res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+					},
+					fail(res) {
+						uni.showToast({
+							title: res,
+							position:'bottom',
+							icon:'none'
+						});
 					}
-				}
-				if(!isFind){
-					//没有找到一样的商品，新增一行到购物车商品列表头部
-					this.goodsList[i].unshift(goods);
-				}
+				});
 			},
 			//控制左滑删除效果-begin
 			touchStart(index,event){
@@ -191,68 +197,92 @@
 			
 			//商品跳转
 			toGoods(e){
-				uni.showToast({title: '商品'+e.id,icon:"none"});
 				uni.navigateTo({
-					url: '../../goods/goods' 
+					url: '../index/goods?goodsId=' +e
 				});
 			},
 			//跳转确认订单页面
 			toConfirmation(){
-				let tmpList=[];
+				let tmpList='';
 				let len = this.goodsList.length;
 				for(let i=0;i<len;i++){
 					if(this.goodsList[i].selected) {
-						tmpList.push(this.goodsList[i]);
+						tmpList=tmpList+this.goodsList[i].id+'|';
 					}
 				}
-				if(tmpList.length<1){
+				if(!tmpList){
 					uni.showToast({
 						title:'请选择商品结算',
 						icon:'none'
 					});
 					return ;
 				}
-				uni.setStorage({
-					key:'buylist',
-					data:tmpList,
-					success: () => {
-						uni.navigateTo({
-							url:'../../order/confirmation'
-						})
-					}
-				})
+				tmpList=tmpList.substring(0,tmpList.length-1)
+				uni.navigateTo({
+					url: '../index/confirmation?id='+tmpList
+				});
 			},
 			//删除商品
 			deleteGoods(id){
-				let len = this.goodsList.length;
-				for(let i=0;i<len;i++){
-					if(id==this.goodsList[i].id){
-						this.goodsList.splice(i, 1);
-						break;
+				let tmpList='';
+				if(id=='list'){
+					let len = this.goodsList.length;
+					for(let i=0;i<len;i++){
+						if(this.goodsList[i].selected) {
+							tmpList=tmpList+this.goodsList[i].id+'|';
+						}
 					}
+					console.log('多选删除')
+				}else{
+					console.log('单个删除')
+					tmpList=id;
 				}
-				this.selectedList.splice(this.selectedList.indexOf(id), 1);
-				this.sum();
-				this.oldIndex = null;
-				this.theIndex = null;
+				uni.request({
+					method:'POST',
+					url: server.requestUrl+'delShopCart',
+					data:{
+						token:server.Token,
+						shopCartId:tmpList
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+							this.goodsList=res.data.data;
+							console.log(this.goodsList);
+						}else{
+							uni.showToast({
+								title: '失败：'+res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+					},
+					fail(res) {
+						uni.showToast({
+							title: res,
+							position:'bottom',
+							icon:'none'
+						});
+					}
+				});
+				
+				
 			},
-			// 删除商品s
-			deleteList(){
-				let len = this.selectedList.length;
-				while (this.selectedList.length>0)
-				{
-					this.deleteGoods(this.selectedList[0]);
-				}
-				this.selectedList = [];
-				this.isAllselected = this.selectedList.length == this.goodsList.length && this.goodsList.length>0;
-				this.sum();
-			},
+			
 			// 选中商品
 			selected(index){
 				this.goodsList[index].selected = this.goodsList[index].selected?false:true;
 				let i = this.selectedList.indexOf(this.goodsList[index].id);
 				i>-1?this.selectedList.splice(i, 1):this.selectedList.push(this.goodsList[index].id);
 				this.isAllselected = this.selectedList.length == this.goodsList.length;
+				console.log(this.selectedList)
 				this.sum();
 			},
 			//全选
@@ -265,19 +295,20 @@
 				}
 				this.selectedList = this.isAllselected?[]:arr;
 				this.isAllselected = this.isAllselected||this.goodsList.length==0?false : true;
+				console.log(this.selectedList)
 				this.sum();
 			},
 			// 减少数量
 			sub(index){
-				if(this.goodsList[index].number<=1){
+				if(this.goodsList[index].count<=1){
 					return;
 				}
-				this.goodsList[index].number--;
+				this.goodsList[index].count--;
 				this.sum();
 			},
 			// 增加数量
 			add(index){
-				this.goodsList[index].number++;
+				this.goodsList[index].count++;
 				this.sum();
 			},
 			// 合计
@@ -289,7 +320,7 @@
 						if(e && i==index){
 							this.sumPrice = this.sumPrice + (e.detail.value*this.goodsList[i].price);
 						}else{
-							this.sumPrice = this.sumPrice + (this.goodsList[i].number*this.goodsList[i].price);
+							this.sumPrice = this.sumPrice + (this.goodsList[i].count*this.goodsList[i].goodsSpecs.price);
 						}
 					}
 				}

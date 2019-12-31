@@ -103,8 +103,9 @@
 				<view class="content">
 					<view class="title">选择规格：</view>
 					<view class="sp">
-						<view v-for="(item,index) in goodsData.specs" :class="[item.id==selectSpec?'on':'']" @tap="setSelectSpec(item.id)" :key="index">{{item.name}}</view>
+						<view v-for="(item,index) in goodsData.specs" :class="[item.id==selectSpec?'on':'']" @tap="setSelectSpec(item)" :key="index">{{item.name}}</view>
 					</view>
+					<view class="pricered" v-if="selectSpec!=null">￥ {{specsPrice|toFixed}}</view>
 					<view class="length" v-if="selectSpec!=null">
 						<view class="text">数量</view>
 						<view class="number">
@@ -119,6 +120,7 @@
 							</view>
 						</view>
 					</view>
+					
 				</view>
 				<view class="btn"><view class="button" @tap="hideSpec">完成</view></view>
 			</view>
@@ -134,7 +136,7 @@
 		</view>
 		<!-- 标题 价格 -->
 		<view class="info-box goods-info">
-			<view class="price">￥{{goodsData.price}}</view>
+			<view class="price">￥{{goodsData.price|toFixed}}</view>
 			<view class="title">
 				{{goodsData.title}}
 			</view>
@@ -208,7 +210,7 @@ export default {
 				price:0,
 				number:1
 			},
-			
+			addCart:false,
 			//轮播图下标
 			currentSwiper: 0,
 			anchorlist:[],//导航条锚点
@@ -230,8 +232,6 @@ export default {
 		this.showBack = false;
 		// #endif
 		//option为object类型，会序列化上个页面传递的参数
-		console.log(option.cid); //打印出上个页面传递的参数。
-		
 		if(!option.goodsId){
 			this.getGoodsInfo(4)
 		}else{
@@ -241,6 +241,11 @@ export default {
 	},
 	onReady(){
 		this.calcAnchor();//计算锚点高度，页面数据是ajax加载时，请把此行放在数据渲染完成事件中执行以保证高度计算正确
+	},
+	filters: {
+		toFixed:function(x) {
+			return parseFloat(x).toFixed(2);
+		}
 	},
 	onPageScroll(e) {
 		//锚点切换
@@ -275,8 +280,6 @@ export default {
 						this.shopCart.price=res.data.data.price
 						this.shopCart.goodsId=res.data.data.goodsid
 						this.shopCart.goodsTitle=res.data.data.title
-						
-						console.log(this.lunboList)
 					}else{
 						uni.showToast({
 							title: res.data.msg,
@@ -284,7 +287,6 @@ export default {
 							icon:'none'
 						});
 					}
-					console.log(res);
 				}
 			});
 		},
@@ -321,21 +323,25 @@ export default {
 		},
 		// 加入购物车
 		joinCart(){
+			this.addCart=true;
+			
 			if(this.selectSpec==null){
 				return this.showSpec(()=>{
-					uni.showToast({title: "已加入购物车"});
+					this.apiAddShopCart()
 				});
 			}
-			uni.showToast({title: "已加入购物车"});
+			this.apiAddShopCart()
 		},
 		//立即购买
 		buy(){
+			this.addCart=false;
 			if(this.selectSpec==null){
 				return this.showSpec(()=>{
-					this.toConfirmation();
+					this.apiAddShopCart(2)
 				});
 			}
-			this.toConfirmation();
+			this.apiAddShopCart('2')
+
 		},
 		//商品评论
 		toRatings(){
@@ -344,19 +350,64 @@ export default {
 			})
 		},
 		//跳转确认订单页面
-		toConfirmation(){
+		toConfirmation(e){
 			uni.navigateTo({
-				url:'confirmation?id='+this.goodsData.goodsid+'&spec='+this.selectSpec+'&number='+this.shopCart.number
+				url:'confirmation?id='+e
 			})
 		},
-		//跳转评论列表
-		showComments(goodsid){
+		//请求添加到购物车
+		apiAddShopCart:function(type=1){
+			
+			uni.request({
+				method:'POST',
+				url: server.requestUrl+'addShopCart',
+				data:{
+					token:server.Token,
+					goodsId:this.goodsData.goodsid,
+					specsId:this.selectSpec,
+					count:this.shopCart.number,
+					type:type
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					if(res.data.code=='1'){
+						uni.showToast({
+							title: res.data.msg,
+							position:'bottom',
+							icon:'none'
+						});
+						this.selectSpec==null;
+						this.shopCart.number=1;
+						if(!this.addCart){
+							uni.navigateTo({
+								url:'confirmation?id='+res.data.data
+							})
+						}
+					}else{
+						uni.showToast({
+							title: '失败：'+res.data.msg,
+							position:'bottom',
+							icon:'none'
+						});
+					}
+				},
+				fail(res) {
+					uni.showToast({
+						title: res,
+						position:'bottom',
+						icon:'none'
+					});
+				}
+			});
 			
 		},
 		//选择规格
 		setSelectSpec(index){
-			this.shopCart.specs=index
-			this.selectSpec = index;
+			this.shopCart.specs=index.id
+			this.specsPrice=index.price
+			this.selectSpec = index.id;
 		},
 		//减少数量
 		sub(){
@@ -400,7 +451,6 @@ export default {
 		},
 		//服务弹窗
 		showService() {
-			console.log('show');
 			this.serviceClass = 'show';
 		},
 		//关闭服务弹窗
@@ -412,8 +462,6 @@ export default {
 		},
 		//规格弹窗
 		showSpec(fun) {
-			console.log('show');
-			console.log(fun);
 			this.specClass = 'show';
 			this.specCallback = fun;
 		},
@@ -648,7 +696,11 @@ page {
 	background-color: #fff;
 	margin-bottom: 20upx;
 }
-
+.pricered{
+	font-size: 38upx;
+	font-weight: 600;
+	color: #f47925;
+}
 .goods-info {
 	.price {
 		font-size: 46upx;

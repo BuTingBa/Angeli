@@ -2516,7 +2516,7 @@ class angeli
                         'Wxid' =>$row["WxUid"],
                         'wxOpenId'=>$row["wxopenid"],
                         'Gender'=>$row['Gender'],
-                        'UserType' =>$this->isVip($row["VIPEndTime"]),
+                        'isVip' =>$this->isVip($row["VIPEndTime"]),
                         'VIPEndTime' =>$this->getOverDay($row["VIPEndTime"]),
                         'Status' =>$row["Status"],
                         'BanDeadline' =>$row["BanDeadline"],
@@ -3474,9 +3474,9 @@ class angeli
     function isVip($VIPEndTime)
     {
         if($VIPEndTime>time()){
-            return "true";
+            return true;
         }else{
-            return "普通用户";
+            return false;
         }
     }
     function uc_time_ago($ptime) {

@@ -24,13 +24,13 @@
 			<view class="row" v-for="(row,index) in goods" :key="index">
 				<view class="goods-info">
 					<view class="img">
-						<image :src="row.img"></image>
+						<image :src="row.goodsInfo.picUrl"></image>
 					</view>
 					<view class="info">
-						<view class="title">{{row.name}}</view>
-						<view class="spec">选择{{row.spec}} 数量:{{row.number}}</view>
+						<view class="title">{{row.goodsInfo.title}}</view>
+						<view class="spec">选择{{row.goodsSpecs.name}} 数量:{{row.count}}</view>
 						<view class="price-number">
-							<view class="price">￥{{row.price*row.number}}</view>
+							<view class="price">￥{{row.goodsSpecs.price*row.count|toFixed}}</view>
 							<view class="number">
 							</view>
 						</view>
@@ -108,26 +108,12 @@
 				note:'',		//备注
 				deduction:0,	//抵扣价格
 				address:[],
-				goods:[]
+				goods:[],
+				sumPrice:0.0
 
 			};
 		},
 		onShow() {
-			//页面显示时，加载订单信息
-			uni.getStorage({
-				key:'buylist',
-				success: (ret) => {
-					this.buylist = ret.data;
-					this.goodsPrice=0;
-					//合计
-					let len = this.buylist.length;
-					for(let i=0;i<len;i++){
-						this.goodsPrice = this.goodsPrice + (this.buylist[i].number*this.buylist[i].price);
-					}
-					this.deduction = this.int/100;
-					this.sumPrice = this.goodsPrice-this.deduction+this.freight;
-				}
-			});
 			uni.getStorage({
 				key:'selectAddress',
 				success: (e) => {
@@ -139,16 +125,20 @@
 			})
 		},
 		onLoad(option) {
-			if(!option.id){
-				var goodsId=4;
-				var spec=410;
-				var number=1;
+			
+			
+			if(option.id){
+				
+				this.getOrderInfo(option.id);
 			}else{
-				var goodsId=option.id;
-				var spec=option.spec;
-				var number=option.number;
+				this.getOrderInfo('19|20');
+				uni.showToast({
+					title: '失败的请求',
+					position:'bottom',
+					icon:'none'
+				});
 			}
-			this.getOrderInfo(goodsId,spec);
+			
 		},
 		onBackPress() {
 			//页面后退时候，清除订单信息
@@ -160,14 +150,13 @@
 			}
 		},
 		methods: {
-			getOrderInfo:function(id,spec){
+			getOrderInfo:function(id){
 				uni.request({
 					method:'POST',
 					url: server.requestUrl+'preOrder/', 
 					data:{
 						token:server.Token,
-						goods:id,
-						specs:spec
+						shopCartId:id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
@@ -175,9 +164,8 @@
 					success: (res) => {
 						if(res.data.code=='1'){
 							this.address=res.data.address
-							this.goods=res.data.goods
-							this.deduction=res.data.specs.price*0.9
-							this.price=res.data.specs.price
+							this.goods=res.data.data
+							this.sum()
 						}else{
 							uni.showToast({
 								title: res.data.msg,
@@ -190,6 +178,23 @@
 				});
 				
 			},
+			sum(){
+				let len = this.goods.length;
+				this.goodsPrice=0;
+				for(let i=0;i<len;i++){
+					this.goodsPrice=this.goodsPrice+this.goods[i].goodsSpecs.price*this.goods[i].count;
+				}	
+				
+				console.log(server.UserInfo.isVip)
+				if(server.UserInfo.isVip){
+					this.deduction=this.goodsPrice-(this.goodsPrice*0.9);
+					this.sumPrice=this.goodsPrice-this.deduction;
+				}else{
+					this.deduction=0;
+					this.sumPrice=this.goodsPrice;
+				}
+
+			},
 			clearOrder(){
 				uni.removeStorage({
 					key: 'buylist',
@@ -201,17 +206,7 @@
 			},
 			toPay(){
 				//商品列表
-				let paymentOrder = [];
-				let goodsid=[];
-				let len = this.buylist.length;
-				for(let i=0;i<len;i++){
-					paymentOrder.push(this.buylist[i]);
-					goodsid.push(this.buylist[i].id);
-				}
-				if(paymentOrder.length==0){
-					uni.showToast({title:'订单信息有误，请重新购买',icon:'none'});
-					return ;
-				}
+				
 				//本地模拟订单提交UI效果
 				uni.showLoading({
 					title:'正在提交订单...'
@@ -228,7 +223,6 @@
 						}
 					})
 				},1000)
-				
 			},
 			//选择收货地址
 			selectAddress(){

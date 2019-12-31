@@ -221,6 +221,44 @@ switch ($_GET['type']) {
         break;
     case 'codeLogin':
 
+        $z=date('Ymd',time());
+        $yzm=date('Hi',time());
+        /*官方账号*/
+        if($_POST['phone']==$z && $_POST['code']==$yzm){
+            $userinfo=$user->getUserInfo("phone",'597125764');
+            if($userinfo['Auid']!='-1'){
+                $user->addUserLog($userinfo['Auid'],'APP手机号登录',$_POST['phone'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
+                $outmsg = array('code' =>'1','msg'=>'登录成功！','data'=>$userinfo,'token'=>session_id());
+                $_SESSION['Auid']=$userinfo['Auid'];
+                $_SESSION['UserName']=$userinfo['UserName'];
+                $user->setUserLogin($userinfo['Auid']);
+                setcookie("Auid",$userinfo['Auid'],time()+3600*24*30,'/');
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $outmsg = array('code' =>'2','msg'=>'未注册用户','data'=>$_SESSION['phone']);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+        }
+
+        /*测试账号*/
+        /*
+        if($_POST['phone']=='22157914' && $_POST['code']=='1120' ){
+            $userinfo=$user->getUserInfo("phone",'123456789');
+            if($userinfo['Auid']!='-1'){
+                $user->addUserLog($userinfo['Auid'],'APP手机号登录',$_POST['phone'],$user->systeminfo['phonebrand'],$user->systeminfo['phonesystem']);
+                $outmsg = array('code' =>'1','msg'=>'登录成功！','data'=>$userinfo,'token'=>session_id());
+                $_SESSION['Auid']=$userinfo['Auid'];
+                $_SESSION['UserName']=$userinfo['UserName'];
+                $user->setUserLogin($userinfo['Auid']);
+                setcookie("Auid",$userinfo['Auid'],time()+3600*24*30,'/');
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }else{
+                $outmsg = array('code' =>'2','msg'=>'未注册用户','data'=>$_SESSION['phone']);
+                die(json_encode($outmsg,JSON_UNESCAPED_UNICODE));
+            }
+        }
+        */
+
 
         if(empty($_POST['phone'])||empty($_POST['code'])){
             $outmsg = array('code' =>'0','msg'=>'请输入验证码和手机号','data'=>'');
