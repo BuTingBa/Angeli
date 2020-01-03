@@ -40,9 +40,11 @@
 			}
 		},
 		onLoad(option) {
-			
+			console.log(option)
 			if(option.token){
-				this.login();
+				server.Token=option.token;
+				this.login(option.token);
+				
 			}else{
 				this.login(server.Token);
 			}
@@ -67,21 +69,23 @@
 						'content-type': 'application/x-www-form-urlencoded',
 					},
 					success: (res) => {
-						if(res.data.code=='1'){
-							server.UserInfo=res.data.data;
+						console.log(res)
+						if(res.data.code=='0'){
 							uni.showToast({
-								title: res.data.msg,
+								title: '登录错误：'+res.data.msg,
 								position:'bottom',
 								icon:'none'
 							});
 						}else{
 							uni.showToast({
-								title: res.data.msg,
+								title: '欢迎你，'+res.data.UserName,
 								position:'bottom',
 								icon:'none'
 							});
+							server.UserInfo=res.data;
+							
 						}
-						console.log(res);
+						console.log(res.data);
 					}
 				});
 			},
@@ -89,27 +93,6 @@
 				uni.request({
 					method:'GET',
 					url: server.requestUrl+'getGoodsConcise/'+date, 
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-					},
-					success: (res) => {
-						if(res.data.code=='1'){
-							this.goodsList=res.data.data;
-						}else{
-							uni.showToast({
-								title: res.data.msg,
-								position:'bottom',
-								icon:'none'
-							});
-						}
-						console.log(res);
-					}
-				});
-			},
-			getUserInfo:function(token){
-				uni.request({
-					method:'GET',
-					url: server.requestUrl+'/'+token, 
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
 					},

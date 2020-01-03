@@ -5,19 +5,19 @@
 				<view class="row" v-for="(row,index) in addressList" :key="index" @tap="select(row)">
 					<view class="left">
 						<view class="head">
-							{{row.head}}
+							{{row.name.substring(0,1)}}
 						</view>
 					</view>
 					<view class="center">
 						<view class="name-tel">
 							<view class="name">{{row.name}}</view>
-							<view class="tel">{{row.tel}}</view>
-							<view class="default" v-if="row.isDefault">
+							<view class="tel">{{row.phone}}</view>
+							<view class="default" v-if="row.isDefault=='1'">
 								默认
 							</view>
 						</view>
 						<view class="address">
-							{{row.address.region.label}} {{row.address.detailed}}
+							{{row.addressRegion}}{{row.detailed}}
 						</view>
 					</view>
 					<view class="right">
@@ -36,59 +36,16 @@
 	</view>
 </template>
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
 				isSelect:false,
-				addressList:[
-					{id:1,name:"大黑哥",head:"大",tel:"18816881688",address:{region:{"label":"广东省-深圳市-福田区","value":[18,2,1],"cityCode":"440304"},detailed:'深南大道1111号无名摩登大厦6楼A2'},isDefault:true},
-					{id:2,name:"大黑哥",head:"大",tel:"15812341234",address:{region:{"label":"广东省-深圳市-福田区","value":[18,2,1],"cityCode":"440304"},detailed:'深北小道2222号有名公寓502'},isDefault:false},
-					{id:3,name:"老大哥",head:"老",tel:"18155467897",address:{region:{"label":"广东省-深圳市-福田区","value":[18,2,1],"cityCode":"440304"},detailed:'深南大道1111号无名摩登大厦6楼A2'},isDefault:false},
-					{id:4,name:"王小妹",head:"王",tel:"13425654895",address:{region:{"label":"广东省-深圳市-福田区","value":[18,2,1],"cityCode":"440304"},detailed:'深南大道1111号无名摩登大厦6楼A2'},isDefault:false},
-				]
+				addressList:[]
 			};
 		},
 		onShow() {
-			
-			uni.getStorage({
-				key:'delAddress',
-				success: (e) => {
-					let len = this.addressList.length;
-					if(e.data.hasOwnProperty('id')){
-						for(let i=0;i<len;i++){
-							if(this.addressList[i].id==e.data.id){
-								this.addressList.splice(i,1);
-								break;
-							}
-						}
-					}
-					uni.removeStorage({
-						key:'delAddress'
-					})
-				}
-			})
-			uni.getStorage({
-				key:'saveAddress',
-				success: (e) => {
-					let len = this.addressList.length;
-					if(e.data.hasOwnProperty('id')){
-						for(let i=0;i<len;i++){
-							if(this.addressList[i].id==e.data.id){
-								this.addressList.splice(i,1,e.data);
-								break;
-							}
-						}
-					}else{
-						let lastid = this.addressList[len-1];
-						lastid++;
-						e.data.id = lastid;
-						this.addressList.push(e.data);
-					}
-					uni.removeStorage({
-						key:'saveAddress'
-					})
-				}
-			})
+			this.getAddress()
 		},
 		onLoad(e) {
 			if(e.type=='select'){
@@ -96,6 +53,31 @@
 			}
 		},
 		methods:{
+			
+			getAddress(){
+				uni.request({
+					method:'POST',
+					url: server.requestUrl+'getAddressList', 
+					data:{
+						token:server.Token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.addressList=res.data.data
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+						console.log(res);
+					}
+				});
+			},
 			edit(row){
 				uni.setStorage({
 					key:'address',

@@ -1441,6 +1441,9 @@ class angeli
                     //表示操作失败
                     return 0;
                 }else{
+
+
+
                     $sql="UPDATE angeli_posts SET ZhongcaoCount=ZhongcaoCount-1 WHERE PostsId='$postId'";
                     $result=$this->mysqli->query($sql) or die($this->mysqli->error);
                     //echo $sql;

@@ -15,7 +15,7 @@
 					</view>
 				</view>
 				<view class="addres">
-					{{address.address}}
+					{{address.region}}{{address.detailed}}
 				</view>
 			</view>
 		</view>
@@ -117,7 +117,7 @@
 			uni.getStorage({
 				key:'selectAddress',
 				success: (e) => {
-					this.recinfo = e.data;
+					this.address = e.data;
 					uni.removeStorage({
 						key:'selectAddress'
 					})
@@ -125,10 +125,9 @@
 			})
 		},
 		onLoad(option) {
-			
+			console.log(server.UserInfo)
 			
 			if(option.id){
-				
 				this.getOrderInfo(option.id);
 			}else{
 				this.getOrderInfo('19|20');
@@ -227,7 +226,7 @@
 			//选择收货地址
 			selectAddress(){
 				uni.navigateTo({
-					url:'../user/address/address?type=select'
+					url:'../user/address?type=select'
 				})
 			}
 		}

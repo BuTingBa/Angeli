@@ -357,6 +357,22 @@ export default {
 		},
 		//请求添加到购物车
 		apiAddShopCart:function(type=1){
+			if(server.Token=''){
+				uni.showToast({
+					title: '用户未登录！',
+					position:'bottom',
+					icon:'none'
+				});
+				return;
+			}
+			if(!server.Token){
+				uni.showToast({
+					title: '用户未登录！',
+					position:'bottom',
+					icon:'none'
+				});
+				return;
+			}
 			
 			uni.request({
 				method:'POST',

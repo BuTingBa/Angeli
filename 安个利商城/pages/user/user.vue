@@ -2,10 +2,10 @@
 	<view>
 		<view class="header" v-bind:class="{'status':isH5Plus}">
 			<view class="userinfo">
-				<view class="face"><image :src="userinfo.face"></image></view>
+				<view class="face"><image :src="userinfo.AvatarUrl"></image></view>
 				<view class="info">
-					<view class="username">{{userinfo.username}}</view>
-					<view class="integral">积分:{{userinfo.integral}}</view>
+					<view class="username">{{userinfo.UserName}}</view>
+					<view class="integral">等级:{{userinfo.Rank}}</view>
 				</view>
 			</view>
 			<view class="setting"><image src="../../static/HM-PersonalCenter/setting.png"></image></view>
@@ -19,7 +19,7 @@
 			</view>
 		</view> 
 		<view class="list" v-for="(list,list_i) in severList" :key="list_i">
-			<view class="li" v-for="(li,li_i) in list" @tap="toPage(list_i,li_i)" v-bind:class="{'noborder':li_i==list.length-1}"  hover-class="hover" :key="li.name" >
+			<view class="li" v-for="(li,li_i) in list" @tap="toPage(li.name)" v-bind:class="{'noborder':li_i==list.length-1}"  hover-class="hover" :key="li.name" >
 				<view class="icon"><image :src="'../../static/HM-PersonalCenter/sever/'+li.icon"></image></view>
 				<view class="text">{{li.name}}</view>
 				<image class="to" src="../../static/HM-PersonalCenter/to.png"></image>
@@ -38,7 +38,7 @@
 				//#ifndef APP-PLUS
 				isH5Plus:false,
 				//#endif
-				userinfo:{},
+				userinfo:[],
 				orderTypeLise:[
 					//name-标题 icon-图标 badge-角标
 					{name:'待付款',icon:'l1.png',badge:1},
@@ -59,17 +59,10 @@
 		},
 		onLoad() {
 			//加载
-			this.init();
+			this.userinfo=server.UserInfo;
+			
 		},
 		methods: {
-			init() {
-				//用户信息
-				this.userinfo={
-					face:'../../static/HM-PersonalCenter/face.jpeg',
-					username:"不停",
-					integral:"6666"
-				}		
-			},
 			//用户点击订单类型
 			toOrderType(index){
 				uni.setStorageSync('tbIndex',index);
@@ -78,8 +71,12 @@
 				})
 			},
 			//用户点击列表项
-			toPage(list_i,li_i){
-				
+			toPage(name){
+				if(name=='收货地址'){
+					uni.navigateTo({
+						url:'./address'
+					})
+				}
 			}
 		}
 	}

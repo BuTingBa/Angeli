@@ -250,12 +250,12 @@
 							<view class="menuTiele">种草排行</view>
 							<view class="menuRight"></view>
 						</view>
-						<!-- <view class="menusolid"></view>
+						<view class="menusolid"></view>
 						<view class="menuItem" @tap="getshop">
 							<view class="menuIcon aicon-shop"></view>
 							<view class="menuTiele">Angeli Shop</view>
 							<view class="menuRight"></view>
-						</view> -->
+						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="set">
 							<view class="menuIcon aicon-set"></view>
@@ -792,8 +792,9 @@
 				this.getPostData('new',0);
 			},
 			getshop:function(){
-				this.systemConfig="商城正在建设中"
-				this.modalName = 'DialogModal2'
+				uni.navigateTo({
+					url: '../edit/edit?type=shop'
+				})
 			},
 			getSysConfig:function(name){
 				uni.request({

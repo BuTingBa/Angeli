@@ -129,7 +129,7 @@
 							console.log(this.goodsList);
 						}else{
 							uni.showToast({
-								title: '失败：'+res.data.msg,
+								title: res.data.msg,
 								position:'bottom',
 								icon:'none'
 							});

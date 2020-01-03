@@ -39,7 +39,7 @@
 					设置默认地址
 				</view>
 				<view class="input switch">
-					<switch color="#f06c7a" :checked="isDefault" @change=isDefaultChange />
+					<switch color="#f06c7a" :checked="isDefault" @change="isDefaultChange" />
 				</view>
 			</view>
 			<view class="row" v-if="editType=='edit'" @tap="del">
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+	import server from '../../server.js';
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	export default {
 		components: {
@@ -73,7 +74,7 @@
 				isDefault:false,
 				cityPickerValue: [0, 0, 1],
 				themeColor: '#007AFF',
-				region:{label:"请点击选择地址",value:[],cityCode:""}
+				region:''
 			};
 		},
 		methods: {
@@ -86,65 +87,148 @@
 			onConfirm(e) {
 				this.region = e;
 				this.cityPickerValue = e.value;
+				console.log(e)
 			},
 			isDefaultChange(e){
 				this.isDefault = e.detail.value;
 			},
 			del(){
+				if(this.isDefault){
+					uni.showToast({
+						title: '默认收货地址无法删除，请设置其他为默认收货地址，再来删除',
+						position:'bottom',
+						icon:'none'
+					});
+					return;
+					
+				}
+				
 				uni.showModal({
 					title: '删除提示',
 					content: '你将删除这个收货地址',
 					success: (res)=>{
 						if (res.confirm) {
-							uni.setStorage({
-								key:'delAddress',
-								data:{id:this.id},
-								success() {
-									uni.navigateBack();
-								}
-							})
-						} else if (res.cancel) {
-							console.log('用户点击取消');
+							this.delAddress()
 						}
 					}
 				});
 				
 			},
+			delAddress(){
+				uni.request({
+					method:'POST',
+					url: server.requestUrl+'delAddress', 
+					data:{
+						id:this.id,
+						token:server.Token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+							
+							uni.navigateBack();
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+						console.log(res);
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
 			save(){
-				let data={"name":this.name,"head":this.name.substr(0,1),"tel":this.tel,"address":{"region":this.region,"detailed":this.detailed},"isDefault":this.isDefault}
-				if(this.editType=='edit'){
-					data.id = this.id
-				}
-				if(!data.name){
+				if(!this.name){
 					uni.showToast({title:'请输入收件人姓名',icon:'none'});
 					return ;
 				}
-				if(!data.tel){
+				if(!this.tel){
 					uni.showToast({title:'请输入收件人电话号码',icon:'none'});
 					return ;
 				}
-				if(!data.address.detailed){
+				if(!this.detailed){
 					uni.showToast({title:'请输入收件人详细地址',icon:'none'});
 					return ;
 				}
-				if(data.address.region.value.length==0){
+				if(!this.region.label){
 					uni.showToast({title:'请选择收件地址',icon:'none'});
 					return ;
 				}
+				if(this.region.value.length==0){
+					uni.showToast({title:'请选择收件地址',icon:'none'});
+					return ;
+				}
+				
+				if(this.editType=='edit'){
+					let data={
+						name:this.name,
+						phone:this.tel,
+						detailed:this.detailed,
+						region:this.region.label,
+						isDefault:this.isDefault?1:0,
+						token:server.Token,
+						addressId:this.id
+					}
+				}else{
+					let data={
+						name:this.name,
+						phone:this.tel,
+						detailed:this.detailed,
+						region:this.region.label,
+						isDefault:this.isDefault?1:0,
+						token:server.Token
+					}
+				}
+				
+				
+				
+				console.log(data)
 				uni.showLoading({
 					title:'正在提交'
 				})
-				//实际应用中请提交ajax,模板定时器模拟提交效果
-				setTimeout(()=>{
-					uni.setStorage({
-						key:'saveAddress',
-						data:data,
-						success() {
-							uni.hideLoading();
-							uni.navigateBack();
+				//提交地址到服务器
+				uni.request({
+					method:'POST',
+					url: server.requestUrl+'addAddress', 
+					data:data,
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.addressList=res.data.data
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
 						}
-					})
-				},300)
+						console.log(res);
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+				
+				
+				
 				
 				
 			}
@@ -159,11 +243,9 @@
 					success: (e) => {
 						this.id = e.data.id;
 						this.name = e.data.name;
-						this.tel = e.data.tel;
-						this.detailed = e.data.address.detailed;
+						this.tel = e.data.phone;
+						this.detailed = e.data.detailed;
 						this.isDefault = e.data.isDefault;
-						this.cityPickerValue = e.data.address.region.value;
-						this.region = e.data.address.region;
 					}
 				})
 			}

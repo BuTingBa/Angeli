@@ -13,21 +13,155 @@ class Index extends Controller
     public function index($token)
     {
         //return date('H-m-d H:i:s',time());
+
         if(!$token){
             return json_encode(['code'=>0,'msg'=>'缺少参数'],JSON_UNESCAPED_UNICODE);
         }
         session_id($token);
         session_start();
+        if(!$_SESSION['Auid']){
+            session_destroy();
+            return json_encode(['code'=>0,'msg'=>'用户未登录','data'=>session_id()],JSON_UNESCAPED_UNICODE);
+        }
+
         $user=$this->getUserInfo($_SESSION['Auid']);
-        if(is_array($user)){
+        if($user['data']['Auid']!='-1'){
             return json_encode($user,JSON_UNESCAPED_UNICODE);
         }else{
-            return json_encode(['code'=>0,'msg'=>'失败','data'=>session_id()],JSON_UNESCAPED_UNICODE);
+            return json_encode(['code'=>0,'msg'=>'用户不存在','data'=>session_id()],JSON_UNESCAPED_UNICODE);
+        }
+
+    }
+
+    /**
+     * 删除地址
+     * @return false|string
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function delAddress()
+    {
+        //必须传入token
+        if(!Request::param('token')){
+            return json_encode(['code'=>0,'msg'=>'用户未登录！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!Request::param('id')){
+            return json_encode(['code'=>0,'msg'=>'缺少参数！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!self::token(Request::param('token'))){
+            return json_encode(['code'=>0,'msg'=>'用户未登录或用户不存在'],JSON_UNESCAPED_UNICODE);
+        }
+        $res=Db::table('address')->where('user_id',$_SESSION['Auid'])->where('address_id',Request::param('id'))->delete();
+        if($res>0){
+            return json_encode(['code'=>1,'msg'=>'删除成功'],JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(['code'=>0,'msg'=>'删除失败！'],JSON_UNESCAPED_UNICODE);
         }
 
     }
 
 
+    /**
+     * 新增地址
+     * @return false|string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function addAddress()
+    {
+        //必须传入token
+        if(!Request::param('token')){
+            return json_encode(['code'=>0,'msg'=>'用户未登录！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!Request::param('name')){
+            return json_encode(['code'=>0,'msg'=>'请填写收件人姓名！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!Request::param('phone')){
+            return json_encode(['code'=>0,'msg'=>'请填写收件人手机号码！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!Request::param('detailed')){
+            return json_encode(['code'=>0,'msg'=>'请填写收件人详细地址！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!Request::param('region')){
+            return json_encode(['code'=>0,'msg'=>'请填写收件人地区！'],JSON_UNESCAPED_UNICODE);
+        }
+        $isDefault=Request::param('isDefault')?1:0;
+        if(!self::token(Request::param('token'))){
+            return json_encode(['code'=>0,'msg'=>'用户未登录或用户不存在'],JSON_UNESCAPED_UNICODE);
+        }
+
+        //如果传入addressId则说明是修改，那就先闪了之前的那条记录，再重新添加就好了
+        //注意！订单表里面的地址，不能用ID索引到此，必须填入收货信息字符串，万一哪天用户删除了，那不就GG 了？
+
+        if(Request::param('addressId') && Request::param('addressId')>0){
+            Db::table('address')->where('user_id',$_SESSION['Auid'])->where('address_id',Request::param('addressId'))->delete();
+        }
+
+        $add=Db::table('address')->where('user_id',$_SESSION['Auid'])->where('status',1)->findOrEmpty();
+        if(empty($add)){
+            $isDefault=1;
+        }else{
+            Db::name('address') ->where('user_id', $_SESSION['Auid'])->update(['status' => 0]);
+        }
+
+        $data=[
+            'user_id'=>$_SESSION['Auid'],
+            'status'=>$isDefault,
+            'phone'=>Request::param('phone'),
+            'region'=>Request::param('region'),
+            'detailed'=>Request::param('detailed'),
+            'name'=>Request::param('name')
+        ];
+        $res=Db::name('address')->insertGetId($data);
+        if($res){
+            return json_encode(['code'=>1,'msg'=>'添加地址成功！','data'=>$res],JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(['code'=>0,'msg'=>'添加地址失败！','data'=>$res],JSON_UNESCAPED_UNICODE);
+        }
+
+    }
+
+
+
+    /**
+     * 通过token获取到用户收货地址
+     * @return false|string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getAddressList()
+    {
+        //必须传入token
+        if(!Request::param('token')){
+            return json_encode(['code'=>0,'msg'=>'用户未登录！'],JSON_UNESCAPED_UNICODE);
+        }
+        if(!self::token(Request::param('token'))){
+            return json_encode(['code'=>0,'msg'=>'用户未登录或用户不存在'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $res=Db::table('address')->field('address_id as id,user_id as userId,status as isDefault,phone,region as addressRegion,detailed,name')
+            ->where('user_id',$_SESSION['Auid'])
+            ->select();
+
+        if(count($res)>0){
+            return json_encode(['code'=>1,'msg'=>'获取成功','data'=>$res],JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(['code'=>0,'msg'=>'还没有收货地址'],JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+
+
+    /** 删除购物车
+     * @return false|string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     public function delShopCart()
     {
         //需要 购物车ID、token
@@ -74,6 +208,7 @@ class Index extends Controller
     /**
      * 添加购物车
      * @return false|string
+     * @throws
      */
     public function addShopCart()
     {
@@ -217,6 +352,8 @@ class Index extends Controller
 
             if(count($data)>=1){
                 $address=Db::table('address')->where('user_id',$_SESSION['Auid'])->where('status',1)->findOrEmpty();
+                
+
                 $outData=array('code'=>1,'msg'=>'获取成功！','data'=>$data,'address'=>$address);
                 return json_encode($outData,JSON_UNESCAPED_UNICODE);
             }else{
@@ -256,9 +393,9 @@ class Index extends Controller
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getAddressList($auid)
+    public function uidGetAddressList($auid)
     {
-        $data=Db::table('address')->field('address_id as id,user_id as auid,status,phone,address,name')->where('user_id',$auid)->select();
+        $data=Db::table('address')->field('address_id as id,user_id as userId,status as isDefault,phone,region as addressRegion,detailed,name')->where('user_id',$auid)->select();
         if(count($data)>0){
             $outData=array('code'=>1,'msg'=>'获取成功！','data'=>$data);
             return json_encode($outData,JSON_UNESCAPED_UNICODE);
@@ -365,4 +502,19 @@ class Index extends Controller
         }
     }
 
+    /**检测token是否存在
+     * @param $token
+     * @return bool
+     */
+    public static function token($token){
+        session_id($token);
+        session_start();
+        if(!$_SESSION['Auid']){
+            session_destroy();
+            return false;
+        }else{
+            return true;
+
+        }
+    }
 }

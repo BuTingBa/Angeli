@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-white" :isBack="true">
+		<cu-custom bgColor="bg-white" :isBack="true" v-if="type!='shop'">
 			<block slot="backText">返回</block>
 			<block slot="content">{{title}}</block>
 		</cu-custom>
@@ -39,23 +39,31 @@
 			<view class="upname" v-if="type=='9'" >
 				 <web-view src="https://api.angeli.top/html/vip.html"></web-view>
 			</view>
+			<view class="upname" v-if="type=='shop'" >
+				<web-view :src="shopSrc"></web-view>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	import server from '../../server.js';
+
 	export default {
 		data() {
 			return {
-				type:1,
+				type:'0',
 				title:"安个利",
 				upNameNumber:0,
-				newName:''
+				newName:'',
+				shopSrc:''
 			}
 		},
 		onLoad:function(val) {
-			console.log(val.type)
+			var pages = getCurrentPages();
+			var page = pages[pages.length - 1];
+			
+			console.log(page)
 			this.type=val.type;
 			if(val.type=='1'){
 				this.title="修改名字"
@@ -84,6 +92,16 @@
 			}
 			if(val.type=='9'){
 				this.title="会员协议"
+			}
+			if(val.type=='shop'){
+				this.title="安个利商城"
+				this.shopSrc="https://shop.angeli.top/#/?token="+server.token
+				// #ifdef APP-PLUS
+				const currentWebview = this.$mp.page.$getAppWebview(); 
+				currentWebview.setBounce({position:{top:'100px'},changeoffset:{top:'20px'}});
+				// #endif
+				
+				
 			}
 		},
 		methods: {

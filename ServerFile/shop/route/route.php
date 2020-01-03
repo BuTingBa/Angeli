@@ -26,6 +26,12 @@ Route::post('api/addShopCart/[:token]','api/index/addShopCart')->allowCrossDomai
 Route::post('api/getShopCart/[:token]','api/index/getShopCart')->allowCrossDomain();
 /*删除购物车商品并获取新的列表*/
 Route::post('api/delShopCart/[:token]','api/index/delShopCart')->allowCrossDomain();
+/*获取用户收货地址列表*/
+Route::post('api/getAddressList','api/index/getAddressList')->allowCrossDomain();
+/*新增/修改地址列表*/
+Route::post('api/addAddress','api/index/addAddress')->allowCrossDomain();
+/*删除地址列表*/
+Route::post('api/delAddress','api/index/delAddress')->allowCrossDomain();
 
 return [
 
