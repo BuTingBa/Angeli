@@ -33,6 +33,7 @@ class Index extends Controller
 
     }
 
+
     /**
      * 删除地址
      * @return false|string
@@ -51,6 +52,7 @@ class Index extends Controller
         if(!self::token(Request::param('token'))){
             return json_encode(['code'=>0,'msg'=>'用户未登录或用户不存在'],JSON_UNESCAPED_UNICODE);
         }
+
         $res=Db::table('address')->where('user_id',$_SESSION['Auid'])->where('address_id',Request::param('id'))->delete();
         if($res>0){
             return json_encode(['code'=>1,'msg'=>'删除成功'],JSON_UNESCAPED_UNICODE);
@@ -179,9 +181,10 @@ class Index extends Controller
         }else{
             $idarr=explode('|', Request::param('shopCartId'));
             foreach ($idarr as $value){
-                Db::table('shoppinp_cart')->where('id',$value)->where('auid',$_SESSION['Auid'])->delete();
+                Db::table('shoppinp_cart')->where('id',$value)->where('auid',$_SESSION['Auid'])
+                                          ->where('data_type','<>',3)->delete();
             }
-            $res=Db::table('shoppinp_cart')->where('auid',$_SESSION['Auid'])->select();
+            $res=Db::table('shoppinp_cart')->where('auid',$_SESSION['Auid'])->where('data_type',1)->select();
             if(count($res)>0){
                 foreach ($res as $val){
                     $data=array(
@@ -224,6 +227,10 @@ class Index extends Controller
         if(!Request::param('count')){
             return json_encode(['code'=>0,'msg'=>'缺少参数！'],JSON_UNESCAPED_UNICODE);
         }
+        if(!Request::param('type')){
+            $type=1;
+        }
+
 
         session_id(Request::param('token'));
         session_start();
@@ -232,20 +239,21 @@ class Index extends Controller
         }
         $type=Request::param('type')?Request::param('type'):1;
 
-        $cx=Db::table('shoppinp_cart')
-            ->where('goods_id',Request::param('goodsId'))
-            ->where('specs_id',Request::param('specsId'))
-            ->where('auid',$_SESSION['Auid'])->findOrEmpty();
-
-        if(count($cx)>0){
-            if($cx['data_type']==$type){
-                Db::table('shoppinp_cart')->where('id', $cx['id'])->setInc('number', Request::param('count'));
-                return json_encode(['code'=>1,'msg'=>'添加购物车成功！','data'=>$cx['id']],JSON_UNESCAPED_UNICODE);
-            }else{
-                return json_encode(['code'=>1,'msg'=>'订单已存在！','data'=>$cx['id']],JSON_UNESCAPED_UNICODE);
+        if($type==2){
+            $cx=Db::table('shoppinp_cart')
+                ->where('goods_id',Request::param('goodsId'))
+                ->where('specs_id',Request::param('specsId'))
+                ->where('data_type',2)
+                ->where('auid',$_SESSION['Auid'])->findOrEmpty();
+            if(count($cx)>0){
+                if($cx['data_type']==$type){
+                    Db::table('shoppinp_cart')->where('id', $cx['id'])->setInc('number', Request::param('count'));
+                    return json_encode(['code'=>1,'msg'=>'添加购物车成功！','data'=>$cx['id']],JSON_UNESCAPED_UNICODE);
+                }else{
+                    return json_encode(['code'=>1,'msg'=>'订单已存在！','data'=>$cx['id']],JSON_UNESCAPED_UNICODE);
+                }
             }
         }
-
         $data=[
             'auid'=>$_SESSION['Auid'],
             'goods_id'=>Request::param('goodsId'),
@@ -253,7 +261,6 @@ class Index extends Controller
             'number'=>Request::param('count'),
             'update_time'=>time(),
             'data_type'=>$type
-
         ];
         $res=Db::name('shoppinp_cart')->insertGetId($data);
         if($res){
@@ -280,7 +287,7 @@ class Index extends Controller
         if(!$_SESSION['Auid']){
             return json_encode(['code'=>0,'msg'=>'身份失效！'],JSON_UNESCAPED_UNICODE);
         }
-        $res=Db::table('shoppinp_cart')->where('auid',$_SESSION['Auid'])->select();
+        $res=Db::table('shoppinp_cart')->where('auid',$_SESSION['Auid'])->where('data_type',1)->select();
         if(count($res)>0){
             foreach ($res as $val){
                 $data=array(
@@ -340,10 +347,8 @@ class Index extends Controller
                     );
                     $data[]=$da;
                 }
-
                 //添加到订单即删除购物车(早就看不惯，商品一直待着购物车里了，早删早清净)
-                Db::table('shoppinp_cart')->where('id',$value)->where('auid',$_SESSION['Auid'])->delete();
-
+                //Db::table('shoppinp_cart')->where('id',$value)->where('data_type',2)->where('auid',$_SESSION['Auid'])->delete();
             }
             if(!is_array($data)){
                 $outData=array('code'=>0,'msg'=>'错误！','data'=>$data);
@@ -411,17 +416,25 @@ class Index extends Controller
      * @param $token
      * @return string
      */
-    public function getUserInfo($id)
+    public function getUserInfo($token)
     {
-        if(!$id){
-            return '用户未登录';
+        if(!$token){
+            return json_encode(['code'=>0,'msg'=>'缺少参数'],JSON_UNESCAPED_UNICODE);
         }
-        $data = file_get_contents('https://api.angeli.top/user.php?type=getUserInfo&auid='.$id);
+        session_id($token);
+        session_start();
+        if(!$_SESSION['Auid']){
+            session_destroy();
+            return json_encode(['code'=>0,'msg'=>'用户未登录','data'=>session_id()],JSON_UNESCAPED_UNICODE);
+        }
+        $data = file_get_contents('https://api.angeli.top/user.php?type=getUserInfo&auid='.$_SESSION['Auid']);
         $data=json_decode($data,true);
         if($data['data']['Auid']!='-1'){
-            return $data['data'];
+            return json_encode($data['data'],JSON_UNESCAPED_UNICODE);
+        }else{
+            return json_encode(['code'=>0,'msg'=>'用户不存在','data'=>session_id()],JSON_UNESCAPED_UNICODE);
         }
-        return '无此用户';
+
     }
 
     /**

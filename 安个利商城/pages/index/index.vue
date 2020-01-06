@@ -41,13 +41,16 @@
 		},
 		onLoad(option) {
 			console.log(option)
+			
 			if(option.token){
-				server.Token=option.token;
 				this.login(option.token);
-				
+				console.log('传参登录')
+				server.Token=option.token;
 			}else{
 				this.login(server.Token);
+				console.log('默认登录')
 			}
+			
 			this.getGoods('')
 		},
 		methods: {
@@ -64,7 +67,7 @@
 			login:function(token){
 				uni.request({
 					method:'GET',
-					url: server.requestUrl+token, 
+					url: server.requestUrl+'login/'+token, 
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
 					},

@@ -7,4 +7,4 @@
         })
     },
     [['components/colorui/components/cu-custom-create-component']]
-]);                
+]);

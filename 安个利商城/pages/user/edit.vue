@@ -90,6 +90,7 @@
 				console.log(e)
 			},
 			isDefaultChange(e){
+				
 				this.isDefault = e.detail.value;
 			},
 			del(){
@@ -149,6 +150,8 @@
 				});
 			},
 			save(){
+				let data=[];
+				
 				if(!this.name){
 					uni.showToast({title:'请输入收件人姓名',icon:'none'});
 					return ;
@@ -171,7 +174,7 @@
 				}
 				
 				if(this.editType=='edit'){
-					let data={
+					data={
 						name:this.name,
 						phone:this.tel,
 						detailed:this.detailed,
@@ -180,8 +183,9 @@
 						token:server.Token,
 						addressId:this.id
 					}
+					console.log('编辑')
 				}else{
-					let data={
+					data={
 						name:this.name,
 						phone:this.tel,
 						detailed:this.detailed,
@@ -189,10 +193,8 @@
 						isDefault:this.isDefault?1:0,
 						token:server.Token
 					}
+					console.log('新建')
 				}
-				
-				
-				
 				console.log(data)
 				uni.showLoading({
 					title:'正在提交'

@@ -1,21 +1,21 @@
 <template>
 	<view>
 		<!-- 收货地址 -->
-		<view class="addr" @tap="selectAddress">
+		<view class="addr" @tap="selectAddress" >
 			<view class="icon">
 				<image src="../../static/img/addricon.png" mode=""></image>
 			</view>
 			<view class="right">
 				<view class="tel-name">
 					<view class="name">
-						{{address.name}}
+						{{address.name?address.name:'你还没有选择地址'}}
 					</view>
 					<view class="tel">
 						{{address.phone}}
 					</view>
 				</view>
 				<view class="addres">
-					{{address.region}}{{address.detailed}}
+					{{address.region}}{{address.detailed?address.detailed:'点击添加一个地址'}}
 				</view>
 			</view>
 		</view>
@@ -109,7 +109,8 @@
 				deduction:0,	//抵扣价格
 				address:[],
 				goods:[],
-				sumPrice:0.0
+				sumPrice:0.0,
+				shopCartId:''
 
 			};
 		},
@@ -129,8 +130,9 @@
 			
 			if(option.id){
 				this.getOrderInfo(option.id);
+				this.shopCartId=option.id;
+				console.log(this.shopCartId)
 			}else{
-				this.getOrderInfo('19|20');
 				uni.showToast({
 					title: '失败的请求',
 					position:'bottom',
@@ -183,7 +185,6 @@
 				for(let i=0;i<len;i++){
 					this.goodsPrice=this.goodsPrice+this.goods[i].goodsSpecs.price*this.goods[i].count;
 				}	
-				
 				console.log(server.UserInfo.isVip)
 				if(server.UserInfo.isVip){
 					this.deduction=this.goodsPrice-(this.goodsPrice*0.9);
@@ -205,23 +206,46 @@
 			},
 			toPay(){
 				//商品列表
+
 				
 				//本地模拟订单提交UI效果
 				uni.showLoading({
 					title:'正在提交订单...'
 				})
-				setTimeout(()=>{
-					uni.setStorage({
-						key:'paymentOrder',
-						data:paymentOrder,
-						success: () => {
-							uni.hideLoading();
-							uni.redirectTo({
-								url:"../pay/payment/payment?amount="+this.sumPrice
-							})
+				
+				uni.request({
+					method:'POST',
+					url: server.requestUrl+'addOrder/', 
+					data:{
+						token:server.Token,
+						data:this.shopCartId,
+						address:JSON.stringify(this.address),
+						payMode:'alipay'
+						
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						if(res.data.code=='1'){
+							this.address=res.data.address
+							this.goods=res.data.data
+							this.sum()
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
 						}
-					})
-				},1000)
+						console.log(res);
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+				
+
 			},
 			//选择收货地址
 			selectAddress(){

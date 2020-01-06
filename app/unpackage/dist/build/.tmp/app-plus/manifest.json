@@ -5,10 +5,10 @@
     "iPad"
   ],
   "id": "__UNI__F71FC08",
-  "name": "安个利",
+  "name": "安个利社区",
   "version": {
-    "name": "1.27",
-    "code": 127
+    "name": "1.28",
+    "code": 128
   },
   "description": "安个利",
   "launch_path": "__uniappview.html",
@@ -84,25 +84,25 @@
       },
       "splashscreen": {
         "android": {
-          "hdpi": "static/main.png",
-          "xhdpi": "static/main.png",
-          "xxhdpi": "static/main.png"
+          "hdpi": "D:/Web/angeli/素材/main.png",
+          "xhdpi": "D:/Web/angeli/素材/main.png",
+          "xxhdpi": "D:/Web/angeli/素材/main.png"
         },
         "ios": {
           "iphone": {
-            "portrait-896h@3x": "static/main.png",
-            "landscape-896h@3x": "static/main.png",
-            "portrait-896h@2x": "static/main.png",
-            "landscape-896h@2x": "static/main.png",
-            "iphonex": "static/main.png",
-            "iphonexl": "static/main.png",
-            "retina55": "static/main.png",
-            "retina55l": "static/main.png",
-            "retina47": "static/main.png",
-            "retina47l": "static/main.png",
-            "retina40": "static/main.png",
-            "retina40l": "static/main.png",
-            "retina35": "static/main.png"
+            "portrait-896h@3x": "D:/Web/angeli/素材/main.png",
+            "landscape-896h@3x": "D:/Web/angeli/素材/main.png",
+            "portrait-896h@2x": "D:/Web/angeli/素材/main.png",
+            "landscape-896h@2x": "D:/Web/angeli/素材/main.png",
+            "iphonex": "D:/Web/angeli/素材/main.png",
+            "iphonexl": "D:/Web/angeli/素材/main.png",
+            "retina55": "D:/Web/angeli/素材/main.png",
+            "retina55l": "D:/Web/angeli/素材/main.png",
+            "retina47": "D:/Web/angeli/素材/main.png",
+            "retina47l": "D:/Web/angeli/素材/main.png",
+            "retina40": "D:/Web/angeli/素材/main.png",
+            "retina40l": "D:/Web/angeli/素材/main.png",
+            "retina35": "D:/Web/angeli/素材/main.png"
           }
         }
       },

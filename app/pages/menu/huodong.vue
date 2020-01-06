@@ -5,6 +5,7 @@
 			<block slot="content">分享得会员</block>
 		</cu-custom>
 		<view class="body">
+			<!-- #ifdef MP -->
 			<view class="tou">
 				<view class="wurentou" :style="{'background-image':'url('+MsgList[0].ToTG.AuthorAvatarUrl+')'}"></view>
 				<view class="wurentou" :style="{'background-image':'url('+MsgList[1].ToTG.AuthorAvatarUrl+')'}"></view>
@@ -12,6 +13,13 @@
 			</view>
 			<button class="fenx" open-type="share" v-if="tuijianren==0">立即分享</button>
 			<button class="fenx" v-if="tuijianren!=0" @click="getreg">进入安个利</button>
+			<!-- #endif -->
+			<!-- #ifdef APP-PLUS -->
+			<view class="tou">
+				<text style="font-size:33upx;">该活动仅小程序端可以参与\n</text>
+				
+			</view>
+			<!-- #endif -->
 		</view>
 	</view>
 </template>

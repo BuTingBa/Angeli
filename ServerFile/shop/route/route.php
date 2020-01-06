@@ -15,11 +15,9 @@ Route::get('api/getGoodsConcise/[:date]/[:token]','api/index/getGoodsList')->all
 /*获取单个商品信息*/
 Route::get('api/getGoodsInfo/[:id]/[:token]','api/index/getGoodsInfo')->allowCrossDomain();
 /*获取用户信息*/
-Route::get('api/getUserInfo/[:id]/[:token]','api/index/getUserInfo')->allowCrossDomain();
+Route::rule('api/login/:token','api/index/getUserInfo')->allowCrossDomain();
 /*计算金额*/
 Route::post('api/preOrder','api/index/settleAccounts')->allowCrossDomain();
-/*获取用户信息*/
-Route::get('api/[:token]','api/index/index')->allowCrossDomain();
 /*添加商品到购物车*/
 Route::post('api/addShopCart/[:token]','api/index/addShopCart')->allowCrossDomain();
 /*获取购物车商品*/
@@ -32,6 +30,14 @@ Route::post('api/getAddressList','api/index/getAddressList')->allowCrossDomain()
 Route::post('api/addAddress','api/index/addAddress')->allowCrossDomain();
 /*删除地址列表*/
 Route::post('api/delAddress','api/index/delAddress')->allowCrossDomain();
+
+/*新增一个订单*/
+Route::post('api/addOrder','api/Order/newOrder')->allowCrossDomain();
+
+
+/*测试*/
+Route::get('api/test/:id','api/Order/test')->allowCrossDomain();
+
 
 return [
 

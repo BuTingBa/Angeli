@@ -250,11 +250,13 @@
 							<view class="menuTiele">种草排行</view>
 							<view class="menuRight"></view>
 						</view>
-						<view class="menusolid"></view>
-						<view class="menuItem" @tap="getshop">
-							<view class="menuIcon aicon-shop"></view>
-							<view class="menuTiele">Angeli Shop</view>
-							<view class="menuRight"></view>
+						<view v-if="userInfo.Auid=='6666' || userInfo.Auid=='1000'||userInfo.Auid=='6753' || userInfo.Auid=='7437' ||userInfo.Auid=='1234'">
+							<view class="menusolid"></view>
+							<view class="menuItem" @tap="getshop">
+								<view class="menuIcon aicon-shop"></view>
+								<view class="menuTiele">Angeli Shop</view>
+								<view class="menuRight"></view>
+							</view>
 						</view>
 						<view class="menusolid"></view>
 						<view class="menuItem" @tap="set">

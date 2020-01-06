@@ -237,7 +237,8 @@ export default {
 		}else{
 			this.getGoodsInfo(option.goodsId)
 		}
-		
+		console.log(server.Token)
+		console.log(server.UserInfo)
 	},
 	onReady(){
 		this.calcAnchor();//计算锚点高度，页面数据是ajax加载时，请把此行放在数据渲染完成事件中执行以保证高度计算正确
@@ -357,9 +358,9 @@ export default {
 		},
 		//请求添加到购物车
 		apiAddShopCart:function(type=1){
-			if(server.Token=''){
+			if(server.Token==''){
 				uni.showToast({
-					title: '用户未登录！',
+					title: 'Token为空！',
 					position:'bottom',
 					icon:'none'
 				});
@@ -373,6 +374,7 @@ export default {
 				});
 				return;
 			}
+			
 			
 			uni.request({
 				method:'POST',

@@ -1157,7 +1157,9 @@ Z(z[0])
 Z([3,'infoo'])
 Z([[4],[[5],[[4],[[5],[[5],[1,'tap']],[[4],[[5],[[4],[[5],[[5],[1,'reguser']],[[4],[[5],[1,'$event']]]]]]]]]]])
 Z([[2,'>'],[[6],[[7],[3,'userInfo']],[3,'VIPEndTime']],[1,0]])
+Z([3,'menuListBox'])
 Z([[2,'||'],[[2,'||'],[[2,'=='],[[7],[3,'shebei']],[1,'devtools']],[[2,'=='],[[7],[3,'shebei']],[1,'android']]],[[2,'=='],[[7],[3,'iosapy']],[1,'yes']]])
+Z([[2,'||'],[[2,'||'],[[2,'||'],[[2,'||'],[[2,'=='],[[6],[[7],[3,'userInfo']],[3,'Auid']],[1,'6666']],[[2,'=='],[[6],[[7],[3,'userInfo']],[3,'Auid']],[1,'1000']]],[[2,'=='],[[6],[[7],[3,'userInfo']],[3,'Auid']],[1,'6753']]],[[2,'=='],[[6],[[7],[3,'userInfo']],[3,'Auid']],[1,'7437']]],[[2,'=='],[[6],[[7],[3,'userInfo']],[3,'Auid']],[1,'1234']]])
 Z([[7],[3,'showJubao']])
 Z([[7],[3,'showAppFenxiang']])
 })(__WXML_GLOBAL__.ops_cached.$gwx_4);return __WXML_GLOBAL__.ops_cached.$gwx_4
@@ -1172,6 +1174,7 @@ Z([1,true])
 Z([3,'1'])
 Z([[4],[[5],[[5],[1,'backText']],[1,'content']]])
 Z([[7],[3,'mail']])
+Z([[2,'>='],[[7],[3,'num']],[1,3]])
 })(__WXML_GLOBAL__.ops_cached.$gwx_5);return __WXML_GLOBAL__.ops_cached.$gwx_5
 }
 function gz$gwx_6(){
@@ -1225,6 +1228,7 @@ function gz$gwx_8(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_8)return __WXML_GLOBAL__.ops_cached.$gwx_8
 __WXML_GLOBAL__.ops_cached.$gwx_8=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
+Z([[2,'!='],[[7],[3,'type']],[1,'shop']])
 Z([3,'bg-white'])
 Z([3,'__l'])
 Z([1,true])
@@ -1241,6 +1245,7 @@ Z([[2,'=='],[[7],[3,'type']],[1,'6']])
 Z([[2,'=='],[[7],[3,'type']],[1,'7']])
 Z([[2,'=='],[[7],[3,'type']],[1,'8']])
 Z([[2,'=='],[[7],[3,'type']],[1,'9']])
+Z([[2,'=='],[[7],[3,'type']],[1,'shop']])
 })(__WXML_GLOBAL__.ops_cached.$gwx_8);return __WXML_GLOBAL__.ops_cached.$gwx_8
 }
 function gz$gwx_9(){
@@ -1376,9 +1381,6 @@ Z([3,'__l'])
 Z([1,true])
 Z([3,'1'])
 Z([[4],[[5],[[5],[1,'backText']],[1,'content']]])
-Z([3,'body'])
-Z([[2,'=='],[[7],[3,'tuijianren']],[1,0]])
-Z([[2,'!='],[[7],[3,'tuijianren']],[1,0]])
 })(__WXML_GLOBAL__.ops_cached.$gwx_18);return __WXML_GLOBAL__.ops_cached.$gwx_18
 }
 function gz$gwx_19(){
@@ -1859,26 +1861,34 @@ cT.wxXCkey=1
 _(aL,bO)
 var fYB=_n('view')
 _rz(z,fYB,'class',64,e,s,gg)
-var h1B=_mz(z,'view',['bindtap',65,'class',1,'data-event-opts',2],[],e,s,gg)
-var o2B=_v()
-_(h1B,o2B)
-if(_oz(z,68,e,s,gg)){o2B.wxVkey=1
+var cZB=_mz(z,'view',['bindtap',65,'class',1,'data-event-opts',2],[],e,s,gg)
+var h1B=_v()
+_(cZB,h1B)
+if(_oz(z,68,e,s,gg)){h1B.wxVkey=1
 }
-o2B.wxXCkey=1
-_(fYB,h1B)
-var cZB=_v()
+h1B.wxXCkey=1
 _(fYB,cZB)
-if(_oz(z,69,e,s,gg)){cZB.wxVkey=1
+var o2B=_n('view')
+_rz(z,o2B,'class',69,e,s,gg)
+var c3B=_v()
+_(o2B,c3B)
+if(_oz(z,70,e,s,gg)){c3B.wxVkey=1
 }
-cZB.wxXCkey=1
+var o4B=_v()
+_(o2B,o4B)
+if(_oz(z,71,e,s,gg)){o4B.wxVkey=1
+}
+c3B.wxXCkey=1
+o4B.wxXCkey=1
+_(fYB,o2B)
 _(aL,fYB)
 var tM=_v()
 _(aL,tM)
-if(_oz(z,70,e,s,gg)){tM.wxVkey=1
+if(_oz(z,72,e,s,gg)){tM.wxVkey=1
 }
 var eN=_v()
 _(aL,eN)
-if(_oz(z,71,e,s,gg)){eN.wxVkey=1
+if(_oz(z,73,e,s,gg)){eN.wxVkey=1
 }
 tM.wxXCkey=1
 eN.wxXCkey=1
@@ -1889,794 +1899,795 @@ e_[x[3]]={f:m3,j:[],i:[],ti:[],ic:[]}
 d_[x[4]]={}
 var m4=function(e,s,r,gg){
 var z=gz$gwx_5()
-var o4B=_n('view')
-var a6B=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(o4B,a6B)
-var l5B=_v()
-_(o4B,l5B)
-if(_oz(z,5,e,s,gg)){l5B.wxVkey=1
+var a6B=_n('view')
+var b9B=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(a6B,b9B)
+var t7B=_v()
+_(a6B,t7B)
+if(_oz(z,5,e,s,gg)){t7B.wxVkey=1
 }
-l5B.wxXCkey=1
-_(r,o4B)
+var e8B=_v()
+_(a6B,e8B)
+if(_oz(z,6,e,s,gg)){e8B.wxVkey=1
+}
+t7B.wxXCkey=1
+e8B.wxXCkey=1
+_(r,a6B)
 return r
 }
 e_[x[4]]={f:m4,j:[],i:[],ti:[],ic:[]}
 d_[x[5]]={}
 var m5=function(e,s,r,gg){
 var z=gz$gwx_6()
-var e8B=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,e8B)
+var xAC=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,xAC)
 return r
 }
 e_[x[5]]={f:m5,j:[],i:[],ti:[],ic:[]}
 d_[x[6]]={}
 var m6=function(e,s,r,gg){
 var z=gz$gwx_7()
-var o0B=_n('view')
-var xAC=_v()
-_(o0B,xAC)
-if(_oz(z,0,e,s,gg)){xAC.wxVkey=1
+var fCC=_n('view')
 var cDC=_v()
-_(xAC,cDC)
-var hEC=function(cGC,oFC,oHC,gg){
-var aJC=_n('view')
-_rz(z,aJC,'class',5,cGC,oFC,gg)
-var bMC=_mz(z,'view',['bindtap',6,'class',1,'data-event-opts',2,'style',3],[],cGC,oFC,gg)
+_(fCC,cDC)
+if(_oz(z,0,e,s,gg)){cDC.wxVkey=1
+var cGC=_v()
+_(cDC,cGC)
+var oHC=function(aJC,lIC,tKC,gg){
+var bMC=_n('view')
+_rz(z,bMC,'class',5,aJC,lIC,gg)
+var oPC=_mz(z,'view',['bindtap',6,'class',1,'data-event-opts',2,'style',3],[],aJC,lIC,gg)
+var fQC=_v()
+_(oPC,fQC)
+if(_oz(z,10,aJC,lIC,gg)){fQC.wxVkey=1
+}
+fQC.wxXCkey=1
+_(bMC,oPC)
 var oNC=_v()
 _(bMC,oNC)
-if(_oz(z,10,cGC,oFC,gg)){oNC.wxVkey=1
+if(_oz(z,11,aJC,lIC,gg)){oNC.wxVkey=1
+}
+var xOC=_v()
+_(bMC,xOC)
+if(_oz(z,12,aJC,lIC,gg)){xOC.wxVkey=1
 }
 oNC.wxXCkey=1
-_(aJC,bMC)
-var tKC=_v()
-_(aJC,tKC)
-if(_oz(z,11,cGC,oFC,gg)){tKC.wxVkey=1
+xOC.wxXCkey=1
+_(tKC,bMC)
+return tKC
 }
-var eLC=_v()
-_(aJC,eLC)
-if(_oz(z,12,cGC,oFC,gg)){eLC.wxVkey=1
+cGC.wxXCkey=2
+_2z(z,3,oHC,e,s,gg,cGC,'list','index','index')
 }
-tKC.wxXCkey=1
-eLC.wxXCkey=1
-_(oHC,aJC)
-return oHC
+var hEC=_v()
+_(fCC,hEC)
+if(_oz(z,13,e,s,gg)){hEC.wxVkey=1
+var cRC=_v()
+_(hEC,cRC)
+var hSC=function(cUC,oTC,oVC,gg){
+var aXC=_n('view')
+_rz(z,aXC,'class',18,cUC,oTC,gg)
+var b1C=_mz(z,'view',['bindtap',19,'class',1,'data-event-opts',2,'style',3],[],cUC,oTC,gg)
+var o2C=_v()
+_(b1C,o2C)
+if(_oz(z,23,cUC,oTC,gg)){o2C.wxVkey=1
 }
-cDC.wxXCkey=2
-_2z(z,3,hEC,e,s,gg,cDC,'list','index','index')
-}
-var oBC=_v()
-_(o0B,oBC)
-if(_oz(z,13,e,s,gg)){oBC.wxVkey=1
-var xOC=_v()
-_(oBC,xOC)
-var oPC=function(cRC,fQC,hSC,gg){
-var cUC=_n('view')
-_rz(z,cUC,'class',18,cRC,fQC,gg)
-var aXC=_mz(z,'view',['bindtap',19,'class',1,'data-event-opts',2,'style',3],[],cRC,fQC,gg)
+o2C.wxXCkey=1
+_(aXC,b1C)
 var tYC=_v()
 _(aXC,tYC)
-if(_oz(z,23,cRC,fQC,gg)){tYC.wxVkey=1
+if(_oz(z,24,cUC,oTC,gg)){tYC.wxVkey=1
+}
+var eZC=_v()
+_(aXC,eZC)
+if(_oz(z,25,cUC,oTC,gg)){eZC.wxVkey=1
 }
 tYC.wxXCkey=1
-_(cUC,aXC)
-var oVC=_v()
-_(cUC,oVC)
-if(_oz(z,24,cRC,fQC,gg)){oVC.wxVkey=1
+eZC.wxXCkey=1
+_(oVC,aXC)
+return oVC
 }
-var lWC=_v()
-_(cUC,lWC)
-if(_oz(z,25,cRC,fQC,gg)){lWC.wxVkey=1
+cRC.wxXCkey=2
+_2z(z,16,hSC,e,s,gg,cRC,'list','index','index')
 }
-oVC.wxXCkey=1
-lWC.wxXCkey=1
-_(hSC,cUC)
-return hSC
+var x3C=_mz(z,'uni-load-more',['bind:__l',26,'status',1,'vueId',2],[],e,s,gg)
+_(fCC,x3C)
+var oFC=_v()
+_(fCC,oFC)
+if(_oz(z,29,e,s,gg)){oFC.wxVkey=1
 }
-xOC.wxXCkey=2
-_2z(z,16,oPC,e,s,gg,xOC,'list','index','index')
-}
-var eZC=_mz(z,'uni-load-more',['bind:__l',26,'status',1,'vueId',2],[],e,s,gg)
-_(o0B,eZC)
-var fCC=_v()
-_(o0B,fCC)
-if(_oz(z,29,e,s,gg)){fCC.wxVkey=1
-}
-xAC.wxXCkey=1
-oBC.wxXCkey=1
-fCC.wxXCkey=1
-_(r,o0B)
+cDC.wxXCkey=1
+hEC.wxXCkey=1
+oFC.wxXCkey=1
+_(r,fCC)
 return r
 }
 e_[x[6]]={f:m6,j:[],i:[],ti:[],ic:[]}
 d_[x[7]]={}
 var m7=function(e,s,r,gg){
 var z=gz$gwx_8()
-var o2C=_n('view')
-var x3C=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(o2C,x3C)
-var o4C=_n('view')
-_rz(z,o4C,'class',5,e,s,gg)
-var f5C=_v()
-_(o4C,f5C)
-if(_oz(z,6,e,s,gg)){f5C.wxVkey=1
-var eDD=_v()
-_(f5C,eDD)
-if(_oz(z,7,e,s,gg)){eDD.wxVkey=1
-}
-eDD.wxXCkey=1
-}
+var f5C=_n('view')
 var c6C=_v()
-_(o4C,c6C)
-if(_oz(z,8,e,s,gg)){c6C.wxVkey=1
+_(f5C,c6C)
+if(_oz(z,0,e,s,gg)){c6C.wxVkey=1
+var h7C=_mz(z,'cu-custom',['bgColor',1,'bind:__l',1,'isBack',2,'vueId',3,'vueSlots',4],[],e,s,gg)
+_(c6C,h7C)
 }
-var h7C=_v()
-_(o4C,h7C)
-if(_oz(z,9,e,s,gg)){h7C.wxVkey=1
-}
-var o8C=_v()
-_(o4C,o8C)
-if(_oz(z,10,e,s,gg)){o8C.wxVkey=1
-}
+var o8C=_n('view')
+_rz(z,o8C,'class',6,e,s,gg)
 var c9C=_v()
-_(o4C,c9C)
-if(_oz(z,11,e,s,gg)){c9C.wxVkey=1
+_(o8C,c9C)
+if(_oz(z,7,e,s,gg)){c9C.wxVkey=1
+var fID=_v()
+_(c9C,fID)
+if(_oz(z,8,e,s,gg)){fID.wxVkey=1
+}
+fID.wxXCkey=1
 }
 var o0C=_v()
-_(o4C,o0C)
-if(_oz(z,12,e,s,gg)){o0C.wxVkey=1
+_(o8C,o0C)
+if(_oz(z,9,e,s,gg)){o0C.wxVkey=1
 }
 var lAD=_v()
-_(o4C,lAD)
-if(_oz(z,13,e,s,gg)){lAD.wxVkey=1
+_(o8C,lAD)
+if(_oz(z,10,e,s,gg)){lAD.wxVkey=1
 }
 var aBD=_v()
-_(o4C,aBD)
-if(_oz(z,14,e,s,gg)){aBD.wxVkey=1
+_(o8C,aBD)
+if(_oz(z,11,e,s,gg)){aBD.wxVkey=1
 }
 var tCD=_v()
-_(o4C,tCD)
-if(_oz(z,15,e,s,gg)){tCD.wxVkey=1
+_(o8C,tCD)
+if(_oz(z,12,e,s,gg)){tCD.wxVkey=1
 }
-f5C.wxXCkey=1
-c6C.wxXCkey=1
-h7C.wxXCkey=1
-o8C.wxXCkey=1
+var eDD=_v()
+_(o8C,eDD)
+if(_oz(z,13,e,s,gg)){eDD.wxVkey=1
+}
+var bED=_v()
+_(o8C,bED)
+if(_oz(z,14,e,s,gg)){bED.wxVkey=1
+}
+var oFD=_v()
+_(o8C,oFD)
+if(_oz(z,15,e,s,gg)){oFD.wxVkey=1
+}
+var xGD=_v()
+_(o8C,xGD)
+if(_oz(z,16,e,s,gg)){xGD.wxVkey=1
+}
+var oHD=_v()
+_(o8C,oHD)
+if(_oz(z,17,e,s,gg)){oHD.wxVkey=1
+}
 c9C.wxXCkey=1
 o0C.wxXCkey=1
 lAD.wxXCkey=1
 aBD.wxXCkey=1
 tCD.wxXCkey=1
-_(o2C,o4C)
-_(r,o2C)
+eDD.wxXCkey=1
+bED.wxXCkey=1
+oFD.wxXCkey=1
+xGD.wxXCkey=1
+oHD.wxXCkey=1
+_(f5C,o8C)
+c6C.wxXCkey=1
+c6C.wxXCkey=3
+_(r,f5C)
 return r
 }
 e_[x[7]]={f:m7,j:[],i:[],ti:[],ic:[]}
 d_[x[8]]={}
 var m8=function(e,s,r,gg){
 var z=gz$gwx_9()
-var oFD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,oFD)
+var hKD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,hKD)
 return r
 }
 e_[x[8]]={f:m8,j:[],i:[],ti:[],ic:[]}
 d_[x[9]]={}
 var m9=function(e,s,r,gg){
 var z=gz$gwx_10()
-var oHD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,oHD)
+var cMD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,cMD)
 return r
 }
 e_[x[9]]={f:m9,j:[],i:[],ti:[],ic:[]}
 d_[x[10]]={}
 var m10=function(e,s,r,gg){
 var z=gz$gwx_11()
-var cJD=_n('view')
-var hKD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(cJD,hKD)
-var oLD=_n('view')
-_rz(z,oLD,'style',5,e,s,gg)
-var cMD=_v()
-_(oLD,cMD)
-if(_oz(z,6,e,s,gg)){cMD.wxVkey=1
+var lOD=_n('view')
+var aPD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(lOD,aPD)
+var tQD=_n('view')
+_rz(z,tQD,'style',5,e,s,gg)
+var eRD=_v()
+_(tQD,eRD)
+if(_oz(z,6,e,s,gg)){eRD.wxVkey=1
 }
-var oND=_v()
-_(oLD,oND)
-if(_oz(z,7,e,s,gg)){oND.wxVkey=1
+var bSD=_v()
+_(tQD,bSD)
+if(_oz(z,7,e,s,gg)){bSD.wxVkey=1
 }
-var lOD=_mz(z,'uni-load-more',['bind:__l',8,'status',1,'vueId',2],[],e,s,gg)
-_(oLD,lOD)
-cMD.wxXCkey=1
-oND.wxXCkey=1
-_(cJD,oLD)
-_(r,cJD)
+var oTD=_mz(z,'uni-load-more',['bind:__l',8,'status',1,'vueId',2],[],e,s,gg)
+_(tQD,oTD)
+eRD.wxXCkey=1
+bSD.wxXCkey=1
+_(lOD,tQD)
+_(r,lOD)
 return r
 }
 e_[x[10]]={f:m10,j:[],i:[],ti:[],ic:[]}
 d_[x[11]]={}
 var m11=function(e,s,r,gg){
 var z=gz$gwx_12()
-var tQD=_n('view')
-var eRD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(tQD,eRD)
-var bSD=_n('view')
-_rz(z,bSD,'style',5,e,s,gg)
-var oTD=_v()
-_(bSD,oTD)
-if(_oz(z,6,e,s,gg)){oTD.wxVkey=1
+var oVD=_n('view')
+var fWD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(oVD,fWD)
+var cXD=_n('view')
+_rz(z,cXD,'style',5,e,s,gg)
+var hYD=_v()
+_(cXD,hYD)
+if(_oz(z,6,e,s,gg)){hYD.wxVkey=1
 }
-var xUD=_v()
-_(bSD,xUD)
-if(_oz(z,7,e,s,gg)){xUD.wxVkey=1
+var oZD=_v()
+_(cXD,oZD)
+if(_oz(z,7,e,s,gg)){oZD.wxVkey=1
 }
-var oVD=_mz(z,'uni-load-more',['bind:__l',8,'status',1,'vueId',2],[],e,s,gg)
-_(bSD,oVD)
-oTD.wxXCkey=1
-xUD.wxXCkey=1
-_(tQD,bSD)
-_(r,tQD)
+var c1D=_mz(z,'uni-load-more',['bind:__l',8,'status',1,'vueId',2],[],e,s,gg)
+_(cXD,c1D)
+hYD.wxXCkey=1
+oZD.wxXCkey=1
+_(oVD,cXD)
+_(r,oVD)
 return r
 }
 e_[x[11]]={f:m11,j:[],i:[],ti:[],ic:[]}
 d_[x[12]]={}
 var m12=function(e,s,r,gg){
 var z=gz$gwx_13()
-var cXD=_n('view')
-var hYD=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(cXD,hYD)
-var oZD=_n('view')
-_rz(z,oZD,'class',5,e,s,gg)
-var c1D=_v()
-_(oZD,c1D)
-if(_oz(z,6,e,s,gg)){c1D.wxVkey=1
+var l3D=_n('view')
+var a4D=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(l3D,a4D)
+var t5D=_n('view')
+_rz(z,t5D,'class',5,e,s,gg)
+var e6D=_v()
+_(t5D,e6D)
+if(_oz(z,6,e,s,gg)){e6D.wxVkey=1
 }
-var o2D=_v()
-_(oZD,o2D)
-if(_oz(z,7,e,s,gg)){o2D.wxVkey=1
+var b7D=_v()
+_(t5D,b7D)
+if(_oz(z,7,e,s,gg)){b7D.wxVkey=1
 }
-var l3D=_v()
-_(oZD,l3D)
-if(_oz(z,8,e,s,gg)){l3D.wxVkey=1
+var o8D=_v()
+_(t5D,o8D)
+if(_oz(z,8,e,s,gg)){o8D.wxVkey=1
 }
-c1D.wxXCkey=1
-o2D.wxXCkey=1
-l3D.wxXCkey=1
-_(cXD,oZD)
-var a4D=_mz(z,'uni-load-more',['bind:__l',9,'status',1,'vueId',2],[],e,s,gg)
-_(cXD,a4D)
-_(r,cXD)
+e6D.wxXCkey=1
+b7D.wxXCkey=1
+o8D.wxXCkey=1
+_(l3D,t5D)
+var x9D=_mz(z,'uni-load-more',['bind:__l',9,'status',1,'vueId',2],[],e,s,gg)
+_(l3D,x9D)
+_(r,l3D)
 return r
 }
 e_[x[12]]={f:m12,j:[],i:[],ti:[],ic:[]}
 d_[x[13]]={}
 var m13=function(e,s,r,gg){
 var z=gz$gwx_14()
-var e6D=_n('view')
-var b7D=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(e6D,b7D)
-var o8D=_v()
-_(e6D,o8D)
-var x9D=function(fAE,o0D,cBE,gg){
-var oDE=_n('view')
-var cEE=_v()
-_(oDE,cEE)
-if(_oz(z,9,fAE,o0D,gg)){cEE.wxVkey=1
+var fAE=_n('view')
+var cBE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(fAE,cBE)
+var hCE=_v()
+_(fAE,hCE)
+var oDE=function(oFE,cEE,lGE,gg){
+var tIE=_n('view')
+var eJE=_v()
+_(tIE,eJE)
+if(_oz(z,9,oFE,cEE,gg)){eJE.wxVkey=1
 }
-var oFE=_v()
-_(oDE,oFE)
-if(_oz(z,10,fAE,o0D,gg)){oFE.wxVkey=1
+var bKE=_v()
+_(tIE,bKE)
+if(_oz(z,10,oFE,cEE,gg)){bKE.wxVkey=1
 }
-cEE.wxXCkey=1
-oFE.wxXCkey=1
-_(cBE,oDE)
-return cBE
+eJE.wxXCkey=1
+bKE.wxXCkey=1
+_(lGE,tIE)
+return lGE
 }
-o8D.wxXCkey=2
-_2z(z,7,x9D,e,s,gg,o8D,'list','index','index')
-_(r,e6D)
+hCE.wxXCkey=2
+_2z(z,7,oDE,e,s,gg,hCE,'list','index','index')
+_(r,fAE)
 return r
 }
 e_[x[13]]={f:m13,j:[],i:[],ti:[],ic:[]}
 d_[x[14]]={}
 var m14=function(e,s,r,gg){
 var z=gz$gwx_15()
-var aHE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,aHE)
+var xME=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,xME)
 return r
 }
 e_[x[14]]={f:m14,j:[],i:[],ti:[],ic:[]}
 d_[x[15]]={}
 var m15=function(e,s,r,gg){
 var z=gz$gwx_16()
-var eJE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,eJE)
+var fOE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,fOE)
 return r
 }
 e_[x[15]]={f:m15,j:[],i:[],ti:[],ic:[]}
 d_[x[16]]={}
 var m16=function(e,s,r,gg){
 var z=gz$gwx_17()
-var oLE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,oLE)
+var hQE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,hQE)
 return r
 }
 e_[x[16]]={f:m16,j:[],i:[],ti:[],ic:[]}
 d_[x[17]]={}
 var m17=function(e,s,r,gg){
 var z=gz$gwx_18()
-var oNE=_n('view')
-var fOE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(oNE,fOE)
-var cPE=_n('view')
-_rz(z,cPE,'class',5,e,s,gg)
-var hQE=_v()
-_(cPE,hQE)
-if(_oz(z,6,e,s,gg)){hQE.wxVkey=1
-}
-var oRE=_v()
-_(cPE,oRE)
-if(_oz(z,7,e,s,gg)){oRE.wxVkey=1
-}
-hQE.wxXCkey=1
-oRE.wxXCkey=1
-_(oNE,cPE)
-_(r,oNE)
+var cSE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,cSE)
 return r
 }
 e_[x[17]]={f:m17,j:[],i:[],ti:[],ic:[]}
 d_[x[18]]={}
 var m18=function(e,s,r,gg){
 var z=gz$gwx_19()
-var oTE=_n('view')
-var lUE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(oTE,lUE)
-var aVE=_v()
-_(oTE,aVE)
-var tWE=function(bYE,eXE,oZE,gg){
-var o2E=_mz(z,'view',['bindtap',9,'class',1,'data-event-opts',2],[],bYE,eXE,gg)
-var f3E=_v()
-_(o2E,f3E)
-if(_oz(z,12,bYE,eXE,gg)){f3E.wxVkey=1
-}
+var lUE=_n('view')
+var aVE=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(lUE,aVE)
+var tWE=_v()
+_(lUE,tWE)
+var eXE=function(oZE,bYE,x1E,gg){
+var f3E=_mz(z,'view',['bindtap',9,'class',1,'data-event-opts',2],[],oZE,bYE,gg)
 var c4E=_v()
-_(o2E,c4E)
-if(_oz(z,13,bYE,eXE,gg)){c4E.wxVkey=1
+_(f3E,c4E)
+if(_oz(z,12,oZE,bYE,gg)){c4E.wxVkey=1
 }
 var h5E=_v()
-_(o2E,h5E)
-if(_oz(z,14,bYE,eXE,gg)){h5E.wxVkey=1
+_(f3E,h5E)
+if(_oz(z,13,oZE,bYE,gg)){h5E.wxVkey=1
 }
 var o6E=_v()
-_(o2E,o6E)
-if(_oz(z,15,bYE,eXE,gg)){o6E.wxVkey=1
+_(f3E,o6E)
+if(_oz(z,14,oZE,bYE,gg)){o6E.wxVkey=1
 }
-f3E.wxXCkey=1
+var c7E=_v()
+_(f3E,c7E)
+if(_oz(z,15,oZE,bYE,gg)){c7E.wxVkey=1
+}
 c4E.wxXCkey=1
 h5E.wxXCkey=1
 o6E.wxXCkey=1
-_(oZE,o2E)
-return oZE
+c7E.wxXCkey=1
+_(x1E,f3E)
+return x1E
 }
-aVE.wxXCkey=2
-_2z(z,7,tWE,e,s,gg,aVE,'list','index','index')
-_(r,oTE)
+tWE.wxXCkey=2
+_2z(z,7,eXE,e,s,gg,tWE,'list','index','index')
+_(r,lUE)
 return r
 }
 e_[x[18]]={f:m18,j:[],i:[],ti:[],ic:[]}
 d_[x[19]]={}
 var m19=function(e,s,r,gg){
 var z=gz$gwx_20()
-var o8E=_n('view')
-var l9E=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(o8E,l9E)
-var a0E=_v()
-_(o8E,a0E)
-var tAF=function(bCF,eBF,oDF,gg){
-var oFF=_mz(z,'view',['bindtap',9,'class',1,'data-event-opts',2],[],bCF,eBF,gg)
-var fGF=_v()
-_(oFF,fGF)
-if(_oz(z,12,bCF,eBF,gg)){fGF.wxVkey=1
-}
+var l9E=_n('view')
+var a0E=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(l9E,a0E)
+var tAF=_v()
+_(l9E,tAF)
+var eBF=function(oDF,bCF,xEF,gg){
+var fGF=_mz(z,'view',['bindtap',9,'class',1,'data-event-opts',2],[],oDF,bCF,gg)
 var cHF=_v()
-_(oFF,cHF)
-if(_oz(z,13,bCF,eBF,gg)){cHF.wxVkey=1
+_(fGF,cHF)
+if(_oz(z,12,oDF,bCF,gg)){cHF.wxVkey=1
 }
 var hIF=_v()
-_(oFF,hIF)
-if(_oz(z,14,bCF,eBF,gg)){hIF.wxVkey=1
+_(fGF,hIF)
+if(_oz(z,13,oDF,bCF,gg)){hIF.wxVkey=1
 }
 var oJF=_v()
-_(oFF,oJF)
-if(_oz(z,15,bCF,eBF,gg)){oJF.wxVkey=1
+_(fGF,oJF)
+if(_oz(z,14,oDF,bCF,gg)){oJF.wxVkey=1
 }
-fGF.wxXCkey=1
+var cKF=_v()
+_(fGF,cKF)
+if(_oz(z,15,oDF,bCF,gg)){cKF.wxVkey=1
+}
 cHF.wxXCkey=1
 hIF.wxXCkey=1
 oJF.wxXCkey=1
-_(oDF,oFF)
-return oDF
+cKF.wxXCkey=1
+_(xEF,fGF)
+return xEF
 }
-a0E.wxXCkey=2
-_2z(z,7,tAF,e,s,gg,a0E,'list','index','index')
-_(r,o8E)
+tAF.wxXCkey=2
+_2z(z,7,eBF,e,s,gg,tAF,'list','index','index')
+_(r,l9E)
 return r
 }
 e_[x[19]]={f:m19,j:[],i:[],ti:[],ic:[]}
 d_[x[20]]={}
 var m20=function(e,s,r,gg){
 var z=gz$gwx_21()
-var oLF=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,oLF)
+var lMF=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,lMF)
 return r
 }
 e_[x[20]]={f:m20,j:[],i:[],ti:[],ic:[]}
 d_[x[21]]={}
 var m21=function(e,s,r,gg){
 var z=gz$gwx_22()
-var aNF=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,aNF)
+var tOF=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,tOF)
 return r
 }
 e_[x[21]]={f:m21,j:[],i:[],ti:[],ic:[]}
 d_[x[22]]={}
 var m22=function(e,s,r,gg){
 var z=gz$gwx_23()
-var ePF=_n('view')
-var bQF=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(ePF,bQF)
-var oRF=_v()
-_(ePF,oRF)
-var xSF=function(fUF,oTF,cVF,gg){
-var oXF=_v()
-_(cVF,oXF)
-if(_oz(z,9,fUF,oTF,gg)){oXF.wxVkey=1
+var bQF=_n('view')
+var oRF=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(bQF,oRF)
+var xSF=_v()
+_(bQF,xSF)
+var oTF=function(cVF,fUF,hWF,gg){
+var cYF=_v()
+_(hWF,cYF)
+if(_oz(z,9,cVF,fUF,gg)){cYF.wxVkey=1
 }
-oXF.wxXCkey=1
-return cVF
+cYF.wxXCkey=1
+return hWF
 }
-oRF.wxXCkey=2
-_2z(z,7,xSF,e,s,gg,oRF,'list','index','index')
-_(r,ePF)
+xSF.wxXCkey=2
+_2z(z,7,oTF,e,s,gg,xSF,'list','index','index')
+_(r,bQF)
 return r
 }
 e_[x[22]]={f:m22,j:[],i:[],ti:[],ic:[]}
 d_[x[23]]={}
 var m23=function(e,s,r,gg){
 var z=gz$gwx_24()
-var oZF=_n('view')
-var a2F=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(oZF,a2F)
-var l1F=_v()
-_(oZF,l1F)
-if(_oz(z,5,e,s,gg)){l1F.wxVkey=1
+var l1F=_n('view')
+var t3F=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(l1F,t3F)
+var a2F=_v()
+_(l1F,a2F)
+if(_oz(z,5,e,s,gg)){a2F.wxVkey=1
 }
-l1F.wxXCkey=1
-_(r,oZF)
+a2F.wxXCkey=1
+_(r,l1F)
 return r
 }
 e_[x[23]]={f:m23,j:[],i:[],ti:[],ic:[]}
 d_[x[24]]={}
 var m24=function(e,s,r,gg){
 var z=gz$gwx_25()
-var e4F=_n('view')
-var x7F=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(e4F,x7F)
-var b5F=_v()
-_(e4F,b5F)
-if(_oz(z,5,e,s,gg)){b5F.wxVkey=1
-}
+var b5F=_n('view')
+var o8F=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(b5F,o8F)
 var o6F=_v()
-_(e4F,o6F)
-if(_oz(z,6,e,s,gg)){o6F.wxVkey=1
+_(b5F,o6F)
+if(_oz(z,5,e,s,gg)){o6F.wxVkey=1
 }
-b5F.wxXCkey=1
+var x7F=_v()
+_(b5F,x7F)
+if(_oz(z,6,e,s,gg)){x7F.wxVkey=1
+}
 o6F.wxXCkey=1
-_(r,e4F)
+x7F.wxXCkey=1
+_(r,b5F)
 return r
 }
 e_[x[24]]={f:m24,j:[],i:[],ti:[],ic:[]}
 d_[x[25]]={}
 var m25=function(e,s,r,gg){
 var z=gz$gwx_26()
-var f9F=_n('view')
-var c0F=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(f9F,c0F)
-var hAG=_v()
-_(f9F,hAG)
-var oBG=function(oDG,cCG,lEG,gg){
-var tGG=_n('view')
-_rz(z,tGG,'class',9,oDG,cCG,gg)
+var c0F=_n('view')
+var hAG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(c0F,hAG)
+var oBG=_v()
+_(c0F,oBG)
+var cCG=function(lEG,oDG,aFG,gg){
 var eHG=_n('view')
-_rz(z,eHG,'class',10,oDG,cCG,gg)
-var bIG=_v()
-_(eHG,bIG)
-if(_oz(z,11,oDG,cCG,gg)){bIG.wxVkey=1
-}
+_rz(z,eHG,'class',9,lEG,oDG,gg)
+var bIG=_n('view')
+_rz(z,bIG,'class',10,lEG,oDG,gg)
 var oJG=_v()
-_(eHG,oJG)
-if(_oz(z,12,oDG,cCG,gg)){oJG.wxVkey=1
+_(bIG,oJG)
+if(_oz(z,11,lEG,oDG,gg)){oJG.wxVkey=1
 }
 var xKG=_v()
-_(eHG,xKG)
-if(_oz(z,13,oDG,cCG,gg)){xKG.wxVkey=1
+_(bIG,xKG)
+if(_oz(z,12,lEG,oDG,gg)){xKG.wxVkey=1
 }
 var oLG=_v()
-_(eHG,oLG)
-if(_oz(z,14,oDG,cCG,gg)){oLG.wxVkey=1
+_(bIG,oLG)
+if(_oz(z,13,lEG,oDG,gg)){oLG.wxVkey=1
 }
-bIG.wxXCkey=1
+var fMG=_v()
+_(bIG,fMG)
+if(_oz(z,14,lEG,oDG,gg)){fMG.wxVkey=1
+}
 oJG.wxXCkey=1
 xKG.wxXCkey=1
 oLG.wxXCkey=1
-_(tGG,eHG)
-var fMG=_mz(z,'view',['bindtap',15,'class',1,'data-event-opts',2],[],oDG,cCG,gg)
-var cNG=_v()
-_(fMG,cNG)
-if(_oz(z,18,oDG,cCG,gg)){cNG.wxVkey=1
-}
+fMG.wxXCkey=1
+_(eHG,bIG)
+var cNG=_mz(z,'view',['bindtap',15,'class',1,'data-event-opts',2],[],lEG,oDG,gg)
 var hOG=_v()
-_(fMG,hOG)
-if(_oz(z,19,oDG,cCG,gg)){hOG.wxVkey=1
+_(cNG,hOG)
+if(_oz(z,18,lEG,oDG,gg)){hOG.wxVkey=1
 }
 var oPG=_v()
-_(fMG,oPG)
-if(_oz(z,20,oDG,cCG,gg)){oPG.wxVkey=1
+_(cNG,oPG)
+if(_oz(z,19,lEG,oDG,gg)){oPG.wxVkey=1
 }
-cNG.wxXCkey=1
+var cQG=_v()
+_(cNG,cQG)
+if(_oz(z,20,lEG,oDG,gg)){cQG.wxVkey=1
+}
 hOG.wxXCkey=1
 oPG.wxXCkey=1
-_(tGG,fMG)
-_(lEG,tGG)
-return lEG
+cQG.wxXCkey=1
+_(eHG,cNG)
+_(aFG,eHG)
+return aFG
 }
-hAG.wxXCkey=2
-_2z(z,7,oBG,e,s,gg,hAG,'list','index','index')
-_(r,f9F)
+oBG.wxXCkey=2
+_2z(z,7,cCG,e,s,gg,oBG,'list','index','index')
+_(r,c0F)
 return r
 }
 e_[x[25]]={f:m25,j:[],i:[],ti:[],ic:[]}
 d_[x[26]]={}
 var m26=function(e,s,r,gg){
 var z=gz$gwx_27()
-var oRG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,oRG)
+var lSG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,lSG)
 return r
 }
 e_[x[26]]={f:m26,j:[],i:[],ti:[],ic:[]}
 d_[x[27]]={}
 var m27=function(e,s,r,gg){
 var z=gz$gwx_28()
-var aTG=_n('view')
-var tUG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(aTG,tUG)
-var eVG=_mz(z,'sunui-upoos',['bind:__l',5,'bind:onImgDel',1,'bind:onUpImg',2,'class',3,'data-event-opts',4,'data-ref',5,'upImgConfig',6,'vueId',7],[],e,s,gg)
-_(aTG,eVG)
-_(r,aTG)
+var tUG=_n('view')
+var eVG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(tUG,eVG)
+var bWG=_mz(z,'sunui-upoos',['bind:__l',5,'bind:onImgDel',1,'bind:onUpImg',2,'class',3,'data-event-opts',4,'data-ref',5,'upImgConfig',6,'vueId',7],[],e,s,gg)
+_(tUG,bWG)
+_(r,tUG)
 return r
 }
 e_[x[27]]={f:m27,j:[],i:[],ti:[],ic:[]}
 d_[x[28]]={}
 var m28=function(e,s,r,gg){
 var z=gz$gwx_29()
-var oXG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,oXG)
+var xYG=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,xYG)
 return r
 }
 e_[x[28]]={f:m28,j:[],i:[],ti:[],ic:[]}
 d_[x[29]]={}
 var m29=function(e,s,r,gg){
 var z=gz$gwx_30()
-var oZG=_n('view')
-var f1G=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(oZG,f1G)
-var c2G=_v()
-_(oZG,c2G)
-var h3G=function(c5G,o4G,o6G,gg){
-var a8G=_n('view')
-_rz(z,a8G,'class',9,c5G,o4G,gg)
-var t9G=_v()
-_(a8G,t9G)
-if(_oz(z,10,c5G,o4G,gg)){t9G.wxVkey=1
-}
+var f1G=_n('view')
+var c2G=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(f1G,c2G)
+var h3G=_v()
+_(f1G,h3G)
+var o4G=function(o6G,c5G,l7G,gg){
+var t9G=_n('view')
+_rz(z,t9G,'class',9,o6G,c5G,gg)
 var e0G=_v()
-_(a8G,e0G)
-if(_oz(z,11,c5G,o4G,gg)){e0G.wxVkey=1
+_(t9G,e0G)
+if(_oz(z,10,o6G,c5G,gg)){e0G.wxVkey=1
 }
-t9G.wxXCkey=1
+var bAH=_v()
+_(t9G,bAH)
+if(_oz(z,11,o6G,c5G,gg)){bAH.wxVkey=1
+}
 e0G.wxXCkey=1
-_(o6G,a8G)
-return o6G
+bAH.wxXCkey=1
+_(l7G,t9G)
+return l7G
 }
-c2G.wxXCkey=2
-_2z(z,7,h3G,e,s,gg,c2G,'alist','index','index')
-_(r,oZG)
+h3G.wxXCkey=2
+_2z(z,7,o4G,e,s,gg,h3G,'alist','index','index')
+_(r,f1G)
 return r
 }
 e_[x[29]]={f:m29,j:[],i:[],ti:[],ic:[]}
 d_[x[30]]={}
 var m30=function(e,s,r,gg){
 var z=gz$gwx_31()
-var oBH=_n('view')
-var fEH=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(oBH,fEH)
-var cFH=_n('view')
-_rz(z,cFH,'class',5,e,s,gg)
-var hGH=_v()
-_(cFH,hGH)
-if(_oz(z,6,e,s,gg)){hGH.wxVkey=1
-}
+var xCH=_n('view')
+var cFH=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(xCH,cFH)
+var hGH=_n('view')
+_rz(z,hGH,'class',5,e,s,gg)
 var oHH=_v()
-_(cFH,oHH)
-if(_oz(z,7,e,s,gg)){oHH.wxVkey=1
+_(hGH,oHH)
+if(_oz(z,6,e,s,gg)){oHH.wxVkey=1
 }
-hGH.wxXCkey=1
+var cIH=_v()
+_(hGH,cIH)
+if(_oz(z,7,e,s,gg)){cIH.wxVkey=1
+}
 oHH.wxXCkey=1
-_(oBH,cFH)
-var cIH=_n('view')
-_rz(z,cIH,'class',8,e,s,gg)
-var oJH=_v()
-_(cIH,oJH)
-if(_oz(z,9,e,s,gg)){oJH.wxVkey=1
-}
+cIH.wxXCkey=1
+_(xCH,hGH)
+var oJH=_n('view')
+_rz(z,oJH,'class',8,e,s,gg)
 var lKH=_v()
-_(cIH,lKH)
-if(_oz(z,10,e,s,gg)){lKH.wxVkey=1
-var aLH=_mz(z,'view',['bindtap',11,'class',1,'data-event-opts',2],[],e,s,gg)
-var tMH=_v()
-_(aLH,tMH)
-var eNH=function(oPH,bOH,xQH,gg){
-var fSH=_v()
-_(xQH,fSH)
-if(_oz(z,18,oPH,bOH,gg)){fSH.wxVkey=1
+_(oJH,lKH)
+if(_oz(z,9,e,s,gg)){lKH.wxVkey=1
 }
-fSH.wxXCkey=1
-return xQH
-}
-tMH.wxXCkey=2
-_2z(z,16,eNH,e,s,gg,tMH,'ds','id','id')
-_(lKH,aLH)
-}
-oJH.wxXCkey=1
-lKH.wxXCkey=1
-_(oBH,cIH)
+var aLH=_v()
+_(oJH,aLH)
+if(_oz(z,10,e,s,gg)){aLH.wxVkey=1
+var tMH=_mz(z,'view',['bindtap',11,'class',1,'data-event-opts',2],[],e,s,gg)
+var eNH=_v()
+_(tMH,eNH)
+var bOH=function(xQH,oPH,oRH,gg){
 var cTH=_v()
-_(oBH,cTH)
-var hUH=function(cWH,oVH,oXH,gg){
-var aZH=_v()
-_(oXH,aZH)
-if(_oz(z,23,cWH,oVH,gg)){aZH.wxVkey=1
-var t1H=_n('view')
-_rz(z,t1H,'class',24,cWH,oVH,gg)
-var e2H=_v()
-_(t1H,e2H)
-if(_oz(z,25,cWH,oVH,gg)){e2H.wxVkey=1
+_(oRH,cTH)
+if(_oz(z,18,xQH,oPH,gg)){cTH.wxVkey=1
 }
+cTH.wxXCkey=1
+return oRH
+}
+eNH.wxXCkey=2
+_2z(z,16,bOH,e,s,gg,eNH,'ds','id','id')
+_(aLH,tMH)
+}
+lKH.wxXCkey=1
+aLH.wxXCkey=1
+_(xCH,oJH)
+var hUH=_v()
+_(xCH,hUH)
+var oVH=function(oXH,cWH,lYH,gg){
+var t1H=_v()
+_(lYH,t1H)
+if(_oz(z,23,oXH,cWH,gg)){t1H.wxVkey=1
+var e2H=_n('view')
+_rz(z,e2H,'class',24,oXH,cWH,gg)
 var b3H=_v()
-_(t1H,b3H)
-if(_oz(z,26,cWH,oVH,gg)){b3H.wxVkey=1
+_(e2H,b3H)
+if(_oz(z,25,oXH,cWH,gg)){b3H.wxVkey=1
 }
-e2H.wxXCkey=1
+var o4H=_v()
+_(e2H,o4H)
+if(_oz(z,26,oXH,cWH,gg)){o4H.wxVkey=1
+}
 b3H.wxXCkey=1
-_(aZH,t1H)
+o4H.wxXCkey=1
+_(t1H,e2H)
 }
-aZH.wxXCkey=1
-return oXH
+t1H.wxXCkey=1
+return lYH
 }
-cTH.wxXCkey=2
-_2z(z,21,hUH,e,s,gg,cTH,'pl','index','index')
-var xCH=_v()
-_(oBH,xCH)
-if(_oz(z,27,e,s,gg)){xCH.wxVkey=1
-}
+hUH.wxXCkey=2
+_2z(z,21,oVH,e,s,gg,hUH,'pl','index','index')
 var oDH=_v()
-_(oBH,oDH)
-if(_oz(z,28,e,s,gg)){oDH.wxVkey=1
+_(xCH,oDH)
+if(_oz(z,27,e,s,gg)){oDH.wxVkey=1
 }
-xCH.wxXCkey=1
+var fEH=_v()
+_(xCH,fEH)
+if(_oz(z,28,e,s,gg)){fEH.wxVkey=1
+}
 oDH.wxXCkey=1
-_(r,oBH)
+fEH.wxXCkey=1
+_(r,xCH)
 return r
 }
 e_[x[30]]={f:m30,j:[],i:[],ti:[],ic:[]}
 d_[x[31]]={}
 var m31=function(e,s,r,gg){
 var z=gz$gwx_32()
-var x5H=_n('view')
-var f7H=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(x5H,f7H)
-var o6H=_v()
-_(x5H,o6H)
-if(_oz(z,5,e,s,gg)){o6H.wxVkey=1
+var o6H=_n('view')
+var c8H=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(o6H,c8H)
+var f7H=_v()
+_(o6H,f7H)
+if(_oz(z,5,e,s,gg)){f7H.wxVkey=1
 }
-o6H.wxXCkey=1
-_(r,x5H)
+f7H.wxXCkey=1
+_(r,o6H)
 return r
 }
 e_[x[31]]={f:m31,j:[],i:[],ti:[],ic:[]}
 d_[x[32]]={}
 var m32=function(e,s,r,gg){
 var z=gz$gwx_33()
-var h9H=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(r,h9H)
+var o0H=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(r,o0H)
 return r
 }
 e_[x[32]]={f:m32,j:[],i:[],ti:[],ic:[]}
 d_[x[33]]={}
 var m33=function(e,s,r,gg){
 var z=gz$gwx_34()
-var cAI=_n('view')
-var aDI=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(cAI,aDI)
-var oBI=_v()
-_(cAI,oBI)
-if(_oz(z,5,e,s,gg)){oBI.wxVkey=1
-}
+var oBI=_n('view')
+var tEI=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(oBI,tEI)
 var lCI=_v()
-_(cAI,lCI)
-if(_oz(z,6,e,s,gg)){lCI.wxVkey=1
-var tEI=_v()
-_(lCI,tEI)
-if(_oz(z,7,e,s,gg)){tEI.wxVkey=1
-var bGI=_v()
-_(tEI,bGI)
-if(_oz(z,8,e,s,gg)){bGI.wxVkey=1
-var oHI=_n('view')
-_rz(z,oHI,'class',9,e,s,gg)
-var xII=_v()
-_(oHI,xII)
-var oJI=function(cLI,fKI,hMI,gg){
-var cOI=_n('view')
-_rz(z,cOI,'class',14,cLI,fKI,gg)
-var oPI=_v()
-_(cOI,oPI)
-if(_oz(z,15,cLI,fKI,gg)){oPI.wxVkey=1
+_(oBI,lCI)
+if(_oz(z,5,e,s,gg)){lCI.wxVkey=1
 }
-var lQI=_v()
-_(cOI,lQI)
-if(_oz(z,16,cLI,fKI,gg)){lQI.wxVkey=1
-}
-oPI.wxXCkey=1
-lQI.wxXCkey=1
-_(hMI,cOI)
-return hMI
-}
-xII.wxXCkey=2
-_2z(z,12,oJI,e,s,gg,xII,'list','index','index')
-var aRI=_mz(z,'uni-load-more',['bind:__l',17,'status',1,'vueId',2],[],e,s,gg)
-_(oHI,aRI)
-_(bGI,oHI)
-}
-else{bGI.wxVkey=2
-}
-bGI.wxXCkey=1
-bGI.wxXCkey=3
-}
+var aDI=_v()
+_(oBI,aDI)
+if(_oz(z,6,e,s,gg)){aDI.wxVkey=1
 var eFI=_v()
-_(lCI,eFI)
-if(_oz(z,20,e,s,gg)){eFI.wxVkey=1
+_(aDI,eFI)
+if(_oz(z,7,e,s,gg)){eFI.wxVkey=1
+var oHI=_v()
+_(eFI,oHI)
+if(_oz(z,8,e,s,gg)){oHI.wxVkey=1
+var xII=_n('view')
+_rz(z,xII,'class',9,e,s,gg)
+var oJI=_v()
+_(xII,oJI)
+var fKI=function(hMI,cLI,oNI,gg){
+var oPI=_n('view')
+_rz(z,oPI,'class',14,hMI,cLI,gg)
+var lQI=_v()
+_(oPI,lQI)
+if(_oz(z,15,hMI,cLI,gg)){lQI.wxVkey=1
 }
-tEI.wxXCkey=1
-tEI.wxXCkey=3
+var aRI=_v()
+_(oPI,aRI)
+if(_oz(z,16,hMI,cLI,gg)){aRI.wxVkey=1
+}
+lQI.wxXCkey=1
+aRI.wxXCkey=1
+_(oNI,oPI)
+return oNI
+}
+oJI.wxXCkey=2
+_2z(z,12,fKI,e,s,gg,oJI,'list','index','index')
+var tSI=_mz(z,'uni-load-more',['bind:__l',17,'status',1,'vueId',2],[],e,s,gg)
+_(xII,tSI)
+_(oHI,xII)
+}
+else{oHI.wxVkey=2
+}
+oHI.wxXCkey=1
+oHI.wxXCkey=3
+}
+var bGI=_v()
+_(aDI,bGI)
+if(_oz(z,20,e,s,gg)){bGI.wxVkey=1
+}
 eFI.wxXCkey=1
+eFI.wxXCkey=3
+bGI.wxXCkey=1
 }
-oBI.wxXCkey=1
 lCI.wxXCkey=1
-lCI.wxXCkey=3
-_(r,cAI)
+aDI.wxXCkey=1
+aDI.wxXCkey=3
+_(r,oBI)
 return r
 }
 e_[x[33]]={f:m33,j:[],i:[],ti:[],ic:[]}
 d_[x[34]]={}
 var m34=function(e,s,r,gg){
 var z=gz$gwx_35()
-var eTI=_n('view')
-var oVI=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
-_(eTI,oVI)
-var bUI=_v()
-_(eTI,bUI)
-if(_oz(z,5,e,s,gg)){bUI.wxVkey=1
+var bUI=_n('view')
+var xWI=_mz(z,'cu-custom',['bgColor',0,'bind:__l',1,'isBack',1,'vueId',2,'vueSlots',3],[],e,s,gg)
+_(bUI,xWI)
+var oVI=_v()
+_(bUI,oVI)
+if(_oz(z,5,e,s,gg)){oVI.wxVkey=1
 }
-bUI.wxXCkey=1
-_(r,eTI)
+oVI.wxXCkey=1
+_(r,bUI)
 return r
 }
 e_[x[34]]={f:m34,j:[],i:[],ti:[],ic:[]}
@@ -2697,7 +2708,7 @@ return root;
 
 
 
-__wxAppCode__['app.json']={"pages":["pages/Home/Home","pages/post/post","pages/reg/reg","pages/i/i","pages/postinfo/postinfo","pages/editinfo/editinfo","pages/huati/huati","pages/sousuo/sousuo","pages/classPost/classPost","pages/edit/edit","pages/set/set","pages/about/about","pages/vip/vip","pages/newUser/newUser","pages/anquan/anquan","pages/menu/Message","pages/menu/friend","pages/menu/jifen","pages/menu/shoucang","pages/menu/mpl","pages/menu/zan","pages/menu/newFans","pages/i/bieren","pages/menu/wallet","pages/menu/tixian","pages/menu/chat","pages/postinfo/dashang","pages/menu/systemMsg","pages/menu/huodong","pages/menu/guanzhu","pages/postinfo/plinfo","pages/menu/help"],"window":{"navigationBarTextStyle":"black","navigationBarTitleText":"安个利","navigationBarBackgroundColor":"#FFF","backgroundColor":"#FFF","navigationStyle":"custom"},"nvueCompiler":"uni-app","renderer":"auto","splashscreen":{"alwaysShowBeforeRender":true,"autoclose":false},"appname":"安个利","compilerVersion":"2.4.6","usingComponents":{"cu-custom":"/components/colorui/components/cu-custom","sunui-upoos":"/components/sunui-upimg/sunui-upimg-alioos"}};
+__wxAppCode__['app.json']={"pages":["pages/Home/Home","pages/post/post","pages/reg/reg","pages/i/i","pages/postinfo/postinfo","pages/editinfo/editinfo","pages/huati/huati","pages/sousuo/sousuo","pages/classPost/classPost","pages/edit/edit","pages/set/set","pages/about/about","pages/vip/vip","pages/newUser/newUser","pages/anquan/anquan","pages/menu/Message","pages/menu/friend","pages/menu/jifen","pages/menu/shoucang","pages/menu/mpl","pages/menu/zan","pages/menu/newFans","pages/i/bieren","pages/menu/wallet","pages/menu/tixian","pages/menu/chat","pages/postinfo/dashang","pages/menu/systemMsg","pages/menu/huodong","pages/menu/guanzhu","pages/postinfo/plinfo","pages/menu/help"],"window":{"navigationBarTextStyle":"black","navigationBarTitleText":"安个利","navigationBarBackgroundColor":"#FFF","backgroundColor":"#FFF","navigationStyle":"custom"},"nvueCompiler":"uni-app","renderer":"auto","splashscreen":{"alwaysShowBeforeRender":true,"autoclose":false},"appname":"安个利社区","compilerVersion":"2.4.6","usingComponents":{"cu-custom":"/components/colorui/components/cu-custom","sunui-upoos":"/components/sunui-upimg/sunui-upimg-alioos"}};
 __wxAppCode__['app.wxml']=$gwx('./app.wxml');
 
 __wxAppCode__['components/colorui/components/cu-custom.json']={"usingComponents":{},"component":true};
@@ -2984,7 +2995,7 @@ define('common/runtime.js',function(require, module, exports, window, document, 
 })([]);
 });
 define('common/vendor.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["common/vendor"],{"0de9":function(t,e,n){"use strict";function r(t){var e=Object.prototype.toString.call(t);return e.substring(8,e.length-1)}function o(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];var o=e.map(function(t){var e=Object.prototype.toString.call(t);if("[object object]"===e.toLowerCase())try{t="---BEGIN:JSON---"+JSON.stringify(t)+"---END:JSON---"}catch(o){t="[object object]"}else if(null===t)t="---NULL---";else if(void 0===t)t="---UNDEFINED---";else{var n=r(t).toUpperCase();t="NUMBER"===n||"BOOLEAN"===n?"---BEGIN:"+n+"---"+t+"---END:"+n+"---":String(t)}return t}),i="";if(o.length>1){var a=o.pop();i=o.join("---COMMA---"),0===a.indexOf(" at ")?i+=a:i+="---COMMA---"+a}else i=o[0];return i}Object.defineProperty(e,"__esModule",{value:!0}),e.default=o},"208e":function(t,e,n){"use strict";var r="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",o=new Array(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,62,-1,-1,-1,63,52,53,54,55,56,57,58,59,60,61,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,-1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,-1,-1,-1,-1,-1);function i(t){var e,n,o,i,a,s;o=t.length,n=0,e="";while(n<o){if(i=255&t.charCodeAt(n++),n==o){e+=r.charAt(i>>2),e+=r.charAt((3&i)<<4),e+="==";break}if(a=t.charCodeAt(n++),n==o){e+=r.charAt(i>>2),e+=r.charAt((3&i)<<4|(240&a)>>4),e+=r.charAt((15&a)<<2),e+="=";break}s=t.charCodeAt(n++),e+=r.charAt(i>>2),e+=r.charAt((3&i)<<4|(240&a)>>4),e+=r.charAt((15&a)<<2|(192&s)>>6),e+=r.charAt(63&s)}return e}function a(t){var e,n,r,i,a,s,u;s=t.length,a=0,u="";while(a<s){do{e=o[255&t.charCodeAt(a++)]}while(a<s&&-1==e);if(-1==e)break;do{n=o[255&t.charCodeAt(a++)]}while(a<s&&-1==n);if(-1==n)break;u+=String.fromCharCode(e<<2|(48&n)>>4);do{if(r=255&t.charCodeAt(a++),61==r)return u;r=o[r]}while(a<s&&-1==r);if(-1==r)break;u+=String.fromCharCode((15&n)<<4|(60&r)>>2);do{if(i=255&t.charCodeAt(a++),61==i)return u;i=o[i]}while(a<s&&-1==i);if(-1==i)break;u+=String.fromCharCode((3&r)<<6|i)}return u}function s(t){var e,n,r,o;for(e="",r=t.length,n=0;n<r;n++)o=t.charCodeAt(n),o>=1&&o<=127?e+=t.charAt(n):o>2047?(e+=String.fromCharCode(224|o>>12&15),e+=String.fromCharCode(128|o>>6&63),e+=String.fromCharCode(128|o>>0&63)):(e+=String.fromCharCode(192|o>>6&31),e+=String.fromCharCode(128|o>>0&63));return e}function u(t){var e,n,r,o,i,a;e="",r=t.length,n=0;while(n<r)switch(o=t.charCodeAt(n++),o>>4){case 0:case 1:case 2:case 3:case 4:case 5:case 6:case 7:e+=t.charAt(n-1);break;case 12:case 13:i=t.charCodeAt(n++),e+=String.fromCharCode((31&o)<<6|63&i);break;case 14:i=t.charCodeAt(n++),a=t.charCodeAt(n++),e+=String.fromCharCode((15&o)<<12|(63&i)<<6|(63&a)<<0);break}return e}t.exports={encode:i,decode:a,utf16to8:s,utf8to16:u}},"26f4":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r="1.27",o="",i=[],a="",s="",u=[],c="",f="",l="",p={cookie:o,system:f,userinfo:i,usersk:a,postClass:u,tgid:c,token:s,Version:r,update:l};e.default=p},2877:function(t,e,n){"use strict";function r(t,e,n,r,o,i,a,s){var u,c="function"===typeof t?t.options:t;if(e&&(c.render=e,c.staticRenderFns=n,c._compiled=!0),r&&(c.functional=!0),i&&(c._scopeId="data-v-"+i),a?(u=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"===typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),o&&o.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(a)},c._ssrRegister=u):o&&(u=s?function(){o.call(this,this.$root.$options.shadowRoot)}:o),u)if(c.functional){c._injectStyles=u;var f=c.render;c.render=function(t,e){return u.call(e),f(t,e)}}else{var l=c.beforeCreate;c.beforeCreate=l?[].concat(l,u):[u]}return{exports:t,options:c}}n.d(e,"a",function(){return r})},"33a2":function(module,exports,__webpack_require__){"use strict";(function(process,global){var __WEBPACK_AMD_DEFINE_RESULT__;
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["common/vendor"],{"0de9":function(t,e,n){"use strict";function r(t){var e=Object.prototype.toString.call(t);return e.substring(8,e.length-1)}function o(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];var o=e.map(function(t){var e=Object.prototype.toString.call(t);if("[object object]"===e.toLowerCase())try{t="---BEGIN:JSON---"+JSON.stringify(t)+"---END:JSON---"}catch(o){t="[object object]"}else if(null===t)t="---NULL---";else if(void 0===t)t="---UNDEFINED---";else{var n=r(t).toUpperCase();t="NUMBER"===n||"BOOLEAN"===n?"---BEGIN:"+n+"---"+t+"---END:"+n+"---":String(t)}return t}),i="";if(o.length>1){var a=o.pop();i=o.join("---COMMA---"),0===a.indexOf(" at ")?i+=a:i+="---COMMA---"+a}else i=o[0];return i}Object.defineProperty(e,"__esModule",{value:!0}),e.default=o},"208e":function(t,e,n){"use strict";var r="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",o=new Array(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,62,-1,-1,-1,63,52,53,54,55,56,57,58,59,60,61,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,-1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,-1,-1,-1,-1,-1);function i(t){var e,n,o,i,a,s;o=t.length,n=0,e="";while(n<o){if(i=255&t.charCodeAt(n++),n==o){e+=r.charAt(i>>2),e+=r.charAt((3&i)<<4),e+="==";break}if(a=t.charCodeAt(n++),n==o){e+=r.charAt(i>>2),e+=r.charAt((3&i)<<4|(240&a)>>4),e+=r.charAt((15&a)<<2),e+="=";break}s=t.charCodeAt(n++),e+=r.charAt(i>>2),e+=r.charAt((3&i)<<4|(240&a)>>4),e+=r.charAt((15&a)<<2|(192&s)>>6),e+=r.charAt(63&s)}return e}function a(t){var e,n,r,i,a,s,u;s=t.length,a=0,u="";while(a<s){do{e=o[255&t.charCodeAt(a++)]}while(a<s&&-1==e);if(-1==e)break;do{n=o[255&t.charCodeAt(a++)]}while(a<s&&-1==n);if(-1==n)break;u+=String.fromCharCode(e<<2|(48&n)>>4);do{if(r=255&t.charCodeAt(a++),61==r)return u;r=o[r]}while(a<s&&-1==r);if(-1==r)break;u+=String.fromCharCode((15&n)<<4|(60&r)>>2);do{if(i=255&t.charCodeAt(a++),61==i)return u;i=o[i]}while(a<s&&-1==i);if(-1==i)break;u+=String.fromCharCode((3&r)<<6|i)}return u}function s(t){var e,n,r,o;for(e="",r=t.length,n=0;n<r;n++)o=t.charCodeAt(n),o>=1&&o<=127?e+=t.charAt(n):o>2047?(e+=String.fromCharCode(224|o>>12&15),e+=String.fromCharCode(128|o>>6&63),e+=String.fromCharCode(128|o>>0&63)):(e+=String.fromCharCode(192|o>>6&31),e+=String.fromCharCode(128|o>>0&63));return e}function u(t){var e,n,r,o,i,a;e="",r=t.length,n=0;while(n<r)switch(o=t.charCodeAt(n++),o>>4){case 0:case 1:case 2:case 3:case 4:case 5:case 6:case 7:e+=t.charAt(n-1);break;case 12:case 13:i=t.charCodeAt(n++),e+=String.fromCharCode((31&o)<<6|63&i);break;case 14:i=t.charCodeAt(n++),a=t.charCodeAt(n++),e+=String.fromCharCode((15&o)<<12|(63&i)<<6|(63&a)<<0);break}return e}t.exports={encode:i,decode:a,utf16to8:s,utf8to16:u}},"26f4":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r="1.28",o="",i=[],a="",s="",u=[],c="",f="",l="",p={cookie:o,system:f,userinfo:i,usersk:a,postClass:u,tgid:c,token:s,Version:r,update:l};e.default=p},2877:function(t,e,n){"use strict";function r(t,e,n,r,o,i,a,s){var u,c="function"===typeof t?t.options:t;if(e&&(c.render=e,c.staticRenderFns=n,c._compiled=!0),r&&(c.functional=!0),i&&(c._scopeId="data-v-"+i),a?(u=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"===typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),o&&o.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(a)},c._ssrRegister=u):o&&(u=s?function(){o.call(this,this.$root.$options.shadowRoot)}:o),u)if(c.functional){c._injectStyles=u;var f=c.render;c.render=function(t,e){return u.call(e),f(t,e)}}else{var l=c.beforeCreate;c.beforeCreate=l?[].concat(l,u):[u]}return{exports:t,options:c}}n.d(e,"a",function(){return r})},"33a2":function(module,exports,__webpack_require__){"use strict";(function(process,global){var __WEBPACK_AMD_DEFINE_RESULT__;
 /**
  * [js-md5]{@link https://github.com/emn178/js-md5}
  *
@@ -3719,13 +3730,13 @@ require('components/uni-load-more.js');
 __wxRoute = 'pages/Home/Home';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/Home/Home.js';
 
 define('pages/Home/Home.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/Home/Home"],{"615c":function(e,t,o){"use strict";o.r(t);var n=o("c706"),a=o("bc13");for(var s in a)"default"!==s&&function(e){o.d(t,e,function(){return a[e]})}(s);o("9871");var i=o("2877"),u=Object(i["a"])(a["default"],n["a"],n["b"],!1,null,null,null);t["default"]=u.exports},8506:function(e,t,o){"use strict";(function(e){o("7e16"),o("921b");n(o("66fd"));var t=n(o("615c"));function n(e){return e&&e.__esModule?e:{default:e}}e(t.default)}).call(this,o("6e42")["createPage"])},9871:function(e,t,o){"use strict";var n=o("a91e"),a=o.n(n);a.a},a91e:function(e,t,o){},ac23:function(e,t,o){"use strict";(function(e,n){Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var a=s(o("26f4"));function s(e){return e&&e.__esModule?e:{default:e}}function i(e,t,o){return t in e?Object.defineProperty(e,t,{value:o,enumerable:!0,configurable:!0,writable:!0}):e[t]=o,e}var u=function(){return o.e("components/uni-load-more").then(o.bind(null,"caa8"))},l={components:{uniLoadMore:u},data:function(){return{Dindex:[],CustomBar:this.CustomBar,modalName:null,AvatarUrl:"",TabCur:0,showAppFenxiang:!1,gaodu:0,msgNumber:0,weikong:!0,username:"游客",page:1,postList:[],scrollTop:0,showYs:!1,old:{scrollTop:0},status:"loading",statusTypes:[{value:"more",text:"加载前",checked:!0},{value:"loading",text:"加载中",checked:!1},{value:"noMore",text:"我是有底线的",checked:!1}],contentText:{contentdown:"查看更多",contentrefresh:"加载中",contentnomore:"我是有底线的"},zhongcao:"0",guanzhu:"0",userid:"0",fensi:"0",dengji:"0",tuijianren:0,systemConfig:"",index:!1,userInfo:[],postype:"new",menuList:["分享给朋友","生成海报","举报"],openmenu:!1,shebei:"",iosapy:"no",jubao:{postid:0,authorid:0},jubaoliyou:"",showJubao:!1}},onPullDownRefresh:function(){console.log(e("下拉刷新"," at pages\\Home\\Home.vue:365"))},onShow:function(){var t=this;try{a.default.token=n.getStorageSync("token"),a.default.token&&console.log(e("赋值后的Token："+a.default.token,a.default.token," at pages\\Home\\Home.vue:376"))}catch(o){n.showToast({title:"身份已失效，请重新登录",position:"bottom",icon:"none"}),console.log(e(o," at pages\\Home\\Home.vue:384"))}try{a.default.userinfo=n.getStorageSync("user"),a.default.userinfo&&console.log(e("赋值后的userinfo："+a.default.userinfo,a.default.userinfo," at pages\\Home\\Home.vue:390"))}catch(o){n.showToast({title:"身份已失效，请重新登录",position:"bottom",icon:"none"}),console.log(e(o," at pages\\Home\\Home.vue:398"))}n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyNoRead",data:{auid:this.userid,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(e){t.iosapy=e.data.data.pay,"1"==e.data.code&&(t.msgNumber=e.data.data.count)}}),n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyinfo",data:{auid:this.userid,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(e){"1"==e.data.code?(t.AvatarUrl=e.data.data.AvatarUrl,t.username=e.data.data.UserName,t.zhongcao=e.data.data.ZhongcaoCount,t.guanzhu=e.data.data.FollowedCount,t.fensi=e.data.data.FollowerCount,t.dengji=e.data.data.Rank,t.userid=e.data.data.Auid,t.userInfo=e.data.data,a.default.userinfo=e.data.data):(t.AvatarUrl="https://c-ssl.duitang.com/uploads/item/201807/01/20180701122340_uxlwc.thumb.700_0.jpeg",t.username="未登录",t.zhongcao=0,t.guanzhu=0,t.fensi=0,t.dengji=0,t.userid=0,t.userInfo=null)}})},onLoad:function(t){try{a.default.token=n.getStorageSync("token"),a.default.token&&console.log(e("赋值后的Token："+a.default.token,a.default.token," at pages\\Home\\Home.vue:465"))}catch(t){n.showToast({title:"身份已失效，请重新登录",position:"bottom",icon:"none"})}try{a.default.userinfo=n.getStorageSync("user"),a.default.userinfo&&console.log(e("赋值后的userinfo："+a.default.userinfo,a.default.userinfo," at pages\\Home\\Home.vue:479"))}catch(t){console.log(e(t," at pages\\Home\\Home.vue:482"))}var o=n.getStorageSync("showYs");"1"!=o&&(this.showYs=!0),a.default.update||setTimeout(this.getVersion,4e3),a.default.token||n.redirectTo({url:"../reg/reg"}),this.shebei=n.getSystemInfoSync().platform,n.getSystemInfo({success:function(t){var o={phonebrand:t.brand+t.model,phonesystem:t.system};a.default.system=JSON.stringify(o),console.log(e(a.default.system," at pages\\Home\\Home.vue:517"))}}),this.tuijianren=t.tuijianid,a.default.tgid=this.tuijianren,this.postList=[],console.log(e("推荐人ID",this.tuijianren," at pages\\Home\\Home.vue:523")),this.getPostData("new",0),this.getSysConfig("home_txt"),this.shebei=n.getSystemInfoSync().platform,console.log(e(this.shebei," at pages\\Home\\Home.vue:638"))},onReady:function(){this.getHei()},methods:{goys:function(){n.navigateTo({url:"../edit/edit?type=5"})},appFenxiang:function(t,o){switch(t){case 0:this.showAppFenxiang=!1;break;case 1:n.setClipboardData({data:"http://share.angeli.top/?postId="+this.postid,success:function(){console.log(e("success"," at pages\\Home\\Home.vue:658"))}}),console.log(e("复制链接"," at pages\\Home\\Home.vue:661"));break;case 2:console.log(e(this.Dindex.PictureId[0]," at pages\\Home\\Home.vue:664")),console.log(e(this.Dindex.Content," at pages\\Home\\Home.vue:665")),console.log(e("http://share.angeli.top/?postId="+this.Dindex.PostsId," at pages\\Home\\Home.vue:666")),n.share({provider:"weixin",scene:"WXSceneSession",type:5,imageUrl:this.Dindex.PictureId[0],title:this.Dindex.Content,miniProgram:{id:"gh_a38adc10b952",path:"pages/postinfo/postinfo?id="+this.Dindex.PostsId,type:0,webUrl:"http://share.angeli.top/?postId="+this.Dindex.PostsId},success:function(t){console.log(e(JSON.stringify(t)," at pages\\Home\\Home.vue:680"))},fail:function(t){console.log(e("fail:"+JSON.stringify(t)," at pages\\Home\\Home.vue:683"))}});break;case 3:n.share({provider:"weixin",scene:"WXSenceTimeline",type:0,href:"http://share.angeli.top/?postId="+this.Dindex.PostsId,title:this.Dindex.Content,summary:this.Dindex.Content,imageUrl:this.Dindex.PictureId[0],success:function(t){console.log(e("success:"+JSON.stringify(t)," at pages\\Home\\Home.vue:697"))},fail:function(t){console.log(e("fail:"+JSON.stringify(t)," at pages\\Home\\Home.vue:700"))}});break;case 4:n.share({provider:"qq",type:1,href:"http://share.angeli.top/?postId="+this.Dindex.PostsId,summary:this.Dindex.Content,title:this.Dindex.Content,imageUrl:this.Dindex.PictureId[0],success:function(t){console.log(e("success:"+JSON.stringify(t)," at pages\\Home\\Home.vue:713"))},fail:function(t){console.log(e("fail:"+JSON.stringify(t)," at pages\\Home\\Home.vue:716"))}});break;default:}},getVersion:function(){n.request({method:"GET",url:"https://api.angeli.top/post.php?type=getVersion",header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\Home\\Home.vue:732")),"1"==t.data.code&&a.default.Version<t.data.data.version&&(console.log(e(t.data.data," at pages\\Home\\Home.vue:735")),n.showModal({title:"应用更新",content:"发现安个利新版本，是否安装升级？",success:function(o){o.confirm&&(console.log(e(t.data.data.downloadUrl," at pages\\Home\\Home.vue:741")),plus.runtime.openURL(t.data.data.downloadUrl),a.default.update=!0)}}))}})},sendjubao:function(){this.$jubao(this.jubao.postid,a.default.userinfo.Auid,this.jubao.authorid,this.jubaoliyou),this.showJubao=!1,n.showToast({title:"举报成功",position:"bottom",icon:"none"})},plusbutton:function(){this.openmenu=!this.openmenu},guanzhua:function(){n.navigateTo({url:"../menu/guanzhu"})},jubaoliyouinput:function(e){this.jubaoliyou=e.target.value},fensia:function(){n.navigateTo({url:"../menu/newFans"})},aotuloding:function(){n.showToast(i({title:"刚刚出现问题，已经为你修复",position:"bottom",icon:"none"},"position","center")),this.getPostData("new",0)},getshop:function(){this.systemConfig="商城正在建设中",this.modalName="DialogModal2"},getSysConfig:function(t){var o=this;n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getSysConfig",data:{configName:t,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\Home\\Home.vue:803")),"1"==t.data.code&&(o.systemConfig=t.data.data,t.data.data?o.modalName="DialogModal2":o.modalName=""),console.log(e(o.msgNumber," at pages\\Home\\Home.vue:812"))},complete:function(){}})},getFriend:function(){n.navigateTo({url:"../menu/friend"})},getbieren:function(e){e==a.default.userinfo.Auid?n.navigateTo({url:"../i/i"}):n.navigateTo({url:"../i/bieren?auid="+e})},getShoucang:function(){n.navigateTo({url:"../menu/shoucang"})},getJifen:function(){n.navigateTo({url:"../menu/jifen"})},getMessage:function(){n.navigateTo({url:"../menu/Message"})},wallet:function(){n.navigateTo({url:"../menu/wallet"})},set:function(){n.navigateTo({url:"../set/set"})},logout:function(){n.clearStorage(),n.showToast(i({title:"已退出登录",position:"bottom",icon:"none"},"position","center")),a.default.userinfo=[],a.default.cookie="",this.modalName=null},cs:function(e){this.old.scrollTop=e.detail.scrollTop},sousuo:function(){n.navigateTo({url:"../sousuo/sousuo"})},getClass:function(e){n.navigateTo({url:"../classPost/classPost?id="+e})},showModal:function(t){var o=this;this.modalName=t.currentTarget.dataset.target,this.AvatarUrl=a.default.userinfo.AvatarUrl,this.username=a.default.userinfo.UserName,this.zhongcao=a.default.userinfo.ZhongcaoCount,this.guanzhu=a.default.userinfo.FollowedCount,this.fensi=a.default.userinfo.FollowerCount,this.dengji=a.default.userinfo.Rank,this.userid=a.default.userinfo.Auid,console.log(e("测试！：",this.username," at pages\\Home\\Home.vue:895")),n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyNoRead",data:{auid:this.userid,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\Home\\Home.vue:908")),"1"==t.data.code?o.msgNumber=t.data.data.count:(n.navigateTo({url:"../reg/reg"}),o.AvatarUrl="https://c-ssl.duitang.com/uploads/item/201807/01/20180701122340_uxlwc.thumb.700_0.jpeg",o.username="未登录",o.zhongcao=0,o.guanzhu=0,o.fensi=0,o.dengji=0,o.userid=0,o.userInfo=null),console.log(e(o.msgNumber," at pages\\Home\\Home.vue:924"))},complete:function(){}})},hideModal:function(e){this.modalName=null,this.showYs=!1,n.setStorageSync("showYs","1")},tabSelect:function(t){this.TabCur=t,this.scrollTop=this.old.scrollTop,this.$nextTick(function(){this.scrollTop=0}),console.log(e(t," at pages\\Home\\Home.vue:942")),0==t?(this.getPostData("new",0),this.postype="new"):1==t?(this.postype="hot",this.getPostData("hot",0)):2==t&&(this.postype="guanzhu",this.getPostData("guanzhu",0))},Like:function(e,t,o,s,i){var u=this;if(""==a.default.token||null==a.default.token)return n.showToast({title:"你还没有登录，请登录后再来吧",position:"bottom",icon:"none"}),void setTimeout(function(){n.navigateTo({url:"../reg/reg"})},1200);if(t!=a.default.userinfo.Auid){if(!0===o)var l="del";else l="add";n.request({method:"GET",url:"https://api.angeli.top/post.php?type=Like",data:{fuid:t,postid:e,mode:l,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:a.default.system},success:function(e){"1"==e.data.code?("add"==l?(u.postList[s].ZhongcaoCount=Number(i)+1,u.postList[s].Give=!0,n.showToast({title:"种草成功！",position:"bottom",icon:"none"})):(u.postList[s].ZhongcaoCount=Number(i)-1,u.postList[s].Give=!1,n.showToast({title:"取消种草成功！",position:"bottom",icon:"none"})),u.$forceUpdate()):n.showToast({title:"种草失败！",position:"bottom",icon:"none"})},complete:function(){}})}else n.showToast({title:"不能给自己种草",position:"bottom",icon:"none"})},caidan:function(t){var o=this;console.log(e(t," at pages\\Home\\Home.vue:1033")),this.Dindex=t,t.AuthorId==a.default.userinfo.Auid?this.menuList=["分享","举报","删除帖子"]:this.menuList=["分享","举报"],n.showActionSheet({itemList:this.menuList,success:function(e){switch(e.tapIndex){case 0:o.showAppFenxiang=!0;break;case 1:o.showJubao=!0,o.jubao.postid=t.PostsId,o.jubao.authorid=t.AuthorId;break;case 2:o.$delPost(t.PostsId);break;default:}},fail:function(t){console.log(e(t.errMsg," at pages\\Home\\Home.vue:1062"))}})},getHei:function(){var t=this,o=n.createSelectorQuery().select("#topbox");o.fields({size:!0,scrollOffset:!0},function(o){t.gaodu=o.height-5,console.log(e("总高度："+t.gaodu," at pages\\Home\\Home.vue:1074"))}).exec()},showImage:function(t,o){var a=t[o];n.previewImage({current:o,urls:t,longPressActions:{itemList:["保存图片"],success:function(t){n.downloadFile({url:a,success:function(t){console.log(e(t," at pages\\Home\\Home.vue:1089")),200===t.statusCode?n.saveImageToPhotosAlbum({filePath:t.tempFilePath,success:function(){n.showToast({title:"已保存",position:"bottom",icon:"none"})}}):n.showToast({title:"保存失败",position:"bottom",icon:"none"})}})},fail:function(t){console.log(e(t.errMsg," at pages\\Home\\Home.vue:1113"))}}})},getPostData:function(t,o){var s=this;console.log(e(t," at pages\\Home\\Home.vue:1119")),this.page=1,n.request({method:"GET",url:"https://api.angeli.top/post.php?type=outPostList",data:{page:1,postType:t,count:10,classId:o,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){s.postList=[],console.log(e(t.data.data," at pages\\Home\\Home.vue:1137")),console.log(e("————————————帖子列表——————————"," at pages\\Home\\Home.vue:1138")),s.postList=t.data.data,console.log(e(s.postList," at pages\\Home\\Home.vue:1140")),s.weikong=!1,"1"!==t.data.code&&n.showToast({title:"获取帖子失败，建议重启",position:"bottom",icon:"none"}),0==t.data.data&&(s.weikong=!0)},complete:function(){s.$forceUpdate()}})},reguser:function(){"未登录"==this.username?n.navigateTo({url:"../reg/reg"}):n.navigateTo({url:"../i/i"})},getVip:function(){n.navigateTo({url:"../vip/vip"})},pluspost:function(){console.log(e("发帖：",a.default.userinfo.Auid," at pages\\Home\\Home.vue:1177")),""==a.default.token||null==a.default.token?(n.showToast({title:"你还没有登录，请登录后再来吧",position:"bottom",icon:"none"}),setTimeout(function(){n.navigateTo({url:"../reg/reg"})},1200)):n.navigateTo({url:"../post/post"})},EndLoding:function(t){var o=this;this.page++,console.log(e(this.scrollTop," at pages\\Home\\Home.vue:1198")),n.request({method:"GET",url:"https://api.angeli.top/post.php?type=outPostList",data:{page:this.page,postType:this.postype,sort:"PsotDate",count:10,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e("————————————帖子列表——————————"+o.page," at pages\\Home\\Home.vue:1213")),void 0==t.data.data.length?(o.page--,o.status="noMore"):(o.postList=o.postList.concat(t.data.data),o.status="loading",console.log(e(o.postList," at pages\\Home\\Home.vue:1220")))}})},getpostinfo:function(e){n.navigateTo({url:"../postinfo/postinfo?id="+e})}},onShareAppMessage:function(t){return"button"===t.from&&console.log(e(t.target," at pages\\Home\\Home.vue:1235")),{title:"超级无敌安个利",path:"/pages/Home/Home",desc:"超级无敌安个利！"}}};t.default=l}).call(this,o("0de9")["default"],o("6e42")["default"])},bc13:function(e,t,o){"use strict";o.r(t);var n=o("ac23"),a=o.n(n);for(var s in n)"default"!==s&&function(e){o.d(t,e,function(){return n[e]})}(s);t["default"]=a.a},c706:function(e,t,o){"use strict";var n=function(){var e=this,t=e.$createElement;e._self._c;e._isMounted||(e.e0=function(t){e.showJubao=!1})},a=[];o.d(t,"a",function(){return n}),o.d(t,"b",function(){return a})}},[["8506","common/runtime","common/vendor"]]]);
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/Home/Home"],{"615c":function(e,t,o){"use strict";o.r(t);var n=o("ffc3"),a=o("bc13");for(var s in a)"default"!==s&&function(e){o.d(t,e,function(){return a[e]})}(s);o("9871");var i=o("2877"),u=Object(i["a"])(a["default"],n["a"],n["b"],!1,null,null,null);t["default"]=u.exports},8506:function(e,t,o){"use strict";(function(e){o("7e16"),o("921b");n(o("66fd"));var t=n(o("615c"));function n(e){return e&&e.__esModule?e:{default:e}}e(t.default)}).call(this,o("6e42")["createPage"])},9871:function(e,t,o){"use strict";var n=o("a91e"),a=o.n(n);a.a},a91e:function(e,t,o){},ac23:function(e,t,o){"use strict";(function(e,n){Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var a=s(o("26f4"));function s(e){return e&&e.__esModule?e:{default:e}}function i(e,t,o){return t in e?Object.defineProperty(e,t,{value:o,enumerable:!0,configurable:!0,writable:!0}):e[t]=o,e}var u=function(){return o.e("components/uni-load-more").then(o.bind(null,"caa8"))},l={components:{uniLoadMore:u},data:function(){return{Dindex:[],CustomBar:this.CustomBar,modalName:null,AvatarUrl:"",TabCur:0,showAppFenxiang:!1,gaodu:0,msgNumber:0,weikong:!0,username:"游客",page:1,postList:[],scrollTop:0,showYs:!1,old:{scrollTop:0},status:"loading",statusTypes:[{value:"more",text:"加载前",checked:!0},{value:"loading",text:"加载中",checked:!1},{value:"noMore",text:"我是有底线的",checked:!1}],contentText:{contentdown:"查看更多",contentrefresh:"加载中",contentnomore:"我是有底线的"},zhongcao:"0",guanzhu:"0",userid:"0",fensi:"0",dengji:"0",tuijianren:0,systemConfig:"",index:!1,userInfo:[],postype:"new",menuList:["分享给朋友","生成海报","举报"],openmenu:!1,shebei:"",iosapy:"no",jubao:{postid:0,authorid:0},jubaoliyou:"",showJubao:!1}},onPullDownRefresh:function(){console.log(e("下拉刷新"," at pages\\Home\\Home.vue:367"))},onShow:function(){var t=this;try{a.default.token=n.getStorageSync("token"),a.default.token&&console.log(e("赋值后的Token："+a.default.token,a.default.token," at pages\\Home\\Home.vue:378"))}catch(o){n.showToast({title:"身份已失效，请重新登录",position:"bottom",icon:"none"}),console.log(e(o," at pages\\Home\\Home.vue:386"))}try{a.default.userinfo=n.getStorageSync("user"),a.default.userinfo&&console.log(e("赋值后的userinfo："+a.default.userinfo,a.default.userinfo," at pages\\Home\\Home.vue:392"))}catch(o){n.showToast({title:"身份已失效，请重新登录",position:"bottom",icon:"none"}),console.log(e(o," at pages\\Home\\Home.vue:400"))}n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyNoRead",data:{auid:this.userid,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(e){t.iosapy=e.data.data.pay,"1"==e.data.code&&(t.msgNumber=e.data.data.count)}}),n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyinfo",data:{auid:this.userid,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(e){"1"==e.data.code?(t.AvatarUrl=e.data.data.AvatarUrl,t.username=e.data.data.UserName,t.zhongcao=e.data.data.ZhongcaoCount,t.guanzhu=e.data.data.FollowedCount,t.fensi=e.data.data.FollowerCount,t.dengji=e.data.data.Rank,t.userid=e.data.data.Auid,t.userInfo=e.data.data,a.default.userinfo=e.data.data):(t.AvatarUrl="https://c-ssl.duitang.com/uploads/item/201807/01/20180701122340_uxlwc.thumb.700_0.jpeg",t.username="未登录",t.zhongcao=0,t.guanzhu=0,t.fensi=0,t.dengji=0,t.userid=0,t.userInfo=null)}})},onLoad:function(t){try{a.default.token=n.getStorageSync("token"),a.default.token&&console.log(e("赋值后的Token："+a.default.token,a.default.token," at pages\\Home\\Home.vue:467"))}catch(t){n.showToast({title:"身份已失效，请重新登录",position:"bottom",icon:"none"})}try{a.default.userinfo=n.getStorageSync("user"),a.default.userinfo&&console.log(e("赋值后的userinfo："+a.default.userinfo,a.default.userinfo," at pages\\Home\\Home.vue:481"))}catch(t){console.log(e(t," at pages\\Home\\Home.vue:484"))}var o=n.getStorageSync("showYs");"1"!=o&&(this.showYs=!0),a.default.update||setTimeout(this.getVersion,4e3),a.default.token||n.redirectTo({url:"../reg/reg"}),this.shebei=n.getSystemInfoSync().platform,n.getSystemInfo({success:function(t){var o={phonebrand:t.brand+t.model,phonesystem:t.system};a.default.system=JSON.stringify(o),console.log(e(a.default.system," at pages\\Home\\Home.vue:519"))}}),this.tuijianren=t.tuijianid,a.default.tgid=this.tuijianren,this.postList=[],console.log(e("推荐人ID",this.tuijianren," at pages\\Home\\Home.vue:525")),this.getPostData("new",0),this.getSysConfig("home_txt"),this.shebei=n.getSystemInfoSync().platform,console.log(e(this.shebei," at pages\\Home\\Home.vue:640")),console.log(e(a.default.token," at pages\\Home\\Home.vue:642"))},onReady:function(){this.getHei()},methods:{gethuodong:function(){n.navigateTo({url:"../menu/huodong"})},goys:function(){n.navigateTo({url:"../edit/edit?type=5"})},appFenxiang:function(t,o){switch(t){case 0:this.showAppFenxiang=!1;break;case 1:n.setClipboardData({data:"http://share.angeli.top/?postId="+this.postid,success:function(){console.log(e("success"," at pages\\Home\\Home.vue:667"))}}),console.log(e("复制链接"," at pages\\Home\\Home.vue:670"));break;case 2:console.log(e(this.Dindex.PictureId[0]," at pages\\Home\\Home.vue:673")),console.log(e(this.Dindex.Content," at pages\\Home\\Home.vue:674")),console.log(e("http://share.angeli.top/?postId="+this.Dindex.PostsId," at pages\\Home\\Home.vue:675")),n.share({provider:"weixin",scene:"WXSceneSession",type:5,imageUrl:this.Dindex.PictureId[0],title:this.Dindex.Content,miniProgram:{id:"gh_a38adc10b952",path:"pages/postinfo/postinfo?id="+this.Dindex.PostsId,type:0,webUrl:"http://share.angeli.top/?postId="+this.Dindex.PostsId},success:function(t){console.log(e(JSON.stringify(t)," at pages\\Home\\Home.vue:689"))},fail:function(t){console.log(e("fail:"+JSON.stringify(t)," at pages\\Home\\Home.vue:692"))}});break;case 3:n.share({provider:"weixin",scene:"WXSenceTimeline",type:0,href:"http://share.angeli.top/?postId="+this.Dindex.PostsId,title:this.Dindex.Content,summary:this.Dindex.Content,imageUrl:this.Dindex.PictureId[0],success:function(t){console.log(e("success:"+JSON.stringify(t)," at pages\\Home\\Home.vue:706"))},fail:function(t){console.log(e("fail:"+JSON.stringify(t)," at pages\\Home\\Home.vue:709"))}});break;case 4:n.share({provider:"qq",type:1,href:"http://share.angeli.top/?postId="+this.Dindex.PostsId,summary:this.Dindex.Content,title:this.Dindex.Content,imageUrl:this.Dindex.PictureId[0],success:function(t){console.log(e("success:"+JSON.stringify(t)," at pages\\Home\\Home.vue:722"))},fail:function(t){console.log(e("fail:"+JSON.stringify(t)," at pages\\Home\\Home.vue:725"))}});break;default:}},getVersion:function(){n.request({method:"GET",url:"https://api.angeli.top/post.php?type=getVersion",header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\Home\\Home.vue:741")),"1"==t.data.code&&a.default.Version<t.data.data.version&&(console.log(e(t.data.data," at pages\\Home\\Home.vue:744")),n.showModal({title:"应用更新",content:"发现安个利新版本，是否安装升级？",success:function(o){o.confirm&&(console.log(e(t.data.data.downloadUrl," at pages\\Home\\Home.vue:750")),plus.runtime.openURL(t.data.data.downloadUrl),a.default.update=!0)}}))}})},sendjubao:function(){this.$jubao(this.jubao.postid,a.default.userinfo.Auid,this.jubao.authorid,this.jubaoliyou),this.showJubao=!1,n.showToast({title:"举报成功",position:"bottom",icon:"none"})},plusbutton:function(){this.openmenu=!this.openmenu},guanzhua:function(){n.navigateTo({url:"../menu/guanzhu"})},jubaoliyouinput:function(e){this.jubaoliyou=e.target.value},fensia:function(){n.navigateTo({url:"../menu/newFans"})},aotuloding:function(){n.showToast(i({title:"刚刚出现问题，已经为你修复",position:"bottom",icon:"none"},"position","center")),this.getPostData("new",0)},getshop:function(){n.navigateTo({url:"../edit/edit?type=shop"})},getSysConfig:function(t){var o=this;n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getSysConfig",data:{configName:t,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\Home\\Home.vue:813")),"1"==t.data.code&&(o.systemConfig=t.data.data,t.data.data?o.modalName="DialogModal2":o.modalName=""),console.log(e(o.msgNumber," at pages\\Home\\Home.vue:822"))},complete:function(){}})},getFriend:function(){n.navigateTo({url:"../menu/friend"})},getbieren:function(e){e==a.default.userinfo.Auid?n.navigateTo({url:"../i/i"}):n.navigateTo({url:"../i/bieren?auid="+e})},getShoucang:function(){n.navigateTo({url:"../menu/shoucang"})},getJifen:function(){n.navigateTo({url:"../menu/jifen"})},getMessage:function(){n.navigateTo({url:"../menu/Message"})},wallet:function(){n.navigateTo({url:"../menu/wallet"})},set:function(){n.navigateTo({url:"../set/set"})},logout:function(){n.clearStorage(),n.showToast(i({title:"已退出登录",position:"bottom",icon:"none"},"position","center")),a.default.userinfo=[],a.default.cookie="",this.modalName=null},cs:function(e){this.old.scrollTop=e.detail.scrollTop},sousuo:function(){n.navigateTo({url:"../sousuo/sousuo"})},getClass:function(e){n.navigateTo({url:"../classPost/classPost?id="+e})},showModal:function(t){var o=this;this.modalName=t.currentTarget.dataset.target,this.AvatarUrl=a.default.userinfo.AvatarUrl,this.username=a.default.userinfo.UserName,this.zhongcao=a.default.userinfo.ZhongcaoCount,this.guanzhu=a.default.userinfo.FollowedCount,this.fensi=a.default.userinfo.FollowerCount,this.dengji=a.default.userinfo.Rank,this.userid=a.default.userinfo.Auid,console.log(e("测试！：",this.username," at pages\\Home\\Home.vue:905")),n.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyNoRead",data:{auid:this.userid,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\Home\\Home.vue:918")),"1"==t.data.code?o.msgNumber=t.data.data.count:(n.navigateTo({url:"../reg/reg"}),o.AvatarUrl="https://c-ssl.duitang.com/uploads/item/201807/01/20180701122340_uxlwc.thumb.700_0.jpeg",o.username="未登录",o.zhongcao=0,o.guanzhu=0,o.fensi=0,o.dengji=0,o.userid=0,o.userInfo=null),console.log(e(o.msgNumber," at pages\\Home\\Home.vue:934"))},complete:function(){}})},hideModal:function(e){this.modalName=null,this.showYs=!1,n.setStorageSync("showYs","1")},tabSelect:function(t){this.TabCur=t,this.scrollTop=this.old.scrollTop,this.$nextTick(function(){this.scrollTop=0}),console.log(e(t," at pages\\Home\\Home.vue:952")),0==t?(this.getPostData("new",0),this.postype="new"):1==t?(this.postype="hot",this.getPostData("hot",0)):2==t&&(this.postype="guanzhu",this.getPostData("guanzhu",0))},Like:function(e,t,o,s,i){var u=this;if(""==a.default.token||null==a.default.token)return n.showToast({title:"你还没有登录，请登录后再来吧",position:"bottom",icon:"none"}),void setTimeout(function(){n.navigateTo({url:"../reg/reg"})},1200);if(t!=a.default.userinfo.Auid){if(!0===o)var l="del";else l="add";n.request({method:"GET",url:"https://api.angeli.top/post.php?type=Like",data:{fuid:t,postid:e,mode:l,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:a.default.system},success:function(e){"1"==e.data.code?("add"==l?(u.postList[s].ZhongcaoCount=Number(i)+1,u.postList[s].Give=!0,n.showToast({title:"种草成功！",position:"bottom",icon:"none"})):(u.postList[s].ZhongcaoCount=Number(i)-1,u.postList[s].Give=!1,n.showToast({title:"取消种草成功！",position:"bottom",icon:"none"})),u.$forceUpdate()):n.showToast({title:"种草失败！",position:"bottom",icon:"none"})},complete:function(){}})}else n.showToast({title:"不能给自己种草",position:"bottom",icon:"none"})},caidan:function(t){var o=this;console.log(e(t," at pages\\Home\\Home.vue:1043")),this.Dindex=t,t.AuthorId==a.default.userinfo.Auid?this.menuList=["分享","举报","删除帖子"]:this.menuList=["分享","举报"],n.showActionSheet({itemList:this.menuList,success:function(e){switch(e.tapIndex){case 0:o.showAppFenxiang=!0;break;case 1:o.showJubao=!0,o.jubao.postid=t.PostsId,o.jubao.authorid=t.AuthorId;break;case 2:o.$delPost(t.PostsId);break;default:}},fail:function(t){console.log(e(t.errMsg," at pages\\Home\\Home.vue:1072"))}})},getHei:function(){var t=this,o=n.createSelectorQuery().select("#topbox");o.fields({size:!0,scrollOffset:!0},function(o){t.gaodu=o.height-5,console.log(e("总高度："+t.gaodu," at pages\\Home\\Home.vue:1084"))}).exec()},showImage:function(t,o){var a=t[o];n.previewImage({current:o,urls:t,longPressActions:{itemList:["保存图片"],success:function(t){n.downloadFile({url:a,success:function(t){console.log(e(t," at pages\\Home\\Home.vue:1099")),200===t.statusCode?n.saveImageToPhotosAlbum({filePath:t.tempFilePath,success:function(){n.showToast({title:"已保存",position:"bottom",icon:"none"})}}):n.showToast({title:"保存失败",position:"bottom",icon:"none"})}})},fail:function(t){console.log(e(t.errMsg," at pages\\Home\\Home.vue:1123"))}}})},getPostData:function(t,o){var s=this;console.log(e(t," at pages\\Home\\Home.vue:1129")),this.page=1,n.request({method:"GET",url:"https://api.angeli.top/post.php?type=outPostList",data:{page:1,postType:t,count:10,classId:o,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){s.postList=[],console.log(e(t.data.data," at pages\\Home\\Home.vue:1147")),console.log(e("————————————帖子列表——————————"," at pages\\Home\\Home.vue:1148")),s.postList=t.data.data,console.log(e(s.postList," at pages\\Home\\Home.vue:1150")),s.weikong=!1,"1"!==t.data.code&&n.showToast({title:"获取帖子失败，建议重启",position:"bottom",icon:"none"}),0==t.data.data&&(s.weikong=!0)},complete:function(){s.$forceUpdate()}})},reguser:function(){"未登录"==this.username?n.navigateTo({url:"../reg/reg"}):n.navigateTo({url:"../i/i"})},getVip:function(){n.navigateTo({url:"../vip/vip"})},pluspost:function(){console.log(e("发帖：",a.default.userinfo.Auid," at pages\\Home\\Home.vue:1187")),""==a.default.token||null==a.default.token?(n.showToast({title:"你还没有登录，请登录后再来吧",position:"bottom",icon:"none"}),setTimeout(function(){n.navigateTo({url:"../reg/reg"})},1200)):n.navigateTo({url:"../post/post"})},EndLoding:function(t){var o=this;this.page++,console.log(e(this.scrollTop," at pages\\Home\\Home.vue:1208")),n.request({method:"GET",url:"https://api.angeli.top/post.php?type=outPostList",data:{page:this.page,postType:this.postype,sort:"PsotDate",count:10,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e("————————————帖子列表——————————"+o.page," at pages\\Home\\Home.vue:1223")),void 0==t.data.data.length?(o.page--,o.status="noMore"):(o.postList=o.postList.concat(t.data.data),o.status="loading",console.log(e(o.postList," at pages\\Home\\Home.vue:1230")))}})},getpostinfo:function(e){n.navigateTo({url:"../postinfo/postinfo?id="+e})}},onShareAppMessage:function(t){return"button"===t.from&&console.log(e(t.target," at pages\\Home\\Home.vue:1245")),{title:"超级无敌安个利",path:"/pages/Home/Home",desc:"超级无敌安个利"}}};t.default=l}).call(this,o("0de9")["default"],o("6e42")["default"])},bc13:function(e,t,o){"use strict";o.r(t);var n=o("ac23"),a=o.n(n);for(var s in n)"default"!==s&&function(e){o.d(t,e,function(){return n[e]})}(s);t["default"]=a.a},ffc3:function(e,t,o){"use strict";var n=function(){var e=this,t=e.$createElement;e._self._c;e._isMounted||(e.e0=function(t){e.showJubao=!1})},a=[];o.d(t,"a",function(){return n}),o.d(t,"b",function(){return a})}},[["8506","common/runtime","common/vendor"]]]);
 });
 require('pages/Home/Home.js');
 __wxRoute = 'pages/post/post';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/post/post.js';
 
 define('pages/post/post.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/post/post"],{"3fd3":function(t,e,o){"use strict";var n=function(){var t=this,e=t.$createElement;t._self._c},s=[];o.d(e,"a",function(){return n}),o.d(e,"b",function(){return s})},"512c":function(t,e,o){},"6ffb":function(t,e,o){"use strict";o.r(e);var n=o("baa1"),s=o.n(n);for(var a in n)"default"!==a&&function(t){o.d(e,t,function(){return n[t]})}(a);e["default"]=s.a},a506:function(t,e,o){"use strict";var n=o("512c"),s=o.n(n);s.a},baa1:function(t,e,o){"use strict";(function(t,n){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var s=i(o("a34a")),a=i(o("26f4"));function i(t){return t&&t.__esModule?t:{default:t}}function u(t,e,o,n,s,a,i){try{var u=t[a](i),c=u.value}catch(r){return void o(r)}u.done?e(c):Promise.resolve(c).then(n,s)}function c(t){return function(){var e=this,o=arguments;return new Promise(function(n,s){var a=t.apply(e,o);function i(t){u(a,n,s,i,c,"next",t)}function c(t){u(a,n,s,i,c,"throw",t)}i(void 0)})}}var r={data:function(){return{CustomBar:this.CustomBar,modalName:null,postcontent:"null",huati:"",nr:"",huatiname:"选择话题",oosArr:[],upImgOos:{aliConfig:{AccessKeySecret:"Us5V1E9tD2bSYFWYWYsHES4lNdAXRi",OSSAccessKeyId:"LTAI9dyLJEiv09Ss",oosDirectory:"angeli-image",url:"https://sz.oss.data.angeli.top/"},notli:!0,count:9,upTextDesc:"",upBgColor:"#EFEFF4",upIconColor:"#fff",upSvgIconName:"icon-addicon",isAddImage:!0}}},onBackPress:function(){var e=this;""!==this.postcontent&&t.showModal({title:"提示",content:"检测到输入框内还有帖子内容，是否保存草稿箱?",success:function(o){o.confirm?(t.setStorageSync("post",e.postcontent),console.log(n("储存草稿箱"," at pages\\post\\post.vue:91"))):o.cancel&&(console.log(n("用户点击取消"," at pages\\post\\post.vue:93")),t.removeStorageSync("post"))}})},onShow:function(){console.log(n(a.default.postClass," at pages\\post\\post.vue:102")),this.huati=a.default.postClass.ClassId,this.huatiname=a.default.postClass.ClassName,console.log(n(a.default.system," at pages\\post\\post.vue:105"))},onLoad:function(e){var o=t.getStorageSync("post");o&&(this.postcontent=o,this.nr=o),t.getSystemInfo({success:function(t){var e={phonebrand:t.brand+t.model,phonesystem:t.system};a.default.system=JSON.stringify(e),console.log(n(a.default.system," at pages\\post\\post.vue:122"))}})},methods:{getClassList:function(){t.navigateTo({url:"../huati/huati"})},uImageTap:function(){this.$refs.uImage.uploadimage(this.upImgOos)},delImgInfo:function(){var t=c(s.default.mark(function t(e){return s.default.wrap(function(t){while(1)switch(t.prev=t.next){case 0:console.log(n("你删除的图片地址为:",e,this.oosArr.splice(e.index,1)," at pages\\post\\post.vue:139"));case 1:case"end":return t.stop()}},t,this)}));function e(e){return t.apply(this,arguments)}return e}(),upOosData:function(){var e=c(s.default.mark(function e(o){var a,i,u;return s.default.wrap(function(e){while(1)switch(e.prev=e.next){case 0:a=[],i=0,u=o.length;case 2:if(!(i<u)){e.next=15;break}if(e.prev=3,""==o[i].path_server){e.next=7;break}return e.next=7,a.push(o[i].path_server.split(","));case 7:e.next=12;break;case 9:e.prev=9,e.t0=e["catch"](3),console.log(n("上传失败..."," at pages\\post\\post.vue:151"));case 12:i++,e.next=2;break;case 15:this.oosArr=a,a.length==this.upImgOos.count&&t.showToast({title:"上传成功",icon:"none"});case 17:case"end":return e.stop()}},e,this,[[3,9]])}));function o(t){return e.apply(this,arguments)}return o}(),textareaAInput:function(t){this.postcontent=t.target.value},sendpost:function(e){console.log(n(this.postcontent," at pages\\post\\post.vue:172")),"null"!=this.postcontent&&""!=this.postcontent?this.postcontent.length>2e3||this.postcontent.length<10?t.showToast({title:"内容最少10个字，最多2000个字",position:"bottom",icon:"none",mask:!0}):null!=this.huati&&0!=this.huati&&0!=this.huati&&"选择话题"!=this.huati?(this.huati||(this.huati=1),t.showLoading({title:"发送帖子中..",mask:!0}),console.log(n(a.default.system," at pages\\post\\post.vue:208")),t.request({method:"POST",url:"https://api.angeli.top/post.php?type=addPost",data:{imageList:this.oosArr.join().split(","),txt:this.postcontent,huati:this.huati,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:a.default.system},success:function(e){t.showToast({title:e.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0}),"2"==e.data.code&&t.showToast({title:e.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0}),"1"==e.data.code&&setTimeout(function(){t.hideLoading(),t.redirectTo({url:"../Home/Home?type=plusPost"})},2e3)},complete:function(){}})):t.showToast({title:"你还没有选择话题",position:"bottom",icon:"none",mask:!0}):t.showToast({title:"请输入文字内容！",position:"bottom",icon:"none",mask:!0})}}};e.default=r}).call(this,o("6e42")["default"],o("0de9")["default"])},f7fd:function(t,e,o){"use strict";(function(t){o("7e16"),o("921b");n(o("66fd"));var e=n(o("fcb0"));function n(t){return t&&t.__esModule?t:{default:t}}t(e.default)}).call(this,o("6e42")["createPage"])},fcb0:function(t,e,o){"use strict";o.r(e);var n=o("3fd3"),s=o("6ffb");for(var a in s)"default"!==a&&function(t){o.d(e,t,function(){return s[t]})}(a);o("a506");var i=o("2877"),u=Object(i["a"])(s["default"],n["a"],n["b"],!1,null,null,null);e["default"]=u.exports}},[["f7fd","common/runtime","common/vendor"]]]);
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/post/post"],{"512c":function(t,o,e){},"6ffb":function(t,o,e){"use strict";e.r(o);var n=e("baa1"),s=e.n(n);for(var a in n)"default"!==a&&function(t){e.d(o,t,function(){return n[t]})}(a);o["default"]=s.a},a506:function(t,o,e){"use strict";var n=e("512c"),s=e.n(n);s.a},baa1:function(t,o,e){"use strict";(function(t,n){Object.defineProperty(o,"__esModule",{value:!0}),o.default=void 0;var s=i(e("a34a")),a=i(e("26f4"));function i(t){return t&&t.__esModule?t:{default:t}}function u(t,o,e,n,s,a,i){try{var u=t[a](i),c=u.value}catch(r){return void e(r)}u.done?o(c):Promise.resolve(c).then(n,s)}function c(t){return function(){var o=this,e=arguments;return new Promise(function(n,s){var a=t.apply(o,e);function i(t){u(a,n,s,i,c,"next",t)}function c(t){u(a,n,s,i,c,"throw",t)}i(void 0)})}}var r={data:function(){return{CustomBar:this.CustomBar,modalName:null,postcontent:"",huati:"",nr:"",huatiname:"选择话题",oosArr:[],upImgOos:{aliConfig:{AccessKeySecret:"Us5V1E9tD2bSYFWYWYsHES4lNdAXRi",OSSAccessKeyId:"LTAI9dyLJEiv09Ss",oosDirectory:"angeli-image",url:"https://sz.oss.data.angeli.top/"},notli:!0,count:9,upTextDesc:"",upBgColor:"#EFEFF4",upIconColor:"#fff",upSvgIconName:"icon-addicon",isAddImage:!0}}},onBackPress:function(){var o=this;console.log(t(this.postcontent.length," at pages\\post\\post.vue:84")),0!=this.postcontent.length&&n.showModal({title:"提示",content:"检测到输入框内还有帖子内容，是否保存草稿箱?",success:function(e){e.confirm?(n.setStorageSync("post",o.postcontent),console.log(t("储存草稿箱"," at pages\\post\\post.vue:92"))):e.cancel&&(console.log(t("用户点击取消"," at pages\\post\\post.vue:94")),n.removeStorageSync("post"))}})},onShow:function(){console.log(t(a.default.postClass," at pages\\post\\post.vue:103")),this.huati=a.default.postClass.ClassId,this.huatiname=a.default.postClass.ClassName,console.log(t(a.default.system," at pages\\post\\post.vue:106"))},onLoad:function(o){var e=n.getStorageSync("post");e&&(this.postcontent=e,this.nr=e),n.getSystemInfo({success:function(o){var e={phonebrand:o.brand+o.model,phonesystem:o.system};a.default.system=JSON.stringify(e),console.log(t(a.default.system," at pages\\post\\post.vue:123"))}})},methods:{getClassList:function(){n.navigateTo({url:"../huati/huati"})},uImageTap:function(){this.$refs.uImage.uploadimage(this.upImgOos)},delImgInfo:function(){var o=c(s.default.mark(function o(e){return s.default.wrap(function(o){while(1)switch(o.prev=o.next){case 0:console.log(t("你删除的图片地址为:",e,this.oosArr.splice(e.index,1)," at pages\\post\\post.vue:140"));case 1:case"end":return o.stop()}},o,this)}));function e(t){return o.apply(this,arguments)}return e}(),upOosData:function(){var o=c(s.default.mark(function o(e){var a,i,u;return s.default.wrap(function(o){while(1)switch(o.prev=o.next){case 0:a=[],i=0,u=e.length;case 2:if(!(i<u)){o.next=15;break}if(o.prev=3,""==e[i].path_server){o.next=7;break}return o.next=7,a.push(e[i].path_server.split(","));case 7:o.next=12;break;case 9:o.prev=9,o.t0=o["catch"](3),console.log(t("上传失败..."," at pages\\post\\post.vue:152"));case 12:i++,o.next=2;break;case 15:this.oosArr=a,a.length==this.upImgOos.count&&n.showToast({title:"上传成功",icon:"none"});case 17:case"end":return o.stop()}},o,this,[[3,9]])}));function e(t){return o.apply(this,arguments)}return e}(),textareaAInput:function(t){this.postcontent=t.target.value},sendpost:function(o){console.log(t(this.postcontent," at pages\\post\\post.vue:172")),"null"!=this.postcontent&&""!=this.postcontent?this.postcontent.length>2e3||this.postcontent.length<10?n.showToast({title:"内容最少10个字，最多2000个字",position:"bottom",icon:"none",mask:!0}):null!=this.huati&&0!=this.huati&&0!=this.huati&&"选择话题"!=this.huati?(this.huati||(this.huati=1),n.showLoading({title:"发送帖子中..",mask:!0}),console.log(t(a.default.system," at pages\\post\\post.vue:208")),n.request({method:"POST",url:"https://api.angeli.top/post.php?type=addPost",data:{imageList:this.oosArr.join().split(","),txt:this.postcontent,huati:this.huati,token:a.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:a.default.system},success:function(t){n.showToast({title:t.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0}),"2"==t.data.code&&n.showToast({title:t.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0}),"1"==t.data.code&&setTimeout(function(){n.hideLoading(),n.redirectTo({url:"../Home/Home?type=plusPost"})},2e3)},complete:function(){}})):n.showToast({title:"你还没有选择话题",position:"bottom",icon:"none",mask:!0}):n.showToast({title:"请输入文字内容！",position:"bottom",icon:"none",mask:!0})}}};o.default=r}).call(this,e("0de9")["default"],e("6e42")["default"])},f7fd:function(t,o,e){"use strict";(function(t){e("7e16"),e("921b");n(e("66fd"));var o=n(e("fcb0"));function n(t){return t&&t.__esModule?t:{default:t}}t(o.default)}).call(this,e("6e42")["createPage"])},f809:function(t,o,e){"use strict";var n=function(){var t=this,o=t.$createElement;t._self._c},s=[];e.d(o,"a",function(){return n}),e.d(o,"b",function(){return s})},fcb0:function(t,o,e){"use strict";e.r(o);var n=e("f809"),s=e("6ffb");for(var a in s)"default"!==a&&function(t){e.d(o,t,function(){return s[t]})}(a);e("a506");var i=e("2877"),u=Object(i["a"])(s["default"],n["a"],n["b"],!1,null,null,null);o["default"]=u.exports}},[["f7fd","common/runtime","common/vendor"]]]);
 });
 require('pages/post/post.js');
 __wxRoute = 'pages/reg/reg';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/reg/reg.js';
@@ -3743,7 +3754,7 @@ require('pages/i/i.js');
 __wxRoute = 'pages/postinfo/postinfo';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/postinfo/postinfo.js';
 
 define('pages/postinfo/postinfo.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/postinfo/postinfo"],{"149e":function(t,o,e){"use strict";e.r(o);var s=e("c758"),n=e.n(s);for(var i in s)"default"!==i&&function(t){e.d(o,t,function(){return s[t]})}(i);o["default"]=n.a},2827:function(t,o,e){"use strict";var s=e("e290"),n=e.n(s);n.a},"2a87":function(t,o,e){"use strict";(function(t){e("7e16"),e("921b");s(e("66fd"));var o=s(e("bb4d"));function s(t){return t&&t.__esModule?t:{default:t}}t(o.default)}).call(this,e("6e42")["createPage"])},"5a73":function(t,o,e){"use strict";var s=function(){var t=this,o=t.$createElement;t._self._c;t._isMounted||(t.e0=function(o){t.showJubao=!1})},n=[];e.d(o,"a",function(){return s}),e.d(o,"b",function(){return n})},bb4d:function(t,o,e){"use strict";e.r(o);var s=e("5a73"),n=e("149e");for(var i in n)"default"!==i&&function(t){e.d(o,t,function(){return n[t]})}(i);e("2827");var a=e("2877"),p=Object(a["a"])(n["default"],s["a"],s["b"],!1,null,null,null);o["default"]=p.exports},c758:function(t,o,e){"use strict";(function(t,s){Object.defineProperty(o,"__esModule",{value:!0}),o.default=void 0;var n=i(e("26f4"));function i(t){return t&&t.__esModule?t:{default:t}}var a={data:function(){return{postInfo:[],pllist:[],dslist:[],showAppFenxiang:!1,showVip:!1,InputBottom:0,plnr:"",xzId:1,postid:"",setvar:"",Give:"0",huifu:!1,gaodu:"-710px",yanse:"rgba(0,0,0,0)",pluid:"",monnumber:1,shunxu:!1,jubao:{postid:0,authorid:0},jubaoliyou:"",showJubao:!1}},onShareAppMessage:function(o){return"button"===o.from&&console.log(t(o.target," at pages\\postinfo\\postinfo.vue:154")),{title:this.postInfo.Content,path:"/pages/postinfo/postinfo?id="+this.postid,desc:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0]}},onLoad:function(o){var e=this;console.log(t("ID:",o.id," at pages\\postinfo\\postinfo.vue:164")),this.postid=o.id,this.getdsList(this.postid),s.getSystemInfo({success:function(o){var e={phonebrand:o.brand+o.model,phonesystem:o.system};n.default.system=JSON.stringify(e),console.log(t(n.default.system," at pages\\postinfo\\postinfo.vue:174"))}}),"fenxiang"==o.type?""==n.default.userinfo.Auid||null==n.default.userinfo.Auid?(s.showLoading({title:"加载中"}),s.login({provider:"weixin",success:function(i){console.log(t(i," at pages\\postinfo\\postinfo.vue:185")),s.request({method:"POST",url:"https://api.angeli.top/reg.php?type=wxlogin",data:{code:i.code,tuijianId:e.tuijianren},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){console.log(t(o," at pages\\postinfo\\postinfo.vue:198")),"0"==o.data.code?(n.default.usersk=o.data.data.session_key,s.showToast({title:"欢迎你，游客",position:"bottom",icon:"none"}),e.AvatarUrl="https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png"):"1"!=o.data.code&&"2"!=o.data.code||(e.AvatarUrl=o.data.data.AvatarUrl,e.username=o.data.data.UserName,e.zhongcao=o.data.data.ZhongcaoCount,e.guanzhu=o.data.data.FollowedCount,e.fensi=o.data.data.FollowerCount,e.dengji=o.data.data.Rank,e.userid=o.data.data.Auid,e.userInfo=o.data.data,n.default.userinfo=o.data.data,n.default.cookie=o.header["Set-Cookie"],console.log(t("记录cookie：",n.default.cookie," at pages\\postinfo\\postinfo.vue:218")),"2"==o.data.code?s.showToast({title:o.data.msg,position:"bottom",icon:"none"}):e.userInfo.VIPEndTime>0?s.showToast({title:"欢迎VIP："+e.username,position:"bottom",icon:"none"}):s.showToast({title:"欢迎你,"+e.username,position:"bottom",icon:"none"}))},complete:function(){e.getpostinfo(o.id),s.hideLoading()},fail:function(t){s.showToast({title:"未知原因，登录失败！",position:"bottom",icon:"none"})}})},fail:function(n){s.showToast({title:"登录失败",position:"bottom"}),e.getpostinfo(o.id),console.error(t("授权登录失败："+JSON.stringify(n)," at pages\\postinfo\\postinfo.vue:262"))}})):(n.default.userinfo.VIPEndTime>0?s.showToast({title:"欢迎VIP："+n.default.userinfo.username,position:"bottom",icon:"none"}):s.showToast({title:"欢迎你,"+n.default.userinfo.username,position:"bottom",icon:"none"}),this.getpostinfo(o.id)):this.getpostinfo(o.id),console.log(t(this.dslist," at pages\\postinfo\\postinfo.vue:286"))},methods:{appFenxiang:function(o,e){switch(o){case 0:this.showAppFenxiang=!1;break;case 1:s.setClipboardData({data:"http://share.angeli.top/?postId="+this.postid,success:function(){console.log(t("success"," at pages\\postinfo\\postinfo.vue:299"))}}),console.log(t("复制链接"," at pages\\postinfo\\postinfo.vue:302"));break;case 2:console.log(t(this.postInfo.PictureId[0]," at pages\\postinfo\\postinfo.vue:305")),console.log(t(this.postInfo.Content," at pages\\postinfo\\postinfo.vue:306")),console.log(t("http://share.angeli.top/?postId="+this.postid," at pages\\postinfo\\postinfo.vue:307")),s.share({provider:"weixin",scene:"WXSceneSession",type:5,imageUrl:this.postInfo.PictureId[0],title:this.postInfo.Content,miniProgram:{id:"gh_a38adc10b952",path:"pages/postinfo/postinfo?id="+this.postid,type:0,webUrl:"http://share.angeli.top/?postId="+this.postid},success:function(o){console.log(t(JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:321"))},fail:function(o){console.log(t("fail:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:324"))}});break;case 3:s.share({provider:"weixin",scene:"WXSenceTimeline",type:0,href:"http://share.angeli.top/?postId="+this.postid,title:this.postInfo.Content,summary:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0],success:function(o){console.log(t("success:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:338"))},fail:function(o){console.log(t("fail:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:341"))}});break;case 4:s.share({provider:"qq",type:1,href:"http://share.angeli.top/?postId="+this.postid,summary:this.postInfo.Content,title:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0],success:function(o){console.log(t("success:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:354"))},fail:function(o){console.log(t("fail:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:357"))}});break;default:}},sendjubao:function(){this.$jubao(this.jubao.postid,n.default.userinfo.Auid,this.jubao.authorid,this.jubaoliyou),this.showJubao=!1,s.showToast({title:"举报成功",position:"bottom",icon:"none"})},jubaoliyouinput:function(t){this.jubaoliyou=t.target.value},getpostinfo:function(o){var e=this;s.showLoading({title:"加载中"}),s.request({method:"GET",url:"https://api.angeli.top/post.php?type=outPostInfo",data:{id:o,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(s){console.log(t("————————————帖子详情——————————"," at pages\\postinfo\\postinfo.vue:395")),e.postInfo=s.data.data,console.log(t(e.postInfo," at pages\\postinfo\\postinfo.vue:397")),e.getplLista(o)},complete:function(){}})},getplLista:function(o){var e=this;s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getpl",data:{postid:o,xu:this.shunxu,count:40,page:1,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){console.log(t("————————————评论详情——————————"," at pages\\postinfo\\postinfo.vue:422")),e.pllist=o.data.data,console.log(t(e.pllist," at pages\\postinfo\\postinfo.vue:424"))},complete:function(){s.hideLoading()}})},setshunxu:function(){this.shunxu?this.shunxu=!1:this.shunxu=!0,console.log(t(this.shunxu," at pages\\postinfo\\postinfo.vue:437")),this.getplLista(this.postid)},getpllist:function(t){s.navigateTo({url:"plinfo?CommentsId="+t+"&postId="+this.postid})},getClass:function(t){s.navigateTo({url:"../classPost/classPost?id="+t})},caidan:function(o){var e=this;console.log(t(o," at pages\\postinfo\\postinfo.vue:451")),this.Dindex=o,o.AuthorId==n.default.userinfo.Auid?this.menuList=["分享","举报","删除帖子"]:this.menuList=["分享","举报"],s.showActionSheet({itemList:this.menuList,success:function(t){switch(t.tapIndex){case 0:e.showAppFenxiang=!0;break;case 1:e.showJubao=!0,e.jubao.postid=o.PostsId,e.jubao.authorid=o.AuthorId;break;case 2:s.showToast({title:"已删除",position:"bottom",icon:"none"}),e.$delPost(o.PostsId);break;default:}},fail:function(o){console.log(t(o.errMsg," at pages\\postinfo\\postinfo.vue:483"))}})},getbieren:function(t){t==n.default.userinfo.Auid?s.navigateTo({url:"../i/i"}):s.navigateTo({url:"../i/bieren?auid="+t})},getdsList:function(o){var e=this;s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getDashangList&postId="+o,data:{token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){"1"==o.data.code?(e.dslist=o.data.data,console.log(t("打赏输出"," at pages\\postinfo\\postinfo.vue:512")),console.log(t(e.dslist," at pages\\postinfo\\postinfo.vue:513")),e.$forceUpdate()):e.dslist=0},complete:function(){}})},getList:function(){s.navigateTo({url:"dashang?id="+this.postid})},getDashang:function(){var o=this;this.postInfo.AuthorId!=n.default.userinfo.Auid?(console.log(t(this.monnumber," at pages\\postinfo\\postinfo.vue:538")),s.request({method:"GET",url:"https://api.angeli.top/post.php?type=dashang",data:{toid:this.postInfo.AuthorId,postid:this.postid,number:this.monnumber,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(t){"1"==t.data.code?(o.showVip=!1,o.gaodu="-710px",o.yanse="rgba(0,0,0,0)",s.showToast({title:"打赏成功！",position:"bottom",icon:"none"}),o.$forceUpdate()):s.showToast({title:t.data.msg,position:"bottom",icon:"none"})},complete:function(){}})):s.showToast({title:"不能给自己打赏",position:"bottom",icon:"none"})},hideVip:function(){this.showVip=!1,this.gaodu="-710px",this.yanse="rgba(0,0,0,0)"},xuanze:function(t){switch(t){case 1:this.monnumber=1;break;case 2:this.monnumber=5;break;case 3:this.monnumber=10;break;case 4:this.monnumber=20;break;default:this.monnumber=1;break}this.xzId=t},showKaitong:function(){this.showVip=!0,this.gaodu="0px",this.yanse="rgba(0,0,0,0.4)"},Like:function(t,o,e,i){var a=this;if(""==n.default.userinfo.Auid||null==n.default.userinfo.Auid)return s.showToast({title:"你还没有登录，请登录后再来吧",position:"bottom",icon:"none"}),void setTimeout(function(){s.navigateTo({url:"../reg/reg"})},1200);if(o!=n.default.userinfo.Auid){if(!0===e)var p="del";else p="add";s.request({method:"GET",url:"https://api.angeli.top/post.php?type=Like",data:{fuid:o,postid:t,mode:p,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(t){"1"==t.data.code?("add"==p?(a.postInfo.Give=!0,a.postInfo.ZhongcaoCount=Number(i)+1,s.showToast({title:"种草成功！",position:"bottom",icon:"none"})):(a.postInfo.Give=!1,a.postInfo.ZhongcaoCount=Number(i)-1,s.showToast({title:"取消种草成功！",position:"bottom",icon:"none"})),a.$forceUpdate()):s.showToast({title:"种草失败！",position:"bottom",icon:"none"})},complete:function(){}})}else s.showToast({title:"不能给自己种草",position:"bottom",icon:"none"})},InputFocus:function(t){this.InputBottom=t.detail.height},InputBlur:function(t){this.InputBottom=0},pinglun:function(t){this.plnr=t.target.value,0==this.plnr.indexOf("@")?this.huifu=!0:this.huifu=!1},onShareAppMessage:function(o){return"button"===o.from&&console.log(t(o.target," at pages\\postinfo\\postinfo.vue:704")),{title:this.postInfo.Content,path:"/pages/postinfo/postinfo?id="+this.postid+"&type=fenxiang",desc:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0]}},showImage:function(o,e){var n=o[e];s.previewImage({current:e,urls:o,longPressActions:{itemList:["保存图片"],success:function(o){s.downloadFile({url:n,success:function(o){console.log(t(o," at pages\\postinfo\\postinfo.vue:725")),200===o.statusCode?s.saveImageToPhotosAlbum({filePath:o.tempFilePath,success:function(){s.showToast({title:"已保存",position:"bottom",icon:"none"})}}):s.showToast({title:"保存失败",position:"bottom",icon:"none"})}})},fail:function(o){console.log(t(o.errMsg," at pages\\postinfo\\postinfo.vue:749"))}}})},sendpl:function(o){var e=this;if(console.log(t(this.plnr," at pages\\postinfo\\postinfo.vue:755")),"null"!=this.plnr&&""!=this.plnr)if(this.plnr.length>300||this.plnr.length<1)s.showToast({title:"内容最少1个字，最多300字",position:"bottom",icon:"none",mask:!0});else if(this.huifuid&&1==this.huifu){var i=this.plnr.substring(0,this.plnr.indexOf(":")+1),a=this.plnr.replace(i,"");s.showLoading({title:"正在提交数据"}),s.request({method:"POST",url:"https://api.angeli.top/post.php?type=hfpl",data:{id:this.huifuid,txt:a,postid:this.postid,uid:this.pluid,auid:n.default.userinfo.Auid,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){"1"==o.data.code&&(e.setvar="",e.plnr="",s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getpl",data:{postid:e.postid,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){console.log(t("————————————评论详情——————————"," at pages\\postinfo\\postinfo.vue:814")),e.pllist=o.data.data,e.plnr,console.log(t(e.pllist," at pages\\postinfo\\postinfo.vue:817"))}})),s.showToast({title:o.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0})},complete:function(){setTimeout(function(){s.hideLoading()},2e3)}})}else s.showLoading({title:"正在提交数据"}),s.request({method:"POST",url:"https://api.angeli.top/post.php?type=pl",data:{auid:n.default.userinfo.Auid,txt:this.plnr,postid:this.postid,uid:this.postInfo.AuthorId,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){"1"==o.data.code&&(e.plnr="",e.setvar="",s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getpl",data:{postid:e.postid,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){console.log(t("————————————评论详情——————————"," at pages\\postinfo\\postinfo.vue:873")),e.pllist=o.data.data,console.log(t(e.pllist," at pages\\postinfo\\postinfo.vue:875")),e.plnr}})),s.showToast({title:o.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0})},complete:function(){setTimeout(function(){s.hideLoading()},2e3)}});else s.showToast({title:"请输入评论内容！",position:"bottom",icon:"none",mask:!0})},dianzan:function(o,e){var i=this;console.log(t("点赞"," at pages\\postinfo\\postinfo.vue:899")),s.request({method:"GET",url:"https://api.angeli.top/post.php?type=dianzan",data:{postid:o,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){if("1"==o.data.code){var n=i.pllist[e].Give;console.log(t(n," at pages\\postinfo\\postinfo.vue:914")),n++,console.log(t(n," at pages\\postinfo\\postinfo.vue:916")),i.$set(i.pllist[e],"Give",n)}s.showToast({title:o.data.msg,position:"bottom",icon:"none",duration:2e3})}})},huifua:function(o,e,s,n){this.huifuid=o,this.setvar="@"+e+": ",this.huifu=!0,this.pluid=n,console.log(t("回复",o,e," at pages\\postinfo\\postinfo.vue:933"))}}};o.default=a}).call(this,e("0de9")["default"],e("6e42")["default"])},e290:function(t,o,e){}},[["2a87","common/runtime","common/vendor"]]]);
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/postinfo/postinfo"],{"149e":function(t,o,e){"use strict";e.r(o);var s=e("c758"),n=e.n(s);for(var i in s)"default"!==i&&function(t){e.d(o,t,function(){return s[t]})}(i);o["default"]=n.a},"1ad3":function(t,o,e){"use strict";var s=function(){var t=this,o=t.$createElement;t._self._c;t._isMounted||(t.e0=function(o){t.showJubao=!1})},n=[];e.d(o,"a",function(){return s}),e.d(o,"b",function(){return n})},2827:function(t,o,e){"use strict";var s=e("e290"),n=e.n(s);n.a},"2a87":function(t,o,e){"use strict";(function(t){e("7e16"),e("921b");s(e("66fd"));var o=s(e("bb4d"));function s(t){return t&&t.__esModule?t:{default:t}}t(o.default)}).call(this,e("6e42")["createPage"])},bb4d:function(t,o,e){"use strict";e.r(o);var s=e("1ad3"),n=e("149e");for(var i in n)"default"!==i&&function(t){e.d(o,t,function(){return n[t]})}(i);e("2827");var a=e("2877"),p=Object(a["a"])(n["default"],s["a"],s["b"],!1,null,null,null);o["default"]=p.exports},c758:function(t,o,e){"use strict";(function(t,s){Object.defineProperty(o,"__esModule",{value:!0}),o.default=void 0;var n=i(e("26f4"));function i(t){return t&&t.__esModule?t:{default:t}}var a={data:function(){return{postInfo:[],pllist:[],dslist:[],showAppFenxiang:!1,showVip:!1,InputBottom:0,plnr:"",xzId:1,postid:"",setvar:"",Give:"0",huifu:!1,gaodu:"-710px",yanse:"rgba(0,0,0,0)",pluid:"",monnumber:1,shunxu:!1,jubao:{postid:0,authorid:0},jubaoliyou:"",showJubao:!1}},onShareAppMessage:function(o){return"button"===o.from&&console.log(t(o.target," at pages\\postinfo\\postinfo.vue:154")),{title:this.postInfo.Content,path:"/pages/postinfo/postinfo?id="+this.postid,desc:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0]}},onLoad:function(o){var e=this;console.log(t("ID:",o.id," at pages\\postinfo\\postinfo.vue:164")),this.postid=o.id,this.getdsList(this.postid),s.getSystemInfo({success:function(o){var e={phonebrand:o.brand+o.model,phonesystem:o.system};n.default.system=JSON.stringify(e),console.log(t(n.default.system," at pages\\postinfo\\postinfo.vue:174"))}}),"fenxiang"==o.type?""==n.default.userinfo.Auid||null==n.default.userinfo.Auid?(s.showLoading({title:"加载中"}),s.login({provider:"weixin",success:function(i){console.log(t(i," at pages\\postinfo\\postinfo.vue:185")),s.request({method:"POST",url:"https://api.angeli.top/reg.php?type=wxlogin",data:{code:i.code,tuijianId:e.tuijianren},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){console.log(t(o," at pages\\postinfo\\postinfo.vue:198")),"0"==o.data.code?(n.default.usersk=o.data.data.session_key,s.showToast({title:"欢迎你，游客",position:"bottom",icon:"none"}),e.AvatarUrl="https://sz.oss.data.angeli.top/angeli-image/1562320238188110.png"):"1"!=o.data.code&&"2"!=o.data.code||(e.AvatarUrl=o.data.data.AvatarUrl,e.username=o.data.data.UserName,e.zhongcao=o.data.data.ZhongcaoCount,e.guanzhu=o.data.data.FollowedCount,e.fensi=o.data.data.FollowerCount,e.dengji=o.data.data.Rank,e.userid=o.data.data.Auid,e.userInfo=o.data.data,n.default.userinfo=o.data.data,n.default.cookie=o.header["Set-Cookie"],console.log(t("记录cookie：",n.default.cookie," at pages\\postinfo\\postinfo.vue:218")),"2"==o.data.code?s.showToast({title:o.data.msg,position:"bottom",icon:"none"}):e.userInfo.VIPEndTime>0?s.showToast({title:"欢迎VIP："+e.username,position:"bottom",icon:"none"}):s.showToast({title:"欢迎你,"+e.username,position:"bottom",icon:"none"}))},complete:function(){e.getpostinfo(o.id),s.hideLoading()},fail:function(t){s.showToast({title:"未知原因，登录失败！",position:"bottom",icon:"none"})}})},fail:function(n){s.showToast({title:"登录失败",position:"bottom"}),e.getpostinfo(o.id),console.error(t("授权登录失败："+JSON.stringify(n)," at pages\\postinfo\\postinfo.vue:262"))}})):(n.default.userinfo.VIPEndTime>0?s.showToast({title:"欢迎VIP："+n.default.userinfo.username,position:"bottom",icon:"none"}):s.showToast({title:"欢迎你,"+n.default.userinfo.username,position:"bottom",icon:"none"}),this.getpostinfo(o.id)):this.getpostinfo(o.id),console.log(t(this.dslist," at pages\\postinfo\\postinfo.vue:286"))},methods:{appFenxiang:function(o,e){switch(o){case 0:this.showAppFenxiang=!1;break;case 1:s.setClipboardData({data:"http://share.angeli.top/?postId="+this.postid,success:function(){console.log(t("success"," at pages\\postinfo\\postinfo.vue:299"))}}),console.log(t("复制链接"," at pages\\postinfo\\postinfo.vue:302"));break;case 2:console.log(t(this.postInfo.PictureId[0]," at pages\\postinfo\\postinfo.vue:305")),console.log(t(this.postInfo.Content," at pages\\postinfo\\postinfo.vue:306")),console.log(t("http://share.angeli.top/?postId="+this.postid," at pages\\postinfo\\postinfo.vue:307")),s.share({provider:"weixin",scene:"WXSceneSession",type:5,imageUrl:this.postInfo.PictureId[0],title:this.postInfo.Content,miniProgram:{id:"gh_a38adc10b952",path:"pages/postinfo/postinfo?id="+this.postid,type:0,webUrl:"http://share.angeli.top/?postId="+this.postid},success:function(o){console.log(t(JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:321"))},fail:function(o){console.log(t("fail:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:324"))}});break;case 3:s.share({provider:"weixin",scene:"WXSenceTimeline",type:0,href:"http://share.angeli.top/?postId="+this.postid,title:this.postInfo.Content,summary:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0],success:function(o){console.log(t("success:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:338"))},fail:function(o){console.log(t("fail:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:341"))}});break;case 4:s.share({provider:"qq",type:1,href:"http://share.angeli.top/?postId="+this.postid,summary:this.postInfo.Content,title:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0],success:function(o){console.log(t("success:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:354"))},fail:function(o){console.log(t("fail:"+JSON.stringify(o)," at pages\\postinfo\\postinfo.vue:357"))}});break;default:}},sendjubao:function(){this.$jubao(this.jubao.postid,n.default.userinfo.Auid,this.jubao.authorid,this.jubaoliyou),this.showJubao=!1,s.showToast({title:"举报成功",position:"bottom",icon:"none"})},jubaoliyouinput:function(t){this.jubaoliyou=t.target.value},getpostinfo:function(o){var e=this;s.showLoading({title:"加载中"}),s.request({method:"GET",url:"https://api.angeli.top/post.php?type=outPostInfo",data:{id:o,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(s){console.log(t("————————————帖子详情——————————"," at pages\\postinfo\\postinfo.vue:395")),e.postInfo=s.data.data,console.log(t(e.postInfo," at pages\\postinfo\\postinfo.vue:397")),e.getplLista(o)},complete:function(){}})},getplLista:function(o){var e=this;s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getpl",data:{postid:o,xu:this.shunxu,count:40,page:1,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){console.log(t("————————————评论详情——————————"," at pages\\postinfo\\postinfo.vue:422")),e.pllist=o.data.data,console.log(t(e.pllist," at pages\\postinfo\\postinfo.vue:424"))},complete:function(){s.hideLoading()}})},setshunxu:function(){this.shunxu?this.shunxu=!1:this.shunxu=!0,console.log(t(this.shunxu," at pages\\postinfo\\postinfo.vue:437")),this.getplLista(this.postid)},getpllist:function(t){s.navigateTo({url:"plinfo?CommentsId="+t+"&postId="+this.postid})},getClass:function(t){s.navigateTo({url:"../classPost/classPost?id="+t})},caidan:function(o){var e=this;console.log(t(o," at pages\\postinfo\\postinfo.vue:451")),this.Dindex=o,o.AuthorId==n.default.userinfo.Auid?this.menuList=["分享","举报","删除帖子"]:this.menuList=["分享","举报"],s.showActionSheet({itemList:this.menuList,success:function(t){switch(t.tapIndex){case 0:e.showAppFenxiang=!0;break;case 1:e.showJubao=!0,e.jubao.postid=o.PostsId,e.jubao.authorid=o.AuthorId;break;case 2:s.showToast({title:"已删除",position:"bottom",icon:"none"}),e.$delPost(o.PostsId);break;default:}},fail:function(o){console.log(t(o.errMsg," at pages\\postinfo\\postinfo.vue:483"))}})},getbieren:function(t){t==n.default.userinfo.Auid?s.navigateTo({url:"../i/i"}):s.navigateTo({url:"../i/bieren?auid="+t})},getdsList:function(o){var e=this;s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getDashangList&postId="+o,data:{token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){"1"==o.data.code?(e.dslist=o.data.data,console.log(t("打赏输出"," at pages\\postinfo\\postinfo.vue:512")),console.log(t(e.dslist," at pages\\postinfo\\postinfo.vue:513")),e.$forceUpdate()):e.dslist=0},complete:function(){}})},getList:function(){s.navigateTo({url:"dashang?id="+this.postid})},getDashang:function(){var o=this;this.postInfo.AuthorId!=n.default.userinfo.Auid?(console.log(t(this.monnumber," at pages\\postinfo\\postinfo.vue:538")),s.request({method:"GET",url:"https://api.angeli.top/post.php?type=dashang",data:{toid:this.postInfo.AuthorId,postid:this.postid,number:this.monnumber,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(t){"1"==t.data.code?(o.showVip=!1,o.gaodu="-710px",o.yanse="rgba(0,0,0,0)",s.showToast({title:"打赏成功！",position:"bottom",icon:"none"}),o.$forceUpdate()):s.showToast({title:t.data.msg,position:"bottom",icon:"none"})},complete:function(){}})):s.showToast({title:"不能给自己打赏",position:"bottom",icon:"none"})},hideVip:function(){this.showVip=!1,this.gaodu="-710px",this.yanse="rgba(0,0,0,0)"},xuanze:function(t){switch(t){case 1:this.monnumber=1;break;case 2:this.monnumber=5;break;case 3:this.monnumber=10;break;case 4:this.monnumber=20;break;default:this.monnumber=1;break}this.xzId=t},showKaitong:function(){this.showVip=!0,this.gaodu="0px",this.yanse="rgba(0,0,0,0.4)"},Like:function(t,o,e,i){var a=this;if(""==n.default.userinfo.Auid||null==n.default.userinfo.Auid)return s.showToast({title:"你还没有登录，请登录后再来吧",position:"bottom",icon:"none"}),void setTimeout(function(){s.navigateTo({url:"../reg/reg"})},1200);if(o!=n.default.userinfo.Auid){if(!0===e)var p="del";else p="add";s.request({method:"GET",url:"https://api.angeli.top/post.php?type=Like",data:{fuid:o,postid:t,mode:p,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(t){"1"==t.data.code?("add"==p?(a.postInfo.Give=!0,a.postInfo.ZhongcaoCount=Number(i)+1,s.showToast({title:"种草成功！",position:"bottom",icon:"none"})):(a.postInfo.Give=!1,a.postInfo.ZhongcaoCount=Number(i)-1,s.showToast({title:"取消种草成功！",position:"bottom",icon:"none"})),a.$forceUpdate()):s.showToast({title:"种草失败！",position:"bottom",icon:"none"})},complete:function(){}})}else s.showToast({title:"不能给自己种草",position:"bottom",icon:"none"})},InputFocus:function(t){this.InputBottom=t.detail.height},InputBlur:function(t){this.InputBottom=0},pinglun:function(t){this.plnr=t.target.value,0==this.plnr.indexOf("@")?this.huifu=!0:this.huifu=!1},onShareAppMessage:function(o){return"button"===o.from&&console.log(t(o.target," at pages\\postinfo\\postinfo.vue:704")),{title:this.postInfo.Content,path:"/pages/postinfo/postinfo?id="+this.postid+"&type=fenxiang",desc:this.postInfo.Content,imageUrl:this.postInfo.PictureId[0]}},showImage:function(o,e){var n=o[e];s.previewImage({current:e,urls:o,longPressActions:{itemList:["保存图片"],success:function(o){s.downloadFile({url:n,success:function(o){console.log(t(o," at pages\\postinfo\\postinfo.vue:725")),200===o.statusCode?s.saveImageToPhotosAlbum({filePath:o.tempFilePath,success:function(){s.showToast({title:"已保存",position:"bottom",icon:"none"})}}):s.showToast({title:"保存失败",position:"bottom",icon:"none"})}})},fail:function(o){console.log(t(o.errMsg," at pages\\postinfo\\postinfo.vue:749"))}}})},sendpl:function(o){var e=this;if(console.log(t(this.plnr," at pages\\postinfo\\postinfo.vue:755")),"null"!=this.plnr&&""!=this.plnr)if(this.plnr.length>300||this.plnr.length<1)s.showToast({title:"内容最少1个字，最多300字",position:"bottom",icon:"none",mask:!0});else if(this.huifuid&&1==this.huifu){var i=this.plnr.substring(0,this.plnr.indexOf(":")+1),a=this.plnr.replace(i,"");s.showLoading({title:"正在提交数据"}),s.request({method:"POST",url:"https://api.angeli.top/post.php?type=hfpl",data:{id:this.huifuid,txt:a,postid:this.postid,uid:this.pluid,auid:n.default.userinfo.Auid,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){"1"==o.data.code&&(e.setvar="",e.plnr="",s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getpl",data:{postid:e.postid,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){console.log(t("————————————评论详情——————————"," at pages\\postinfo\\postinfo.vue:814")),e.pllist=o.data.data,e.plnr,console.log(t(e.pllist," at pages\\postinfo\\postinfo.vue:817"))}})),s.showToast({title:o.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0})},complete:function(){setTimeout(function(){s.hideLoading()},2e3)}})}else s.showLoading({title:"正在提交数据"}),s.request({method:"POST",url:"https://api.angeli.top/post.php?type=pl",data:{auid:n.default.userinfo.Auid,txt:this.plnr,postid:this.postid,uid:this.postInfo.AuthorId,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded",system:n.default.system},success:function(o){"1"==o.data.code&&(e.plnr="",e.setvar="",s.request({method:"GET",url:"https://api.angeli.top/post.php?type=getpl",data:{postid:e.postid,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){console.log(t("————————————评论详情——————————"," at pages\\postinfo\\postinfo.vue:873")),e.pllist=o.data.data,console.log(t(e.pllist," at pages\\postinfo\\postinfo.vue:875")),e.plnr}})),s.showToast({title:o.data.msg,position:"bottom",icon:"none",duration:2e3,mask:!0})},complete:function(){setTimeout(function(){s.hideLoading()},2e3)}});else s.showToast({title:"请输入评论内容！",position:"bottom",icon:"none",mask:!0})},dianzan:function(o,e){var i=this;console.log(t("点赞"," at pages\\postinfo\\postinfo.vue:899")),s.request({method:"GET",url:"https://api.angeli.top/post.php?type=dianzan",data:{postid:o,token:n.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(o){if("1"==o.data.code){var n=i.pllist[e].Give;console.log(t(n," at pages\\postinfo\\postinfo.vue:914")),n++,console.log(t(n," at pages\\postinfo\\postinfo.vue:916")),i.$set(i.pllist[e],"Give",n)}s.showToast({title:o.data.msg,position:"bottom",icon:"none",duration:2e3})}})},huifua:function(o,e,s,n){this.huifuid=o,this.setvar="@"+e+": ",this.huifu=!0,this.pluid=n,console.log(t("回复",o,e," at pages\\postinfo\\postinfo.vue:933"))}}};o.default=a}).call(this,e("0de9")["default"],e("6e42")["default"])},e290:function(t,o,e){}},[["2a87","common/runtime","common/vendor"]]]);
 });
 require('pages/postinfo/postinfo.js');
 __wxRoute = 'pages/editinfo/editinfo';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/editinfo/editinfo.js';
@@ -3773,7 +3784,7 @@ require('pages/classPost/classPost.js');
 __wxRoute = 'pages/edit/edit';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/edit/edit.js';
 
 define('pages/edit/edit.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/edit/edit"],{"1c93":function(t,e,n){"use strict";n.r(e);var a=n("e2a1"),i=n.n(a);for(var o in a)"default"!==o&&function(t){n.d(e,t,function(){return a[t]})}(o);e["default"]=i.a},"1e41":function(t,e,n){"use strict";(function(t){n("7e16"),n("921b");a(n("66fd"));var e=a(n("6aa3"));function a(t){return t&&t.__esModule?t:{default:t}}t(e.default)}).call(this,n("6e42")["createPage"])},2087:function(t,e,n){"use strict";var a=function(){var t=this,e=t.$createElement;t._self._c},i=[];n.d(e,"a",function(){return a}),n.d(e,"b",function(){return i})},"6aa3":function(t,e,n){"use strict";n.r(e);var a=n("2087"),i=n("1c93");for(var o in i)"default"!==o&&function(t){n.d(e,t,function(){return i[t]})}(o);n("a614");var u=n("2877"),d=Object(u["a"])(i["default"],a["a"],a["b"],!1,null,null,null);e["default"]=d.exports},a614:function(t,e,n){"use strict";var a=n("ee63"),i=n.n(a);i.a},e2a1:function(t,e,n){"use strict";(function(t,a){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var i=o(n("26f4"));function o(t){return t&&t.__esModule?t:{default:t}}var u={data:function(){return{type:1,title:"安个利",upNameNumber:0,newName:""}},onLoad:function(e){console.log(t(e.type," at pages\\edit\\edit.vue:58")),this.type=e.type,"1"==e.type&&(this.title="修改名字",this.getNumber()),"2"==e.type&&(this.title="个性签名"),"3"==e.type&&(this.title="等级特权"),"4"==e.type&&(this.title="关于安个利"),"5"==e.type&&(this.title="安个利隐私政策"),"6"==e.type&&(this.title="安个利用户协议"),"7"==e.type&&(this.title="关于安个利"),"8"==e.type&&(this.title="安个利充值协议"),"9"==e.type&&(this.title="会员协议")},methods:{inputing:function(e){this.newName=e.detail.value,console.log(t(e.detail," at pages\\edit\\edit.vue:92"))},setName:function(){a.showLoading({title:"正在提交数据"}),a.request({method:"GET",url:"https://api.angeli.top/user.php?type=setName",data:{auid:i.default.userinfo.Auid,newName:this.newName,token:i.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){a.showToast({title:t.data.msg,position:"bottom",icon:"none"}),"1"==t.data.code&&setTimeout(function(){a.hideLoading(),a.navigateBack({delta:1})},1500)},complete:function(){a.hideLoading()}})},getNumber:function(){var e=this;a.request({method:"GET",url:"https://api.angeli.top/user.php?type=getNameCount",data:{auid:i.default.userinfo.Auid,token:i.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(n){"1"==n.data.code&&(e.upNameNumber=n.data.data,console.log(t(e.upNameNumber,n.data.data," at pages\\edit\\edit.vue:145")))}})},setms:function(){a.showLoading({title:"正在提交数据"}),a.request({method:"GET",url:"https://api.angeli.top/user.php?type=setms",data:{auid:i.default.userinfo.Auid,ms:this.newName,token:i.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){a.showToast({title:t.data.msg,position:"bottom",icon:"none"}),"1"==t.data.code&&setTimeout(function(){a.hideLoading(),a.navigateBack({delta:1})},1500)},complete:function(){a.hideLoading()}})}}};e.default=u}).call(this,n("0de9")["default"],n("6e42")["default"])},ee63:function(t,e,n){}},[["1e41","common/runtime","common/vendor"]]]);
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/edit/edit"],{"1c93":function(t,e,n){"use strict";n.r(e);var a=n("e2a1"),i=n.n(a);for(var o in a)"default"!==o&&function(t){n.d(e,t,function(){return a[t]})}(o);e["default"]=i.a},"1e41":function(t,e,n){"use strict";(function(t){n("7e16"),n("921b");a(n("66fd"));var e=a(n("6aa3"));function a(t){return t&&t.__esModule?t:{default:t}}t(e.default)}).call(this,n("6e42")["createPage"])},"4e24":function(t,e,n){"use strict";var a=function(){var t=this,e=t.$createElement;t._self._c},i=[];n.d(e,"a",function(){return a}),n.d(e,"b",function(){return i})},"6aa3":function(t,e,n){"use strict";n.r(e);var a=n("4e24"),i=n("1c93");for(var o in i)"default"!==o&&function(t){n.d(e,t,function(){return i[t]})}(o);n("a614");var u=n("2877"),s=Object(u["a"])(i["default"],a["a"],a["b"],!1,null,null,null);e["default"]=s.exports},a614:function(t,e,n){"use strict";var a=n("ee63"),i=n.n(a);i.a},e2a1:function(t,e,n){"use strict";(function(t,a){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var i=o(n("26f4"));function o(t){return t&&t.__esModule?t:{default:t}}var u={data:function(){return{type:"0",title:"安个利",upNameNumber:0,newName:"",shopSrc:""}},onLoad:function(e){var n=getCurrentPages(),a=n[n.length-1];if(console.log(t(a," at pages\\edit\\edit.vue:66")),this.type=e.type,"1"==e.type&&(this.title="修改名字",this.getNumber()),"2"==e.type&&(this.title="个性签名"),"3"==e.type&&(this.title="等级特权"),"4"==e.type&&(this.title="关于安个利"),"5"==e.type&&(this.title="安个利隐私政策"),"6"==e.type&&(this.title="安个利用户协议"),"7"==e.type&&(this.title="关于安个利"),"8"==e.type&&(this.title="安个利充值协议"),"9"==e.type&&(this.title="会员协议"),"shop"==e.type){this.title="安个利商城",this.shopSrc="https://shop.angeli.top/#/?token="+i.default.token;var o=this.$mp.page.$getAppWebview();o.setBounce({position:{top:"100px"},changeoffset:{top:"20px"}})}},methods:{inputing:function(e){this.newName=e.detail.value,console.log(t(e.detail," at pages\\edit\\edit.vue:110"))},setName:function(){a.showLoading({title:"正在提交数据"}),a.request({method:"GET",url:"https://api.angeli.top/user.php?type=setName",data:{auid:i.default.userinfo.Auid,newName:this.newName,token:i.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){a.showToast({title:t.data.msg,position:"bottom",icon:"none"}),"1"==t.data.code&&setTimeout(function(){a.hideLoading(),a.navigateBack({delta:1})},1500)},complete:function(){a.hideLoading()}})},getNumber:function(){var e=this;a.request({method:"GET",url:"https://api.angeli.top/user.php?type=getNameCount",data:{auid:i.default.userinfo.Auid,token:i.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(n){"1"==n.data.code&&(e.upNameNumber=n.data.data,console.log(t(e.upNameNumber,n.data.data," at pages\\edit\\edit.vue:163")))}})},setms:function(){a.showLoading({title:"正在提交数据"}),a.request({method:"GET",url:"https://api.angeli.top/user.php?type=setms",data:{auid:i.default.userinfo.Auid,ms:this.newName,token:i.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){a.showToast({title:t.data.msg,position:"bottom",icon:"none"}),"1"==t.data.code&&setTimeout(function(){a.hideLoading(),a.navigateBack({delta:1})},1500)},complete:function(){a.hideLoading()}})}}};e.default=u}).call(this,n("0de9")["default"],n("6e42")["default"])},ee63:function(t,e,n){}},[["1e41","common/runtime","common/vendor"]]]);
 });
 require('pages/edit/edit.js');
 __wxRoute = 'pages/set/set';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/set/set.js';
@@ -3785,7 +3796,7 @@ require('pages/set/set.js');
 __wxRoute = 'pages/about/about';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/about/about.js';
 
 define('pages/about/about.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/about/about"],{"08d0":function(t,e,n){"use strict";var u=n("e02a"),i=n.n(u);i.a},"2cb3":function(t,e,n){"use strict";(function(t){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var u=i(n("26f4"));function i(t){return t&&t.__esModule?t:{default:t}}var a={data:function(){return{Version:"1.0.1",mail:!1}},onLoad:function(){this.Version=u.default.Version},methods:{hiw:function(){this.mail=!1},showmail:function(){this.mail=!0},getpage:function(e){1==e&&t.navigateTo({url:"../edit/edit?type=4"}),2==e&&t.navigateTo({url:"../edit/edit?type=6"}),3==e&&t.navigateTo({url:"../edit/edit?type=5"}),4==e&&t.navigateTo({url:"../edit/edit?type=7"})}}};e.default=a}).call(this,n("6e42")["default"])},"4f67":function(t,e,n){"use strict";var u=function(){var t=this,e=t.$createElement;t._self._c},i=[];n.d(e,"a",function(){return u}),n.d(e,"b",function(){return i})},dd0f:function(t,e,n){"use strict";(function(t){n("7e16"),n("921b");u(n("66fd"));var e=u(n("e7fd"));function u(t){return t&&t.__esModule?t:{default:t}}t(e.default)}).call(this,n("6e42")["createPage"])},e02a:function(t,e,n){},e7fd:function(t,e,n){"use strict";n.r(e);var u=n("4f67"),i=n("eb70");for(var a in i)"default"!==a&&function(t){n.d(e,t,function(){return i[t]})}(a);n("08d0");var o=n("2877"),r=Object(o["a"])(i["default"],u["a"],u["b"],!1,null,null,null);e["default"]=r.exports},eb70:function(t,e,n){"use strict";n.r(e);var u=n("2cb3"),i=n.n(u);for(var a in u)"default"!==a&&function(t){n.d(e,t,function(){return u[t]})}(a);e["default"]=i.a}},[["dd0f","common/runtime","common/vendor"]]]);
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/about/about"],{"08d0":function(t,e,n){"use strict";var u=n("e02a"),a=n.n(u);a.a},"2cb3":function(t,e,n){"use strict";(function(t){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var u=a(n("26f4"));function a(t){return t&&t.__esModule?t:{default:t}}var i={data:function(){return{Version:"1.0.1",mail:!1,num:0,user:[],token:"asfdasfasrdgrgset3254sdf23werfa"}},onLoad:function(){this.Version=u.default.Version,this.user=u.default.userinfo,this.token=u.default.token},methods:{hiw:function(){this.mail=!1,this.num=0},showmail:function(){this.mail=!0},getpage:function(e){1==e&&t.navigateTo({url:"../edit/edit?type=4"}),2==e&&t.navigateTo({url:"../edit/edit?type=6"}),3==e&&t.navigateTo({url:"../edit/edit?type=5"}),4==e&&t.navigateTo({url:"../edit/edit?type=7"})}}};e.default=i}).call(this,n("6e42")["default"])},dd0f:function(t,e,n){"use strict";(function(t){n("7e16"),n("921b");u(n("66fd"));var e=u(n("e7fd"));function u(t){return t&&t.__esModule?t:{default:t}}t(e.default)}).call(this,n("6e42")["createPage"])},e02a:function(t,e,n){},e02a7:function(t,e,n){"use strict";var u=function(){var t=this,e=t.$createElement;t._self._c;t._isMounted||(t.e0=function(e){t.num++})},a=[];n.d(e,"a",function(){return u}),n.d(e,"b",function(){return a})},e7fd:function(t,e,n){"use strict";n.r(e);var u=n("e02a7"),a=n("eb70");for(var i in a)"default"!==i&&function(t){n.d(e,t,function(){return a[t]})}(i);n("08d0");var o=n("2877"),r=Object(o["a"])(a["default"],u["a"],u["b"],!1,null,null,null);e["default"]=r.exports},eb70:function(t,e,n){"use strict";n.r(e);var u=n("2cb3"),a=n.n(u);for(var i in u)"default"!==i&&function(t){n.d(e,t,function(){return u[t]})}(i);e["default"]=a.a}},[["dd0f","common/runtime","common/vendor"]]]);
 });
 require('pages/about/about.js');
 __wxRoute = 'pages/vip/vip';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/vip/vip.js';
@@ -3887,7 +3898,7 @@ require('pages/menu/systemMsg.js');
 __wxRoute = 'pages/menu/huodong';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/menu/huodong.js';
 
 define('pages/menu/huodong.js',function(require, module, exports, window, document, frames, self, location, navigator, localStorage, history, Caches, screen, alert, confirm, prompt, fetch, XMLHttpRequest, WebSocket, webkit, WeixinJSCore, Reporter, print, WeixinJSBridge){
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/menu/huodong"],{"0736":function(e,t,n){"use strict";var o=n("f9b8"),u=n.n(o);u.a},"17bd":function(e,t,n){"use strict";(function(e,o){Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=a(n("26f4"));function a(e){return e&&e.__esModule?e:{default:e}}var i={data:function(){return{MsgList:[],auid:0,val:"",value:"",tuijianren:0}},onLoad:function(t){var n=this;console.log(e(t," at pages\\menu\\huodong.vue:32")),console.log(e("推荐人："+t.tuijianid," at pages\\menu\\huodong.vue:33")),this.getMyMsg(),t.tuijianid&&(this.tuijianren=t.tuijianid,u.default.tgid=this.tuijianren),o.login({provider:"weixin",success:function(t){console.log(e(t," at pages\\menu\\huodong.vue:42")),o.request({method:"POST",url:"https://api.angeli.top/reg.php?type=wxlogin",data:{code:t.code,tuijianId:n.tuijianren},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\menu\\huodong.vue:55")),u.default.usersk=t.data.data.session_key,u.default.cookie=t.header["Set-Cookie"],"0"!=t.data.code&&(console.log(e("已经存在有账号了，就不要注册了"," at pages\\menu\\huodong.vue:59")),n.tuijianren=0,console.log(e(n.tuijianren," at pages\\menu\\huodong.vue:61")),u.default.userinfo=t.data.data),console.log(e("输出登录结果"," at pages\\menu\\huodong.vue:64")),console.log(e(t," at pages\\menu\\huodong.vue:65"))}})}})},onShow:function(){},methods:{getreg:function(){o.navigateTo({url:"../reg/reg"})},input:function(e){this.val=e.target.value},login:function(){},getme:function(){o.navigateTo({url:"../i/i"})},markmsg:function(){o.request({method:"GET",url:"https://api.angeli.top/user.php?type=mark&class=system",data:{msgId:this.msgid,token:u.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\menu\\huodong.vue:108")),"1"==t.data.code?console.log(e("已将信息标记为已读"," at pages\\menu\\huodong.vue:110")):console.log(e("标记已读失败！"," at pages\\menu\\huodong.vue:112"))},complete:function(){}})},InputFocus:function(e){this.InputBottom=e.detail.height},InputBlur:function(e){this.InputBottom=0},getMyMsg:function(){var t=this;o.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyTG",data:{token:u.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(n){console.log(e(n," at pages\\menu\\huodong.vue:139")),"1"==n.data.code&&(t.MsgList=n.data.data),console.log(e(t.MsgList," at pages\\menu\\huodong.vue:143"))}})}},onShareAppMessage:function(t){return console.log(e("MyId:"+u.default.userinfo.Auid," at pages\\menu\\huodong.vue:149")),"button"===t.from&&console.log(e(t.target," at pages\\menu\\huodong.vue:151")),{title:"给你安利一个好东西",path:"/pages/menu/huodong?tuijianid="+u.default.userinfo.Auid}}};t.default=i}).call(this,n("0de9")["default"],n("6e42")["default"])},"651d":function(e,t,n){"use strict";(function(e){n("7e16"),n("921b");o(n("66fd"));var t=o(n("d4c4"));function o(e){return e&&e.__esModule?e:{default:e}}e(t.default)}).call(this,n("6e42")["createPage"])},c846:function(e,t,n){"use strict";var o=function(){var e=this,t=e.$createElement;e._self._c},u=[];n.d(t,"a",function(){return o}),n.d(t,"b",function(){return u})},d166:function(e,t,n){"use strict";n.r(t);var o=n("17bd"),u=n.n(o);for(var a in o)"default"!==a&&function(e){n.d(t,e,function(){return o[e]})}(a);t["default"]=u.a},d4c4:function(e,t,n){"use strict";n.r(t);var o=n("c846"),u=n("d166");for(var a in u)"default"!==a&&function(e){n.d(t,e,function(){return u[e]})}(a);n("0736");var i=n("2877"),s=Object(i["a"])(u["default"],o["a"],o["b"],!1,null,null,null);t["default"]=s.exports},f9b8:function(e,t,n){}},[["651d","common/runtime","common/vendor"]]]);
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/menu/huodong"],{"0736":function(e,t,n){"use strict";var o=n("f9b8"),u=n.n(o);u.a},"17bd":function(e,t,n){"use strict";(function(e,o){Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=a(n("26f4"));function a(e){return e&&e.__esModule?e:{default:e}}var i={data:function(){return{MsgList:[],auid:0,val:"",value:"",tuijianren:0}},onLoad:function(t){var n=this;console.log(e(t," at pages\\menu\\huodong.vue:40")),console.log(e("推荐人："+t.tuijianid," at pages\\menu\\huodong.vue:41")),this.getMyMsg(),t.tuijianid&&(this.tuijianren=t.tuijianid,u.default.tgid=this.tuijianren),o.login({provider:"weixin",success:function(t){console.log(e(t," at pages\\menu\\huodong.vue:50")),o.request({method:"POST",url:"https://api.angeli.top/reg.php?type=wxlogin",data:{code:t.code,tuijianId:n.tuijianren},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\menu\\huodong.vue:63")),u.default.usersk=t.data.data.session_key,u.default.cookie=t.header["Set-Cookie"],"0"!=t.data.code&&(console.log(e("已经存在有账号了，就不要注册了"," at pages\\menu\\huodong.vue:67")),n.tuijianren=0,console.log(e(n.tuijianren," at pages\\menu\\huodong.vue:69")),u.default.userinfo=t.data.data),console.log(e("输出登录结果"," at pages\\menu\\huodong.vue:72")),console.log(e(t," at pages\\menu\\huodong.vue:73"))}})}})},onShow:function(){},methods:{getreg:function(){o.navigateTo({url:"../reg/reg"})},input:function(e){this.val=e.target.value},login:function(){},getme:function(){o.navigateTo({url:"../i/i"})},markmsg:function(){o.request({method:"GET",url:"https://api.angeli.top/user.php?type=mark&class=system",data:{msgId:this.msgid,token:u.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(t){console.log(e(t," at pages\\menu\\huodong.vue:116")),"1"==t.data.code?console.log(e("已将信息标记为已读"," at pages\\menu\\huodong.vue:118")):console.log(e("标记已读失败！"," at pages\\menu\\huodong.vue:120"))},complete:function(){}})},InputFocus:function(e){this.InputBottom=e.detail.height},InputBlur:function(e){this.InputBottom=0},getMyMsg:function(){var t=this;o.request({method:"GET",url:"https://api.angeli.top/user.php?type=getMyTG",data:{token:u.default.token},header:{"content-type":"application/x-www-form-urlencoded"},success:function(n){console.log(e(n," at pages\\menu\\huodong.vue:147")),"1"==n.data.code&&(t.MsgList=n.data.data),console.log(e(t.MsgList," at pages\\menu\\huodong.vue:151"))}})}},onShareAppMessage:function(t){return console.log(e("MyId:"+u.default.userinfo.Auid," at pages\\menu\\huodong.vue:157")),"button"===t.from&&console.log(e(t.target," at pages\\menu\\huodong.vue:159")),{title:"给你安利一个好东西",path:"/pages/menu/huodong?tuijianid="+u.default.userinfo.Auid}}};t.default=i}).call(this,n("0de9")["default"],n("6e42")["default"])},"37af":function(e,t,n){"use strict";var o=function(){var e=this,t=e.$createElement;e._self._c},u=[];n.d(t,"a",function(){return o}),n.d(t,"b",function(){return u})},"651d":function(e,t,n){"use strict";(function(e){n("7e16"),n("921b");o(n("66fd"));var t=o(n("d4c4"));function o(e){return e&&e.__esModule?e:{default:e}}e(t.default)}).call(this,n("6e42")["createPage"])},d166:function(e,t,n){"use strict";n.r(t);var o=n("17bd"),u=n.n(o);for(var a in o)"default"!==a&&function(e){n.d(t,e,function(){return o[e]})}(a);t["default"]=u.a},d4c4:function(e,t,n){"use strict";n.r(t);var o=n("37af"),u=n("d166");for(var a in u)"default"!==a&&function(e){n.d(t,e,function(){return u[e]})}(a);n("0736");var i=n("2877"),s=Object(i["a"])(u["default"],o["a"],o["b"],!1,null,null,null);t["default"]=s.exports},f9b8:function(e,t,n){}},[["651d","common/runtime","common/vendor"]]]);
 });
 require('pages/menu/huodong.js');
 __wxRoute = 'pages/menu/guanzhu';__wxRouteBegin = true;__wxAppCurrentFile__ = 'pages/menu/guanzhu.js';

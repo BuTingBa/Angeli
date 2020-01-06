@@ -4,6 +4,10 @@ page {
 		width: 100vw;
 		overflow: hidden;
 }
+.huo{
+		font-size: 22rpx;
+		border-bottom:1rpx solid #1CBBB4;
+}
 .Maxnum{
 		font-size: 28rpx;
 		font-weight: 700;
