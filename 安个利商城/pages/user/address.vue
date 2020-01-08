@@ -151,6 +151,7 @@ view{
 		}
 	}
 	.list{
+		margin-top:40upx;
 		flex-wrap: wrap;
 		.row{
 			width: 96%;

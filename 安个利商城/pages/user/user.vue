@@ -85,9 +85,11 @@
 <style lang="scss">
 page{background-color:#fff}
 .header{
+	
 	&.status{padding-top:var(--status-bar-height);}
 	background-color:#ff6364;width:92%;height:30vw;padding:0 4%;display:flex;align-items:center;
 	.userinfo{
+		margin-top: 40upx;
 		width:90%;display:flex;
 		.face{flex-shrink:0;width:15vw;height:15vw;
 			image{width:100%;height:100%;border-radius:100%}

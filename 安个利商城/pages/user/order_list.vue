@@ -9,35 +9,35 @@
 		<!-- 考虑非APP端长列表和复杂的DOM使用scroll-view会卡顿，所以漂浮顶部选项卡使用page本身的滑动 -->
 		<view class="order-list">
 			<view class="list">
-				<view class="onorder" v-if="list.length==0">
+				<view class="onorder" v-if="orderList.length<1">
 					<image src="../../../static/img/noorder.png"></image>
 					<view class="text">
 						没有相关订单
 					</view>
 				</view>
-				<view class="row" v-for="(row,index) in list" :key="index">
-					<view class="type">{{typeText[row.type]}}</view>
+				<view class="row" v-for="(row,index) in orderList" :key="index">
+					<view class="type">{{typeText[row.orderStatus]}}</view>
 					<view class="order-info">
 						<view class="left">
-							<image :src="row.img"></image>
+							<image :src="row.goodsList[0].goodsInfo.picUrl"></image>
 						</view>
 						<view class="right">
 							<view class="name">
-								{{row.name}}
+								{{row.orderTitle}}
 							</view>
-							<view class="spec">{{row.spec}}</view>
+							<view class="spec">{{row.goodsList[0].goodsSpecs.name}}</view>
 							<view class="price-number">
 								￥<view class="price">{{row.price}}</view>
-								x<view class="number">{{row.numner}}</view>
+								x<view class="number">{{row.goodsList.length}}</view>
 							</view>
 						</view>
 						
 					</view>
 					<view class="detail">
-						<view class="number">共{{row.numner}}件商品</view><view class="sum">合计￥<view class="price">{{row.payment}}</view></view><view class="nominal">(含运费 ￥{{row.freight}})</view>
+						<view class="number">共{{row.goodsList.length}}件商品</view><view class="sum">合计￥<view class="price">{{row.orderPrice}}</view></view><view class="nominal">(优惠后 ￥{{row.price}})</view>
 					</view>
 					<view class="btns">
-						<block v-if="row.type=='unpaid'"><view class="default" @tap="cancelOrder(row)">取消订单</view><view class="pay" @tap="toPayment(row)">付款</view></block>
+						<block v-if="row.orderStatus=='0'"><view class="default" @tap="cancelOrder(row)">取消订单</view><view class="pay" @tap="toPayment(row)">付款</view></block>
 						<block v-if="row.type=='back'"><view class="default" @tap="remindDeliver(row)">提醒发货</view></block>
 						<block v-if="row.type=='unreceived'"><view class="default" @tap="showLogistics(row)">查看物流</view><view class="pay">确认收货</view><view class="pay">我要退货</view></block>
 						<block v-if="row.type=='received'"><view class="default">评价</view><view class="default">再次购买</view></block>
@@ -51,50 +51,23 @@
 	</view>
 </template>
 <script>
+	import server from '../../server.js';
 	export default {
 		data() {
 			return {
 				headerPosition:"fixed",
 				headerTop:"0px",
 				typeText:{
-					unpaid:'等待付款',
-					back:'等待商家发货',
-					unreceived:'商家已发货',
-					completed:'交易已完成',
-					refunds:'商品退货处理中',
-					cancelled:'订单已取消'
+					0:'等待付款',
+					1:'等待商家发货',
+					2:'商家已发货',
+					3:'交易已完成',
+					4:'商品退货处理中',
+					5:'订单已取消'
 				},
 				orderType: ['全部','待付款','待发货','待收货','退换货'],
 				//订单列表 演示数据
-				orderList:[
-					[
-						{ type:"unpaid",ordersn:0,goods_id: 0, img: '/static/img/goods/p1.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '168.00',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"unpaid",ordersn:1,goods_id: 1, img: '/static/img/goods/p2.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '168.00',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"back",ordersn:2,goods_id: 1, img: '/static/img/goods/p3.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '168.00',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"unreceived",ordersn:3,goods_id: 1, img: '/static/img/goods/p4.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '168.00',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"received",ordersn:4,goods_id: 1, img: '/static/img/goods/p5.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '168.00',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"completed",ordersn:5,goods_id: 1, img: '/static/img/goods/p6.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '168.00',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"refunds",ordersn:6,goods_id: 1, img: '/static/img/goods/p5.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"cancelled",ordersn:7,goods_id: 1, img: '/static/img/goods/p5.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 }
-					],
-					[
-						{ type:"unpaid",ordersn:0,goods_id: 0, img: '/static/img/goods/p1.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 },
-						{ type:"unpaid",ordersn:1,goods_id: 1, img: '/static/img/goods/p2.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 }
-					],
-					[
-						//无
-					],
-					[
-						{ type:"unreceived",ordersn:3,goods_id: 1, img: '/static/img/goods/p4.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 }
-					],
-					[
-						{ type:"received",ordersn:4,goods_id: 1, img: '/static/img/goods/p5.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 }
-					],
-					[
-						{ type:"refunds",ordersn:6,goods_id: 1, img: '/static/img/goods/p5.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168',payment:168.00,freight:12.00,spec:'规格:S码',numner:1 }
-					]
-					
-				],
+				orderList:[],
 				list:[],
 				tabbarIndex:0
 			};
@@ -104,7 +77,11 @@
 			console.log("option: " + JSON.stringify(option));
 			let tbIndex = parseInt(option.tbIndex)+1;
 			this.list = this.orderList[tbIndex];
-			this.tabbarIndex = tbIndex;
+			this.tabbarIndex = parseInt(tbIndex);
+			
+			//this.getOrderList(this.tabbarIndex);
+			
+			this.getOrderList(1);
 			//兼容H5下排序栏位置
 			// #ifdef H5
 				let Timer = setInterval(()=>{
@@ -125,9 +102,37 @@
 			showType(tbIndex){
 				this.tabbarIndex = tbIndex;
 				this.list = this.orderList[tbIndex];
+				console.log(this.tabbarIndex)
 			},
 			showLogistics(row){
 				
+			},
+			getOrderList(type){
+				
+				if(type===1){ //查询未付款订单
+					var url='queryArrearage/';
+				}
+				
+				uni.request({
+					method:'GET',
+					url: server.requestUrl+url+server.Token, 
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.data.code===1){
+							this.orderList=res.data.data
+							
+						}else{
+							uni.showToast({
+								title:res.data.msg,
+								position:'bottom',
+								icon:'none'
+							});
+						}
+					}
+				});
 			},
 			remindDeliver(row){
 				uni.showToast({
@@ -193,6 +198,8 @@ page{
 	background-color: #f3f3f3;
 }
 .topTabBar{
+	padding-top: 40upx;
+	margin-bottom: 10upx;
 	width: 100%;
 	position: fixed;
 	top: 0;
@@ -222,7 +229,7 @@ page{
 	}
 }
 .order-list{
-	margin-top: 80upx;
+	margin-top: 120upx;
 	padding-top: 20upx;
 	width: 100%;
 	.list{

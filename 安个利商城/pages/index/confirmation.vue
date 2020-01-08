@@ -15,7 +15,8 @@
 					</view>
 				</view>
 				<view class="addres">
-					{{address.region}}{{address.detailed?address.detailed:'点击添加一个地址'}}
+					{{address.addressRegion}}{{address.detailed?address.detailed:'点击添加一个地址'}}
+					
 				</view>
 			</view>
 		</view>
@@ -206,12 +207,17 @@
 			},
 			toPay(){
 				//商品列表
+				
+
+
 
 				
 				//本地模拟订单提交UI效果
 				uni.showLoading({
 					title:'正在提交订单...'
 				})
+				
+				
 				
 				uni.request({
 					method:'POST',
@@ -220,7 +226,8 @@
 						token:server.Token,
 						data:this.shopCartId,
 						address:JSON.stringify(this.address),
-						payMode:'alipay'
+						payMode:'wxpay',
+						note:this.note
 						
 					},
 					header: {
@@ -261,7 +268,7 @@
 .addr{
 	width: 86%;
 	padding: 20upx 3%;
-	margin: 30upx auto 20upx auto;
+	margin: 60upx auto 20upx auto;
 	box-shadow: 0upx 5upx 20upx rgba(0,0,0,0.1);
 	border-radius: 20upx;
 	display: flex;

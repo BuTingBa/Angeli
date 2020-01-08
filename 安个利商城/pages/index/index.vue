@@ -41,7 +41,6 @@
 		},
 		onLoad(option) {
 			console.log(option)
-			
 			if(option.token){
 				this.login(option.token);
 				console.log('传参登录')
@@ -110,6 +109,7 @@
 							});
 						}
 						console.log(res);
+						
 					}
 				});
 			}
@@ -204,6 +204,7 @@
 	top: 0px;
 	left: 0px;
 	white-space: nowrap;
+	margin-top: 40upx;
 	overflow: hidden;
 }
 page{

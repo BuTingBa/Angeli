@@ -386,6 +386,7 @@
 		/*  #endif  */
 		.title{
 			font-size: 36upx;
+			margin-top: 40upx;
 		}
 		
 	}

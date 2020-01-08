@@ -391,6 +391,7 @@ export default {
 				},
 				success: (res) => {
 					if(res.data.code=='1'){
+						this.shopCart.number=1;
 						uni.showToast({
 							title: res.data.msg,
 							position:'bottom',
@@ -583,6 +584,8 @@ page {
 	.after {
 		width: 92%;
 		padding: 0 4%;
+		margin-top: 40upx;
+		
 		height: 100upx;
 		display: flex;
 		align-items: center;

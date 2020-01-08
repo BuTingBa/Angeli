@@ -246,12 +246,14 @@ class Index extends Controller
                 ->where('data_type',2)
                 ->where('auid',$_SESSION['Auid'])->findOrEmpty();
             if(count($cx)>0){
-                if($cx['data_type']==$type){
+                Db::table('shoppinp_cart')->where('id',$cx['id'])->delete();
+
+                /*if($cx['data_type']==$type){
                     Db::table('shoppinp_cart')->where('id', $cx['id'])->setInc('number', Request::param('count'));
                     return json_encode(['code'=>1,'msg'=>'添加购物车成功！','data'=>$cx['id']],JSON_UNESCAPED_UNICODE);
                 }else{
                     return json_encode(['code'=>1,'msg'=>'订单已存在！','data'=>$cx['id']],JSON_UNESCAPED_UNICODE);
-                }
+                }*/
             }
         }
         $data=[
