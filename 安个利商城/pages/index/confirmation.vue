@@ -15,7 +15,7 @@
 					</view>
 				</view>
 				<view class="addres">
-					{{address.addressRegion}}{{address.detailed?address.detailed:'点击添加一个地址'}}
+					{{address.addressRegion?address.addressRegion:address.region}}{{address.detailed?address.detailed:'点击添加一个地址'}}
 					
 				</view>
 			</view>
@@ -51,7 +51,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					备注 :
+					备注:
 				</view>
 				<view class="right">
 					<input placeholder="选填,备注内容" v-model="note" />
@@ -235,9 +235,9 @@
 					},
 					success: (res) => {
 						if(res.data.code=='1'){
-							this.address=res.data.address
-							this.goods=res.data.data
-							this.sum()
+							console.log(res.data.data);
+							
+							//location.href=res.data.data;
 						}else{
 							uni.showToast({
 								title: res.data.msg,

@@ -79,9 +79,9 @@
 			this.list = this.orderList[tbIndex];
 			this.tabbarIndex = parseInt(tbIndex);
 			
-			//this.getOrderList(this.tabbarIndex);
+			this.getOrderList(this.tabbarIndex);
 			
-			this.getOrderList(1);
+			
 			//兼容H5下排序栏位置
 			// #ifdef H5
 				let Timer = setInterval(()=>{
@@ -101,21 +101,18 @@
 		methods: {
 			showType(tbIndex){
 				this.tabbarIndex = tbIndex;
-				this.list = this.orderList[tbIndex];
+				//this.list = this.orderList[tbIndex];
+				this.getOrderList(tbIndex);
 				console.log(this.tabbarIndex)
 			},
 			showLogistics(row){
 				
 			},
 			getOrderList(type){
-				
-				if(type===1){ //查询未付款订单
-					var url='queryArrearage/';
-				}
-				
+				var url=type+'/';
 				uni.request({
 					method:'GET',
-					url: server.requestUrl+url+server.Token, 
+					url: server.requestUrl+'queryOrder/'+url+server.Token, 
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
 					},
@@ -125,6 +122,7 @@
 							this.orderList=res.data.data
 							
 						}else{
+							this.orderList=[]
 							uni.showToast({
 								title:res.data.msg,
 								position:'bottom',

@@ -14,6 +14,7 @@ use think\Db;
 use think\facade\Request;
 use app\common\controller\Index as gg;
 use think\facade\Env;
+use think\facade\Log;
 
 require_once Env::get('ROOT_PATH').'extend/lib/wxpay/WeChatPay.class.php';
 
@@ -27,8 +28,57 @@ class Order
     public function test($id)
     {
         $orderNo=gg::createOrderNo();
-        $wxpay=new \WeChatPay('11',$orderNo,'测试','1');
-        var_dump($wxpay->unifiedorder());
+        $wxpay=new \WeChatPay($orderNo,'测试','1');
+        return json_encode($wxpay->unifiedorder(),JSON_UNESCAPED_UNICODE);
+
+    }
+
+    /**
+     * 获取微信支付回调
+     */
+    public function wxNotify()
+    {
+        $postXml = file_get_contents("php://input"); //接收微信参数
+        $data=gg::xmlToArray($postXml);
+        log::write($data);
+        if($data['result_code']=='SUCCESS') {
+            $res=Db::table('order')->where('order_no',$data['out_trade_no'])->find();
+            log::write('查询结果');
+            log::write($res);
+            if(is_array($res)){
+                if($res['price']==$data['total_fee']){
+                    log::write('价格相等！');
+                    $upda=array(
+                        'order_status' => 1,
+                        'payment_price'=>$data['total_fee'],
+                        'pay_order_no'=>$data['transaction_id'],
+                        'completion_time'=>time()
+                    );
+                    $ddd=Db::table('order')->where('order_no',$data['out_trade_no'])->update($upda);
+                    if($ddd<1){
+                        log::write('更新订单失败！');
+                    }
+                    $idarr=explode('|', $res['shop_cart_id']);
+                    foreach ($idarr as $value){
+                        Db::table('shoppinp_cart')->where('id',$value)->update(['data_type'=>3]);
+                    }
+                }else{
+                    log::write('价格不一样！');
+                    $upda=array(
+                        'mark' =>'支付失败:金额不匹配',
+                    );
+                    Db::table('order')->where('order_no',$data['out_trade_no'])->update($upda);
+                }
+            }else{
+                log::write('没有找到订单！');
+            }
+        }else{
+            log::write('支付失败！');
+
+        }
+        exit;
+
+
     }
 
     /**
@@ -39,7 +89,7 @@ class Order
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function queryArrearage($token)
+    public function queryArrearage($type,$token)
     {
         if(!$token){
             return json_encode(['code'=>0,'msg'=>'用户未登录！'],JSON_UNESCAPED_UNICODE);
@@ -47,7 +97,23 @@ class Order
         if(!gg::token($token)){
             return json_encode(['code'=>0,'msg'=>'用户未登录或用户不存在'],JSON_UNESCAPED_UNICODE);
         }
-        $res=Db::table('order')->where('user_id',$_SESSION['Auid'])->where('order_status',0)->select();
+
+        if($type==0){
+            $res=Db::table('order')->where('user_id',$_SESSION['Auid'])->select();
+        }
+        if($type==1){
+            $res=Db::table('order')->where('user_id',$_SESSION['Auid'])->where('order_status',0)->select();
+        }
+        if($type==2){
+            $res=Db::table('order')->where('user_id',$_SESSION['Auid'])->where('order_status',1)->select();
+        }
+        if($type==3){
+            $res=Db::table('order')->where('user_id',$_SESSION['Auid'])->where('order_status',2)->select();
+        }
+        if($type==4){
+            $res=Db::table('order')->where('user_id',$_SESSION['Auid'])->where('order_status',4)->select();
+        }
+
         if(count($res)>0){
             foreach ($res as $val){
                 $d=array(
@@ -114,7 +180,7 @@ class Order
         //遍历购物车ID，获取商品信息
         $count=0;
         $price=0;
-
+        $title='安个利';
         foreach ($idarr as $value){
             $res=Db::table('shoppinp_cart')->where('id',$value)->where('auid',$_SESSION['Auid'])->findOrEmpty();
             $da=array(
@@ -127,13 +193,13 @@ class Order
                 'goodsSpecs'=>gg::getSpecsInfo($res['specs_id'])
             );
             $count++;
-            $price=$price+$da['count']*$da['goodsSpecs']['price'];
+            $price=$price+$da['count']*$da['goodsSpecs']['price']*100;
+            $title=$da['goodsInfo']['title'];
         }
         if($count>1){
-            $title=$da['goodsInfo']['name'].'等'.$count.'件商品';
-        }else{
-            $title=$da['goodsInfo']['name'];
+            $title=$da['goodsInfo']['title'].'等'.$count.'件商品';
         }
+
         if(gg::isVip($_SESSION['Auid'])){
             $vipPrice=$price*0.9;
         }else{
@@ -145,8 +211,7 @@ class Order
         //  $title          订单名称
         //  $address
         //  订单编号
-        $orderNo=gg::createOrderNo();
-
+        $orderNo=gg::createOrderNo($_SESSION['Auid']);
         $orderData=array(
             'order_no'=>$orderNo,
             'user_id'=>$_SESSION['Auid'],
@@ -165,7 +230,15 @@ class Order
 
         $addOrder = Db::name('order')->insertGetId($orderData);
         if($addOrder>0){
-
+            $wxpay=new \WeChatPay($orderNo,$title,$vipPrice);
+            $payData=$wxpay->unifiedorder();
+            if($payData['result_code']=='SUCCESS'){
+                return json_encode(['code'=>1,'msg'=>$payData['return_msg'],'data'=>$payData['mweb_url']],JSON_UNESCAPED_UNICODE);
+            }else{
+                return json_encode(['code'=>0,'msg'=>$payData['return_msg']],JSON_UNESCAPED_UNICODE);
+            }
+        }else{
+            return json_encode(['code'=>0,'msg'=>'添加订单失败'],JSON_UNESCAPED_UNICODE);
         }
 
     }

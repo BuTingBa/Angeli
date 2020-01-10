@@ -359,8 +359,6 @@ class Index extends Controller
 
             if(count($data)>=1){
                 $address=Db::table('address')->where('user_id',$_SESSION['Auid'])->where('status',1)->findOrEmpty();
-                
-
                 $outData=array('code'=>1,'msg'=>'获取成功！','data'=>$data,'address'=>$address);
                 return json_encode($outData,JSON_UNESCAPED_UNICODE);
             }else{

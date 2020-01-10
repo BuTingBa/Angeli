@@ -15,6 +15,15 @@ use think\facade\Request;
 class Index
 {
 
+
+    public static function xmlToArray($xml) {
+        //禁止引用外部 xml 实体
+        libxml_disable_entity_loader(true);
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xmlstring), true);
+        return $val;
+    }
+
     public static function shopCartIdToGoodsInfo($cartId)
     {
         $idarr=explode('|', $cartId);
@@ -41,9 +50,8 @@ class Index
     /**生成商家订单号
      * @return string
      */
-    public static function createOrderNo()
+    public static function createOrderNo($auid=0)
     {
-        $auid=$_SESSION['Auid'];
         $num=date('YmdHis',time());
         $rand=mt_rand(10,99);
         return 'AGLSHOP'.$num.$rand.$auid;
@@ -110,7 +118,7 @@ class Index
     public static function userInfo($auid)
     {
         if(!$auid){
-            return '缺少参数';
+            return '缺少用户参数';
         }
         $data = file_get_contents('https://api.angeli.top/user.php?type=getUserInfo&auid='.$auid);
         $data=json_decode($data,true);

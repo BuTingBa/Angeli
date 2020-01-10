@@ -33,8 +33,12 @@ Route::post('api/delAddress','api/index/delAddress')->allowCrossDomain();
 
 /*新增一个订单*/
 Route::post('api/addOrder','api/Order/newOrder')->allowCrossDomain();
-/*获取待付款订单*/
-Route::rule('api/queryArrearage/:token','api/Order/queryArrearage')->allowCrossDomain();
+/*查询订单*/
+Route::rule('api/queryOrder/:type/:token','api/Order/queryArrearage')->allowCrossDomain();
+
+/*支付回调*/
+Route::rule('api/wxNotify','api/Order/wxNotify')->allowCrossDomain();
+
 
 
 /*测试*/

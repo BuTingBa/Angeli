@@ -299,6 +299,7 @@
 		}
 	}
 	.content{
+		margin-top:40upx ;
 		display: flex;
 		flex-wrap: wrap;
 		view{

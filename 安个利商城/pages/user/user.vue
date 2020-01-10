@@ -65,6 +65,7 @@
 		methods: {
 			//用户点击订单类型
 			toOrderType(index){
+				console.log(index)
 				uni.setStorageSync('tbIndex',index);
 				uni.navigateTo({
 					url:"order_list?tbIndex="+index
